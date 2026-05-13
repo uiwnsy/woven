@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronRight } from 'lucide-react';
 import {
   HomeSelectedIcon,
   BriefDisabledIcon,
@@ -359,7 +358,7 @@ export default function HomePage() {
                     <p className="text-[14px] text-black/60 mt-[7px]">{item.subtitle}</p>
                   </div>
                 </div>
-                <ChevronRight size={20} className="text-[#899098] shrink-0 ml-2" />
+                <img src="/arrow-right.svg" alt="" width={20} height={20} className="shrink-0 ml-2" />
               </button>
             ))}
           </div>
@@ -396,7 +395,7 @@ export default function HomePage() {
             <h2 className="text-[22px] font-bold text-stone-900">전체 캠페인</h2>
             <button className="flex items-center gap-0.5 active:opacity-70">
               <span className="text-[14px] font-semibold text-stone-500">더보기</span>
-              <ChevronRight size={16} className="text-stone-400" />
+              <img src="/arrow-right.svg" alt="" width={16} height={16} />
             </button>
           </div>
           <div className="flex gap-3 overflow-x-auto px-5 pb-1 scrollbar-none">

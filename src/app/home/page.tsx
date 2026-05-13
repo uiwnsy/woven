@@ -376,7 +376,7 @@ export default function HomePage() {
                 className="w-[260px] shrink-0 bg-[#f8faff] rounded-2xl p-5 flex flex-col"
               >
                 {/* Star icon */}
-                <img src="/star-icon.png" alt="" width={32} height={32} className="mb-3" />
+                <img src="/star-icon.png" alt="" width={24} height={24} className="mb-3" />
                 <p className="text-[15px] text-black leading-[1.5] flex-1 mb-4">
                   <span style={{ color: '#4F52E0' }}>{insight.highlight}</span>{insight.text}
                 </p>

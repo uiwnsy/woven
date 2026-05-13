@@ -48,10 +48,10 @@ export default function BoardPage() {
         <span className="text-[24px] font-bold text-stone-900 tracking-[-0.4px]">보드</span>
         <div className="flex items-center gap-3">
           <button className="active:opacity-60">
-            <SearchIcon size={22} className="text-stone-900" />
+            <SearchIcon size={32} className="text-stone-900" />
           </button>
           <button className="relative active:opacity-60">
-            <AlertIcon size={22} className="text-stone-900" />
+            <AlertIcon size={32} className="text-stone-900" />
             <span className="absolute top-0 right-0 w-[10px] h-[10px] bg-iris-500 rounded-full border-2 border-white" />
           </button>
         </div>
@@ -139,7 +139,7 @@ export default function BoardPage() {
             className={`flex-1 flex flex-col items-center justify-center gap-[5px] active:opacity-60
               ${active ? 'text-stone-900' : 'text-stone-300'}`}
           >
-            <Icon size={24} />
+            <Icon size={32} />
             <span className={`text-[12px] ${active ? 'font-semibold' : 'font-medium'}`}>{label}</span>
           </button>
         ))}

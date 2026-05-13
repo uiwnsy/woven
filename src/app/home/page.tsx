@@ -402,7 +402,7 @@ export default function HomePage() {
             {CAMPAIGNS.map(campaign => (
               <div
                 key={campaign.id}
-                className="w-[186px] shrink-0 bg-white border border-[#ebeef7] rounded-2xl p-5 flex flex-col shadow-[0_2px_8px_rgba(235,238,247,0.8)]"
+                className="w-[186px] shrink-0 bg-white border border-[#ebeef7] rounded-2xl p-5 flex flex-col"
               >
                 <span className={`${campaign.statusBg} ${campaign.statusText} text-[14px] font-semibold px-3 py-1.5 rounded-full self-start mb-3`}>
                   {campaign.status}

@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['var(--font-manrope)', 'Pretendard Variable', 'Pretendard', '-apple-system', 'sans-serif'],
+        pretendard: ['Pretendard Variable', 'Pretendard', '-apple-system', 'sans-serif'],
       },
       colors: {
         iris: {

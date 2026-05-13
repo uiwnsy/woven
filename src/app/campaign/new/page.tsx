@@ -1,0 +1,729 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ChevronLeft, ChevronDown, Calendar, Plus, X, Check } from 'lucide-react';
+
+type Step = 1 | 2 | 3 | 4 | 5;
+
+type FormData = {
+  brand: string;
+  campaignName: string;
+  productName: string;
+  startDate: string;
+  endDate: string;
+  platforms: string[];
+  budget: string;
+  goal: string;
+  kpis: string[];
+  brandDesc: string;
+  productFeatures: string;
+  coreMessage: string;
+  contentGuide: string;
+  requiredTags: string[];
+  recommendedTags: string[];
+  briefTone: 'formal' | 'friendly' | 'casual';
+};
+
+const PLATFORMS = ['인스타그램', '유튜브', '틱톡', '블로그'];
+
+const GOALS = [
+  { id: 'purchase',   label: '구매 전환',   desc: '매출 전환율 중심 - 할인코드 UTM 추적',    icon: '🛍️' },
+  { id: 'awareness',  label: '인지도 확대',  desc: '도달 노출 중심 - 브랜드 스토리 강조',      icon: '📣' },
+  { id: 'follower',   label: '팔로워 증가',  desc: '팔로우 유도 - 계정 성장 목표',            icon: '👤' },
+  { id: 'content',    label: '콘텐츠 수집',  desc: 'UGC 리뷰 확보 - 콘텐츠 자산 구축',       icon: '🎬' },
+];
+
+const KPIS = [
+  { id: 'roas',       label: 'ROAS',  desc: '광고비 대비 매출' },
+  { id: 'clicks',     label: '클릭수', desc: 'UTM 링크 클릭 수' },
+  { id: 'conversion', label: '전환수', desc: '구매 또는 신청 완료 수' },
+  { id: 'upload',     label: '업로드 수', desc: '인플루언서 게시 건수' },
+];
+
+const TONES = [
+  { id: 'formal',   label: '공식적', icon: '👔' },
+  { id: 'friendly', label: '친근한', icon: '😊' },
+  { id: 'casual',   label: '캐주얼', icon: '✌️' },
+];
+
+const MOCK_BRIEF = `안녕하세요 [인플루언서명]님! 😊
+루미에르입니다.
+
+루미에르 여름 선케어 캠페인에 함께할 크리에이터를 찾고 있어요. [인플루언서명]님의 뷰티 콘텐츠를 보고 저희 톤과 잘 맞을 것 같아 연락드렸어요!
+
+🎁 제품
+루미에르 선블럭 크림 (신제품)
+
+🎬 콘텐츠
+인스타그램 릴스 1건 — 봄 무드 데일리 메이크업룩
+
+🏷️ 필수 태그
+#선케어 #자외선차단 #수분 #루미에르
+
+📋 가이드라인
+docs.google.com/fxB2eY1zadeox4dkz
+
+🚫 경쟁 브랜드 언급 금지 · 프로모션 용어 사용 금지 · 과장 표현 금지`;
+
+function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
+  return (
+    <button
+      onClick={onToggle}
+      className={`relative w-[51px] h-[31px] rounded-full transition-colors shrink-0
+        ${on ? 'bg-iris-500' : 'bg-stone-300'}`}
+    >
+      <div className={`absolute top-[2px] w-[27px] h-[27px] bg-white rounded-full shadow transition-transform
+        ${on ? 'translate-x-[22px]' : 'translate-x-[2px]'}`} />
+    </button>
+  );
+}
+
+function FormLabel({ children, required, optional, autoFill }: {
+  children: React.ReactNode;
+  required?: boolean;
+  optional?: boolean;
+  autoFill?: boolean;
+}) {
+  return (
+    <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center gap-1">
+        <span className="text-[15px] font-semibold text-stone-800">{children}</span>
+        {required && <span className="text-iris-500 text-[14px]">*</span>}
+        {optional && <span className="text-stone-400 text-[13px] ml-0.5">(선택)</span>}
+      </div>
+      {autoFill && <span className="text-[13px] text-iris-500 font-medium">자동 채움</span>}
+    </div>
+  );
+}
+
+function TextInput({ value, onChange, placeholder }: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}) {
+  return (
+    <input
+      type="text"
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      placeholder={placeholder}
+      className="w-full h-[52px] border border-stone-200 rounded-xl px-4 text-[16px] text-stone-900 outline-none focus:border-iris-400 placeholder:text-stone-400 bg-white"
+    />
+  );
+}
+
+function TagInput({ tags, onAdd, onRemove, placeholder }: {
+  tags: string[];
+  onAdd: (t: string) => void;
+  onRemove: (t: string) => void;
+  placeholder: string;
+}) {
+  const [value, setValue] = useState('');
+  const submit = () => {
+    const trimmed = value.trim().replace(/^#/, '');
+    if (trimmed) { onAdd(trimmed); setValue(''); }
+  };
+  return (
+    <div>
+      <div className="flex items-center border border-stone-200 rounded-xl px-4 h-[52px] gap-2 bg-white">
+        <input
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && submit()}
+          placeholder={placeholder}
+          className="flex-1 text-[16px] outline-none text-stone-900 placeholder:text-stone-400"
+        />
+        <button onClick={submit} className="active:opacity-60">
+          <Plus size={20} className="text-stone-400" />
+        </button>
+      </div>
+      {tags.length > 0 && (
+        <div className="flex flex-wrap gap-2 mt-2">
+          {tags.map(tag => (
+            <span key={tag} className="flex items-center gap-1 bg-stone-100 text-stone-700 text-[14px] px-3 py-1 rounded-full">
+              {tag}
+              <button onClick={() => onRemove(tag)} className="active:opacity-60">
+                <X size={12} />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Step 1: Basic Info ─────────────────────────────────────────────────────
+
+function Step1({ form, updateForm, togglePlatform }: {
+  form: FormData;
+  updateForm: (k: keyof FormData, v: any) => void;
+  togglePlatform: (p: string) => void;
+}) {
+  return (
+    <div className="px-5 pt-6">
+      <h1 className="text-[24px] font-bold text-stone-900 mb-6">캠페인 기본 정보</h1>
+
+      <div className="mb-5">
+        <FormLabel required>브랜드명</FormLabel>
+        <button className="w-full h-[52px] border border-stone-200 rounded-xl px-4 flex items-center justify-between bg-white active:opacity-70">
+          <span className="text-[16px] text-stone-900">{form.brand}</span>
+          <ChevronDown size={20} className="text-stone-500" />
+        </button>
+      </div>
+
+      <div className="mb-5">
+        <FormLabel required>캠페인명</FormLabel>
+        <TextInput value={form.campaignName} onChange={v => updateForm('campaignName', v)} placeholder="2026 여름 선케어" />
+      </div>
+
+      <div className="mb-5">
+        <FormLabel required>제품명</FormLabel>
+        <TextInput value={form.productName} onChange={v => updateForm('productName', v)} placeholder="루미에르 선블럭 크림" />
+      </div>
+
+      <div className="mb-5">
+        <FormLabel required>캠페인 기간</FormLabel>
+        <div className="flex items-center gap-2">
+          <div className="flex-1 h-[52px] border border-stone-200 rounded-xl px-4 flex items-center gap-2 bg-white">
+            <Calendar size={15} className="text-stone-400 shrink-0" />
+            <input
+              type="text"
+              value={form.startDate}
+              onChange={e => updateForm('startDate', e.target.value)}
+              placeholder="2026.06.09"
+              className="flex-1 text-[15px] outline-none text-stone-900 placeholder:text-stone-400"
+            />
+          </div>
+          <span className="text-stone-400 font-medium">-</span>
+          <div className="flex-1 h-[52px] border border-stone-200 rounded-xl px-4 flex items-center gap-2 bg-white">
+            <Calendar size={15} className="text-stone-400 shrink-0" />
+            <input
+              type="text"
+              value={form.endDate}
+              onChange={e => updateForm('endDate', e.target.value)}
+              placeholder="2026.07.31"
+              className="flex-1 text-[15px] outline-none text-stone-900 placeholder:text-stone-400"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-5">
+        <FormLabel required>플랫폼</FormLabel>
+        <div className="flex flex-wrap gap-2">
+          {PLATFORMS.map(p => (
+            <button
+              key={p}
+              onClick={() => togglePlatform(p)}
+              className={`h-9 px-4 rounded-full text-[15px] font-medium transition-all active:opacity-70
+                ${form.platforms.includes(p)
+                  ? 'bg-iris-500 text-white'
+                  : 'border border-stone-200 text-stone-600 bg-white'}`}
+            >
+              {p}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-5">
+        <FormLabel optional>예산</FormLabel>
+        <div className="flex items-center border border-stone-200 rounded-xl px-4 h-[52px] bg-white">
+          <input
+            type="text"
+            value={form.budget}
+            onChange={e => updateForm('budget', e.target.value)}
+            placeholder="5,000,000"
+            className="flex-1 text-[16px] outline-none text-stone-900 placeholder:text-stone-400"
+          />
+          <span className="text-stone-500 text-[16px]">원</span>
+        </div>
+      </div>
+
+      <div className="mb-5">
+        <FormLabel optional>담당자</FormLabel>
+        <button className="w-full h-[70px] border border-stone-200 rounded-xl px-4 flex items-center justify-between bg-white active:opacity-70">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[#f7b898] flex items-center justify-center shrink-0">
+              <span className="text-white text-[16px] font-bold">김</span>
+            </div>
+            <div className="text-left">
+              <p className="text-[16px] font-medium text-stone-900">김지은</p>
+              <p className="text-[13px] text-stone-400">마케팅 팀</p>
+            </div>
+          </div>
+          <ChevronDown size={20} className="text-stone-500" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── Step 2: Goal + KPI ────────────────────────────────────────────────────
+
+function Step2({ form, updateForm, toggleKPI }: {
+  form: FormData;
+  updateForm: (k: keyof FormData, v: any) => void;
+  toggleKPI: (id: string) => void;
+}) {
+  return (
+    <div className="px-5 pt-6">
+      <h1 className="text-[24px] font-bold text-stone-900 mb-6">캠페인 목표</h1>
+
+      <div className="mb-8">
+        <p className="text-[15px] font-semibold text-stone-800 mb-3">목표 유형</p>
+        <div className="flex flex-col gap-3">
+          {GOALS.map(goal => (
+            <button
+              key={goal.id}
+              onClick={() => updateForm('goal', goal.id)}
+              className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 text-left transition-all active:opacity-80
+                ${form.goal === goal.id ? 'border-iris-500 bg-[#f5f5ff]' : 'border-stone-200 bg-white'}`}
+            >
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-[22px] shrink-0
+                ${form.goal === goal.id ? 'bg-iris-50' : 'bg-stone-100'}`}>
+                {goal.icon}
+              </div>
+              <div>
+                <p className="text-[16px] font-semibold text-stone-900">{goal.label}</p>
+                <p className="text-[13px] text-stone-400 mt-0.5">{goal.desc}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-5">
+        <p className="text-[18px] font-bold text-stone-900 mb-3">KPI 지표</p>
+        <div className="border border-stone-200 rounded-2xl overflow-hidden bg-white">
+          {KPIS.map((kpi, i) => (
+            <div
+              key={kpi.id}
+              className={`flex items-center justify-between px-5 py-4
+                ${i < KPIS.length - 1 ? 'border-b border-stone-100' : ''}`}
+            >
+              <div>
+                <p className="text-[16px] font-semibold text-stone-900">{kpi.label}</p>
+                <p className="text-[13px] text-stone-400 mt-0.5">{kpi.desc}</p>
+              </div>
+              <Toggle
+                on={form.kpis.includes(kpi.id)}
+                onToggle={() => toggleKPI(kpi.id)}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Step 3: AI Brief Materials ────────────────────────────────────────────
+
+const DEFAULT_RESTRICTIONS = [
+  '경쟁 브랜드 언급 금지',
+  '"최저가", "할인" 등 프로모션 용어 사용 금지',
+  '과장된 효능/효과 표현 금지',
+  '의약품으로 오해할 수 있는 표현 금지',
+];
+
+function Step3({ form, updateForm }: {
+  form: FormData;
+  updateForm: (k: keyof FormData, v: any) => void;
+}) {
+  const addRequired    = (t: string) => updateForm('requiredTags',     [...form.requiredTags, t]);
+  const removeRequired = (t: string) => updateForm('requiredTags',     form.requiredTags.filter(x => x !== t));
+  const addRecommended    = (t: string) => updateForm('recommendedTags', [...form.recommendedTags, t]);
+  const removeRecommended = (t: string) => updateForm('recommendedTags', form.recommendedTags.filter(x => x !== t));
+
+  return (
+    <div className="px-5 pt-6">
+      <h1 className="text-[24px] font-bold text-stone-900 mb-4">AI 브리프 재료 입력</h1>
+
+      {/* Info banner */}
+      <div className="bg-[#eef0fd] rounded-xl px-4 py-3 mb-6 flex gap-2">
+        <span className="text-iris-500 text-[15px] shrink-0 mt-0.5">⚠</span>
+        <p className="text-[13px] text-stone-600 leading-relaxed">
+          입력하신 정보를 반영해 AI 브리프를 만들 수 있어요.<br />
+          아래 내용을 채울수록 메시지가 정교해집니다.
+        </p>
+      </div>
+
+      {/* 브랜드 소개 */}
+      <div className="mb-5">
+        <FormLabel autoFill>브랜드 소개</FormLabel>
+        <textarea
+          value={form.brandDesc}
+          onChange={e => updateForm('brandDesc', e.target.value)}
+          rows={4}
+          className="w-full border border-stone-200 rounded-xl px-4 py-3 text-[15px] text-stone-700 outline-none resize-none focus:border-iris-400 bg-white"
+        />
+        <p className="text-[12px] text-stone-400 mt-1">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
+      </div>
+
+      {/* 제품 특징 */}
+      <div className="mb-5">
+        <FormLabel required>제품 특징</FormLabel>
+        <textarea
+          value={form.productFeatures}
+          onChange={e => updateForm('productFeatures', e.target.value)}
+          placeholder={'SPF50+, PA++++ 자외선 차단 · 피부 장벽 강화\n세라마이드 함유 · 백탁 없는 수분 텍스처 · 민감성 피부 테스트 완료'}
+          rows={3}
+          className="w-full border border-stone-200 rounded-xl px-4 py-3 text-[15px] text-stone-900 outline-none resize-none focus:border-iris-400 placeholder:text-stone-400 bg-white"
+        />
+      </div>
+
+      {/* 핵심 메시지 */}
+      <div className="mb-5">
+        <FormLabel required>핵심 메시지</FormLabel>
+        <textarea
+          value={form.coreMessage}
+          onChange={e => updateForm('coreMessage', e.target.value)}
+          placeholder="자외선 차단은 기본, 피부 장벽 케어까지. 매일 바르고 싶은 선케어를 강조"
+          rows={3}
+          className="w-full border border-stone-200 rounded-xl px-4 py-3 text-[15px] text-stone-900 outline-none resize-none focus:border-iris-400 placeholder:text-stone-400 bg-white"
+        />
+      </div>
+
+      {/* 금지 사항 */}
+      <div className="mb-5">
+        <FormLabel autoFill>금지 사항</FormLabel>
+        <div className="border border-stone-200 rounded-xl px-4 py-3 bg-white">
+          {DEFAULT_RESTRICTIONS.map(r => (
+            <p key={r} className="text-[14px] text-stone-700 py-0.5 leading-relaxed">• {r}</p>
+          ))}
+        </div>
+      </div>
+
+      {/* 콘텐츠 가이드라인 */}
+      <div className="mb-5">
+        <FormLabel optional>콘텐츠 가이드라인</FormLabel>
+        <div className="flex items-center border border-stone-200 rounded-xl px-4 h-[52px] gap-2 bg-white">
+          <input
+            type="text"
+            value={form.contentGuide}
+            onChange={e => updateForm('contentGuide', e.target.value)}
+            placeholder="docs.google.com/fxB2eY1z..."
+            className="flex-1 text-[15px] outline-none text-stone-900 placeholder:text-stone-400"
+          />
+          <span className="text-stone-400 text-[18px]">🔗</span>
+        </div>
+        <p className="text-[12px] text-stone-400 mt-1">* 링크 입력 시 AI 브리프에 자동 반영돼요.</p>
+      </div>
+
+      {/* 필수 해시태그 */}
+      <div className="mb-5">
+        <FormLabel>필수 해시태그</FormLabel>
+        <TagInput tags={form.requiredTags} onAdd={addRequired} onRemove={removeRequired} placeholder="선케어" />
+      </div>
+
+      {/* 추천 해시태그 */}
+      <div className="mb-5">
+        <FormLabel>추천 해시태그</FormLabel>
+        <TagInput tags={form.recommendedTags} onAdd={addRecommended} onRemove={removeRecommended} placeholder="#해시태그 입력" />
+      </div>
+    </div>
+  );
+}
+
+// ─── Step 4: AI Brief Result ───────────────────────────────────────────────
+
+function Step4({ form, updateForm }: {
+  form: FormData;
+  updateForm: (k: keyof FormData, v: any) => void;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try { await navigator.clipboard.writeText(MOCK_BRIEF); } catch { /* ignore */ }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="px-5 pt-6">
+      <span className="inline-block bg-[#dcfce7] text-[#16a34a] text-[13px] font-semibold px-3 py-1 rounded-full mb-3">
+        AI 생성 완료
+      </span>
+      <h1 className="text-[24px] font-bold text-stone-900 mb-2">브리프를 확인해주세요</h1>
+      <p className="text-[14px] text-stone-500 mb-6 leading-relaxed">
+        캠페인 정보 기반으로 AI가 생성한 브리프예요. 내용을 확인하고,<br />
+        필요한 부분을 수정한 뒤 저장하세요.
+      </p>
+
+      {/* Tone selector */}
+      <div className="mb-5">
+        <p className="text-[16px] font-semibold text-stone-900 mb-3">브리프 톤</p>
+        <div className="flex gap-3">
+          {TONES.map(tone => (
+            <button
+              key={tone.id}
+              onClick={() => updateForm('briefTone', tone.id)}
+              className={`flex-1 flex flex-col items-center gap-2 py-4 rounded-2xl border-2 transition-all active:opacity-80
+                ${form.briefTone === tone.id ? 'border-iris-500 bg-[#f5f5ff]' : 'border-stone-200 bg-white'}`}
+            >
+              <span className="text-[24px]">{tone.icon}</span>
+              <span className={`text-[14px] font-semibold
+                ${form.briefTone === tone.id ? 'text-iris-500' : 'text-stone-600'}`}>
+                {tone.label}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Generated brief */}
+      <div className="border border-stone-200 rounded-2xl overflow-hidden mb-4">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-stone-100">
+          <span className="text-[15px] font-semibold text-stone-900">생성된 브리프</span>
+          <div className="bg-iris-500 px-2.5 py-1 rounded-lg">
+            <span className="text-white text-[12px] font-bold">AI</span>
+          </div>
+        </div>
+        <div className="px-4 py-4">
+          <pre className="text-[14px] text-stone-700 leading-relaxed whitespace-pre-wrap font-sans">
+            {MOCK_BRIEF}
+          </pre>
+        </div>
+      </div>
+
+      {/* Action buttons */}
+      <div className="flex gap-3 mb-2">
+        <button className="flex-1 h-[48px] border border-stone-200 rounded-xl text-[15px] font-semibold text-stone-700 active:opacity-70">
+          수정하기
+        </button>
+        <button
+          onClick={handleCopy}
+          className="flex-1 h-[48px] border border-stone-200 rounded-xl text-[15px] font-semibold text-stone-700 active:opacity-70 flex items-center justify-center gap-1.5"
+        >
+          {copied
+            ? <><Check size={16} className="text-green-500" /><span>복사됨</span></>
+            : '복사하기'}
+        </button>
+      </div>
+      <p className="text-[12px] text-stone-400 text-center mb-4">
+        인플루언서별 발송 시 이름과 핸들이 자동으로 반영돼요.
+      </p>
+      <button className="w-full py-2 text-[15px] text-iris-500 font-semibold text-center active:opacity-70">
+        다시 생성하기
+      </button>
+    </div>
+  );
+}
+
+// ─── Step 5: Completion ────────────────────────────────────────────────────
+
+function Step5({ form, router }: { form: FormData; router: ReturnType<typeof useRouter> }) {
+  const goalLabel = GOALS.find(g => g.id === form.goal)?.label ?? '구매전환';
+  const dateRange = form.startDate && form.endDate
+    ? `${form.startDate} ~ ${form.endDate}`
+    : '6.1 ~ 7.31';
+
+  const rows = [
+    { label: '브랜드',   value: form.brand },
+    { label: '캠페인명', value: form.campaignName || '2026 여름 선케어' },
+    { label: '기간',     value: dateRange },
+    { label: '목표',     value: goalLabel },
+    { label: '플랫폼',   value: form.platforms.join(', ') || '인스타그램' },
+  ];
+
+  return (
+    <div className="px-5 pt-12 flex flex-col items-center pb-[140px]">
+      {/* Checkmark circle */}
+      <div className="w-[72px] h-[72px] bg-iris-500 rounded-full flex items-center justify-center mb-6">
+        <Check size={36} className="text-white" strokeWidth={3} />
+      </div>
+
+      <h1 className="text-[26px] font-bold text-stone-900 mb-3">캠페인이 추가됐어요!</h1>
+      <p className="text-[15px] text-stone-500 text-center mb-8 leading-relaxed">
+        이제 인플루언서를 추가하고<br />보드에서 관리해보세요
+      </p>
+
+      {/* Summary card */}
+      <div className="w-full border border-stone-200 rounded-2xl overflow-hidden mb-3">
+        {rows.map((row, i) => (
+          <div
+            key={row.label}
+            className={`flex items-center justify-between px-5 py-4 ${i > 0 ? 'border-t border-stone-100' : ''}`}
+          >
+            <span className="text-[15px] text-stone-400">{row.label}</span>
+            <span className="text-[15px] font-medium text-stone-900">{row.value}</span>
+          </div>
+        ))}
+        <div className="flex items-center justify-between px-5 py-4 border-t border-stone-100">
+          <span className="text-[15px] text-stone-400">AI 브리프</span>
+          <span className="bg-[#dcfce7] text-[#16a34a] text-[13px] font-semibold px-3 py-1 rounded-full">생성완료</span>
+        </div>
+      </div>
+
+      <p className="text-[13px] text-stone-400 text-center leading-relaxed">
+        보드에서 인플루언서를 추가하면 저장된 브리프를<br />바로 복사해 보낼 수 있어요.
+      </p>
+    </div>
+  );
+}
+
+// ─── Main ──────────────────────────────────────────────────────────────────
+
+export default function CampaignNewPage() {
+  const router = useRouter();
+  const [step, setStep] = useState<Step>(1);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const [form, setForm] = useState<FormData>({
+    brand: '루미에르',
+    campaignName: '',
+    productName: '',
+    startDate: '',
+    endDate: '',
+    platforms: ['인스타그램'],
+    budget: '',
+    goal: 'purchase',
+    kpis: ['roas', 'clicks', 'conversion'],
+    brandDesc: '루미에르는 자연 유래 성분을 기반으로 한 K-뷰티 스킨케어 브랜드입니다. \'빛나는 피부, 가벼운 일상\'을 슬로건으로, 매일 사용하고 싶은 선케어 라인을 선보이고 있어요.',
+    productFeatures: '',
+    coreMessage: '',
+    contentGuide: '',
+    requiredTags: ['선케어', '루미에르'],
+    recommendedTags: ['#SPF50', '#자외선차단', '#수분'],
+    briefTone: 'friendly',
+  });
+
+  const updateForm = (key: keyof FormData, value: any) => setForm(prev => ({ ...prev, [key]: value }));
+  const togglePlatform = (p: string) =>
+    updateForm('platforms', form.platforms.includes(p)
+      ? form.platforms.filter(x => x !== p)
+      : [...form.platforms, p]);
+  const toggleKPI = (id: string) =>
+    updateForm('kpis', form.kpis.includes(id)
+      ? form.kpis.filter(x => x !== id)
+      : [...form.kpis, id]);
+
+  const handleGenerateBrief = async () => {
+    setIsGenerating(true);
+    await new Promise(r => setTimeout(r, 1800));
+    setIsGenerating(false);
+    setStep(4);
+  };
+
+  const goBack = () => {
+    if (step === 1) router.back();
+    else setStep(prev => (prev - 1) as Step);
+  };
+
+  const progressPct = step <= 4 ? (step / 4) * 100 : 100;
+
+  return (
+    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
+
+      {/* Header */}
+      <div className="flex items-center justify-center px-5 h-[65px] border-b border-[#f0f2f8] bg-white shrink-0 relative">
+        {step < 5 && (
+          <button onClick={goBack} className="absolute left-5 active:opacity-60">
+            <ChevronLeft size={24} className="text-stone-900" />
+          </button>
+        )}
+        <span className="text-[18px] font-semibold text-stone-900">캠페인 추가</span>
+      </div>
+
+      {/* Progress bar */}
+      <div className="h-[4px] bg-stone-100 shrink-0">
+        <div
+          className="h-full bg-iris-500 transition-all duration-300"
+          style={{ width: `${progressPct}%` }}
+        />
+      </div>
+
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto pb-[120px]">
+        {step === 1 && <Step1 form={form} updateForm={updateForm} togglePlatform={togglePlatform} />}
+        {step === 2 && <Step2 form={form} updateForm={updateForm} toggleKPI={toggleKPI} />}
+        {step === 3 && <Step3 form={form} updateForm={updateForm} />}
+        {step === 4 && <Step4 form={form} updateForm={updateForm} />}
+        {step === 5 && <Step5 form={form} router={router} />}
+      </div>
+
+      {/* Bottom CTA */}
+      <div className="absolute bottom-0 w-full px-5 pb-8 pt-4 bg-white border-t border-[#f0f2f8]">
+        {step === 1 && (
+          <button
+            onClick={() => setStep(2)}
+            className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80"
+          >
+            다음
+          </button>
+        )}
+
+        {step === 2 && (
+          <button
+            onClick={() => setStep(3)}
+            className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80"
+          >
+            다음
+          </button>
+        )}
+
+        {step === 3 && (
+          <>
+            <button
+              onClick={handleGenerateBrief}
+              disabled={isGenerating}
+              className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80 disabled:opacity-70 flex items-center justify-center gap-2"
+            >
+              {isGenerating ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  AI가 브리프를 생성 중이에요...
+                </>
+              ) : '브리프 생성하기'}
+            </button>
+            <button
+              onClick={() => setStep(5)}
+              className="w-full py-3 text-[15px] text-stone-400 text-center active:opacity-60"
+            >
+              브리프 없이 캠페인 만들기
+            </button>
+          </>
+        )}
+
+        {step === 4 && (
+          <>
+            <button
+              onClick={() => setStep(5)}
+              className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80"
+            >
+              브리프 저장하고 캠페인 만들기
+            </button>
+            <button
+              onClick={() => setStep(5)}
+              className="w-full py-3 text-[15px] text-stone-400 text-center active:opacity-60"
+            >
+              나중에 할게요
+            </button>
+          </>
+        )}
+
+        {step === 5 && (
+          <>
+            <button
+              onClick={() => router.push('/board')}
+              className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80"
+            >
+              보드에서 인플루언서 관리하기
+            </button>
+            <button
+              onClick={() => router.push('/campaign')}
+              className="w-full py-3 text-[15px] text-stone-400 text-center active:opacity-60"
+            >
+              나중에 할게요
+            </button>
+          </>
+        )}
+      </div>
+
+    </div>
+  );
+}

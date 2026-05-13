@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ChevronDown, LayoutGrid, List } from 'lucide-react';
 import {
   SearchIcon, AlertIcon,
@@ -18,25 +19,28 @@ const TABS = [
   { id: 'uploaded',   label: '업로드완료', count: '1' },
 ];
 
-const MOCK_DATA: Influencer[] = [
-  {
-    id: '1', name: 'haye0', handle: '@haye0', followers: '10.4만',
-    categories: ['뷰티', '패션'], statusText: '전송 D+26',
-    profileImg: 'https://i.pravatar.cc/150?img=1',
-  },
-  {
-    id: '2', name: 'zigoo', handle: '@zigoo', followers: '8만',
-    categories: ['뷰티', '패션'], statusText: '전송 D+26',
-    profileImg: 'https://i.pravatar.cc/150?img=5',
-  },
-  {
-    id: '3', name: '김지영', handle: '@jijizero', followers: '21만',
-    categories: ['뷰티', '연애/결혼', '일상'], statusText: '전송 D+26',
-    profileImg: 'https://i.pravatar.cc/150?img=9',
-  },
-];
+const TAB_DATA: Record<string, Influencer[]> = {
+  'list-up': [],
+  'contacting': [
+    { id: '1', name: 'haye0',  handle: '@haye0',    followers: '10.4만', categories: ['뷰티', '패션'],               statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=1' },
+    { id: '2', name: 'zigoo',  handle: '@zigoo',    followers: '8만',    categories: ['뷰티', '패션'],               statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=5' },
+    { id: '3', name: '김지영', handle: '@jijizero', followers: '21만',   categories: ['뷰티', '연애/결혼', '일상'],  statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=9' },
+  ],
+  'negotiated': [
+    { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: 'D-8', profileImg: 'https://i.pravatar.cc/150?img=47' },
+    { id: '4', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],        statusText: 'D-3', profileImg: 'https://i.pravatar.cc/150?img=44' },
+  ],
+  'inProgress': [
+    { id: '5', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=47' },
+    { id: '5', name: 'zigoo',  handle: '@zigoo',  followers: '8만',   categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=5' },
+  ],
+  'uploaded': [
+    { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: '업로드 완료', profileImg: 'https://i.pravatar.cc/150?img=47' },
+  ],
+};
 
 export default function BoardPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('contacting');
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
 
@@ -118,24 +122,47 @@ export default function BoardPage() {
         {/* Card list */}
         <div className="px-5 pt-5 flex justify-center">
           <div className="w-full max-w-[390px]">
-            {MOCK_DATA.map(item => (
-              <InfluencerCard key={item.id} data={item} onPress={() => {}} />
-            ))}
+            {(TAB_DATA[activeTab] ?? []).length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 text-stone-300">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="mb-3">
+                  <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M16 24h16M24 16v16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                <p className="text-[15px]">인플루언서를 추가해보세요</p>
+              </div>
+            ) : (
+              (TAB_DATA[activeTab] ?? []).map((item, i) => (
+                <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id)} />
+              ))
+            )}
           </div>
         </div>
+
+        {/* Add influencer button */}
+        <button
+          onClick={() => router.push('/board/add')}
+          className="w-full flex items-center justify-center gap-2 py-5 mt-2 active:opacity-70"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="9" stroke="#6366f1" strokeWidth="1.5"/>
+            <path d="M10 6v8M6 10h8" stroke="#6366f1" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+          <span className="text-[16px] font-semibold text-iris-500">인플루언서 추가</span>
+        </button>
       </div>
 
       {/* ── Bottom navigation ── */}
       <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-3 bg-white border-t border-[#f0f2f8]">
         {[
-          { Icon: HomeDisabledIcon,   label: '홈',        active: false },
-          { Icon: BriefDisabledIcon,  label: '캠페인',    active: false },
-          { Icon: BoardSelectedIcon,  label: '보드',      active: true  },
-          { Icon: ReportDisabledIcon, label: '성과',      active: false },
-          { Icon: MyDisabledIcon,     label: '마이페이지', active: false },
-        ].map(({ Icon, label, active }) => (
+          { Icon: HomeDisabledIcon,   label: '홈',        active: false, onClick: () => router.push('/home') },
+          { Icon: BriefDisabledIcon,  label: '캠페인',    active: false, onClick: () => router.push('/campaign') },
+          { Icon: BoardSelectedIcon,  label: '보드',      active: true,  onClick: () => {} },
+          { Icon: ReportDisabledIcon, label: '성과',      active: false, onClick: () => router.push('/performance') },
+          { Icon: MyDisabledIcon,     label: '마이페이지', active: false, onClick: () => router.push('/mypage') },
+        ].map(({ Icon, label, active, onClick }) => (
           <button
             key={label}
+            onClick={onClick}
             className={`flex-1 flex flex-col items-center justify-center gap-[5px] active:opacity-60
               ${active ? 'text-stone-900' : 'text-stone-300'}`}
           >

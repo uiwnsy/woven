@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    font-family: var(--font-manrope), 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+}
+
 @layer utilities {
   .scrollbar-none {
     -ms-overflow-style: none;

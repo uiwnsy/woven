@@ -42,7 +42,7 @@ export default function LoginPage() {
     >
       {/* Logo centered */}
       <div className="flex-1 flex items-center justify-center">
-        <img src="/woven-logo.svg" alt="Woven" width={160} height={29} />
+        <img src="/woven-logo.svg" alt="Woven" width={115} height={21} />
       </div>
 
       {/* Buttons */}

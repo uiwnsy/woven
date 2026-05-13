@@ -334,7 +334,7 @@ export default function HomePage() {
                 className="flex-1 min-w-0 bg-white border border-[#E8E7E4] rounded-[14px] px-5 py-[22px] flex flex-col gap-3"
               >
                 <div className="flex flex-col gap-1.5">
-                  <p className="text-[16px] font-medium leading-none" style={{ color: '#5C5A54' }}>{kpi.label}</p>
+                  <p className="text-[14px] font-medium leading-none" style={{ color: '#5C5A54' }}>{kpi.label}</p>
                   <p className="text-[26px] font-bold text-black leading-none">{kpi.value}</p>
                 </div>
                 <div className={`${kpi.badgeBg} px-[10px] py-1 rounded-full inline-flex self-start`}>

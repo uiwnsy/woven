@@ -265,7 +265,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[14px] font-semibold text-black">{inf.name}</span>
+                        <span className="text-[16px] font-semibold text-black">{inf.name}</span>
                         <span className="text-[13px] text-stone-500">{inf.handle}</span>
                       </div>
                       <span className="text-[12px] text-stone-500">{inf.followers}</span>
@@ -355,7 +355,7 @@ export default function HomePage() {
                 <div className="flex items-center gap-3">
                   <img src={item.icon} alt="" width={52} height={52} className="shrink-0" />
                   <div className="text-left">
-                    <p className="text-[14px] font-semibold text-black">{item.title}</p>
+                    <p className="text-[16px] font-semibold text-black">{item.title}</p>
                     <p className="text-[14px] text-black/60 mt-[7px]">{item.subtitle}</p>
                   </div>
                 </div>

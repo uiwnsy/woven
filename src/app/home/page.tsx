@@ -331,12 +331,14 @@ export default function HomePage() {
             {KPI_DATA.map(kpi => (
               <div
                 key={kpi.id}
-                className="flex-1 min-w-0 bg-white border border-[#ebeef7] rounded-2xl px-3 pt-4 pb-3"
+                className="flex-1 min-w-0 bg-white border border-[#E8E7E4] rounded-[14px] px-5 py-[22px] flex flex-col gap-3"
               >
-                <p className="text-[13px] font-medium text-stone-600 mb-1 truncate">{kpi.label}</p>
-                <p className="text-[22px] font-bold text-black mb-3 leading-none">{kpi.value}</p>
-                <div className={`${kpi.badgeBg} px-2 py-[5px] rounded-full inline-flex max-w-full`}>
-                  <span className={`text-[12px] ${kpi.badgeText} truncate`}>{kpi.badge}</span>
+                <div className="flex flex-col gap-1.5">
+                  <p className="text-[16px] font-medium leading-none" style={{ color: '#5C5A54' }}>{kpi.label}</p>
+                  <p className="text-[26px] font-bold text-black leading-none">{kpi.value}</p>
+                </div>
+                <div className={`${kpi.badgeBg} px-[10px] py-1 rounded-full inline-flex self-start`}>
+                  <span className={`text-[16px] font-semibold ${kpi.badgeText} whitespace-nowrap`}>{kpi.badge}</span>
                 </div>
               </div>
             ))}

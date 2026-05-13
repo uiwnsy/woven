@@ -380,7 +380,7 @@ export default function HomePage() {
                 {/* Star icon */}
                 <img src="/star-icon.png" alt="" width={24} height={24} className="mb-3" />
                 <p className="text-[15px] text-black leading-[1.5] flex-1 mb-4">
-                  <span style={{ color: '#4F52E0' }}>{insight.highlight}</span>{insight.text}
+                  <span style={{ color: '#4F52E0' }} className="font-semibold">{insight.highlight}</span>{insight.text}
                 </p>
                 <button className="bg-iris-500 rounded-xl py-[11px] active:opacity-80">
                   <span className="text-white text-[15px] font-semibold">{insight.action}</span>

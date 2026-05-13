@@ -171,7 +171,7 @@ export default function HomePage() {
       </div>
 
       {/* ── Scrollable content ── */}
-      <div className="flex-1 overflow-y-auto pb-[95px]">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden pb-[95px]">
 
         {/* Gradient greeting + tabs (scrolls away) */}
         <div style={{ background: 'linear-gradient(139deg, #8486F3 0.32%, #6366F1 104.47%)' }}>
@@ -331,12 +331,12 @@ export default function HomePage() {
             {KPI_DATA.map(kpi => (
               <div
                 key={kpi.id}
-                className="flex-1 bg-white border border-[#ebeef7] rounded-2xl px-5 pt-5 pb-4"
+                className="flex-1 min-w-0 bg-white border border-[#ebeef7] rounded-2xl px-3 pt-4 pb-3"
               >
-                <p className="text-[16px] font-medium text-stone-600 mb-1">{kpi.label}</p>
-                <p className="text-[26px] font-bold text-black mb-4 leading-none">{kpi.value}</p>
-                <div className={`${kpi.badgeBg} px-3 py-[6px] rounded-full inline-flex`}>
-                  <span className={`text-[14px] ${kpi.badgeText} whitespace-nowrap`}>{kpi.badge}</span>
+                <p className="text-[13px] font-medium text-stone-600 mb-1 truncate">{kpi.label}</p>
+                <p className="text-[22px] font-bold text-black mb-3 leading-none">{kpi.value}</p>
+                <div className={`${kpi.badgeBg} px-2 py-[5px] rounded-full inline-flex max-w-full`}>
+                  <span className={`text-[12px] ${kpi.badgeText} truncate`}>{kpi.badge}</span>
                 </div>
               </div>
             ))}

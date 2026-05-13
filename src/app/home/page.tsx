@@ -125,7 +125,7 @@ const INFLUENCER_RANKS: InfluencerRank[] = [
     stage: { label: '리스트업', bg: 'bg-[#f5f5f3]', text: 'text-stone-600' } },
 ];
 
-const RANK_FILTERS = ['ROAS순', '브랜드별', '클릭순', '진행중', '단계순'];
+const RANK_FILTERS = ['ROAS순', '클릭순'];
 
 const CAMPAIGNS = [
   {

@@ -226,7 +226,7 @@ export default function HomePage() {
         {activeTab === '인플루언서' && (
           <>
             {/* 성과 순위 */}
-            <div className="bg-white px-5 pt-5 pb-2 mb-2">
+            <div className="bg-white px-5 pt-[40px] pb-[40px] mb-2">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-[22px] font-bold text-stone-900">성과 순위</h2>
                 <div className="flex gap-2 overflow-x-auto scrollbar-none">
@@ -306,7 +306,7 @@ export default function HomePage() {
         {/* Campaign summary - 현황 탭만 */}
         {activeTab === '현황' && (
         <>
-        <div className="bg-white px-5 py-[30px] mb-2">
+        <div className="bg-white px-5 py-[40px] mb-2">
           <div className="flex items-center justify-between mb-1.5">
             <span className="text-[22px] font-bold text-stone-900">루미에르 봄봄 프로모션</span>
             <span className="bg-iris-500 text-white text-[14px] font-bold px-3 py-[5px] rounded-full shrink-0 ml-2">D-8</span>
@@ -368,7 +368,7 @@ export default function HomePage() {
         )}
 
         {/* AI 인사이트 */}
-        <div className="bg-white pt-5 pb-5 mb-2">
+        <div className="bg-white pt-[40px] pb-[40px] mb-2">
           <h2 className="text-[22px] font-bold text-stone-900 px-5 mb-4">AI 인사이트</h2>
           <div className="flex gap-3 overflow-x-auto px-5 pb-1 scrollbar-none">
             {AI_INSIGHTS.map(insight => (
@@ -390,7 +390,7 @@ export default function HomePage() {
         </div>
 
         {/* 전체 캠페인 */}
-        <div className="bg-white pt-5 pb-5 mb-2">
+        <div className="bg-white pt-[40px] pb-[40px] mb-2">
           <div className="flex items-center justify-between px-5 mb-4">
             <h2 className="text-[22px] font-bold text-stone-900">전체 캠페인</h2>
             <button className="flex items-center gap-0.5 active:opacity-70">

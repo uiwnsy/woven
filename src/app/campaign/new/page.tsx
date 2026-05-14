@@ -446,100 +446,204 @@ const DEFAULT_RESTRICTIONS = [
   '의약품으로 오해할 수 있는 표현 금지',
 ];
 
+function AutoFillBadge() {
+  return (
+    <span className="text-[14px] font-semibold text-[#26B059] bg-[#F0FDF4] px-[8px] py-[6px] rounded-full shrink-0">
+      자동 채움
+    </span>
+  );
+}
+
+function HashtagSection({ title, tags, onAdd, onRemove, placeholder }: {
+  title: string;
+  tags: string[];
+  onAdd: (t: string) => void;
+  onRemove: (t: string) => void;
+  placeholder: string;
+}) {
+  const [value, setValue] = useState('');
+  const submit = () => {
+    const trimmed = value.trim().replace(/^#/, '');
+    if (trimmed) { onAdd(trimmed); setValue(''); }
+  };
+  return (
+    <div className="flex flex-col gap-[10px]">
+      <div className="flex flex-col gap-[12px]">
+        <span className="text-[18px] font-semibold text-black">{title}</span>
+        <div
+          className="flex items-center justify-between border border-[#E8E7E4] rounded-[10px] bg-white h-[56px]"
+          style={{ padding: '0 12px 0 20px' }}
+        >
+          <input
+            type="text"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && submit()}
+            placeholder={placeholder}
+            className="flex-1 text-[18px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
+          />
+          <button
+            onClick={submit}
+            className="w-[34px] h-[34px] flex items-center justify-center rounded-[8px] active:opacity-60 shrink-0"
+          >
+            <Plus size={18} className="text-[#B0ADA7]" />
+          </button>
+        </div>
+      </div>
+      {tags.length > 0 && (
+        <div className="flex flex-wrap gap-[6px]">
+          {tags.map(tag => (
+            <span key={tag} className="flex items-center gap-2 bg-[#F5F5F3] text-[14px] font-medium text-[#78756E] px-[14px] py-[8px] rounded-full">
+              {tag}
+              <button onClick={() => onRemove(tag)} className="active:opacity-60 flex items-center">
+                <X size={9} className="text-[#78756E]" />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Step3({ form, updateForm }: {
   form: FormData;
   updateForm: (k: keyof FormData, v: any) => void;
 }) {
-  const addRequired    = (t: string) => updateForm('requiredTags',     [...form.requiredTags, t]);
-  const removeRequired = (t: string) => updateForm('requiredTags',     form.requiredTags.filter(x => x !== t));
+  const addRequired       = (t: string) => updateForm('requiredTags',    [...form.requiredTags, t]);
+  const removeRequired    = (t: string) => updateForm('requiredTags',    form.requiredTags.filter(x => x !== t));
   const addRecommended    = (t: string) => updateForm('recommendedTags', [...form.recommendedTags, t]);
   const removeRecommended = (t: string) => updateForm('recommendedTags', form.recommendedTags.filter(x => x !== t));
 
   return (
-    <div className="px-5 pt-6">
-      <h1 className="text-[24px] font-bold text-stone-900 mb-4">AI 브리프 재료 입력</h1>
+    <div className="px-5 pt-6 flex flex-col gap-[34px]">
 
-      {/* Info banner */}
-      <div className="bg-[#eef0fd] rounded-xl px-4 py-3 mb-6 flex gap-2">
-        <span className="text-iris-500 text-[15px] shrink-0 mt-0.5">⚠</span>
-        <p className="text-[13px] text-stone-600 leading-relaxed">
-          입력하신 정보를 반영해 AI 브리프를 만들 수 있어요.<br />
-          아래 내용을 채울수록 메시지가 정교해집니다.
-        </p>
-      </div>
-
-      {/* 브랜드 소개 */}
-      <div className="mb-5">
-        <FormLabel autoFill>브랜드 소개</FormLabel>
-        <textarea
-          value={form.brandDesc}
-          onChange={e => updateForm('brandDesc', e.target.value)}
-          rows={4}
-          className="w-full border border-stone-200 rounded-xl px-4 py-3 text-[15px] text-stone-700 outline-none resize-none focus:border-iris-400 bg-white"
-        />
-        <p className="text-[12px] text-stone-400 mt-1">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
-      </div>
-
-      {/* 제품 특징 */}
-      <div className="mb-5">
-        <FormLabel required>제품 특징</FormLabel>
-        <textarea
-          value={form.productFeatures}
-          onChange={e => updateForm('productFeatures', e.target.value)}
-          placeholder={'SPF50+, PA++++ 자외선 차단 · 피부 장벽 강화\n세라마이드 함유 · 백탁 없는 수분 텍스처 · 민감성 피부 테스트 완료'}
-          rows={3}
-          className="w-full border border-stone-200 rounded-xl px-4 py-3 text-[15px] text-stone-900 outline-none resize-none focus:border-iris-400 placeholder:text-stone-400 bg-white"
-        />
-      </div>
-
-      {/* 핵심 메시지 */}
-      <div className="mb-5">
-        <FormLabel required>핵심 메시지</FormLabel>
-        <textarea
-          value={form.coreMessage}
-          onChange={e => updateForm('coreMessage', e.target.value)}
-          placeholder="자외선 차단은 기본, 피부 장벽 케어까지. 매일 바르고 싶은 선케어를 강조"
-          rows={3}
-          className="w-full border border-stone-200 rounded-xl px-4 py-3 text-[15px] text-stone-900 outline-none resize-none focus:border-iris-400 placeholder:text-stone-400 bg-white"
-        />
-      </div>
-
-      {/* 금지 사항 */}
-      <div className="mb-5">
-        <FormLabel autoFill>금지 사항</FormLabel>
-        <div className="border border-stone-200 rounded-xl px-4 py-3 bg-white">
-          {DEFAULT_RESTRICTIONS.map(r => (
-            <p key={r} className="text-[14px] text-stone-700 py-0.5 leading-relaxed">• {r}</p>
-          ))}
+      {/* Header + info */}
+      <div className="flex flex-col gap-[18px]">
+        <h1 className="text-[22px] font-bold text-black">AI 브리프 재료 입력</h1>
+        <div className="flex gap-2 bg-[#EEF7FF] rounded-[12px] p-5">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[2px]">
+            <circle cx="9" cy="9" r="8" stroke="#2D92FE" strokeWidth="1.5"/>
+            <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
+            <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
+          </svg>
+          <p className="text-[14px] font-medium text-[#2D92FE] leading-[135%]">
+            입력하신 정보를 반영해 AI 브리프를 만들 수 있어요.<br />
+            아래 내용을 채울수록 메시지가 정교해집니다.
+          </p>
         </div>
       </div>
 
-      {/* 콘텐츠 가이드라인 */}
-      <div className="mb-5">
-        <FormLabel optional>콘텐츠 가이드라인</FormLabel>
-        <div className="flex items-center border border-stone-200 rounded-xl px-4 h-[52px] gap-2 bg-white">
-          <input
-            type="text"
-            value={form.contentGuide}
-            onChange={e => updateForm('contentGuide', e.target.value)}
-            placeholder="docs.google.com/fxB2eY1z..."
-            className="flex-1 text-[15px] outline-none text-stone-900 placeholder:text-stone-400"
+      {/* Fields */}
+      <div className="flex flex-col gap-[30px]">
+
+        {/* 브랜드 소개 */}
+        <div className="flex flex-col gap-[12px]">
+          <div className="flex items-center justify-between">
+            <span className="text-[18px] font-semibold text-black">브랜드 소개</span>
+            <AutoFillBadge />
+          </div>
+          <div className="flex flex-col gap-[6px]">
+            <div
+              className="rounded-[10px] p-5 bg-[#F8FAFF]"
+              style={{ border: '1px solid rgba(221,231,255,0.4)' }}
+            >
+              <p className="text-[18px] font-medium text-[#8995A2] leading-[150%]">{form.brandDesc}</p>
+            </div>
+            <p className="text-[14px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
+          </div>
+        </div>
+
+        {/* 제품 특징 */}
+        <div className="flex flex-col gap-[12px]">
+          <div className="flex items-center gap-1">
+            <span className="text-[18px] font-semibold text-black">제품 특징</span>
+            <span className="text-[#6366F1]">*</span>
+          </div>
+          <textarea
+            value={form.productFeatures}
+            onChange={e => updateForm('productFeatures', e.target.value)}
+            placeholder={'SPF50+, PA++++ 자외선 차단 · 피부 장벽 강화\n세라마이드 함유 · 백탁 없는 수분 텍스처 · 민감성 피부 테스트 완료'}
+            rows={3}
+            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
           />
-          <span className="text-stone-400 text-[18px]">🔗</span>
         </div>
-        <p className="text-[12px] text-stone-400 mt-1">* 링크 입력 시 AI 브리프에 자동 반영돼요.</p>
-      </div>
 
-      {/* 필수 해시태그 */}
-      <div className="mb-5">
-        <FormLabel>필수 해시태그</FormLabel>
-        <TagInput tags={form.requiredTags} onAdd={addRequired} onRemove={removeRequired} placeholder="선케어" />
-      </div>
+        {/* 핵심 메시지 */}
+        <div className="flex flex-col gap-[12px]">
+          <div className="flex items-center gap-1">
+            <span className="text-[18px] font-semibold text-black">핵심 메시지</span>
+            <span className="text-[#6366F1]">*</span>
+          </div>
+          <textarea
+            value={form.coreMessage}
+            onChange={e => updateForm('coreMessage', e.target.value)}
+            placeholder="자외선 차단은 기본, 피부 장벽 케어까지. 매일 바르고 싶은 선케어를 강조"
+            rows={3}
+            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
+          />
+        </div>
 
-      {/* 추천 해시태그 */}
-      <div className="mb-5">
-        <FormLabel>추천 해시태그</FormLabel>
-        <TagInput tags={form.recommendedTags} onAdd={addRecommended} onRemove={removeRecommended} placeholder="#해시태그 입력" />
+        {/* 금지 사항 */}
+        <div className="flex flex-col gap-[12px]">
+          <div className="flex items-center justify-between">
+            <span className="text-[18px] font-semibold text-black">금지 사항</span>
+            <AutoFillBadge />
+          </div>
+          <div
+            className="rounded-[10px] p-5 bg-[#F8FAFF]"
+            style={{ border: '1px solid rgba(221,231,255,0.4)' }}
+          >
+            {DEFAULT_RESTRICTIONS.map(r => (
+              <p key={r} className="text-[18px] font-medium text-[#8995A2] leading-[150%]">- {r}</p>
+            ))}
+          </div>
+        </div>
+
+        {/* 콘텐츠 가이드라인 */}
+        <div className="flex flex-col gap-[12px]">
+          <div className="flex items-center gap-[6px]">
+            <span className="text-[18px] font-semibold text-black">콘텐츠 가이드라인</span>
+            <span className="text-[15px] font-normal text-[#91929F]">(선택)</span>
+          </div>
+          <div className="flex flex-col gap-[6px]">
+            <div
+              className="flex items-center justify-between border border-[#E8E7E4] rounded-[10px] bg-white"
+              style={{ padding: '15px 12px 15px 20px' }}
+            >
+              <input
+                type="text"
+                value={form.contentGuide}
+                onChange={e => updateForm('contentGuide', e.target.value)}
+                placeholder="docs.google.com/fxB2eY1z..."
+                className="flex-1 text-[18px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
+              />
+              <div className="w-[34px] h-[34px] flex items-center justify-center rounded-[8px] shrink-0 text-[20px]">
+                🔗
+              </div>
+            </div>
+            <p className="text-[14px] text-[#B0ADA7]">* 링크 입력 시 AI 브리프에 자동 반영돼요.</p>
+          </div>
+        </div>
+
+        {/* 필수 해시태그 */}
+        <HashtagSection
+          title="필수 해시태그"
+          tags={form.requiredTags}
+          onAdd={addRequired}
+          onRemove={removeRequired}
+          placeholder="선케어"
+        />
+
+        {/* 추천 해시태그 */}
+        <HashtagSection
+          title="추천 해시태그"
+          tags={form.recommendedTags}
+          onAdd={addRecommended}
+          onRemove={removeRecommended}
+          placeholder="#해시태그 입력"
+        />
+
       </div>
     </div>
   );

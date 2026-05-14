@@ -518,7 +518,7 @@ function Step3({ form, updateForm }: {
   const removeRecommended = (t: string) => updateForm('recommendedTags', form.recommendedTags.filter(x => x !== t));
 
   return (
-    <div className="px-5 pt-6 flex flex-col gap-[34px]">
+    <div className="px-5 pt-6 pb-10 flex flex-col gap-[34px]">
 
       {/* Header + info */}
       <div className="flex flex-col gap-[18px]">
@@ -565,10 +565,11 @@ function Step3({ form, updateForm }: {
           <textarea
             value={form.productFeatures}
             onChange={e => updateForm('productFeatures', e.target.value)}
-            onInput={e => { const el = e.currentTarget; el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }}
+            onInput={e => { const el = e.currentTarget; el.style.height = '0px'; el.style.height = el.scrollHeight + 'px'; }}
             placeholder={'예) 주요 성분과 효능, 피부 타입, 사용 후 느낌 등을 자유롭게 적어주세요\n예) SPF50+, 세라마이드 함유, 백탁 없는 수분 텍스처, 민감성 피부 테스트 완료'}
-            rows={1}
-            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white overflow-hidden"
+            rows={4}
+            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
+            style={{ overflowY: 'hidden' }}
           />
         </div>
 
@@ -581,10 +582,11 @@ function Step3({ form, updateForm }: {
           <textarea
             value={form.coreMessage}
             onChange={e => updateForm('coreMessage', e.target.value)}
-            onInput={e => { const el = e.currentTarget; el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }}
+            onInput={e => { const el = e.currentTarget; el.style.height = '0px'; el.style.height = el.scrollHeight + 'px'; }}
             placeholder="예) 인플루언서가 콘텐츠에서 전달해줬으면 하는 핵심 메시지를 적어주세요"
-            rows={1}
-            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white overflow-hidden"
+            rows={2}
+            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
+            style={{ overflowY: 'hidden' }}
           />
         </div>
 

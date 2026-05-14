@@ -262,7 +262,7 @@ export default function HomePage() {
                         <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="ig" className="w-3.5 h-3.5" />
                       </div>
                     </div>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-0">
                       <div className="flex items-center gap-1.5">
                         <span className="text-[16px] font-semibold text-black">{inf.name}</span>
                         <span className="text-[13px] text-stone-500">{inf.handle}</span>

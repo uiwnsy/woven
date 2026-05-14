@@ -390,8 +390,8 @@ function Step2({ form, updateForm, toggleKPI }: {
               <button
                 key={goal.id}
                 onClick={() => updateForm('goal', goal.id)}
-                className={`w-full flex items-center gap-[14px] p-5 rounded-[10px] text-left transition-all active:opacity-80
-                  ${isActive ? 'border-2 border-[#6366F1] bg-[#EEEEFF]' : 'border border-[#E8E7E4] bg-white'}`}
+                className={`w-full flex items-center gap-[14px] p-5 rounded-[10px] border border-[#E8E7E4] text-left transition-all active:opacity-80
+                  ${isActive ? 'bg-[#EEEEFF]' : 'bg-white'}`}
               >
                 <img src={goal.icon} alt={goal.label} className="w-[52px] h-[52px] shrink-0" />
                 <div className="flex flex-col gap-[6px]">

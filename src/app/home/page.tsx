@@ -426,10 +426,11 @@ export default function HomePage() {
                     </div>
                   </div>
                 )}
-                {/* Completed: ROAS + 클릭수 */}
+                {/* Completed: titlebox (border-bottom) + info */}
                 {campaign.type === 'completed' && (
                   <>
-                    <div className="flex gap-5 pb-[14px]">
+                    {/* analysis inside titlebox with bottom border */}
+                    <div className="flex gap-5 pb-[14px] border-b border-[#E8E7E4]">
                       <div className="flex flex-col gap-[3px] py-[5px]">
                         <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>ROAS</span>
                         <span className="text-[20px] font-bold leading-[22px]" style={{ color: '#166534' }}>{campaign.roas}</span>
@@ -439,6 +440,7 @@ export default function HomePage() {
                         <span className="text-[20px] font-bold leading-[22px]" style={{ color: '#166534' }}>{campaign.clicks}</span>
                       </div>
                     </div>
+                    {/* info below titlebox border */}
                     <div className="flex items-center justify-between">
                       <span className="text-[14px] font-bold" style={{ color: '#78756E' }}>{campaign.influencerCount}</span>
                       <span className="text-[14px] font-bold" style={{ color: '#5C5A54' }}>{campaign.completedMonth}</span>

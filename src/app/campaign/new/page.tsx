@@ -192,7 +192,7 @@ function DateBox({ value, onChange, placeholder }: {
       }}
     >
       <Calendar size={20} className="text-stone-400 shrink-0" />
-      <span className={`text-[18px] font-medium select-none ${formatted ? 'text-[#1C1A17]' : 'text-[#C7C4BE]'}`}>
+      <span className={`text-[16px] font-medium select-none ${formatted ? 'text-[#1C1A17]' : 'text-[#C7C4BE]'}`}>
         {formatted || placeholder}
       </span>
       <input
@@ -234,7 +234,7 @@ function Step1({ form, updateForm, togglePlatform }: {
             value={form.campaignName}
             onChange={e => updateForm('campaignName', e.target.value)}
             placeholder="캠페인명을 입력해주세요"
-            className="w-full h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 text-[18px] font-medium text-[#1C1A17] outline-none focus:border-iris-400 placeholder:text-[#C7C4BE] bg-white"
+            className="w-full h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 text-[16px] font-medium text-[#1C1A17] outline-none focus:border-iris-400 placeholder:text-[#C7C4BE] bg-white"
           />
         </div>
 
@@ -249,7 +249,7 @@ function Step1({ form, updateForm, togglePlatform }: {
             value={form.productName}
             onChange={e => updateForm('productName', e.target.value)}
             placeholder="제품명을 입력해주세요"
-            className="w-full h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 text-[18px] font-medium text-[#1C1A17] outline-none focus:border-iris-400 placeholder:text-[#C7C4BE] bg-white"
+            className="w-full h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 text-[16px] font-medium text-[#1C1A17] outline-none focus:border-iris-400 placeholder:text-[#C7C4BE] bg-white"
           />
         </div>
 
@@ -261,7 +261,7 @@ function Step1({ form, updateForm, togglePlatform }: {
           </div>
           <div className="flex items-center gap-2">
             <DateBox value={form.startDate} onChange={v => updateForm('startDate', v)} placeholder="시작일" />
-            <span className="text-[#C7C4BE] font-medium text-[18px]">-</span>
+            <span className="text-[#C7C4BE] font-medium text-[16px]">-</span>
             <DateBox value={form.endDate} onChange={v => updateForm('endDate', v)} placeholder="종료일" />
           </div>
         </div>
@@ -300,7 +300,7 @@ function Step1({ form, updateForm, togglePlatform }: {
               value={form.budget}
               onChange={e => updateForm('budget', e.target.value)}
               placeholder="예산을 입력해주세요"
-              className="flex-1 text-[18px] font-medium text-[#1C1A17] outline-none placeholder:text-[#C7C4BE]"
+              className="flex-1 text-[16px] font-medium text-[#1C1A17] outline-none placeholder:text-[#C7C4BE]"
             />
             <span className="text-[#78756E] text-[16px] font-semibold shrink-0">원</span>
           </div>
@@ -474,14 +474,14 @@ function HashtagSection({ title, tags, onAdd, onRemove }: {
           style={{ padding: '0 12px 0 20px' }}
         >
           <div className="flex items-center flex-1 gap-[2px]">
-            <span className="text-[18px] font-medium text-[#1C1A17]">#</span>
+            <span className="text-[16px] font-medium text-[#1C1A17]">#</span>
             <input
               type="text"
               value={value}
               onChange={e => setValue(e.target.value.replace(/^#/, ''))}
               onKeyDown={e => e.key === 'Enter' && submit()}
               placeholder="키워드를 입력하세요"
-              className="flex-1 text-[18px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
+              className="flex-1 text-[16px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
             />
           </div>
           <button
@@ -568,7 +568,7 @@ function Step3({ form, updateForm }: {
             onInput={e => { const el = e.currentTarget; el.style.height = '0px'; el.style.height = el.scrollHeight + 'px'; }}
             placeholder={'예) 주요 성분과 효능, 피부 타입, 사용 후 느낌 등을 자유롭게 적어주세요\n예) SPF50+, 세라마이드 함유, 백탁 없는 수분 텍스처, 민감성 피부 테스트 완료'}
             rows={4}
-            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[14px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
+            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
             style={{ overflowY: 'hidden' }}
           />
         </div>
@@ -583,9 +583,9 @@ function Step3({ form, updateForm }: {
             value={form.coreMessage}
             onChange={e => updateForm('coreMessage', e.target.value)}
             onInput={e => { const el = e.currentTarget; el.style.height = '0px'; el.style.height = el.scrollHeight + 'px'; }}
-            placeholder="예) 인플루언서가 콘텐츠에서 전달해줬으면 하는 핵심 메시지를 적어주세요"
+            placeholder="인플루언서가 콘텐츠에서 전달해줬으면 하는 핵심 메시지를 적어주세요"
             rows={2}
-            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[14px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
+            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
             style={{ overflowY: 'hidden' }}
           />
         </div>
@@ -625,7 +625,7 @@ function Step3({ form, updateForm }: {
                 value={form.contentGuide}
                 onChange={e => updateForm('contentGuide', e.target.value)}
                 placeholder="구글 문서 등 가이드라인 링크를 입력해주세요"
-                className="flex-1 text-[18px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
+                className="flex-1 text-[16px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
               />
             </div>
             <p className="text-[14px] text-[#B0ADA7]">* 링크 입력 시 AI 브리프에 자동 반영돼요.</p>

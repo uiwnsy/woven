@@ -156,92 +156,33 @@ export default function HomePage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'현황' | '인플루언서'>('현황');
   const [rankFilter, setRankFilter] = useState('ROAS순');
+  const [showBanner, setShowBanner] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const snapRef = useRef<HTMLDivElement>(null);
-  const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = scrollRef.current;
-    const snapTarget = snapRef.current;
-    const bannerTarget = bannerRef.current;
-    if (!container || !snapTarget || !bannerTarget) return;
+    if (!container) return;
 
-    let isLocked = false;
-    let hasUnlocked = false;
-    let gestureUnlocked = false; // 같은 제스처 내 재잠금 방지
     let touchStartY = 0;
-    let snapPos = 0;
 
     const onTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY;
-      gestureUnlocked = false;
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      const dy = touchStartY - e.touches[0].clientY; // 양수 = 아래 스와이프
-
-      // 잠금 시도: 스냅 포인트 도달 여부 확인
-      if (!isLocked && !hasUnlocked && !gestureUnlocked) {
-        const offset = snapTarget.getBoundingClientRect().top - container.getBoundingClientRect().top;
-        if (offset <= 2) {
-          snapPos = container.scrollTop;
-          isLocked = true;
-        }
-      }
-
-      if (!isLocked) return;
-
-      if (dy < -10) {
-        // 위로 스와이프: 잠금 해제 후 자연스럽게 위로 스크롤
-        isLocked = false;
-        gestureUnlocked = true;
-        return;
-      }
-
-      // 아래 방향: 스크롤 완전 차단 (touchend에서 의도 판단)
-      e.preventDefault();
-      container.scrollTop = snapPos;
     };
 
     const onTouchEnd = (e: TouchEvent) => {
-      if (!isLocked) return;
+      const atBottom = container.scrollTop >= container.scrollHeight - container.clientHeight - 5;
       const dy = touchStartY - e.changedTouches[0].clientY;
-      if (dy > 50) {
-        // 손 뗄 때 50px 이상 아래로 움직였으면 → 배너 공개
-        isLocked = false;
-        hasUnlocked = true;
-        const bannerScrollTop = snapPos +
-          bannerTarget.getBoundingClientRect().top -
-          container.getBoundingClientRect().top;
-        container.scrollTo({ top: bannerScrollTop, behavior: 'smooth' });
-      }
-      // 50px 미만이면 계속 잠금 유지
-    };
-
-    const onScroll = () => {
-      // 관성 스크롤 대응: 잠긴 상태에서 snapPos 이상 넘어가면 강제 복귀
-      if (isLocked && container.scrollTop > snapPos + 5) {
-        container.scrollTop = snapPos;
-      }
-      // 위로 충분히 올라가면 초기화
-      if (container.scrollTop < snapPos - 100) {
-        isLocked = false;
-        hasUnlocked = false;
-      }
+      if (atBottom && dy > 50) setShowBanner(true);
+      if (showBanner && dy < -50) setShowBanner(false);
     };
 
     container.addEventListener('touchstart', onTouchStart, { passive: true });
-    container.addEventListener('touchmove', onTouchMove, { passive: false });
     container.addEventListener('touchend', onTouchEnd, { passive: true });
-    container.addEventListener('scroll', onScroll, { passive: true });
-
     return () => {
       container.removeEventListener('touchstart', onTouchStart);
-      container.removeEventListener('touchmove', onTouchMove);
       container.removeEventListener('touchend', onTouchEnd);
-      container.removeEventListener('scroll', onScroll);
     };
-  }, []);
+  }, [showBanner]);
 
   return (
     <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
@@ -479,7 +420,7 @@ export default function HomePage() {
         </div>
 
         {/* 전체 캠페인 */}
-        <div ref={snapRef} className="bg-white pt-[40px] pb-[40px] mb-[10px]">
+        <div className="bg-white pt-[40px] pb-[40px] mb-[10px]">
           <div className="flex items-center justify-between px-5 mb-4">
             <h2 className="text-[22px] font-bold text-stone-900">전체 캠페인</h2>
             <button className="border border-[#D4D2CE] rounded-[30px] px-[10px] pt-[3px] pb-1 active:opacity-70">
@@ -547,8 +488,18 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* FAQ / Help */}
-        <div ref={bannerRef} className="mx-5 my-5 rounded-[14px] overflow-hidden px-[22px] py-[28px] flex items-center justify-between" style={{ backgroundColor: '#EDF1FF' }}>
+        </div>
+      </div>
+
+      {/* FAQ / Help - 스크롤 컨테이너 밖, 아래 스와이프로 슬라이드업 */}
+      <div
+        className="absolute left-0 right-0 transition-transform duration-300 ease-out z-10"
+        style={{
+          bottom: '95px',
+          transform: showBanner ? 'translateY(0)' : 'translateY(100%)',
+        }}
+      >
+        <div className="mx-5 rounded-[14px] overflow-hidden px-[22px] py-[28px] flex items-center justify-between" style={{ backgroundColor: '#EDF1FF' }}>
           <div className="flex flex-col gap-1">
             <p className="text-[20px] font-semibold leading-none" style={{ color: '#1E2075' }}>막히는 게 있나요?</p>
             <p className="text-[14px] font-semibold leading-[1.4]" style={{ color: 'rgba(30, 32, 117, 0.5)' }}>
@@ -556,8 +507,6 @@ export default function HomePage() {
             </p>
           </div>
           <img src="/banner-img.png" alt="" width={78} height={78} className="shrink-0 ml-3" />
-        </div>
-
         </div>
       </div>
 

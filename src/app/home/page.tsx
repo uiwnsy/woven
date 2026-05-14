@@ -330,7 +330,7 @@ export default function HomePage() {
           </div>
 
           {/* KPI blocks */}
-          <div className="flex gap-[11px] pb-[50px] border-b border-[#EBEEF7]">
+          <div className="flex gap-[11px]">
             {KPI_DATA.map(kpi => (
               <div
                 key={kpi.id}

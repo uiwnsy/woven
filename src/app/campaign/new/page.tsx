@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, Calendar, Plus, X, Check } from 'lucide-react';
 
@@ -768,7 +769,11 @@ function Step4({ form, updateForm }: {
   const [isEditing, setIsEditing] = useState(false);
   const [briefVersion, setBriefVersion] = useState(0);
   const [editedBrief, setEditedBrief] = useState<string | null>(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => { setMounted(true); }, []);
 
   const variants = BRIEF_VARIANTS[form.briefTone] ?? BRIEF_VARIANTS.friendly;
   const generatedBrief = variants[briefVersion % variants.length];
@@ -796,12 +801,27 @@ function Step4({ form, updateForm }: {
     setEditedBrief(null);
   };
 
-  // Body scroll lock while overlay is open
+  // Body scroll lock + keyboard height via visualViewport
   useEffect(() => {
     if (!isEditing) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
+
+    const vv = window.visualViewport;
+    const onViewport = () => {
+      if (!vv) return;
+      setKeyboardHeight(Math.max(0, window.innerHeight - vv.height));
+    };
+    if (vv) {
+      vv.addEventListener('resize', onViewport);
+      onViewport();
+    }
+
+    return () => {
+      document.body.style.overflow = prev;
+      if (vv) vv.removeEventListener('resize', onViewport);
+      setKeyboardHeight(0);
+    };
   }, [isEditing]);
 
   // Set textarea height to content height on open
@@ -814,15 +834,15 @@ function Step4({ form, updateForm }: {
 
   return (
     <>
-      {/* Edit overlay — three separate fixed layers so header can NEVER scroll */}
-      {isEditing && (
+      {/* Portal renders outside overflow:hidden container — fixed elements behave correctly on iOS */}
+      {mounted && isEditing && createPortal(
         <>
-          {/* Layer 1: white backdrop — blocks background interaction */}
+          {/* Layer 1: white backdrop */}
           <div
             className="fixed inset-0 z-50 bg-white"
             onTouchMove={e => { e.stopPropagation(); e.preventDefault(); }}
           />
-          {/* Layer 2: header — fixed to viewport, immune to any scroll */}
+          {/* Layer 2: header — truly fixed to viewport top, never scrolls */}
           <div className="fixed inset-x-0 top-0 z-[60] h-[56px] flex items-center justify-between px-5 bg-white border-b border-[#E8E7E4]">
             <span className="text-[18px] font-semibold text-black">브리프 수정</span>
             <button
@@ -832,10 +852,15 @@ function Step4({ form, updateForm }: {
               완료
             </button>
           </div>
-          {/* Layer 3: scroll area — content height + 50px, no extra empty space */}
+          {/* Layer 3: scroll area — bottom tracks keyboard so content always visible */}
           <div
-            className="fixed inset-x-0 bottom-0 z-[60] overflow-y-auto bg-white"
-            style={{ top: '56px', WebkitOverflowScrolling: 'touch' }}
+            className="fixed inset-x-0 z-[60] overflow-y-auto bg-white"
+            style={{
+              top: '56px',
+              bottom: `${keyboardHeight}px`,
+              WebkitOverflowScrolling: 'touch',
+              overscrollBehavior: 'contain',
+            }}
           >
             <div className="p-5 pb-[50px]">
               <textarea
@@ -852,7 +877,8 @@ function Step4({ form, updateForm }: {
               />
             </div>
           </div>
-        </>
+        </>,
+        document.body
       )}
 
       <div className="px-5 pt-6 flex flex-col gap-[30px] pb-10">

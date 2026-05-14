@@ -169,7 +169,7 @@ export default function CampaignPage() {
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`shrink-0 h-8 px-4 rounded-full text-[14px] transition-all active:opacity-70
+                className={`shrink-0 h-8 px-3 rounded-full text-[14px] transition-all active:opacity-70
                   ${isActive
                     ? 'bg-iris-500 text-white font-medium'
                     : 'border border-[#d4d2ce] text-[#899098] font-semibold bg-white'}`}

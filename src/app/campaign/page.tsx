@@ -180,22 +180,23 @@ export default function CampaignPage() {
           })}
         </div>
 
-        {/* Campaign cards */}
-        <div className="flex flex-col gap-[10px]">
-          {filtered.map(campaign => (
-            <CampaignCard key={campaign.id} campaign={campaign} />
-          ))}
-        </div>
+        {/* Frame 294: cards + button */}
+        <div className="flex flex-col gap-[20px]">
+          <div className="flex flex-col gap-[10px]">
+            {filtered.map(campaign => (
+              <CampaignCard key={campaign.id} campaign={campaign} />
+            ))}
+          </div>
 
-        {/* Create button */}
-        <button
-          onClick={() => router.push('/campaign/new')}
-          className="w-full h-[68px] flex items-center justify-center gap-[4px] rounded-[14px] mt-[20px] active:opacity-70"
-          style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
-        >
-          <PlusCircle size={16} className="text-iris-500" />
-          <span className="text-[16px] font-medium text-iris-500">캠페인 만들기</span>
-        </button>
+          <button
+            onClick={() => router.push('/campaign/new')}
+            className="w-full h-[68px] flex items-center justify-center gap-[4px] rounded-[14px] active:opacity-70"
+            style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
+          >
+            <PlusCircle size={16} className="text-iris-500" />
+            <span className="text-[16px] font-medium text-iris-500">캠페인 만들기</span>
+          </button>
+        </div>
 
       </div>
 

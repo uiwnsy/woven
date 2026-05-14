@@ -159,7 +159,7 @@ export default function CampaignPage() {
       </div>
 
       {/* ── Scrollable body ── */}
-      <div className="flex-1 bg-[#fafbfe] overflow-y-auto pb-[95px]">
+      <div className="flex-1 bg-[#fafbfe] overflow-y-auto pb-[125px]">
 
         {/* Filter chips */}
         <div className="flex gap-2 px-5 py-4 overflow-x-auto scrollbar-none">

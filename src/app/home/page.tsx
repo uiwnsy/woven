@@ -126,27 +126,30 @@ const INFLUENCER_RANKS: InfluencerRank[] = [
 
 const RANK_FILTERS = ['ROAS순', '클릭순'];
 
-const CAMPAIGNS = [
-  {
-    id: 1,
-    status: '진행중',
-    statusBg: 'bg-[#fef6f1]',
-    statusText: 'text-[#d96430]',
-    name: '루미에르\n봄봄 프로모션',
-    progress: '업로드 1/11',
-    dday: 'D-8',
-    progressPct: 1 / 11,
-  },
-  {
-    id: 2,
-    status: '기획',
-    statusBg: 'bg-[#f5f5f3]',
-    statusText: 'text-stone-600',
-    name: '수분크림 마이크로\n인플루언서',
-    progress: '리스트업 2/20',
-    dday: 'D-34',
-    progressPct: 2 / 20,
-  },
+type ActiveCampaign = {
+  id: number; type: 'active';
+  status: string; statusBg: string; statusText: string;
+  name: string; progress: string; dday: string; progressPct: number;
+};
+type CompletedCampaign = {
+  id: number; type: 'completed';
+  status: string; statusBg: string; statusText: string;
+  name: string; roas: string; clicks: string;
+  influencerCount: string; completedMonth: string;
+};
+type Campaign = ActiveCampaign | CompletedCampaign;
+
+const CAMPAIGNS: Campaign[] = [
+  { id: 1, type: 'active', status: '진행중', statusBg: 'bg-[#fef6f1]', statusText: 'text-[#d96430]',
+    name: '루미에르\n봄봄 프로모션', progress: '업로드 1/11', dday: 'D-8', progressPct: 1 / 11 },
+  { id: 2, type: 'active', status: '기획', statusBg: 'bg-[#f5f5f3]', statusText: 'text-[#5C5A54]',
+    name: '수분크림 마이크로\n인플루언서', progress: '리스트업 2/20', dday: 'D-34', progressPct: 2 / 20 },
+  { id: 3, type: 'completed', status: '완료', statusBg: 'bg-[#f0fdf4]', statusText: 'text-[#166534]',
+    name: '루미에르\n스킨케어 신제품 런칭', roas: '4.1x', clicks: '29.2x',
+    influencerCount: '인플루언서 6명', completedMonth: '3월 완료' },
+  { id: 4, type: 'completed', status: '완료', statusBg: 'bg-[#f0fdf4]', statusText: 'text-[#166534]',
+    name: '단독 루미에르\n콜라보', roas: '3.2x', clicks: '18.2x',
+    influencerCount: '인플루언서 1명', completedMonth: '1월 완료' },
 ];
 
 export default function HomePage() {
@@ -397,11 +400,11 @@ export default function HomePage() {
               <span className="text-[14px] font-semibold" style={{ color: '#78756E' }}>더보기</span>
             </button>
           </div>
-          <div className="flex gap-3 overflow-x-auto px-5 pb-1 scrollbar-none">
+          <div className="flex gap-[17px] overflow-x-auto px-5 pb-1 scrollbar-none">
             {CAMPAIGNS.map(campaign => (
               <div
                 key={campaign.id}
-                className="w-[200px] shrink-0 bg-white border border-[#E8E7E4] rounded-[14px] p-5 flex flex-col gap-[75px]"
+                className={`w-[200px] shrink-0 bg-white border border-[#E8E7E4] rounded-[14px] p-5 flex flex-col ${campaign.type === 'active' ? 'gap-[75px]' : 'gap-[14px]'}`}
               >
                 {/* Title box */}
                 <div className="flex flex-col gap-[14px]">
@@ -410,21 +413,49 @@ export default function HomePage() {
                   </span>
                   <p className="text-[18px] font-bold text-black leading-[1.35] whitespace-pre-line">{campaign.name}</p>
                 </div>
-                {/* Progress section */}
-                <div className="flex flex-col gap-[13px]">
-                  <div className="relative w-full h-[3px] bg-[#D9D9D9] rounded-[20px]">
-                    <div
-                      className="absolute top-0 left-0 h-full bg-iris-500 rounded-[20px]"
-                      style={{ width: `${campaign.progressPct * 100}%` }}
-                    />
+                {/* Active: progress bar */}
+                {campaign.type === 'active' && (
+                  <div className="flex flex-col gap-[13px]">
+                    <div className="relative w-full h-[3px] bg-[#D9D9D9] rounded-[20px]">
+                      <div className="absolute top-0 left-0 h-full bg-iris-500 rounded-[20px]"
+                        style={{ width: `${campaign.progressPct * 100}%` }} />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[14px] font-bold" style={{ color: '#78756E' }}>{campaign.progress}</span>
+                      <span className="text-[14px] font-bold text-[#D96430]">{campaign.dday}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[14px] font-bold" style={{ color: '#78756E' }}>{campaign.progress}</span>
-                    <span className="text-[14px] font-bold text-[#D96430]">{campaign.dday}</span>
-                  </div>
-                </div>
+                )}
+                {/* Completed: ROAS + 클릭수 */}
+                {campaign.type === 'completed' && (
+                  <>
+                    <div className="flex gap-5 pb-[14px]">
+                      <div className="flex flex-col gap-[3px] py-[5px]">
+                        <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>ROAS</span>
+                        <span className="text-[20px] font-bold leading-[22px]" style={{ color: '#166534' }}>{campaign.roas}</span>
+                      </div>
+                      <div className="flex flex-col gap-[3px] py-[5px]">
+                        <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>클릭수</span>
+                        <span className="text-[20px] font-bold leading-[22px]" style={{ color: '#166534' }}>{campaign.clicks}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[14px] font-bold" style={{ color: '#78756E' }}>{campaign.influencerCount}</span>
+                      <span className="text-[14px] font-bold" style={{ color: '#5C5A54' }}>{campaign.completedMonth}</span>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
+            {/* Card 5: 새 캠페인 추가 */}
+            <div className="w-[200px] h-[239px] shrink-0 bg-[#F1F2FD] rounded-[14px] p-5 flex flex-col items-center justify-center gap-[14px]">
+              <div className="w-8 h-8 rounded-full border border-[#8486F3] flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 3v10M3 8h10" stroke="#8486F3" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <span className="text-[16px] font-bold" style={{ color: '#8486F3' }}>새 캠페인 추가</span>
+            </div>
           </div>
         </div>
 

@@ -158,56 +158,72 @@ export default function HomePage() {
   const [rankFilter, setRankFilter] = useState('ROAS순');
   const scrollRef = useRef<HTMLDivElement>(null);
   const snapRef = useRef<HTMLDivElement>(null);
+  const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = scrollRef.current;
     const snapTarget = snapRef.current;
-    if (!container || !snapTarget) return;
+    const bannerTarget = bannerRef.current;
+    if (!container || !snapTarget || !bannerTarget) return;
 
     let isLocked = false;
     let hasUnlocked = false;
     let gestureStartY = 0;
-    let currentTouchY = 0;
 
-    const getSnapPos = () => snapTarget.offsetTop;
+    // getBoundingClientRect 기반으로 스크롤 컨테이너 기준 절대 위치 계산
+    const getAbsScrollTop = (el: HTMLElement) => {
+      const cRect = container.getBoundingClientRect();
+      const eRect = el.getBoundingClientRect();
+      return container.scrollTop + (eRect.top - cRect.top);
+    };
 
     const onTouchStart = (e: TouchEvent) => {
       gestureStartY = e.touches[0].clientY;
-      currentTouchY = gestureStartY;
     };
 
     const onTouchMove = (e: TouchEvent) => {
-      currentTouchY = e.touches[0].clientY;
       if (!isLocked) return;
-      const dy = gestureStartY - currentTouchY;
+      const dy = gestureStartY - e.touches[0].clientY;
+
       if (dy < -20) {
-        // 위로 스크롤 - 잠금 해제 후 위로 올라가게
+        // 위로 스크롤: 해제
         isLocked = false;
         hasUnlocked = false;
         return;
       }
       if (dy > 50) {
-        // 아래로 충분히 스와이프 - 잠금 해제 후 배너로
+        // 아래로 충분히 스와이프: 배너로 직접 이동
         isLocked = false;
         hasUnlocked = true;
+        container.scrollTo({ top: getAbsScrollTop(bannerTarget), behavior: 'smooth' });
         return;
       }
+      // 그 외: 스크롤 차단
       e.preventDefault();
     };
 
     const onScroll = () => {
-      const snapPos = getSnapPos();
-      // 위로 올라가면 hasUnlocked 초기화
+      const snapPos = getAbsScrollTop(snapTarget);
+
+      // 스냅 지점 위로 올라가면 hasUnlocked 초기화
       if (container.scrollTop < snapPos - 100) {
         hasUnlocked = false;
+        isLocked = false;
       }
-      // 잠금 해제 후 재잠금 방지
-      if (!isLocked && !hasUnlocked && container.scrollTop + 30 >= snapPos) {
+
+      // 잠금 조건: 스냅 지점 도달 + 아직 해제된 적 없음
+      if (!isLocked && !hasUnlocked && snapPos <= 30) {
         isLocked = true;
-        gestureStartY = currentTouchY;
+        gestureStartY = 0;
+        container.scrollTo({ top: container.scrollTop, behavior: 'instant' } as ScrollToOptions);
       }
-      if (isLocked && container.scrollTop !== snapPos) {
-        container.scrollTop = snapPos;
+
+      // 잠긴 상태에서 위치 강제 고정
+      if (isLocked) {
+        const lockedPos = getAbsScrollTop(snapTarget);
+        if (lockedPos < -2 || lockedPos > 2) {
+          container.scrollTop = container.scrollTop - lockedPos;
+        }
       }
     };
 
@@ -527,7 +543,7 @@ export default function HomePage() {
         </div>
 
         {/* FAQ / Help */}
-        <div className="mx-5 my-5 rounded-[14px] overflow-hidden px-[22px] py-[28px] flex items-center justify-between" style={{ backgroundColor: '#EDF1FF' }}>
+        <div ref={bannerRef} className="mx-5 my-5 rounded-[14px] overflow-hidden px-[22px] py-[28px] flex items-center justify-between" style={{ backgroundColor: '#EDF1FF' }}>
           <div className="flex flex-col gap-1">
             <p className="text-[20px] font-semibold leading-none" style={{ color: '#1E2075' }}>막히는 게 있나요?</p>
             <p className="text-[14px] font-semibold leading-[1.4]" style={{ color: 'rgba(30, 32, 117, 0.5)' }}>

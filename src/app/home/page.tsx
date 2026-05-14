@@ -330,7 +330,7 @@ export default function HomePage() {
           </div>
 
           {/* KPI blocks */}
-          <div className="flex gap-[11px] pb-[30px] border-b border-[#EBEEF7]">
+          <div className="flex gap-[11px] pb-[40px] border-b border-[#EBEEF7]">
             {KPI_DATA.map(kpi => (
               <div
                 key={kpi.id}
@@ -348,7 +348,7 @@ export default function HomePage() {
           </div>
 
           {/* Urgent section */}
-          <h2 className="text-[18px] font-bold text-stone-900 mb-3 pt-5">긴급 확인 필요</h2>
+          <h2 className="text-[18px] font-bold text-stone-900 mb-3 pt-[40px]">긴급 확인 필요</h2>
           <div className="flex flex-col gap-3">
             {URGENT_ITEMS.map((item) => (
               <button

@@ -486,7 +486,7 @@ function HashtagSection({ title, tags, onAdd, onRemove, placeholder }: {
             onClick={submit}
             className="w-[34px] h-[34px] flex items-center justify-center rounded-[8px] active:opacity-60 shrink-0"
           >
-            <Plus size={18} className="text-[#B0ADA7]" />
+            <Plus size={18} className="text-[#1C1A17]" />
           </button>
         </div>
       </div>
@@ -563,7 +563,7 @@ function Step3({ form, updateForm }: {
           <textarea
             value={form.productFeatures}
             onChange={e => updateForm('productFeatures', e.target.value)}
-            placeholder={'SPF50+, PA++++ 자외선 차단 · 피부 장벽 강화\n세라마이드 함유 · 백탁 없는 수분 텍스처 · 민감성 피부 테스트 완료'}
+            placeholder={'예) 주요 성분과 효능, 피부 타입, 사용 후 느낌 등을 자유롭게 적어주세요\n예) SPF50+, 세라마이드 함유, 백탁 없는 수분 텍스처, 민감성 피부 테스트 완료'}
             rows={3}
             className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
           />
@@ -578,7 +578,7 @@ function Step3({ form, updateForm }: {
           <textarea
             value={form.coreMessage}
             onChange={e => updateForm('coreMessage', e.target.value)}
-            placeholder="자외선 차단은 기본, 피부 장벽 케어까지. 매일 바르고 싶은 선케어를 강조"
+            placeholder="예) 인플루언서가 콘텐츠에서 전달해줬으면 하는 핵심 메시지를 적어주세요"
             rows={3}
             className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
           />
@@ -590,13 +590,16 @@ function Step3({ form, updateForm }: {
             <span className="text-[18px] font-semibold text-black">금지 사항</span>
             <AutoFillBadge />
           </div>
-          <div
-            className="rounded-[10px] p-5 bg-[#F8FAFF]"
-            style={{ border: '1px solid rgba(221,231,255,0.4)' }}
-          >
-            {DEFAULT_RESTRICTIONS.map(r => (
-              <p key={r} className="text-[18px] font-medium text-[#8995A2] leading-[150%]">- {r}</p>
-            ))}
+          <div className="flex flex-col gap-[6px]">
+            <div
+              className="rounded-[10px] p-5 bg-[#F8FAFF]"
+              style={{ border: '1px solid rgba(221,231,255,0.4)' }}
+            >
+              {DEFAULT_RESTRICTIONS.map(r => (
+                <p key={r} className="text-[18px] font-medium text-[#8995A2] leading-[150%]">- {r}</p>
+              ))}
+            </div>
+            <p className="text-[14px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
           </div>
         </div>
 
@@ -615,12 +618,9 @@ function Step3({ form, updateForm }: {
                 type="text"
                 value={form.contentGuide}
                 onChange={e => updateForm('contentGuide', e.target.value)}
-                placeholder="docs.google.com/fxB2eY1z..."
+                placeholder="구글 문서 등 가이드라인 링크를 입력해주세요"
                 className="flex-1 text-[18px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
               />
-              <div className="w-[34px] h-[34px] flex items-center justify-center rounded-[8px] shrink-0 text-[20px]">
-                🔗
-              </div>
             </div>
             <p className="text-[14px] text-[#B0ADA7]">* 링크 입력 시 AI 브리프에 자동 반영돼요.</p>
           </div>
@@ -632,7 +632,7 @@ function Step3({ form, updateForm }: {
           tags={form.requiredTags}
           onAdd={addRequired}
           onRemove={removeRequired}
-          placeholder="선케어"
+          placeholder="#해시태그"
         />
 
         {/* 추천 해시태그 */}

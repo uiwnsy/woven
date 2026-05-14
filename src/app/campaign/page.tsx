@@ -190,10 +190,11 @@ export default function CampaignPage() {
         {/* Create button */}
         <button
           onClick={() => router.push('/campaign/new')}
-          className="w-full flex items-center justify-center gap-2 py-5 mt-2 active:opacity-70"
+          className="w-full h-[68px] flex items-center justify-center gap-[4px] rounded-[14px] mt-2 active:opacity-70"
+          style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
         >
-          <PlusCircle size={20} className="text-iris-500" />
-          <span className="text-[16px] font-semibold text-iris-500">캠페인 만들기</span>
+          <PlusCircle size={16} className="text-iris-500" />
+          <span className="text-[16px] font-medium text-iris-500">캠페인 만들기</span>
         </button>
 
       </div>

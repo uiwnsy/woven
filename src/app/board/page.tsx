@@ -141,13 +141,14 @@ export default function BoardPage() {
         {/* Add influencer button */}
         <button
           onClick={() => router.push('/board/add')}
-          className="w-full flex items-center justify-center gap-2 py-5 mt-2 active:opacity-70"
+          className="w-full h-[68px] flex items-center justify-center gap-[4px] rounded-[14px] mt-2 active:opacity-70"
+          style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
         >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9" stroke="#6366f1" strokeWidth="1.5"/>
-            <path d="M10 6v8M6 10h8" stroke="#6366f1" strokeWidth="1.5" strokeLinecap="round"/>
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="9" stroke="#8486F3" strokeWidth="1.5"/>
+            <path d="M10 6v8M6 10h8" stroke="#8486F3" strokeWidth="1.5" strokeLinecap="round"/>
           </svg>
-          <span className="text-[16px] font-semibold text-iris-500">인플루언서 추가</span>
+          <span className="text-[16px] font-medium" style={{ color: '#8486F3' }}>인플루언서 추가</span>
         </button>
       </div>
 

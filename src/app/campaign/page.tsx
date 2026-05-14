@@ -181,7 +181,7 @@ export default function CampaignPage() {
         </div>
 
         {/* Campaign cards */}
-        <div className="flex flex-col gap-[10px] px-5">
+        <div className="flex flex-col gap-[10px]">
           {filtered.map(campaign => (
             <CampaignCard key={campaign.id} campaign={campaign} />
           ))}
@@ -190,7 +190,7 @@ export default function CampaignPage() {
         {/* Create button */}
         <button
           onClick={() => router.push('/campaign/new')}
-          className="mx-5 h-[68px] flex items-center justify-center gap-[4px] rounded-[14px] mt-[10px] active:opacity-70"
+          className="w-full h-[68px] flex items-center justify-center gap-[4px] rounded-[14px] mt-[20px] active:opacity-70"
           style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
         >
           <PlusCircle size={16} className="text-iris-500" />

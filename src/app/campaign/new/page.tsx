@@ -1027,7 +1027,7 @@ export default function CampaignNewPage() {
   const progressPct = step <= 4 ? (step / 4) * 100 : 100;
 
   return (
-    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
+    <div className="flex flex-col bg-white max-w-[430px] mx-auto relative overflow-hidden" style={{ height: '100dvh' }}>
 
       {/* Header */}
       <div className="flex items-center justify-center px-5 h-[65px] border-b border-[#f0f2f8] bg-white shrink-0 relative">

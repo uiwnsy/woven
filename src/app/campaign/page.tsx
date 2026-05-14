@@ -11,7 +11,7 @@ import {
 
 type CampaignStatus = '전체' | '기획' | '진행중' | '완료';
 
-const FILTERS: CampaignStatus[] = ['전체', '마감 임박순' as any, '브랜드별' as any, '기획', '진행중', '완료'];
+const FILTERS: CampaignStatus[] = ['전체', '마감 임박순' as any, '기획', '진행중', '완료'];
 
 type Campaign = {
   id: number;
@@ -137,7 +137,7 @@ export default function CampaignPage() {
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState<string>('전체');
 
-  const filtered = activeFilter === '전체' || activeFilter === '마감 임박순' || activeFilter === '브랜드별'
+  const filtered = activeFilter === '전체' || activeFilter === '마감 임박순'
     ? MOCK_CAMPAIGNS
     : MOCK_CAMPAIGNS.filter(c => c.status === activeFilter);
 
@@ -163,7 +163,7 @@ export default function CampaignPage() {
 
         {/* Filter chips */}
         <div className="flex gap-2 px-5 py-4 overflow-x-auto scrollbar-none">
-          {(['전체', '마감 임박순', '브랜드별', '기획', '진행중', '완료'] as const).map(filter => {
+          {(['전체', '마감 임박순', '기획', '진행중', '완료'] as const).map(filter => {
             const isActive = activeFilter === filter;
             return (
               <button

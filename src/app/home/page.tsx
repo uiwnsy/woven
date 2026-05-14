@@ -262,8 +262,8 @@ export default function HomePage() {
                       <div className="w-10 h-10 rounded-full bg-stone-200 overflow-hidden">
                         <img src={inf.profileImg} alt={inf.name} className="w-full h-full object-cover" />
                       </div>
-                      <div className="absolute -bottom-0.5 -right-0.5 bg-white rounded-full p-[2px] shadow-sm">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="ig" className="w-3.5 h-3.5" />
+                      <div className="absolute -bottom-0.5 -right-0.5">
+                        <img src="/ig-icon.svg" alt="ig" className="w-[18px] h-[18px]" />
                       </div>
                     </div>
                     <div className="flex flex-col gap-0">
@@ -330,7 +330,7 @@ export default function HomePage() {
           </div>
 
           {/* KPI blocks */}
-          <div className="flex gap-[11px] pb-[40px] border-b border-[#EBEEF7]">
+          <div className="flex gap-[11px] pb-[50px] border-b border-[#EBEEF7]">
             {KPI_DATA.map(kpi => (
               <div
                 key={kpi.id}

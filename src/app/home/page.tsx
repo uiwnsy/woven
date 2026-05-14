@@ -286,12 +286,12 @@ export default function HomePage() {
                   ) : (
                     <div className="flex items-center gap-1.5">
                       {inf.stage && (
-                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[14px] font-semibold px-3 py-1 rounded-full`}>
+                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[14px] font-medium px-3 py-1 rounded-full`}>
                           {inf.stage.label}
                         </span>
                       )}
                       {inf.status && (
-                        <span className={`${inf.status.bg} ${inf.status.text} text-[14px] font-semibold px-3 py-1 rounded-full`}>
+                        <span className={`${inf.status.bg} ${inf.status.text} text-[14px] font-medium px-3 py-1 rounded-full`}>
                           {inf.status.label}
                         </span>
                       )}

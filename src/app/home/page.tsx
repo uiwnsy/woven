@@ -168,54 +168,62 @@ export default function HomePage() {
 
     let isLocked = false;
     let hasUnlocked = false;
+    let gestureUnlocked = false; // 같은 제스처 내 재잠금 방지
     let touchStartY = 0;
-    let snapPos = 0; // 잠금 시점에 캐싱한 scrollTop 값
+    let snapPos = 0;
 
     const onTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY;
+      gestureUnlocked = false;
     };
 
     const onTouchMove = (e: TouchEvent) => {
-      const dy = touchStartY - e.touches[0].clientY; // 양수 = 아래로 스와이프
+      const dy = touchStartY - e.touches[0].clientY; // 양수 = 아래 스와이프
 
-      // 아직 잠금 안 됐고 해제된 적도 없을 때: 스냅 도달 여부 체크
-      if (!isLocked && !hasUnlocked) {
+      // 잠금 시도: 스냅 포인트 도달 여부 확인
+      if (!isLocked && !hasUnlocked && !gestureUnlocked) {
         const offset = snapTarget.getBoundingClientRect().top - container.getBoundingClientRect().top;
-        if (offset <= 5) {
-          // 전체 캠페인 상단이 컨테이너 상단에 닿음 → 잠금
-          snapPos = container.scrollTop - offset; // 정확한 스냅 위치 캐싱
-          container.scrollTop = snapPos;
+        if (offset <= 2) {
+          snapPos = container.scrollTop;
           isLocked = true;
         }
       }
 
-      if (isLocked) {
-        if (dy < -20) {
-          // 위로 스와이프: 잠금 해제
-          isLocked = false;
-          hasUnlocked = false;
-          return;
-        }
-        if (dy > 50) {
-          // 아래로 충분히 스와이프: 배너로 이동
-          isLocked = false;
-          hasUnlocked = true;
-          const bannerPos = snapPos + bannerTarget.getBoundingClientRect().top - container.getBoundingClientRect().top;
-          container.scrollTo({ top: bannerPos, behavior: 'smooth' });
-          return;
-        }
-        // 그 외: 스크롤 차단 + 위치 고정
-        e.preventDefault();
-        container.scrollTop = snapPos;
+      if (!isLocked) return;
+
+      if (dy < -10) {
+        // 위로 스와이프: 잠금 해제 후 자연스럽게 위로 스크롤
+        isLocked = false;
+        gestureUnlocked = true;
+        return;
       }
+
+      // 아래 방향: 스크롤 완전 차단 (touchend에서 의도 판단)
+      e.preventDefault();
+      container.scrollTop = snapPos;
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (!isLocked) return;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if (dy > 50) {
+        // 손 뗄 때 50px 이상 아래로 움직였으면 → 배너 공개
+        isLocked = false;
+        hasUnlocked = true;
+        const bannerScrollTop = snapPos +
+          bannerTarget.getBoundingClientRect().top -
+          container.getBoundingClientRect().top;
+        container.scrollTo({ top: bannerScrollTop, behavior: 'smooth' });
+      }
+      // 50px 미만이면 계속 잠금 유지
     };
 
     const onScroll = () => {
-      // 관성 스크롤이 snapPos를 넘어가면 강제 복귀
+      // 관성 스크롤 대응: 잠긴 상태에서 snapPos 이상 넘어가면 강제 복귀
       if (isLocked && container.scrollTop > snapPos + 5) {
         container.scrollTop = snapPos;
       }
-      // 위로 올라가면 초기화
+      // 위로 충분히 올라가면 초기화
       if (container.scrollTop < snapPos - 100) {
         isLocked = false;
         hasUnlocked = false;
@@ -224,11 +232,13 @@ export default function HomePage() {
 
     container.addEventListener('touchstart', onTouchStart, { passive: true });
     container.addEventListener('touchmove', onTouchMove, { passive: false });
+    container.addEventListener('touchend', onTouchEnd, { passive: true });
     container.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
       container.removeEventListener('touchstart', onTouchStart);
       container.removeEventListener('touchmove', onTouchMove);
+      container.removeEventListener('touchend', onTouchEnd);
       container.removeEventListener('scroll', onScroll);
     };
   }, []);

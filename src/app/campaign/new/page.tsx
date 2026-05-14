@@ -47,6 +47,13 @@ const TONES = [
   { id: 'casual',   label: '캐주얼', icon: '✌️' },
 ];
 
+const GOAL_KPI_MAP: Record<string, string[]> = {
+  purchase:  ['roas', 'clicks', 'conversion'],
+  awareness: ['clicks', 'upload'],
+  follower:  ['clicks', 'upload'],
+  content:   ['upload'],
+};
+
 const MOCK_MANAGERS = [
   { id: '1', name: '김지은', team: '마케팅 팀', initial: '김', color: '#f7b898' },
   { id: '2', name: '이수민', team: '마케팅 팀', initial: '이', color: '#98c4f7' },
@@ -389,7 +396,10 @@ function Step2({ form, updateForm, toggleKPI }: {
             return (
               <button
                 key={goal.id}
-                onClick={() => updateForm('goal', goal.id)}
+                onClick={() => {
+                  updateForm('goal', goal.id);
+                  updateForm('kpis', GOAL_KPI_MAP[goal.id]);
+                }}
                 className={`w-full flex items-center gap-[14px] p-5 rounded-[10px] border border-[#E8E7E4] text-left transition-all active:opacity-80
                   ${isActive ? 'bg-[#EEEEFF]' : 'bg-white'}`}
               >

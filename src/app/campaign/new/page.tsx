@@ -666,7 +666,6 @@ function Step3({ form, updateForm }: {
         <div className="flex flex-col gap-[12px]">
           <div className="flex items-center gap-1">
             <span className="text-[18px] font-semibold text-black">제품 특징</span>
-            <span className="text-[#6366F1]">*</span>
           </div>
           <textarea
             value={form.productFeatures}
@@ -683,7 +682,6 @@ function Step3({ form, updateForm }: {
         <div className="flex flex-col gap-[12px]">
           <div className="flex items-center gap-[6px]">
             <span className="text-[18px] font-semibold text-black">핵심 메시지</span>
-            <span className="text-[15px] font-normal text-[#91929F]">(선택)</span>
           </div>
           <textarea
             value={form.coreMessage}
@@ -1061,7 +1059,6 @@ export default function CampaignNewPage() {
       ? form.kpis.filter(x => x !== id)
       : [...form.kpis, id]);
 
-  const step3Valid = form.productFeatures.trim() !== '';
 
   const step1Valid =
     form.campaignName.trim() !== '' &&
@@ -1139,9 +1136,8 @@ export default function CampaignNewPage() {
           <>
             <button
               onClick={handleGenerateBrief}
-              disabled={isGenerating || !step3Valid}
-              className={`w-full py-4 text-white text-[18px] font-bold rounded-[12px] flex items-center justify-center gap-2 transition-colors
-                ${step3Valid ? 'bg-[#2E2C28] active:opacity-80' : 'bg-stone-300 cursor-not-allowed'}`}
+              disabled={isGenerating}
+              className="w-full py-4 bg-[#2E2C28] text-white text-[18px] font-bold rounded-[12px] flex items-center justify-center gap-2 active:opacity-80"
             >
               {isGenerating ? (
                 <>

@@ -312,7 +312,7 @@ export default function HomePage() {
         <div className="bg-white px-5 py-[40px] mb-[10px]">
           <div className="flex items-center justify-between mb-1.5">
             <span className="text-[22px] font-bold text-stone-900">루미에르 봄봄 프로모션</span>
-            <span className="bg-iris-500 text-white text-[14px] font-bold px-3 py-[5px] rounded-full shrink-0 ml-2">D-8</span>
+            <span className="bg-iris-500 text-white text-[14px] font-bold rounded-full shrink-0 ml-2" style={{ padding: '9px 3px 8px' }}>D-8</span>
           </div>
           <p className="text-[14px] font-medium text-[#8995a2] mb-[32px]">
             4월 26일 마감 &nbsp;·&nbsp; 오늘 오전 8:41

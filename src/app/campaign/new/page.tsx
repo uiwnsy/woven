@@ -760,152 +760,153 @@ function Step3({ form, updateForm }: {
 
 // ─── Step 4: AI Brief Result ───────────────────────────────────────────────
 
-function Step4({ form, updateForm, isEditing, onEditingChange }: {
+function Step4({ form, updateForm }: {
   form: FormData;
   updateForm: (k: keyof FormData, v: any) => void;
-  isEditing: boolean;
-  onEditingChange: (v: boolean) => void;
 }) {
   const [copied, setCopied] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [briefVersion, setBriefVersion] = useState(0);
+  const [editedBrief, setEditedBrief] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const variants = BRIEF_VARIANTS[form.briefTone] ?? BRIEF_VARIANTS.friendly;
-  const briefText = variants[briefVersion % variants.length];
+  const generatedBrief = variants[briefVersion % variants.length];
+  const displayBrief = editedBrief ?? generatedBrief;
 
   const handleCopy = async () => {
-    const text = isEditing ? (textareaRef.current?.value ?? briefText) : briefText;
-    try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
+    try { await navigator.clipboard.writeText(displayBrief); } catch { /* ignore */ }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleDoneEditing = () => {
+    if (textareaRef.current) setEditedBrief(textareaRef.current.value);
+    setIsEditing(false);
+  };
+
   const handleRegenerate = () => {
-    onEditingChange(false);
+    setEditedBrief(null);
     setBriefVersion(v => v + 1);
   };
 
   const handleToneChange = (toneId: string) => {
     updateForm('briefTone', toneId);
     setBriefVersion(0);
-    onEditingChange(false);
+    setEditedBrief(null);
   };
 
-  useLayoutEffect(() => {
-    if (isEditing && textareaRef.current) {
-      const el = textareaRef.current;
-      el.style.height = el.scrollHeight + 'px';
-      el.focus();
-      el.setSelectionRange(el.value.length, el.value.length);
-    }
-  }, [isEditing]);
-
   return (
-    <div className="px-5 pt-6 flex flex-col gap-[30px] pb-10">
-
-      {/* Header */}
-      <div className="flex flex-col gap-[18px]">
-        <h1 className="text-[22px] font-bold text-black">브리프를 확인해주세요</h1>
-        <div className="flex gap-2 bg-[#EEF7FF] rounded-[12px] p-5">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[2px]">
-            <circle cx="9" cy="9" r="8" stroke="#2D92FE" strokeWidth="1.5"/>
-            <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
-            <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
-          </svg>
-          <p className="text-[14px] font-medium text-[#2D92FE] leading-[135%]">
-            캠페인 정보 기반으로 AI가 생성한 브리프예요.<br />
-            내용을 확인하고, 필요한 부분을 수정한 뒤 저장하세요.
-          </p>
+    <>
+      {/* Full-screen edit overlay — avoids keyboard layout issues entirely */}
+      {isEditing && (
+        <div className="fixed inset-0 z-50 bg-white flex flex-col">
+          <div className="flex items-center justify-between px-5 h-[56px] border-b border-[#E8E7E4] shrink-0">
+            <span className="text-[18px] font-semibold text-black">브리프 수정</span>
+            <button
+              onClick={handleDoneEditing}
+              className="text-[16px] font-semibold text-[#6366F1] px-2 py-2 active:opacity-70"
+            >
+              완료
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto p-5">
+            <textarea
+              ref={textareaRef}
+              defaultValue={displayBrief}
+              autoFocus
+              className="w-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white"
+              style={{ minHeight: '100%' }}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Tone selector */}
-      <div className="flex flex-col gap-[14px]">
-        <span className="text-[18px] font-semibold text-black">브리프 톤</span>
-        <div className="flex gap-[14px]">
-          {TONES.map(tone => {
-            const isActive = form.briefTone === tone.id;
-            return (
+      <div className="px-5 pt-6 flex flex-col gap-[30px] pb-10">
+
+        {/* Header */}
+        <div className="flex flex-col gap-[18px]">
+          <h1 className="text-[22px] font-bold text-black">브리프를 확인해주세요</h1>
+          <div className="flex gap-2 bg-[#EEF7FF] rounded-[12px] p-5">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[2px]">
+              <circle cx="9" cy="9" r="8" stroke="#2D92FE" strokeWidth="1.5"/>
+              <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
+              <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
+            </svg>
+            <p className="text-[14px] font-medium text-[#2D92FE] leading-[135%]">
+              캠페인 정보 기반으로 AI가 생성한 브리프예요.<br />
+              내용을 확인하고, 필요한 부분을 수정한 뒤 저장하세요.
+            </p>
+          </div>
+        </div>
+
+        {/* Tone selector */}
+        <div className="flex flex-col gap-[14px]">
+          <span className="text-[18px] font-semibold text-black">브리프 톤</span>
+          <div className="flex gap-[14px]">
+            {TONES.map(tone => {
+              const isActive = form.briefTone === tone.id;
+              return (
+                <button
+                  key={tone.id}
+                  onClick={() => handleToneChange(tone.id)}
+                  className={`flex-1 flex flex-col items-center gap-2 p-5 rounded-[10px] transition-all active:opacity-80
+                    ${isActive ? 'border border-[#E8E7E4] bg-[#EEEEFF]' : 'border border-[#E8E7E4] bg-white'}`}
+                >
+                  <img src={tone.icon} alt={tone.label} className="w-[52px] h-[52px]" />
+                  <span className="text-[18px] font-semibold text-[#1C1A17]">{tone.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Generated brief card */}
+        <div className="flex flex-col gap-[6px]">
+          <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF]">
+              <span className="text-[16px] font-medium text-black">생성된 브리프</span>
+              <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
+                <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
+              </div>
+            </div>
+            <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
+              <p className="text-[16px] font-medium text-[#1C1A17] leading-[150%] whitespace-pre-wrap">
+                {displayBrief}
+              </p>
+            </div>
+            <div className="flex border-t border-[#ECECEF]">
               <button
-                key={tone.id}
-                onClick={() => handleToneChange(tone.id)}
-                className={`flex-1 flex flex-col items-center gap-2 p-5 rounded-[10px] transition-all active:opacity-80
-                  ${isActive
-                    ? 'border border-[#E8E7E4] bg-[#EEEEFF]'
-                    : 'border border-[#E8E7E4] bg-white'}`}
+                onClick={() => setIsEditing(true)}
+                className="flex-1 py-[15px] flex items-center justify-center bg-[#F8FAFF] border-r border-[#ECECEF] rounded-bl-[14px] active:opacity-70"
               >
-                <img src={tone.icon} alt={tone.label} className="w-[52px] h-[52px]" />
-                <span className="text-[18px] font-semibold text-[#1C1A17]">{tone.label}</span>
+                <span className="text-[16px] font-medium text-black">수정하기</span>
               </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Generated brief card */}
-      <div className="flex flex-col gap-[6px]">
-        <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden flex flex-col">
-          {/* Card header */}
-          <div className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF]">
-            <span className="text-[16px] font-medium text-black">생성된 브리프</span>
-            <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
-              <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
+              <button
+                onClick={handleCopy}
+                className="flex-1 py-[15px] flex items-center justify-center gap-1 bg-[#F8FAFF] rounded-br-[14px] active:opacity-70"
+              >
+                {copied
+                  ? <><Check size={14} className="text-[#6366F1]" /><span className="text-[16px] font-medium text-[#6366F1]">복사됨</span></>
+                  : <span className="text-[16px] font-medium text-black">복사하기</span>}
+              </button>
             </div>
           </div>
-
-          {/* Brief content */}
-          <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
-            {isEditing ? (
-              <textarea
-                ref={textareaRef}
-                defaultValue={briefText}
-                onChange={e => { const el = e.currentTarget; el.style.height = '0px'; el.style.height = el.scrollHeight + 'px'; }}
-                className="w-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white"
-                style={{ overflowY: 'hidden' }}
-              />
-            ) : (
-              <p className="text-[16px] font-medium text-[#1C1A17] leading-[150%] whitespace-pre-wrap">
-                {briefText}
-              </p>
-            )}
-          </div>
-
-          {/* Edit / Copy buttons */}
-          <div className="flex border-t border-[#ECECEF]">
-            <button
-              onClick={() => onEditingChange(!isEditing)}
-              className="flex-1 py-[15px] flex items-center justify-center bg-[#F8FAFF] border-r border-[#ECECEF] rounded-bl-[14px] active:opacity-70"
-            >
-              <span className={`text-[16px] font-medium ${isEditing ? 'text-[#6366F1]' : 'text-black'}`}>
-                {isEditing ? '완료' : '수정하기'}
-              </span>
-            </button>
-            <button
-              onClick={handleCopy}
-              className="flex-1 py-[15px] flex items-center justify-center gap-1 bg-[#F8FAFF] rounded-br-[14px] active:opacity-70"
-            >
-              {copied
-                ? <><Check size={14} className="text-[#6366F1]" /><span className="text-[16px] font-medium text-[#6366F1]">복사됨</span></>
-                : <span className="text-[16px] font-medium text-black">복사하기</span>}
-            </button>
-          </div>
+          <p className="text-[14px] font-normal text-[#B0ADA7] leading-[135%]">
+            인플루언서별 발송 시 이름과 핸들이 자동으로 반영돼요.
+          </p>
         </div>
 
-        {/* Disclaimer */}
-        <p className="text-[14px] font-normal text-[#B0ADA7] leading-[135%]">
-          인플루언서별 발송 시 이름과 핸들이 자동으로 반영돼요.
-        </p>
+        {/* Regenerate button */}
+        <button
+          onClick={handleRegenerate}
+          className="w-full h-[56px] bg-[#F0F2FB] rounded-[12px] flex items-center justify-center active:opacity-70"
+        >
+          <span className="text-[18px] font-bold text-[#6366F1]">다시 생성하기</span>
+        </button>
+
       </div>
-
-      {/* Regenerate button */}
-      <button
-        onClick={handleRegenerate}
-        className="w-full h-[56px] bg-[#F0F2FB] rounded-[12px] flex items-center justify-center active:opacity-70"
-      >
-        <span className="text-[18px] font-bold text-[#6366F1]">다시 생성하기</span>
-      </button>
-
-    </div>
+    </>
   );
 }
 
@@ -966,12 +967,10 @@ export default function CampaignNewPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>(1);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [isStep4Editing, setIsStep4Editing] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 });
-    setIsStep4Editing(false);
   }, [step]);
 
   const [form, setForm] = useState<FormData>({
@@ -1027,7 +1026,7 @@ export default function CampaignNewPage() {
   const progressPct = step <= 4 ? (step / 4) * 100 : 100;
 
   return (
-    <div className="flex flex-col bg-white max-w-[430px] mx-auto relative overflow-hidden" style={{ height: '100dvh' }}>
+    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
 
       {/* Header */}
       <div className="flex items-center justify-center px-5 h-[65px] border-b border-[#f0f2f8] bg-white shrink-0 relative">
@@ -1048,16 +1047,16 @@ export default function CampaignNewPage() {
       </div>
 
       {/* Scrollable content */}
-      <div ref={scrollRef} className={`flex-1 overflow-y-auto ${isStep4Editing ? 'pb-6' : 'pb-[160px]'}`}>
+      <div ref={scrollRef} className="flex-1 overflow-y-auto pb-[160px]">
         {step === 1 && <Step1 form={form} updateForm={updateForm} togglePlatform={togglePlatform} />}
         {step === 2 && <Step2 form={form} updateForm={updateForm} toggleKPI={toggleKPI} />}
         {step === 3 && <Step3 form={form} updateForm={updateForm} />}
-        {step === 4 && <Step4 form={form} updateForm={updateForm} isEditing={isStep4Editing} onEditingChange={setIsStep4Editing} />}
+        {step === 4 && <Step4 form={form} updateForm={updateForm} />}
         {step === 5 && <Step5 form={form} router={router} />}
       </div>
 
       {/* Bottom CTA */}
-      <div className={`absolute bottom-0 w-full p-5 bg-white border-t border-[#E8E7E4] flex flex-col gap-[10px] ${step === 4 && isStep4Editing ? 'hidden' : ''}`}>
+      <div className="absolute bottom-0 w-full px-5 pt-5 pb-8 bg-white border-t border-[#E8E7E4] flex flex-col gap-[10px]">
         {step === 1 && (
           <button
             onClick={() => step1Valid && setStep(2)}

@@ -262,9 +262,7 @@ export default function HomePage() {
                       <div className="w-10 h-10 rounded-full bg-stone-200 overflow-hidden">
                         <img src={inf.profileImg} alt={inf.name} className="w-full h-full object-cover" />
                       </div>
-                      <div className="absolute -bottom-0.5 -right-0.5">
-                        <img src="/ig-icon.svg" alt="ig" className="w-[18px] h-[18px]" />
-                      </div>
+                      <img src="/skill-icons_instagram.png" alt="ig" className="absolute w-4 h-4 bottom-0 -right-[1px]" />
                     </div>
                     <div className="flex flex-col gap-0">
                       <div className="flex items-center gap-1.5">

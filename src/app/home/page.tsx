@@ -168,62 +168,59 @@ export default function HomePage() {
 
     let isLocked = false;
     let hasUnlocked = false;
-    let gestureStartY = 0;
+    let touchStartY = 0;
+    let skipNext = 0;
 
-    // getBoundingClientRect 기반으로 스크롤 컨테이너 기준 절대 위치 계산
-    const getAbsScrollTop = (el: HTMLElement) => {
-      const cRect = container.getBoundingClientRect();
-      const eRect = el.getBoundingClientRect();
-      return container.scrollTop + (eRect.top - cRect.top);
-    };
+    // 현재 뷰포트 내에서 snapTarget이 컨테이너 상단으로부터 몇 px 아래에 있는지
+    // 0 = 상단에 딱 붙음, 양수 = 아직 아래에 있음, 음수 = 이미 위로 지나감
+    const getOffset = () =>
+      snapTarget.getBoundingClientRect().top - container.getBoundingClientRect().top;
 
     const onTouchStart = (e: TouchEvent) => {
-      gestureStartY = e.touches[0].clientY;
+      touchStartY = e.touches[0].clientY;
     };
 
     const onTouchMove = (e: TouchEvent) => {
       if (!isLocked) return;
-      const dy = gestureStartY - e.touches[0].clientY;
+      const dy = touchStartY - e.touches[0].clientY; // 양수 = 아래로 스와이프
 
       if (dy < -20) {
-        // 위로 스크롤: 해제
         isLocked = false;
         hasUnlocked = false;
         return;
       }
       if (dy > 50) {
-        // 아래로 충분히 스와이프: 배너로 직접 이동
         isLocked = false;
         hasUnlocked = true;
-        container.scrollTo({ top: getAbsScrollTop(bannerTarget), behavior: 'smooth' });
+        // 배너로 직접 이동
+        const bannerOffset = bannerTarget.getBoundingClientRect().top - container.getBoundingClientRect().top;
+        container.scrollTo({ top: container.scrollTop + bannerOffset, behavior: 'smooth' });
         return;
       }
-      // 그 외: 스크롤 차단
       e.preventDefault();
     };
 
     const onScroll = () => {
-      const snapPos = getAbsScrollTop(snapTarget);
+      // 내가 직접 조정한 scroll 이벤트는 무시
+      if (skipNext > 0) { skipNext--; return; }
 
-      // 스냅 지점 위로 올라가면 hasUnlocked 초기화
-      if (container.scrollTop < snapPos - 100) {
-        hasUnlocked = false;
+      const offset = getOffset();
+
+      // 위로 스크롤해서 스냅 지점 위로 올라가면 초기화
+      if (offset > 50) {
         isLocked = false;
+        hasUnlocked = false;
       }
 
-      // 잠금 조건: 스냅 지점 도달 + 아직 해제된 적 없음
-      if (!isLocked && !hasUnlocked && snapPos <= 30) {
+      // 스냅 지점 도달: offset이 0 이하 (전체 캠페인이 상단에 닿거나 지나침)
+      if (!isLocked && !hasUnlocked && offset <= 0) {
         isLocked = true;
-        gestureStartY = 0;
-        container.scrollTo({ top: container.scrollTop, behavior: 'instant' } as ScrollToOptions);
       }
 
-      // 잠긴 상태에서 위치 강제 고정
-      if (isLocked) {
-        const lockedPos = getAbsScrollTop(snapTarget);
-        if (lockedPos < -2 || lockedPos > 2) {
-          container.scrollTop = container.scrollTop - lockedPos;
-        }
+      // 잠긴 상태에서 위치 강제 고정 (inertia scroll 대응)
+      if (isLocked && Math.abs(offset) > 1) {
+        skipNext++;
+        container.scrollTop += offset;
       }
     };
 

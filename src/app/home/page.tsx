@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   HomeSelectedIcon,
@@ -156,6 +156,31 @@ export default function HomePage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'현황' | '인플루언서'>('현황');
   const [rankFilter, setRankFilter] = useState('ROAS순');
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const snapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+    let timer: ReturnType<typeof setTimeout>;
+    const onScroll = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const snap = snapRef.current;
+        if (!snap) return;
+        const containerTop = container.getBoundingClientRect().top;
+        const snapTop = snap.getBoundingClientRect().top - containerTop;
+        if (snapTop > -20 && snapTop < 200) {
+          container.scrollTo({ top: container.scrollTop + snapTop, behavior: 'smooth' });
+        }
+      }, 80);
+    };
+    container.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      container.removeEventListener('scroll', onScroll);
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
@@ -173,7 +198,7 @@ export default function HomePage() {
       </div>
 
       {/* ── Scrollable content ── */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden pb-[95px] snap-y snap-proximity">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden pb-[95px]">
 
         {/* Gradient greeting + tabs (scrolls away) */}
         <div style={{ background: 'linear-gradient(139deg, #8486F3 0.32%, #6366F1 104.47%)' }}>
@@ -393,7 +418,7 @@ export default function HomePage() {
         </div>
 
         {/* 전체 캠페인 */}
-        <div className="bg-white pt-[40px] pb-[40px] mb-[10px] snap-start">
+        <div ref={snapRef} className="bg-white pt-[40px] pb-[40px] mb-[10px]">
           <div className="flex items-center justify-between px-5 mb-4">
             <h2 className="text-[22px] font-bold text-stone-900">전체 캠페인</h2>
             <button className="border border-[#D4D2CE] rounded-[30px] px-[10px] pt-[3px] pb-1 active:opacity-70">

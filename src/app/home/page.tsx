@@ -450,7 +450,7 @@ export default function HomePage() {
               </div>
             ))}
             {/* Card 5: 새 캠페인 추가 */}
-            <div className="w-[200px] h-[239px] shrink-0 bg-[#F1F2FD] rounded-[14px] p-5 flex flex-col items-center justify-center gap-[14px]">
+            <div className="w-[200px] self-stretch shrink-0 bg-[#F1F2FD] rounded-[14px] p-5 flex flex-col items-center justify-center gap-[14px]">
               <div className="w-8 h-8 rounded-full border border-[#8486F3] flex items-center justify-center">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M8 3v10M3 8h10" stroke="#8486F3" strokeWidth="1.5" strokeLinecap="round"/>

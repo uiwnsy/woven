@@ -378,7 +378,7 @@ function Step2({ form, updateForm, toggleKPI }: {
 }) {
   return (
     <div className="px-5 pt-6">
-      <h1 className="text-[24px] font-bold text-stone-900 mb-6">캠페인 목표</h1>
+      <h1 className="text-[22px] font-bold text-stone-900 mb-6">캠페인 목표</h1>
 
       <div className="mb-8">
         <p className="text-[15px] font-semibold text-stone-800 mb-3">목표 유형</p>

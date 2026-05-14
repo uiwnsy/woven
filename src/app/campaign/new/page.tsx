@@ -395,7 +395,7 @@ function Step2({ form, updateForm, toggleKPI }: {
               >
                 <img src={goal.icon} alt={goal.label} className="w-[52px] h-[52px] shrink-0" />
                 <div className="flex flex-col gap-[6px]">
-                  <p className="text-[20px] font-medium text-[#1C1A17]">{goal.label}</p>
+                  <p className="text-[18px] font-medium text-[#1C1A17]">{goal.label}</p>
                   <p className="text-[14px] font-medium text-[#B0ADA7]">{goal.desc}</p>
                 </div>
               </button>
@@ -414,7 +414,7 @@ function Step2({ form, updateForm, toggleKPI }: {
                   ${i > 0 ? 'border-t border-[#E8E7E4]' : ''}`}
               >
                 <div className="flex flex-col gap-[6px]">
-                  <p className="text-[20px] font-medium text-[#1C1A17]">{kpi.label}</p>
+                  <p className="text-[18px] font-medium text-[#1C1A17]">{kpi.label}</p>
                   <p className="text-[14px] font-medium text-[#B0ADA7]">{kpi.desc}</p>
                 </div>
                 <Toggle on={form.kpis.includes(kpi.id)} onToggle={() => toggleKPI(kpi.id)} />

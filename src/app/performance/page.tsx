@@ -136,7 +136,7 @@ export default function PerformancePage() {
 
       {/* ── Header ── */}
       <div className="flex items-center justify-between px-5 h-[65px] border-b border-[#f0f2f8] bg-white shrink-0">
-        <span className="text-[24px] font-bold text-stone-900 tracking-[-0.4px]">성과</span>
+        <span className="text-[22px] font-bold text-stone-900 tracking-[-0.4px]">성과</span>
         <div className="flex items-center gap-3">
           <button className="active:opacity-60"><SearchIcon size={32} className="text-stone-900" /></button>
           <button className="relative active:opacity-60">

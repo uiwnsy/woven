@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronRight, Calendar, Plus, X, Check } from 'lucide-react';
+import { ChevronLeft, ChevronDown, Calendar, Plus, X, Check } from 'lucide-react';
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -295,7 +295,7 @@ function Step1({ form, updateForm, togglePlatform }: {
               placeholder="예산을 입력해주세요"
               className="flex-1 text-[18px] font-medium text-[#1C1A17] outline-none placeholder:text-[#C7C4BE]"
             />
-            <span className="text-[#78756E] text-[16px] font-medium shrink-0">원</span>
+            <span className="text-[#78756E] text-[16px] font-semibold shrink-0">원</span>
           </div>
         </div>
 
@@ -307,21 +307,21 @@ function Step1({ form, updateForm, togglePlatform }: {
           </div>
           <button
             onClick={() => setShowManagerSheet(true)}
-            className="w-full h-[72px] border border-[#E8E7E4] rounded-[10px] px-5 flex items-center justify-between bg-white active:opacity-70"
+            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 flex items-center justify-between bg-white active:opacity-70"
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-[10px]">
               <div
                 className="w-[50px] h-[50px] rounded-full flex items-center justify-center shrink-0"
                 style={{ backgroundColor: selectedManager.color }}
               >
-                <span className="text-white text-[18px] font-bold">{selectedManager.initial}</span>
+                <span className="text-white text-[18px] font-semibold">{selectedManager.initial}</span>
               </div>
-              <div className="text-left">
-                <p className="text-[18px] font-medium text-[#1C1A17]">{selectedManager.name}</p>
-                <p className="text-[14px] text-[#78756E]">{selectedManager.team}</p>
+              <div className="flex flex-col gap-[6px] text-left">
+                <p className="text-[18px] font-medium text-[#1C1A17] leading-none">{selectedManager.name}</p>
+                <p className="text-[14px] font-medium text-[#B0ADA7] leading-none">{selectedManager.team}</p>
               </div>
             </div>
-            <ChevronRight size={20} className="text-[#C7C4BE]" />
+            <ChevronDown size={20} className="text-[#B0ADA7]" />
           </button>
         </div>
       </div>
@@ -355,7 +355,7 @@ function Step1({ form, updateForm, togglePlatform }: {
                     </div>
                     <div className="flex-1 text-left">
                       <p className="text-[16px] font-medium text-[#1C1A17]">{mgr.name}</p>
-                      <p className="text-[13px] text-[#78756E]">{mgr.team}</p>
+                      <p className="text-[13px] text-[#B0ADA7]">{mgr.team}</p>
                     </div>
                     {isSelected && <Check size={18} className="text-iris-500 shrink-0" />}
                   </button>

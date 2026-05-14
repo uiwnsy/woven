@@ -321,7 +321,7 @@ function Step1({ form, updateForm, togglePlatform }: {
                 <p className="text-[14px] font-medium text-[#B0ADA7] leading-none">{selectedManager.team}</p>
               </div>
             </div>
-            <img src="/arrow-right.svg" alt="" className="w-5 h-5 rotate-90" />
+            <img src="/arrow-down.svg" alt="" className="w-5 h-5" />
           </button>
         </div>
       </div>

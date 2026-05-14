@@ -161,24 +161,40 @@ export default function HomePage() {
 
   useEffect(() => {
     const container = scrollRef.current;
-    if (!container) return;
-    let timer: ReturnType<typeof setTimeout>;
+    const snapTarget = snapRef.current;
+    if (!container || !snapTarget) return;
+
+    let locked = false;
+    let lockTimer: ReturnType<typeof setTimeout>;
+
     const onScroll = () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        const snap = snapRef.current;
-        if (!snap) return;
-        const containerTop = container.getBoundingClientRect().top;
-        const snapTop = snap.getBoundingClientRect().top - containerTop;
-        if (snapTop > -20 && snapTop < 200) {
-          container.scrollTo({ top: container.scrollTop + snapTop, behavior: 'smooth' });
-        }
-      }, 80);
+      if (locked) return;
+      const snapPos = snapTarget.offsetTop;
+      if (container.scrollTop + 50 >= snapPos) {
+        clearTimeout(lockTimer);
+        container.scrollTo({ top: snapPos, behavior: 'smooth' });
+        locked = true;
+        lockTimer = setTimeout(() => {
+          if (locked) container.style.overflowY = 'hidden';
+        }, 400);
+      }
     };
+
+    const onTouchStart = () => {
+      if (locked) {
+        locked = false;
+        container.style.overflowY = '';
+      }
+    };
+
     container.addEventListener('scroll', onScroll, { passive: true });
+    container.addEventListener('touchstart', onTouchStart, { passive: true });
+
     return () => {
       container.removeEventListener('scroll', onScroll);
-      clearTimeout(timer);
+      container.removeEventListener('touchstart', onTouchStart);
+      container.style.overflowY = '';
+      clearTimeout(lockTimer);
     };
   }, []);
 

@@ -165,6 +165,7 @@ export default function HomePage() {
     if (!container || !snapTarget) return;
 
     let isLocked = false;
+    let hasUnlocked = false;
     let gestureStartY = 0;
     let currentTouchY = 0;
 
@@ -179,8 +180,16 @@ export default function HomePage() {
       currentTouchY = e.touches[0].clientY;
       if (!isLocked) return;
       const dy = gestureStartY - currentTouchY;
-      if (dy < -20 || dy > 50) {
+      if (dy < -20) {
+        // 위로 스크롤 - 잠금 해제 후 위로 올라가게
         isLocked = false;
+        hasUnlocked = false;
+        return;
+      }
+      if (dy > 50) {
+        // 아래로 충분히 스와이프 - 잠금 해제 후 배너로
+        isLocked = false;
+        hasUnlocked = true;
         return;
       }
       e.preventDefault();
@@ -188,7 +197,12 @@ export default function HomePage() {
 
     const onScroll = () => {
       const snapPos = getSnapPos();
-      if (!isLocked && container.scrollTop + 30 >= snapPos) {
+      // 위로 올라가면 hasUnlocked 초기화
+      if (container.scrollTop < snapPos - 100) {
+        hasUnlocked = false;
+      }
+      // 잠금 해제 후 재잠금 방지
+      if (!isLocked && !hasUnlocked && container.scrollTop + 30 >= snapPos) {
         isLocked = true;
         gestureStartY = currentTouchY;
       }

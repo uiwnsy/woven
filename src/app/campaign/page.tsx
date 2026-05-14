@@ -181,7 +181,7 @@ export default function CampaignPage() {
         </div>
 
         {/* Frame 294: cards + button */}
-        <div className="flex flex-col gap-[20px]">
+        <div className="flex flex-col gap-[20px] px-5">
           <div className="flex flex-col gap-[10px]">
             {filtered.map(campaign => (
               <CampaignCard key={campaign.id} campaign={campaign} />

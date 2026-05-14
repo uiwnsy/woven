@@ -42,9 +42,9 @@ const KPIS = [
 ];
 
 const TONES = [
-  { id: 'formal',   label: '공식적', icon: '👔' },
-  { id: 'friendly', label: '친근한', icon: '😊' },
-  { id: 'casual',   label: '캐주얼', icon: '✌️' },
+  { id: 'formal',   label: '공식적', icon: '/formal-icon.svg' },
+  { id: 'friendly', label: '친근한', icon: '/friendly-icon.svg' },
+  { id: 'casual',   label: '캐주얼', icon: '/casual-icon.svg' },
 ];
 
 const GOAL_KPI_MAP: Record<string, string[]> = {
@@ -668,72 +668,92 @@ function Step4({ form, updateForm }: {
   };
 
   return (
-    <div className="px-5 pt-6">
-      <span className="inline-block bg-[#dcfce7] text-[#16a34a] text-[13px] font-semibold px-3 py-1 rounded-full mb-3">
-        AI 생성 완료
-      </span>
-      <h1 className="text-[24px] font-bold text-stone-900 mb-2">브리프를 확인해주세요</h1>
-      <p className="text-[14px] text-stone-500 mb-6 leading-relaxed">
-        캠페인 정보 기반으로 AI가 생성한 브리프예요. 내용을 확인하고,<br />
-        필요한 부분을 수정한 뒤 저장하세요.
-      </p>
+    <div className="px-5 pt-6 flex flex-col gap-[30px]">
+
+      {/* Header */}
+      <div className="flex flex-col gap-[18px]">
+        <h1 className="text-[22px] font-bold text-black">브리프를 확인해주세요</h1>
+        <div className="flex gap-2 bg-[#EEF7FF] rounded-[12px] p-5">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[2px]">
+            <circle cx="9" cy="9" r="8" stroke="#2D92FE" strokeWidth="1.5"/>
+            <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
+            <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
+          </svg>
+          <p className="text-[14px] font-medium text-[#2D92FE] leading-[135%]">
+            캠페인 정보 기반으로 AI가 생성한 브리프예요.<br />
+            내용을 확인하고, 필요한 부분을 수정한 뒤 저장하세요.
+          </p>
+        </div>
+      </div>
 
       {/* Tone selector */}
-      <div className="mb-5">
-        <p className="text-[16px] font-semibold text-stone-900 mb-3">브리프 톤</p>
-        <div className="flex gap-3">
-          {TONES.map(tone => (
-            <button
-              key={tone.id}
-              onClick={() => updateForm('briefTone', tone.id)}
-              className={`flex-1 flex flex-col items-center gap-2 py-4 rounded-2xl border-2 transition-all active:opacity-80
-                ${form.briefTone === tone.id ? 'border-iris-500 bg-[#f5f5ff]' : 'border-stone-200 bg-white'}`}
-            >
-              <span className="text-[24px]">{tone.icon}</span>
-              <span className={`text-[14px] font-semibold
-                ${form.briefTone === tone.id ? 'text-iris-500' : 'text-stone-600'}`}>
-                {tone.label}
-              </span>
-            </button>
-          ))}
+      <div className="flex flex-col gap-[14px]">
+        <span className="text-[18px] font-semibold text-black">브리프 톤</span>
+        <div className="flex gap-[14px]">
+          {TONES.map(tone => {
+            const isActive = form.briefTone === tone.id;
+            return (
+              <button
+                key={tone.id}
+                onClick={() => updateForm('briefTone', tone.id)}
+                className={`flex-1 flex flex-col items-center gap-2 p-5 rounded-[10px] transition-all active:opacity-80
+                  ${isActive
+                    ? 'border-2 border-[#6366F1] bg-white'
+                    : 'border border-[#E8E7E4] bg-white'}`}
+              >
+                <img src={tone.icon} alt={tone.label} className="w-[52px] h-[52px]" />
+                <span className="text-[18px] font-semibold text-[#1C1A17]">{tone.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Generated brief */}
-      <div className="border border-stone-200 rounded-2xl overflow-hidden mb-4">
-        <div className="flex items-center justify-between px-4 py-3 border-b border-stone-100">
-          <span className="text-[15px] font-semibold text-stone-900">생성된 브리프</span>
-          <div className="bg-iris-500 px-2.5 py-1 rounded-lg">
-            <span className="text-white text-[12px] font-bold">AI</span>
+      {/* Generated brief card */}
+      <div className="flex flex-col gap-[6px]">
+        <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden flex flex-col">
+          {/* Card header */}
+          <div className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF]">
+            <span className="text-[16px] font-medium text-black">생성된 브리프</span>
+            <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
+              <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
+            </div>
+          </div>
+
+          {/* Brief content */}
+          <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
+            <p className="text-[16px] font-medium text-[#1C1A17] leading-[150%] whitespace-pre-wrap">
+              {MOCK_BRIEF}
+            </p>
+          </div>
+
+          {/* Edit / Copy buttons */}
+          <div className="flex border-t border-[#ECECEF]">
+            <button className="flex-1 py-[15px] flex items-center justify-center bg-[#F8FAFF] border-r border-[#ECECEF] rounded-bl-[14px] active:opacity-70">
+              <span className="text-[16px] font-medium text-black">수정하기</span>
+            </button>
+            <button
+              onClick={handleCopy}
+              className="flex-1 py-[15px] flex items-center justify-center gap-1 bg-[#F8FAFF] rounded-br-[14px] active:opacity-70"
+            >
+              {copied
+                ? <><Check size={14} className="text-[#6366F1]" /><span className="text-[16px] font-medium text-[#6366F1]">복사됨</span></>
+                : <span className="text-[16px] font-medium text-black">복사하기</span>}
+            </button>
           </div>
         </div>
-        <div className="px-4 py-4">
-          <pre className="text-[14px] text-stone-700 leading-relaxed whitespace-pre-wrap font-sans">
-            {MOCK_BRIEF}
-          </pre>
-        </div>
+
+        {/* Disclaimer */}
+        <p className="text-[14px] font-normal text-[#B0ADA7] leading-[135%]">
+          인플루언서별 발송 시 이름과 핸들이 자동으로 반영돼요.
+        </p>
       </div>
 
-      {/* Action buttons */}
-      <div className="flex gap-3 mb-2">
-        <button className="flex-1 h-[48px] border border-stone-200 rounded-xl text-[15px] font-semibold text-stone-700 active:opacity-70">
-          수정하기
-        </button>
-        <button
-          onClick={handleCopy}
-          className="flex-1 h-[48px] border border-stone-200 rounded-xl text-[15px] font-semibold text-stone-700 active:opacity-70 flex items-center justify-center gap-1.5"
-        >
-          {copied
-            ? <><Check size={16} className="text-green-500" /><span>복사됨</span></>
-            : '복사하기'}
-        </button>
-      </div>
-      <p className="text-[12px] text-stone-400 text-center mb-4">
-        인플루언서별 발송 시 이름과 핸들이 자동으로 반영돼요.
-      </p>
-      <button className="w-full py-2 text-[15px] text-iris-500 font-semibold text-center active:opacity-70">
-        다시 생성하기
+      {/* Regenerate button */}
+      <button className="w-full h-[56px] bg-[#F0F2FB] rounded-[12px] flex items-center justify-center active:opacity-70">
+        <span className="text-[18px] font-bold text-[#6366F1]">다시 생성하기</span>
       </button>
+
     </div>
   );
 }
@@ -927,13 +947,13 @@ export default function CampaignNewPage() {
           <>
             <button
               onClick={() => setStep(5)}
-              className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80"
+              className="w-full h-[56px] bg-[#2E2C28] text-white text-[18px] font-bold rounded-[12px] active:opacity-80"
             >
               브리프 저장하고 캠페인 만들기
             </button>
             <button
               onClick={() => setStep(5)}
-              className="w-full py-3 text-[15px] text-stone-400 text-center active:opacity-60"
+              className="w-full h-[56px] text-[18px] font-medium text-[#B7B7B7] text-center active:opacity-60 flex items-center justify-center"
             >
               나중에 할게요
             </button>

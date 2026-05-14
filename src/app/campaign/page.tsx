@@ -81,37 +81,37 @@ function CampaignCard({ campaign }: { campaign: Campaign }) {
   const hasProgress = campaign.progressPct !== undefined;
 
   return (
-    <div className="bg-white mx-5 rounded-2xl mb-3 px-5 py-5 border border-[#ebeef7] shadow-[0_2px_8px_rgba(235,238,247,0.6)]">
-      {/* Title + Status */}
-      <div className="flex items-start justify-between mb-2">
-        <span className="text-[18px] font-semibold text-black leading-[1.3] flex-1 pr-3">
-          {campaign.title}
-        </span>
-        <span className={`${statusStyle.bg} ${statusStyle.text} text-[14px] font-semibold px-3 py-1 rounded-full shrink-0 mt-0.5`}>
-          {campaign.status}
-        </span>
-      </div>
-
-      {/* Info row */}
-      <div className="flex items-center gap-4 mb-4">
-        <div className="flex items-center gap-1.5">
-          <Calendar size={14} className="text-stone-500 shrink-0" />
-          <span className="text-[14px] font-medium text-stone-500">{campaign.dateRange}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <Users size={14} className="text-stone-500 shrink-0" />
-          <span className="text-[13px] font-medium text-stone-500">
-            인플루언서 {campaign.influencerCount}명 연결
+    <div className="bg-white rounded-[14px] border border-[#EBEEF7] px-5 py-[22px] flex flex-col gap-4">
+      {/* Section 1: Title+status + Info row */}
+      <div className="flex flex-col gap-[6px]">
+        <div className="flex items-start justify-between">
+          <span className="text-[18px] font-semibold text-black leading-[1.3] flex-1 pr-3">
+            {campaign.title}
+          </span>
+          <span className={`${statusStyle.bg} ${statusStyle.text} text-[14px] font-semibold px-[8px] py-[6px] rounded-full shrink-0`}>
+            {campaign.status}
           </span>
         </div>
+        <div className="flex items-center gap-[14px]">
+          <div className="flex items-center gap-[3px]">
+            <Calendar size={16} className="shrink-0" style={{ color: '#78756E' }} />
+            <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>{campaign.dateRange}</span>
+          </div>
+          <div className="flex items-center gap-[2px]">
+            <Users size={16} className="shrink-0" style={{ color: '#78756E' }} />
+            <span className="text-[13px] font-medium" style={{ color: '#78756E' }}>
+              인플루언서 {campaign.influencerCount}명 연결
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* Progress bar */}
+      {/* Section 2: Progress bar */}
       {hasProgress && (
-        <div className="mb-3">
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[14px] font-medium text-stone-500">{campaign.progressLabel}</span>
-            <span className="text-[13px] font-medium text-stone-500">{campaign.progressFraction}</span>
+        <div className="flex flex-col gap-[6px]">
+          <div className="flex items-center justify-between">
+            <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>{campaign.progressLabel}</span>
+            <span className="text-[13px] font-medium" style={{ color: '#78756E' }}>{campaign.progressFraction}</span>
           </div>
           <div className="w-full h-[5px] bg-stone-200 rounded-full">
             <div
@@ -122,10 +122,10 @@ function CampaignCard({ campaign }: { campaign: Campaign }) {
         </div>
       )}
 
-      {/* Brief status */}
-      <div className="flex items-center gap-1.5 mt-1">
+      {/* Section 3: Brief status */}
+      <div className="flex items-center gap-[2px]">
         <DocumentIcon done={campaign.briefDone} />
-        <span className={`text-[14px] font-semibold ${campaign.briefDone ? 'text-[#3d3fc7]' : 'text-stone-500'}`}>
+        <span className={`text-[14px] font-semibold ${campaign.briefDone ? 'text-[#3d3fc7]' : 'text-[#78756E]'}`}>
           {campaign.briefDone ? '브리프 생성 완료' : '브리프 생성 필요'}
         </span>
       </div>
@@ -181,7 +181,7 @@ export default function CampaignPage() {
         </div>
 
         {/* Campaign cards */}
-        <div className="pt-1">
+        <div className="flex flex-col gap-[10px] px-5">
           {filtered.map(campaign => (
             <CampaignCard key={campaign.id} campaign={campaign} />
           ))}
@@ -190,7 +190,7 @@ export default function CampaignPage() {
         {/* Create button */}
         <button
           onClick={() => router.push('/campaign/new')}
-          className="w-full h-[68px] flex items-center justify-center gap-[4px] rounded-[14px] mt-2 active:opacity-70"
+          className="mx-5 h-[68px] flex items-center justify-center gap-[4px] rounded-[14px] mt-[10px] active:opacity-70"
           style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
         >
           <PlusCircle size={16} className="text-iris-500" />

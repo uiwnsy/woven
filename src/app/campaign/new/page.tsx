@@ -760,13 +760,14 @@ function Step3({ form, updateForm }: {
 
 // ─── Step 4: AI Brief Result ───────────────────────────────────────────────
 
-function Step4({ form, updateForm }: {
+function Step4({ form, updateForm, isEditing, onEditingChange }: {
   form: FormData;
   updateForm: (k: keyof FormData, v: any) => void;
+  isEditing: boolean;
+  onEditingChange: (v: boolean) => void;
 }) {
   const [copied, setCopied] = useState(false);
   const [briefVersion, setBriefVersion] = useState(0);
-  const [isEditing, setIsEditing] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const variants = BRIEF_VARIANTS[form.briefTone] ?? BRIEF_VARIANTS.friendly;
@@ -780,14 +781,14 @@ function Step4({ form, updateForm }: {
   };
 
   const handleRegenerate = () => {
-    setIsEditing(false);
+    onEditingChange(false);
     setBriefVersion(v => v + 1);
   };
 
   const handleToneChange = (toneId: string) => {
     updateForm('briefTone', toneId);
     setBriefVersion(0);
-    setIsEditing(false);
+    onEditingChange(false);
   };
 
   useLayoutEffect(() => {
@@ -872,7 +873,7 @@ function Step4({ form, updateForm }: {
           {/* Edit / Copy buttons */}
           <div className="flex border-t border-[#ECECEF]">
             <button
-              onClick={() => setIsEditing(e => !e)}
+              onClick={() => onEditingChange(!isEditing)}
               className="flex-1 py-[15px] flex items-center justify-center bg-[#F8FAFF] border-r border-[#ECECEF] rounded-bl-[14px] active:opacity-70"
             >
               <span className={`text-[16px] font-medium ${isEditing ? 'text-[#6366F1]' : 'text-black'}`}>
@@ -965,10 +966,12 @@ export default function CampaignNewPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>(1);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isStep4Editing, setIsStep4Editing] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 });
+    setIsStep4Editing(false);
   }, [step]);
 
   const [form, setForm] = useState<FormData>({
@@ -1045,16 +1048,16 @@ export default function CampaignNewPage() {
       </div>
 
       {/* Scrollable content */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto pb-[160px]">
+      <div ref={scrollRef} className={`flex-1 overflow-y-auto ${isStep4Editing ? 'pb-6' : 'pb-[160px]'}`}>
         {step === 1 && <Step1 form={form} updateForm={updateForm} togglePlatform={togglePlatform} />}
         {step === 2 && <Step2 form={form} updateForm={updateForm} toggleKPI={toggleKPI} />}
         {step === 3 && <Step3 form={form} updateForm={updateForm} />}
-        {step === 4 && <Step4 form={form} updateForm={updateForm} />}
+        {step === 4 && <Step4 form={form} updateForm={updateForm} isEditing={isStep4Editing} onEditingChange={setIsStep4Editing} />}
         {step === 5 && <Step5 form={form} router={router} />}
       </div>
 
       {/* Bottom CTA */}
-      <div className="absolute bottom-0 w-full px-5 pb-8 pt-4 bg-white border-t border-[#f0f2f8]">
+      <div className={`absolute bottom-0 w-full px-5 pb-8 pt-4 bg-white border-t border-[#f0f2f8] ${step === 4 && isStep4Editing ? 'hidden' : ''}`}>
         {step === 1 && (
           <button
             onClick={() => step1Valid && setStep(2)}

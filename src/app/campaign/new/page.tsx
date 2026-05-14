@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, Calendar, Plus, X, Check } from 'lucide-react';
 
@@ -790,10 +790,9 @@ function Step4({ form, updateForm }: {
     setIsEditing(false);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isEditing && textareaRef.current) {
       const el = textareaRef.current;
-      el.style.height = '0px';
       el.style.height = el.scrollHeight + 'px';
       el.focus();
       el.setSelectionRange(el.value.length, el.value.length);

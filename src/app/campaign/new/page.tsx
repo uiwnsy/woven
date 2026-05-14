@@ -796,7 +796,7 @@ function Step4({ form, updateForm }: {
     setEditedBrief(null);
   };
 
-  // Lock body scroll while overlay is open (iOS scroll-bleed fix)
+  // Body scroll lock while overlay is open
   useEffect(() => {
     if (!isEditing) return;
     const prev = document.body.style.overflow;
@@ -804,17 +804,26 @@ function Step4({ form, updateForm }: {
     return () => { document.body.style.overflow = prev; };
   }, [isEditing]);
 
+  // Set textarea height to content height on open
+  useLayoutEffect(() => {
+    if (!isEditing || !textareaRef.current) return;
+    const el = textareaRef.current;
+    el.style.height = '0px';
+    el.style.height = el.scrollHeight + 'px';
+  }, [isEditing]);
+
   return (
     <>
-      {/* Full-screen edit overlay */}
+      {/* Edit overlay — three separate fixed layers so header can NEVER scroll */}
       {isEditing && (
-        <div
-          className="fixed inset-x-0 top-0 z-50 bg-white"
-          style={{ height: '100dvh' }}
-          onTouchMove={e => e.stopPropagation()}
-        >
-          {/* Header — never scrolls */}
-          <div className="absolute inset-x-0 top-0 h-[56px] flex items-center justify-between px-5 border-b border-[#E8E7E4] bg-white z-10">
+        <>
+          {/* Layer 1: white backdrop — blocks background interaction */}
+          <div
+            className="fixed inset-0 z-50 bg-white"
+            onTouchMove={e => { e.stopPropagation(); e.preventDefault(); }}
+          />
+          {/* Layer 2: header — fixed to viewport, immune to any scroll */}
+          <div className="fixed inset-x-0 top-0 z-[60] h-[56px] flex items-center justify-between px-5 bg-white border-b border-[#E8E7E4]">
             <span className="text-[18px] font-semibold text-black">브리프 수정</span>
             <button
               onClick={handleDoneEditing}
@@ -823,20 +832,27 @@ function Step4({ form, updateForm }: {
               완료
             </button>
           </div>
-          {/* Scroll area — only this scrolls */}
+          {/* Layer 3: scroll area — content height + 50px, no extra empty space */}
           <div
-            className="absolute inset-x-0 bottom-0 overflow-y-auto p-5"
+            className="fixed inset-x-0 bottom-0 z-[60] overflow-y-auto bg-white"
             style={{ top: '56px', WebkitOverflowScrolling: 'touch' }}
-            onTouchMove={e => e.stopPropagation()}
           >
-            <textarea
-              ref={textareaRef}
-              defaultValue={displayBrief}
-              autoFocus
-              className="w-full min-h-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white block"
-            />
+            <div className="p-5 pb-[50px]">
+              <textarea
+                ref={textareaRef}
+                defaultValue={displayBrief}
+                autoFocus
+                onInput={e => {
+                  const el = e.currentTarget;
+                  el.style.height = '0px';
+                  el.style.height = el.scrollHeight + 'px';
+                }}
+                className="w-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white block"
+                style={{ overflowY: 'hidden' }}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       <div className="px-5 pt-6 flex flex-col gap-[30px] pb-10">

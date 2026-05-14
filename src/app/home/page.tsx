@@ -404,7 +404,7 @@ export default function HomePage() {
             {CAMPAIGNS.map(campaign => (
               <div
                 key={campaign.id}
-                className={`w-[200px] shrink-0 bg-white border border-[#ebeef7] rounded-[14px] p-5 flex flex-col ${campaign.type === 'active' ? 'gap-[75px]' : 'gap-[14px]'}`}
+                className={`w-[200px] shrink-0 bg-white border border-[#ebeef7] rounded-[14px] p-5 flex flex-col ${campaign.type === 'active' ? 'justify-between' : 'gap-[14px]'}`}
               >
                 {/* Title box */}
                 <div className="flex flex-col gap-[14px]">

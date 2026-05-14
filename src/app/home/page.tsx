@@ -164,37 +164,47 @@ export default function HomePage() {
     const snapTarget = snapRef.current;
     if (!container || !snapTarget) return;
 
-    let locked = false;
-    let lockTimer: ReturnType<typeof setTimeout>;
+    let isLocked = false;
+    let gestureStartY = 0;
+    let currentTouchY = 0;
+
+    const getSnapPos = () => snapTarget.offsetTop;
+
+    const onTouchStart = (e: TouchEvent) => {
+      gestureStartY = e.touches[0].clientY;
+      currentTouchY = gestureStartY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      currentTouchY = e.touches[0].clientY;
+      if (!isLocked) return;
+      const dy = gestureStartY - currentTouchY;
+      if (dy < -20 || dy > 50) {
+        isLocked = false;
+        return;
+      }
+      e.preventDefault();
+    };
 
     const onScroll = () => {
-      if (locked) return;
-      const snapPos = snapTarget.offsetTop;
-      if (container.scrollTop + 50 >= snapPos) {
-        clearTimeout(lockTimer);
-        container.scrollTo({ top: snapPos, behavior: 'smooth' });
-        locked = true;
-        lockTimer = setTimeout(() => {
-          if (locked) container.style.overflowY = 'hidden';
-        }, 400);
+      const snapPos = getSnapPos();
+      if (!isLocked && container.scrollTop + 30 >= snapPos) {
+        isLocked = true;
+        gestureStartY = currentTouchY;
+      }
+      if (isLocked && container.scrollTop !== snapPos) {
+        container.scrollTop = snapPos;
       }
     };
 
-    const onTouchStart = () => {
-      if (locked) {
-        locked = false;
-        container.style.overflowY = '';
-      }
-    };
-
-    container.addEventListener('scroll', onScroll, { passive: true });
     container.addEventListener('touchstart', onTouchStart, { passive: true });
+    container.addEventListener('touchmove', onTouchMove, { passive: false });
+    container.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
-      container.removeEventListener('scroll', onScroll);
       container.removeEventListener('touchstart', onTouchStart);
-      container.style.overflowY = '';
-      clearTimeout(lockTimer);
+      container.removeEventListener('touchmove', onTouchMove);
+      container.removeEventListener('scroll', onScroll);
     };
   }, []);
 

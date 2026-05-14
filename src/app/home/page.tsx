@@ -333,7 +333,7 @@ export default function HomePage() {
             {KPI_DATA.map(kpi => (
               <div
                 key={kpi.id}
-                className="flex-1 min-w-0 bg-white border border-[#E8E7E4] rounded-[14px] px-5 py-[22px] flex flex-col gap-3"
+                className="flex-1 min-w-0 bg-white border border-[#ebeef7] rounded-[14px] px-5 py-[22px] flex flex-col gap-3"
               >
                 <div className="flex flex-col gap-1.5">
                   <p className="text-[14px] font-medium leading-none" style={{ color: '#5C5A54' }}>{kpi.label}</p>
@@ -404,7 +404,7 @@ export default function HomePage() {
             {CAMPAIGNS.map(campaign => (
               <div
                 key={campaign.id}
-                className={`w-[200px] shrink-0 bg-white border border-[#E8E7E4] rounded-[14px] p-5 flex flex-col ${campaign.type === 'active' ? 'gap-[75px]' : 'gap-[14px]'}`}
+                className={`w-[200px] shrink-0 bg-white border border-[#ebeef7] rounded-[14px] p-5 flex flex-col ${campaign.type === 'active' ? 'gap-[75px]' : 'gap-[14px]'}`}
               >
                 {/* Title box */}
                 <div className="flex flex-col gap-[14px]">

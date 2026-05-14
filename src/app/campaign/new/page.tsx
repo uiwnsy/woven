@@ -550,7 +550,7 @@ function Step3({ form, updateForm }: {
               className="rounded-[10px] p-5 bg-[#F8FAFF]"
               style={{ border: '1px solid rgba(221,231,255,0.4)' }}
             >
-              <p className="text-[18px] font-medium text-[#8995A2] leading-[150%]">{form.brandDesc}</p>
+              <p className="text-[16px] font-medium text-[#8995A2] leading-[150%]">{form.brandDesc}</p>
             </div>
             <p className="text-[14px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
           </div>
@@ -602,7 +602,7 @@ function Step3({ form, updateForm }: {
               style={{ border: '1px solid rgba(221,231,255,0.4)' }}
             >
               {DEFAULT_RESTRICTIONS.map(r => (
-                <p key={r} className="text-[18px] font-medium text-[#8995A2] leading-[150%]">- {r}</p>
+                <p key={r} className="text-[16px] font-medium text-[#8995A2] leading-[150%]">- {r}</p>
               ))}
             </div>
             <p className="text-[14px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>

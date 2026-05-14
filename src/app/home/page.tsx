@@ -401,23 +401,26 @@ export default function HomePage() {
             {CAMPAIGNS.map(campaign => (
               <div
                 key={campaign.id}
-                className="w-[186px] shrink-0 bg-white border border-[#ebeef7] rounded-2xl p-5 flex flex-col"
+                className="w-[200px] shrink-0 bg-white border border-[#E8E7E4] rounded-[14px] p-5 flex flex-col gap-[75px]"
               >
-                <span className={`${campaign.statusBg} ${campaign.statusText} text-[14px] font-semibold px-3 py-1.5 rounded-full self-start mb-3`}>
-                  {campaign.status}
-                </span>
-                <p className="text-[18px] font-bold text-black leading-[1.4] flex-1 whitespace-pre-line">{campaign.name}</p>
-                {/* Progress bar */}
-                <div className="mt-4">
-                  <div className="w-full h-[3px] bg-stone-200 rounded-full mb-2">
+                {/* Title box */}
+                <div className="flex flex-col gap-[14px]">
+                  <span className={`${campaign.statusBg} ${campaign.statusText} text-[14px] font-semibold px-[10px] py-[6px] rounded-[30px] self-start`}>
+                    {campaign.status}
+                  </span>
+                  <p className="text-[18px] font-bold text-black leading-[1.35] whitespace-pre-line">{campaign.name}</p>
+                </div>
+                {/* Progress section */}
+                <div className="flex flex-col gap-[13px]">
+                  <div className="relative w-full h-[3px] bg-[#D9D9D9] rounded-[20px]">
                     <div
-                      className="h-full bg-iris-500 rounded-full"
+                      className="absolute top-0 left-0 h-full bg-iris-500 rounded-[20px]"
                       style={{ width: `${campaign.progressPct * 100}%` }}
                     />
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[14px] font-bold text-stone-500">{campaign.progress}</span>
-                    <span className="text-[14px] font-bold text-[#d96430]">{campaign.dday}</span>
+                    <span className="text-[14px] font-bold" style={{ color: '#78756E' }}>{campaign.progress}</span>
+                    <span className="text-[14px] font-bold text-[#D96430]">{campaign.dday}</span>
                   </div>
                 </div>
               </div>

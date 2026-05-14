@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronDown, Calendar, Plus, X, Check } from 'lucide-react';
+import { ChevronLeft, Calendar, Plus, X, Check } from 'lucide-react';
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -321,7 +321,7 @@ function Step1({ form, updateForm, togglePlatform }: {
                 <p className="text-[14px] font-medium text-[#B0ADA7] leading-none">{selectedManager.team}</p>
               </div>
             </div>
-            <ChevronDown size={20} className="text-[#B0ADA7]" />
+            <img src="/arrow-right.svg" alt="" className="w-5 h-5 rotate-90" />
           </button>
         </div>
       </div>

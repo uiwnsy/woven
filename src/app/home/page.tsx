@@ -158,12 +158,22 @@ export default function HomePage() {
   const [rankFilter, setRankFilter] = useState('ROAS순');
   const [showBanner, setShowBanner] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const lastSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
 
     let touchStartY = 0;
+
+    const triggerBounce = () => {
+      const el = lastSectionRef.current;
+      if (!el) return;
+      el.classList.remove('section-bounce-hint');
+      void el.offsetWidth;
+      el.classList.add('section-bounce-hint');
+      setTimeout(() => el.classList.remove('section-bounce-hint'), 700);
+    };
 
     const onTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY;
@@ -172,8 +182,19 @@ export default function HomePage() {
     const onTouchEnd = (e: TouchEvent) => {
       const atBottom = container.scrollTop >= container.scrollHeight - container.clientHeight - 5;
       const dy = touchStartY - e.changedTouches[0].clientY;
-      if (atBottom && dy > 50) setShowBanner(true);
-      if (showBanner && dy < -50) setShowBanner(false);
+
+      if (!showBanner) {
+        if (atBottom && dy > 65) {
+          setShowBanner(true);
+          setTimeout(() => {
+            container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+          }, 80);
+        } else if (atBottom && dy > 18) {
+          triggerBounce();
+        }
+      } else {
+        if (dy < -50) setShowBanner(false);
+      }
     };
 
     container.addEventListener('touchstart', onTouchStart, { passive: true });
@@ -420,7 +441,7 @@ export default function HomePage() {
         </div>
 
         {/* 전체 캠페인 */}
-        <div className="bg-white pt-[40px] pb-[40px] mb-[10px]">
+        <div ref={lastSectionRef} className="bg-white pt-[40px] pb-[40px] mb-[10px]">
           <div className="flex items-center justify-between px-5 mb-4">
             <h2 className="text-[22px] font-bold text-stone-900">전체 캠페인</h2>
             <button className="border border-[#D4D2CE] rounded-[30px] px-[10px] pt-[3px] pb-1 active:opacity-70">
@@ -489,25 +510,33 @@ export default function HomePage() {
         </div>
 
         </div>
-      </div>
 
-      {/* FAQ / Help - 스크롤 컨테이너 밖, 아래 스와이프로 슬라이드업 */}
-      <div
-        className="absolute left-0 right-0 transition-transform duration-300 ease-out z-10"
-        style={{
-          bottom: '95px',
-          transform: showBanner ? 'translateY(0)' : 'translateY(100%)',
-        }}
-      >
-        <div className="mx-5 rounded-[14px] overflow-hidden px-[22px] py-[28px] flex items-center justify-between" style={{ backgroundColor: '#EDF1FF' }}>
-          <div className="flex flex-col gap-1">
-            <p className="text-[20px] font-semibold leading-none" style={{ color: '#1E2075' }}>막히는 게 있나요?</p>
-            <p className="text-[14px] font-semibold leading-[1.4]" style={{ color: 'rgba(30, 32, 117, 0.5)' }}>
-              자주 묻는 질문과 사용 가이드를<br />모아뒀어요
-            </p>
+        {/* FAQ Banner - 스크롤 컨테이너 안, 마지막 섹션 아래에서 펼쳐짐 */}
+        <div
+          style={{
+            maxHeight: showBanner ? '200px' : '0px',
+            overflow: 'hidden',
+            transition: 'max-height 0.45s ease-out',
+          }}
+        >
+          <div
+            style={{
+              transform: showBanner ? 'translateY(0)' : 'translateY(24px)',
+              transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            }}
+          >
+            <div className="mx-5 mt-[10px] mb-0 rounded-[14px] px-[22px] py-[28px] flex items-center justify-between" style={{ backgroundColor: '#EDF1FF' }}>
+              <div className="flex flex-col gap-1">
+                <p className="text-[20px] font-semibold leading-none" style={{ color: '#1E2075' }}>막히는 게 있나요?</p>
+                <p className="text-[14px] font-semibold leading-[1.4]" style={{ color: 'rgba(30, 32, 117, 0.5)' }}>
+                  자주 묻는 질문과 사용 가이드를<br />모아뒀어요
+                </p>
+              </div>
+              <img src="/banner-img.png" alt="" width={78} height={78} className="shrink-0 ml-3" />
+            </div>
           </div>
-          <img src="/banner-img.png" alt="" width={78} height={78} className="shrink-0 ml-3" />
         </div>
+
       </div>
 
       {/* ── Bottom navigation ── */}

@@ -796,12 +796,24 @@ function Step4({ form, updateForm }: {
     setEditedBrief(null);
   };
 
+  // Lock body scroll while overlay is open (iOS scroll-bleed fix)
+  useEffect(() => {
+    if (!isEditing) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [isEditing]);
+
   return (
     <>
-      {/* Full-screen edit overlay — avoids keyboard layout issues entirely */}
+      {/* Full-screen edit overlay */}
       {isEditing && (
-        <div className="fixed inset-x-0 top-0 z-50 bg-white overflow-hidden" style={{ height: '100dvh' }}>
-          {/* Header — absolutely pinned, never scrolls */}
+        <div
+          className="fixed inset-x-0 top-0 z-50 bg-white"
+          style={{ height: '100dvh' }}
+          onTouchMove={e => e.stopPropagation()}
+        >
+          {/* Header — never scrolls */}
           <div className="absolute inset-x-0 top-0 h-[56px] flex items-center justify-between px-5 border-b border-[#E8E7E4] bg-white z-10">
             <span className="text-[18px] font-semibold text-black">브리프 수정</span>
             <button
@@ -811,13 +823,17 @@ function Step4({ form, updateForm }: {
               완료
             </button>
           </div>
-          {/* Scroll area — fills space below header */}
-          <div className="absolute inset-x-0 bottom-0 overflow-y-auto p-5" style={{ top: '56px' }}>
+          {/* Scroll area — only this scrolls */}
+          <div
+            className="absolute inset-x-0 bottom-0 overflow-y-auto p-5"
+            style={{ top: '56px', WebkitOverflowScrolling: 'touch' }}
+            onTouchMove={e => e.stopPropagation()}
+          >
             <textarea
               ref={textareaRef}
               defaultValue={displayBrief}
               autoFocus
-              className="w-full min-h-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white"
+              className="w-full min-h-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white block"
             />
           </div>
         </div>

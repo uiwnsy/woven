@@ -454,12 +454,11 @@ function AutoFillBadge() {
   );
 }
 
-function HashtagSection({ title, tags, onAdd, onRemove, placeholder }: {
+function HashtagSection({ title, tags, onAdd, onRemove }: {
   title: string;
   tags: string[];
   onAdd: (t: string) => void;
   onRemove: (t: string) => void;
-  placeholder: string;
 }) {
   const [value, setValue] = useState('');
   const submit = () => {
@@ -474,14 +473,17 @@ function HashtagSection({ title, tags, onAdd, onRemove, placeholder }: {
           className="flex items-center justify-between border border-[#E8E7E4] rounded-[10px] bg-white h-[56px]"
           style={{ padding: '0 12px 0 20px' }}
         >
-          <input
-            type="text"
-            value={value}
-            onChange={e => setValue(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && submit()}
-            placeholder={placeholder}
-            className="flex-1 text-[18px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
-          />
+          <div className="flex items-center flex-1 gap-[2px]">
+            <span className="text-[18px] font-medium text-[#1C1A17]">#</span>
+            <input
+              type="text"
+              value={value}
+              onChange={e => setValue(e.target.value.replace(/^#/, ''))}
+              onKeyDown={e => e.key === 'Enter' && submit()}
+              placeholder="키워드를 입력하세요"
+              className="flex-1 text-[18px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
+            />
+          </div>
           <button
             onClick={submit}
             className="w-[34px] h-[34px] flex items-center justify-center rounded-[8px] active:opacity-60 shrink-0"
@@ -494,7 +496,7 @@ function HashtagSection({ title, tags, onAdd, onRemove, placeholder }: {
         <div className="flex flex-wrap gap-[6px]">
           {tags.map(tag => (
             <span key={tag} className="flex items-center gap-2 bg-[#F5F5F3] text-[14px] font-medium text-[#78756E] px-[14px] py-[8px] rounded-full">
-              {tag}
+              #{tag}
               <button onClick={() => onRemove(tag)} className="active:opacity-60 flex items-center">
                 <X size={9} className="text-[#78756E]" />
               </button>
@@ -563,24 +565,26 @@ function Step3({ form, updateForm }: {
           <textarea
             value={form.productFeatures}
             onChange={e => updateForm('productFeatures', e.target.value)}
+            onInput={e => { const el = e.currentTarget; el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }}
             placeholder={'예) 주요 성분과 효능, 피부 타입, 사용 후 느낌 등을 자유롭게 적어주세요\n예) SPF50+, 세라마이드 함유, 백탁 없는 수분 텍스처, 민감성 피부 테스트 완료'}
-            rows={3}
-            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
+            rows={1}
+            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white overflow-hidden"
           />
         </div>
 
         {/* 핵심 메시지 */}
         <div className="flex flex-col gap-[12px]">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-[6px]">
             <span className="text-[18px] font-semibold text-black">핵심 메시지</span>
-            <span className="text-[#6366F1]">*</span>
+            <span className="text-[15px] font-normal text-[#91929F]">(선택)</span>
           </div>
           <textarea
             value={form.coreMessage}
             onChange={e => updateForm('coreMessage', e.target.value)}
+            onInput={e => { const el = e.currentTarget; el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }}
             placeholder="예) 인플루언서가 콘텐츠에서 전달해줬으면 하는 핵심 메시지를 적어주세요"
-            rows={3}
-            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white"
+            rows={1}
+            className="w-full border border-[#E8E7E4] rounded-[10px] p-5 text-[18px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none focus:border-iris-400 placeholder:text-[#B0ADA7] bg-white overflow-hidden"
           />
         </div>
 
@@ -632,7 +636,6 @@ function Step3({ form, updateForm }: {
           tags={form.requiredTags}
           onAdd={addRequired}
           onRemove={removeRequired}
-          placeholder="#해시태그"
         />
 
         {/* 추천 해시태그 */}
@@ -641,7 +644,6 @@ function Step3({ form, updateForm }: {
           tags={form.recommendedTags}
           onAdd={addRecommended}
           onRemove={removeRecommended}
-          placeholder="#해시태그 입력"
         />
 
       </div>
@@ -807,7 +809,7 @@ export default function CampaignNewPage() {
     coreMessage: '',
     contentGuide: '',
     requiredTags: ['선케어', '루미에르'],
-    recommendedTags: ['#SPF50', '#자외선차단', '#수분'],
+    recommendedTags: ['SPF50', '자외선차단', '수분'],
     briefTone: 'friendly',
   });
 
@@ -820,6 +822,8 @@ export default function CampaignNewPage() {
     updateForm('kpis', form.kpis.includes(id)
       ? form.kpis.filter(x => x !== id)
       : [...form.kpis, id]);
+
+  const step3Valid = form.productFeatures.trim() !== '';
 
   const step1Valid =
     form.campaignName.trim() !== '' &&
@@ -864,7 +868,7 @@ export default function CampaignNewPage() {
       </div>
 
       {/* Scrollable content */}
-      <div className="flex-1 overflow-y-auto pb-[120px]">
+      <div className="flex-1 overflow-y-auto pb-[160px]">
         {step === 1 && <Step1 form={form} updateForm={updateForm} togglePlatform={togglePlatform} />}
         {step === 2 && <Step2 form={form} updateForm={updateForm} toggleKPI={toggleKPI} />}
         {step === 3 && <Step3 form={form} updateForm={updateForm} />}
@@ -897,8 +901,9 @@ export default function CampaignNewPage() {
           <>
             <button
               onClick={handleGenerateBrief}
-              disabled={isGenerating}
-              className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80 disabled:opacity-70 flex items-center justify-center gap-2"
+              disabled={isGenerating || !step3Valid}
+              className={`w-full h-[56px] text-white text-[18px] font-bold rounded-[12px] flex items-center justify-center gap-2 transition-colors
+                ${step3Valid ? 'bg-[#2E2C28] active:opacity-80' : 'bg-stone-300 cursor-not-allowed'}`}
             >
               {isGenerating ? (
                 <>

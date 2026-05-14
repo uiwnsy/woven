@@ -800,8 +800,9 @@ function Step4({ form, updateForm }: {
     <>
       {/* Full-screen edit overlay — avoids keyboard layout issues entirely */}
       {isEditing && (
-        <div className="fixed inset-x-0 top-0 z-50 bg-white flex flex-col" style={{ height: '100dvh' }}>
-          <div className="flex items-center justify-between px-5 h-[56px] border-b border-[#E8E7E4] shrink-0 bg-white">
+        <div className="fixed inset-x-0 top-0 z-50 bg-white overflow-hidden" style={{ height: '100dvh' }}>
+          {/* Header — absolutely pinned, never scrolls */}
+          <div className="absolute inset-x-0 top-0 h-[56px] flex items-center justify-between px-5 border-b border-[#E8E7E4] bg-white z-10">
             <span className="text-[18px] font-semibold text-black">브리프 수정</span>
             <button
               onClick={handleDoneEditing}
@@ -810,7 +811,8 @@ function Step4({ form, updateForm }: {
               완료
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto min-h-0 p-5">
+          {/* Scroll area — fills space below header */}
+          <div className="absolute inset-x-0 bottom-0 overflow-y-auto p-5" style={{ top: '56px' }}>
             <textarea
               ref={textareaRef}
               defaultValue={displayBrief}

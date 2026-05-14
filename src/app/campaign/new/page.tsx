@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, Calendar, Plus, X, Check } from 'lucide-react';
 
@@ -60,7 +60,52 @@ const MOCK_MANAGERS = [
   { id: '3', name: '박준혁', team: '영업 팀',   initial: '박', color: '#a8f0b8' },
 ];
 
-const MOCK_BRIEF = `안녕하세요 [인플루언서명]님! 😊
+const BRIEF_VARIANTS: Record<string, string[]> = {
+  formal: [
+    `[인플루언서명] 님께,
+
+안녕하세요. 루미에르 마케팅팀입니다.
+
+이번 여름 선케어 캠페인의 공식 협력 파트너로 함께해 주실 분을 찾고 있어, 귀하의 전문적인 뷰티 콘텐츠를 바탕으로 제안드리게 되었습니다.
+
+📦 제품
+루미에르 선블럭 크림 (신제품)
+
+📽 콘텐츠 형식
+인스타그램 릴스 1건 — 데일리 선케어 루틴 소개
+
+🏷 필수 해시태그
+#선케어 #자외선차단 #수분 #루미에르
+
+📎 가이드라인
+docs.google.com/fxB2eY1zadeox4dkz
+
+🚫 금지 사항
+경쟁 브랜드 언급 금지 · 과장 표현 금지 · 프로모션 용어 사용 금지`,
+
+    `[인플루언서명] 님께,
+
+루미에르 마케팅팀에서 공식 캠페인 협력을 제안드립니다.
+
+여름 시즌 선케어 신제품 출시를 알리는 이번 캠페인에서 귀하의 채널과 협력하고자 합니다.
+
+📦 제품
+루미에르 선블럭 크림 (신제품)
+
+📽 콘텐츠 형식
+인스타그램 릴스 1건
+
+🏷 필수 해시태그
+#선케어 #자외선차단 #수분 #루미에르
+
+📎 가이드라인
+docs.google.com/fxB2eY1zadeox4dkz
+
+🚫 금지 사항
+경쟁 브랜드 언급 금지 · 과장 표현 금지`,
+  ],
+  friendly: [
+    `안녕하세요 [인플루언서명]님! 😊
 루미에르입니다.
 
 루미에르 여름 선케어 캠페인에 함께할 크리에이터를 찾고 있어요. [인플루언서명]님의 뷰티 콘텐츠를 보고 저희 톤과 잘 맞을 것 같아 연락드렸어요!
@@ -71,13 +116,73 @@ const MOCK_BRIEF = `안녕하세요 [인플루언서명]님! 😊
 🎬 콘텐츠
 인스타그램 릴스 1건 — 봄 무드 데일리 메이크업룩
 
-🏷️ 필수 태그
+🏷 필수 태그
 #선케어 #자외선차단 #수분 #루미에르
 
-📋 가이드라인
+📎 가이드라인
 docs.google.com/fxB2eY1zadeox4dkz
 
-🚫 경쟁 브랜드 언급 금지 · 프로모션 용어 사용 금지 · 과장 표현 금지`;
+🚫 경쟁 브랜드 언급 금지 · 프로모션 용어 사용 금지 · 과장 표현 금지`,
+
+    `안녕하세요 [인플루언서명]님 🌟
+루미에르 팀이에요!
+
+[인플루언서명]님 콘텐츠를 즐겨 보고 있는데요, 이번 여름 선케어 신제품 캠페인을 함께해 주실 분을 찾고 있어서 연락드렸어요 😄
+
+🎁 보내드릴 제품
+루미에르 선블럭 크림 (신제품)
+
+🎬 콘텐츠 방향
+인스타그램 릴스 1건 — 편하게 일상 속 선케어 루틴으로!
+
+🏷 꼭 넣어주세요
+#선케어 #자외선차단 #수분 #루미에르
+
+📎 가이드라인
+docs.google.com/fxB2eY1zadeox4dkz
+
+🚫 경쟁 브랜드 언급 금지 · 과장 표현은 피해주세요`,
+  ],
+  casual: [
+    `[인플루언서명]님 안녕하세요 ✌️
+루미에르예요!
+
+이번 여름 선케어 신제품 같이 해볼 크리에이터 찾고 있었는데, [인플루언서명]님 피드 보다가 딱이다 싶어서 바로 연락했어요 ㅎㅎ
+
+🎁 제품
+루미에르 선블럭 크림 (신제품)
+
+🎬 콘텐츠
+릴스 1개 — 데일리 선케어 루틴이나 메이크업룩에 자연스럽게 녹여주세요!
+
+🏷 태그
+#선케어 #자외선차단 #수분 #루미에르
+
+📎 가이드
+docs.google.com/fxB2eY1zadeox4dkz
+
+🚫 경쟁 브랜드 언급 NG · 과장 표현 NG`,
+
+    `[인플루언서명]님~~~ 😎
+루미에르 마케팅팀이에요!
+
+솔직히 [인플루언서명]님 뷰티 콘텐츠 진짜 좋아해서요, 이번 여름 선케어 신제품 캠페인 같이 하면 너무 잘 맞을 것 같아 연락드려요 🙌
+
+🎁 제품
+루미에르 선블럭 크림
+
+🎬 콘텐츠
+릴스 1개 — 자유롭게 일상 선케어로!
+
+🏷 필수 태그
+#선케어 #자외선차단 #수분 #루미에르
+
+📎 가이드라인
+docs.google.com/fxB2eY1zadeox4dkz
+
+🚫 경쟁 브랜드 NO · 과장 표현 NO`,
+  ],
+};
 
 function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   return (
@@ -660,15 +765,43 @@ function Step4({ form, updateForm }: {
   updateForm: (k: keyof FormData, v: any) => void;
 }) {
   const [copied, setCopied] = useState(false);
+  const [briefVersion, setBriefVersion] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const variants = BRIEF_VARIANTS[form.briefTone] ?? BRIEF_VARIANTS.friendly;
+  const briefText = variants[briefVersion % variants.length];
 
   const handleCopy = async () => {
-    try { await navigator.clipboard.writeText(MOCK_BRIEF); } catch { /* ignore */ }
+    const text = isEditing ? (textareaRef.current?.value ?? briefText) : briefText;
+    try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleRegenerate = () => {
+    setIsEditing(false);
+    setBriefVersion(v => v + 1);
+  };
+
+  const handleToneChange = (toneId: string) => {
+    updateForm('briefTone', toneId);
+    setBriefVersion(0);
+    setIsEditing(false);
+  };
+
+  useEffect(() => {
+    if (isEditing && textareaRef.current) {
+      const el = textareaRef.current;
+      el.style.height = '0px';
+      el.style.height = el.scrollHeight + 'px';
+      el.focus();
+      el.setSelectionRange(el.value.length, el.value.length);
+    }
+  }, [isEditing]);
+
   return (
-    <div className="px-5 pt-6 flex flex-col gap-[30px]">
+    <div className="px-5 pt-6 flex flex-col gap-[30px] pb-10">
 
       {/* Header */}
       <div className="flex flex-col gap-[18px]">
@@ -695,10 +828,10 @@ function Step4({ form, updateForm }: {
             return (
               <button
                 key={tone.id}
-                onClick={() => updateForm('briefTone', tone.id)}
+                onClick={() => handleToneChange(tone.id)}
                 className={`flex-1 flex flex-col items-center gap-2 p-5 rounded-[10px] transition-all active:opacity-80
                   ${isActive
-                    ? 'border-2 border-[#6366F1] bg-white'
+                    ? 'border border-[#E8E7E4] bg-[#EEEEFF]'
                     : 'border border-[#E8E7E4] bg-white'}`}
               >
                 <img src={tone.icon} alt={tone.label} className="w-[52px] h-[52px]" />
@@ -722,15 +855,30 @@ function Step4({ form, updateForm }: {
 
           {/* Brief content */}
           <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
-            <p className="text-[16px] font-medium text-[#1C1A17] leading-[150%] whitespace-pre-wrap">
-              {MOCK_BRIEF}
-            </p>
+            {isEditing ? (
+              <textarea
+                ref={textareaRef}
+                defaultValue={briefText}
+                onChange={e => { const el = e.currentTarget; el.style.height = '0px'; el.style.height = el.scrollHeight + 'px'; }}
+                className="w-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white"
+                style={{ overflowY: 'hidden' }}
+              />
+            ) : (
+              <p className="text-[16px] font-medium text-[#1C1A17] leading-[150%] whitespace-pre-wrap">
+                {briefText}
+              </p>
+            )}
           </div>
 
           {/* Edit / Copy buttons */}
           <div className="flex border-t border-[#ECECEF]">
-            <button className="flex-1 py-[15px] flex items-center justify-center bg-[#F8FAFF] border-r border-[#ECECEF] rounded-bl-[14px] active:opacity-70">
-              <span className="text-[16px] font-medium text-black">수정하기</span>
+            <button
+              onClick={() => setIsEditing(e => !e)}
+              className="flex-1 py-[15px] flex items-center justify-center bg-[#F8FAFF] border-r border-[#ECECEF] rounded-bl-[14px] active:opacity-70"
+            >
+              <span className={`text-[16px] font-medium ${isEditing ? 'text-[#6366F1]' : 'text-black'}`}>
+                {isEditing ? '완료' : '수정하기'}
+              </span>
             </button>
             <button
               onClick={handleCopy}
@@ -750,7 +898,10 @@ function Step4({ form, updateForm }: {
       </div>
 
       {/* Regenerate button */}
-      <button className="w-full h-[56px] bg-[#F0F2FB] rounded-[12px] flex items-center justify-center active:opacity-70">
+      <button
+        onClick={handleRegenerate}
+        className="w-full h-[56px] bg-[#F0F2FB] rounded-[12px] flex items-center justify-center active:opacity-70"
+      >
         <span className="text-[18px] font-bold text-[#6366F1]">다시 생성하기</span>
       </button>
 
@@ -815,6 +966,11 @@ export default function CampaignNewPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>(1);
   const [isGenerating, setIsGenerating] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [step]);
 
   const [form, setForm] = useState<FormData>({
     campaignName: '',
@@ -890,7 +1046,7 @@ export default function CampaignNewPage() {
       </div>
 
       {/* Scrollable content */}
-      <div className="flex-1 overflow-y-auto pb-[160px]">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto pb-[160px]">
         {step === 1 && <Step1 form={form} updateForm={updateForm} togglePlatform={togglePlatform} />}
         {step === 2 && <Step2 form={form} updateForm={updateForm} toggleKPI={toggleKPI} />}
         {step === 3 && <Step3 form={form} updateForm={updateForm} />}

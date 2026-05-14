@@ -1,19 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronDown, Calendar, Plus, X, Check } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Plus, X, Check } from 'lucide-react';
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
 type FormData = {
-  brand: string;
   campaignName: string;
   productName: string;
   startDate: string;
   endDate: string;
   platforms: string[];
   budget: string;
+  manager: string;
   goal: string;
   kpis: string[];
   brandDesc: string;
@@ -35,9 +35,9 @@ const GOALS = [
 ];
 
 const KPIS = [
-  { id: 'roas',       label: 'ROAS',  desc: '광고비 대비 매출' },
-  { id: 'clicks',     label: '클릭수', desc: 'UTM 링크 클릭 수' },
-  { id: 'conversion', label: '전환수', desc: '구매 또는 신청 완료 수' },
+  { id: 'roas',       label: 'ROAS',     desc: '광고비 대비 매출' },
+  { id: 'clicks',     label: '클릭수',   desc: 'UTM 링크 클릭 수' },
+  { id: 'conversion', label: '전환수',   desc: '구매 또는 신청 완료 수' },
   { id: 'upload',     label: '업로드 수', desc: '인플루언서 게시 건수' },
 ];
 
@@ -45,6 +45,12 @@ const TONES = [
   { id: 'formal',   label: '공식적', icon: '👔' },
   { id: 'friendly', label: '친근한', icon: '😊' },
   { id: 'casual',   label: '캐주얼', icon: '✌️' },
+];
+
+const MOCK_MANAGERS = [
+  { id: '1', name: '김지은', team: '마케팅 팀', initial: '김', color: '#f7b898' },
+  { id: '2', name: '이수민', team: '마케팅 팀', initial: '이', color: '#98c4f7' },
+  { id: '3', name: '박준혁', team: '영업 팀',   initial: '박', color: '#a8f0b8' },
 ];
 
 const MOCK_BRIEF = `안녕하세요 [인플루언서명]님! 😊
@@ -155,6 +161,45 @@ function TagInput({ tags, onAdd, onRemove, placeholder }: {
   );
 }
 
+// ─── DateBox ────────────────────────────────────────────────────────────────
+
+function DateBox({ value, onChange, placeholder }: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const formatted = value
+    ? value.slice(2).replace(/-/g, '.')
+    : '';
+
+  return (
+    <div
+      className="relative flex-1 h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 flex items-center gap-[6px] bg-white cursor-pointer"
+      onClick={() => {
+        const el = inputRef.current;
+        if (!el) return;
+        if (typeof el.showPicker === 'function') el.showPicker();
+        else el.click();
+      }}
+    >
+      <Calendar size={20} className="text-stone-400 shrink-0" />
+      <span className={`text-[18px] font-medium select-none ${formatted ? 'text-[#1C1A17]' : 'text-[#C7C4BE]'}`}>
+        {formatted || placeholder}
+      </span>
+      <input
+        ref={inputRef}
+        type="date"
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+        tabIndex={-1}
+      />
+    </div>
+  );
+}
+
 // ─── Step 1: Basic Info ─────────────────────────────────────────────────────
 
 function Step1({ form, updateForm, togglePlatform }: {
@@ -162,103 +207,165 @@ function Step1({ form, updateForm, togglePlatform }: {
   updateForm: (k: keyof FormData, v: any) => void;
   togglePlatform: (p: string) => void;
 }) {
+  const [showManagerSheet, setShowManagerSheet] = useState(false);
+
+  const selectedManager = MOCK_MANAGERS.find(m => m.name === form.manager) ?? MOCK_MANAGERS[0];
+
   return (
-    <div className="px-5 pt-6">
-      <h1 className="text-[24px] font-bold text-stone-900 mb-6">캠페인 기본 정보</h1>
+    <>
+      <div className="px-5 pt-6 pb-2">
+        <h1 className="text-[22px] font-bold text-[#1C1A17] mb-6">캠페인 기본 정보</h1>
 
-      <div className="mb-5">
-        <FormLabel required>브랜드명</FormLabel>
-        <button className="w-full h-[52px] border border-stone-200 rounded-xl px-4 flex items-center justify-between bg-white active:opacity-70">
-          <span className="text-[16px] text-stone-900">{form.brand}</span>
-          <ChevronDown size={20} className="text-stone-500" />
-        </button>
-      </div>
-
-      <div className="mb-5">
-        <FormLabel required>캠페인명</FormLabel>
-        <TextInput value={form.campaignName} onChange={v => updateForm('campaignName', v)} placeholder="2026 여름 선케어" />
-      </div>
-
-      <div className="mb-5">
-        <FormLabel required>제품명</FormLabel>
-        <TextInput value={form.productName} onChange={v => updateForm('productName', v)} placeholder="루미에르 선블럭 크림" />
-      </div>
-
-      <div className="mb-5">
-        <FormLabel required>캠페인 기간</FormLabel>
-        <div className="flex items-center gap-2">
-          <div className="flex-1 h-[52px] border border-stone-200 rounded-xl px-4 flex items-center gap-2 bg-white">
-            <Calendar size={15} className="text-stone-400 shrink-0" />
-            <input
-              type="text"
-              value={form.startDate}
-              onChange={e => updateForm('startDate', e.target.value)}
-              placeholder="2026.06.09"
-              className="flex-1 text-[15px] outline-none text-stone-900 placeholder:text-stone-400"
-            />
+        {/* 캠페인명 */}
+        <div className="mb-6">
+          <div className="flex items-center gap-1 mb-2">
+            <span className="text-[18px] font-medium text-[#1C1A17]">캠페인명</span>
+            <span className="text-iris-500">*</span>
           </div>
-          <span className="text-stone-400 font-medium">-</span>
-          <div className="flex-1 h-[52px] border border-stone-200 rounded-xl px-4 flex items-center gap-2 bg-white">
-            <Calendar size={15} className="text-stone-400 shrink-0" />
-            <input
-              type="text"
-              value={form.endDate}
-              onChange={e => updateForm('endDate', e.target.value)}
-              placeholder="2026.07.31"
-              className="flex-1 text-[15px] outline-none text-stone-900 placeholder:text-stone-400"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-5">
-        <FormLabel required>플랫폼</FormLabel>
-        <div className="flex flex-wrap gap-2">
-          {PLATFORMS.map(p => (
-            <button
-              key={p}
-              onClick={() => togglePlatform(p)}
-              className={`h-9 px-4 rounded-full text-[15px] font-medium transition-all active:opacity-70
-                ${form.platforms.includes(p)
-                  ? 'bg-iris-500 text-white'
-                  : 'border border-stone-200 text-stone-600 bg-white'}`}
-            >
-              {p}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="mb-5">
-        <FormLabel optional>예산</FormLabel>
-        <div className="flex items-center border border-stone-200 rounded-xl px-4 h-[52px] bg-white">
           <input
             type="text"
-            value={form.budget}
-            onChange={e => updateForm('budget', e.target.value)}
-            placeholder="5,000,000"
-            className="flex-1 text-[16px] outline-none text-stone-900 placeholder:text-stone-400"
+            value={form.campaignName}
+            onChange={e => updateForm('campaignName', e.target.value)}
+            placeholder="캠페인명을 입력해주세요"
+            className="w-full h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 text-[18px] font-medium text-[#1C1A17] outline-none focus:border-iris-400 placeholder:text-[#C7C4BE] bg-white"
           />
-          <span className="text-stone-500 text-[16px]">원</span>
+        </div>
+
+        {/* 제품명 */}
+        <div className="mb-6">
+          <div className="flex items-center gap-1 mb-2">
+            <span className="text-[18px] font-medium text-[#1C1A17]">제품명</span>
+            <span className="text-iris-500">*</span>
+          </div>
+          <input
+            type="text"
+            value={form.productName}
+            onChange={e => updateForm('productName', e.target.value)}
+            placeholder="제품명을 입력해주세요"
+            className="w-full h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 text-[18px] font-medium text-[#1C1A17] outline-none focus:border-iris-400 placeholder:text-[#C7C4BE] bg-white"
+          />
+        </div>
+
+        {/* 캠페인 기간 */}
+        <div className="mb-6">
+          <div className="flex items-center gap-1 mb-2">
+            <span className="text-[18px] font-medium text-[#1C1A17]">캠페인 기간</span>
+            <span className="text-iris-500">*</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <DateBox value={form.startDate} onChange={v => updateForm('startDate', v)} placeholder="시작일" />
+            <span className="text-[#C7C4BE] font-medium text-[18px]">-</span>
+            <DateBox value={form.endDate} onChange={v => updateForm('endDate', v)} placeholder="종료일" />
+          </div>
+        </div>
+
+        {/* 플랫폼 */}
+        <div className="mb-6">
+          <div className="flex items-center gap-1 mb-2">
+            <span className="text-[18px] font-medium text-[#1C1A17]">플랫폼</span>
+            <span className="text-iris-500">*</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {PLATFORMS.map(p => (
+              <button
+                key={p}
+                onClick={() => togglePlatform(p)}
+                className={`h-[40px] px-5 rounded-full text-[16px] font-medium transition-all active:opacity-70
+                  ${form.platforms.includes(p)
+                    ? 'bg-iris-500 text-white'
+                    : 'border border-[#E8E7E4] text-[#78756E] bg-white'}`}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 예산 */}
+        <div className="mb-6">
+          <div className="flex items-center gap-1 mb-2">
+            <span className="text-[18px] font-medium text-[#1C1A17]">예산</span>
+            <span className="text-[16px] font-medium text-[#78756E]">(선택)</span>
+          </div>
+          <div className="flex items-center border border-[#E8E7E4] rounded-[10px] px-5 h-[52px] bg-white">
+            <input
+              type="text"
+              value={form.budget}
+              onChange={e => updateForm('budget', e.target.value)}
+              placeholder="예산을 입력해주세요"
+              className="flex-1 text-[18px] font-medium text-[#1C1A17] outline-none placeholder:text-[#C7C4BE]"
+            />
+            <span className="text-[#78756E] text-[16px] font-medium shrink-0">원</span>
+          </div>
+        </div>
+
+        {/* 담당자 */}
+        <div className="mb-6">
+          <div className="flex items-center gap-1 mb-2">
+            <span className="text-[18px] font-medium text-[#1C1A17]">담당자</span>
+            <span className="text-[16px] font-medium text-[#78756E]">(선택)</span>
+          </div>
+          <button
+            onClick={() => setShowManagerSheet(true)}
+            className="w-full h-[72px] border border-[#E8E7E4] rounded-[10px] px-5 flex items-center justify-between bg-white active:opacity-70"
+          >
+            <div className="flex items-center gap-3">
+              <div
+                className="w-[50px] h-[50px] rounded-full flex items-center justify-center shrink-0"
+                style={{ backgroundColor: selectedManager.color }}
+              >
+                <span className="text-white text-[18px] font-bold">{selectedManager.initial}</span>
+              </div>
+              <div className="text-left">
+                <p className="text-[18px] font-medium text-[#1C1A17]">{selectedManager.name}</p>
+                <p className="text-[14px] text-[#78756E]">{selectedManager.team}</p>
+              </div>
+            </div>
+            <ChevronRight size={20} className="text-[#C7C4BE]" />
+          </button>
         </div>
       </div>
 
-      <div className="mb-5">
-        <FormLabel optional>담당자</FormLabel>
-        <button className="w-full h-[70px] border border-stone-200 rounded-xl px-4 flex items-center justify-between bg-white active:opacity-70">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#f7b898] flex items-center justify-center shrink-0">
-              <span className="text-white text-[16px] font-bold">김</span>
+      {/* Manager bottom sheet */}
+      {showManagerSheet && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-end" style={{ maxWidth: 430, margin: '0 auto' }}>
+          <div className="absolute inset-0 bg-black/40" onClick={() => setShowManagerSheet(false)} />
+          <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-8">
+            <div className="flex items-center justify-between mb-5">
+              <span className="text-[18px] font-bold text-[#1C1A17]">담당자 선택</span>
+              <button onClick={() => setShowManagerSheet(false)} className="active:opacity-60">
+                <X size={22} className="text-stone-500" />
+              </button>
             </div>
-            <div className="text-left">
-              <p className="text-[16px] font-medium text-stone-900">김지은</p>
-              <p className="text-[13px] text-stone-400">마케팅 팀</p>
+            <div className="flex flex-col gap-2">
+              {MOCK_MANAGERS.map(mgr => {
+                const isSelected = form.manager === mgr.name;
+                return (
+                  <button
+                    key={mgr.id}
+                    onClick={() => { updateForm('manager', mgr.name); setShowManagerSheet(false); }}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-[12px] active:opacity-70 transition-colors
+                      ${isSelected ? 'bg-[#f0f0fd]' : 'bg-[#fafbfe]'}`}
+                  >
+                    <div
+                      className="w-[46px] h-[46px] rounded-full flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: mgr.color }}
+                    >
+                      <span className="text-white text-[16px] font-bold">{mgr.initial}</span>
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="text-[16px] font-medium text-[#1C1A17]">{mgr.name}</p>
+                      <p className="text-[13px] text-[#78756E]">{mgr.team}</p>
+                    </div>
+                    {isSelected && <Check size={18} className="text-iris-500 shrink-0" />}
+                  </button>
+                );
+              })}
             </div>
           </div>
-          <ChevronDown size={20} className="text-stone-500" />
-        </button>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -519,12 +626,11 @@ function Step4({ form, updateForm }: {
 function Step5({ form, router }: { form: FormData; router: ReturnType<typeof useRouter> }) {
   const goalLabel = GOALS.find(g => g.id === form.goal)?.label ?? '구매전환';
   const dateRange = form.startDate && form.endDate
-    ? `${form.startDate} ~ ${form.endDate}`
+    ? `${form.startDate.slice(2).replace(/-/g, '.')} ~ ${form.endDate.slice(2).replace(/-/g, '.')}`
     : '6.1 ~ 7.31';
 
   const rows = [
-    { label: '브랜드',   value: form.brand },
-    { label: '캠페인명', value: form.campaignName || '2026 여름 선케어' },
+    { label: '캠페인명', value: form.campaignName || '-' },
     { label: '기간',     value: dateRange },
     { label: '목표',     value: goalLabel },
     { label: '플랫폼',   value: form.platforms.join(', ') || '인스타그램' },
@@ -574,13 +680,13 @@ export default function CampaignNewPage() {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const [form, setForm] = useState<FormData>({
-    brand: '루미에르',
     campaignName: '',
     productName: '',
     startDate: '',
     endDate: '',
     platforms: ['인스타그램'],
     budget: '',
+    manager: '김지은',
     goal: 'purchase',
     kpis: ['roas', 'clicks', 'conversion'],
     brandDesc: '루미에르는 자연 유래 성분을 기반으로 한 K-뷰티 스킨케어 브랜드입니다. \'빛나는 피부, 가벼운 일상\'을 슬로건으로, 매일 사용하고 싶은 선케어 라인을 선보이고 있어요.',
@@ -601,6 +707,13 @@ export default function CampaignNewPage() {
     updateForm('kpis', form.kpis.includes(id)
       ? form.kpis.filter(x => x !== id)
       : [...form.kpis, id]);
+
+  const step1Valid =
+    form.campaignName.trim() !== '' &&
+    form.productName.trim() !== '' &&
+    form.startDate !== '' &&
+    form.endDate !== '' &&
+    form.platforms.length > 0;
 
   const handleGenerateBrief = async () => {
     setIsGenerating(true);
@@ -650,8 +763,9 @@ export default function CampaignNewPage() {
       <div className="absolute bottom-0 w-full px-5 pb-8 pt-4 bg-white border-t border-[#f0f2f8]">
         {step === 1 && (
           <button
-            onClick={() => setStep(2)}
-            className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80"
+            onClick={() => step1Valid && setStep(2)}
+            className={`w-full h-[56px] text-white text-[18px] font-bold rounded-[12px] transition-colors
+              ${step1Valid ? 'bg-[#2E2C28] active:opacity-80' : 'bg-stone-300 cursor-not-allowed'}`}
           >
             다음
           </button>

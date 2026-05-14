@@ -511,7 +511,7 @@ export default function HomePage() {
       </div>
 
       {/* ── Bottom navigation ── */}
-      <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-3 bg-white border-t border-[#f0f2f8]">
+      <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-3 bg-white border-t border-[#f0f2f8] z-20">
         {[
           { Icon: HomeSelectedIcon,  label: '홈',        active: true,  onClick: () => {} },
           { Icon: BriefDisabledIcon, label: '캠페인',    active: false, onClick: () => router.push('/campaign') },

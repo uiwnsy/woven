@@ -28,10 +28,10 @@ type FormData = {
 const PLATFORMS = ['인스타그램', '유튜브', '틱톡', '블로그'];
 
 const GOALS = [
-  { id: 'purchase',   label: '구매 전환',   desc: '매출 전환율 중심 - 할인코드 UTM 추적',    icon: '🛍️' },
-  { id: 'awareness',  label: '인지도 확대',  desc: '도달 노출 중심 - 브랜드 스토리 강조',      icon: '📣' },
-  { id: 'follower',   label: '팔로워 증가',  desc: '팔로우 유도 - 계정 성장 목표',            icon: '👤' },
-  { id: 'content',    label: '콘텐츠 수집',  desc: 'UGC 리뷰 확보 - 콘텐츠 자산 구축',       icon: '🎬' },
+  { id: 'purchase',  label: '구매 전환',  desc: '매출 전환율 중심 - 할인코드 UTM 추적', icon: '/shopping-icon.svg' },
+  { id: 'awareness', label: '인지도 확대', desc: '도달 노출 중심 - 브랜드 스토리 강조',  icon: '/ad-icon.svg' },
+  { id: 'follower',  label: '팔로워 증가', desc: '팔로우 유도 - 계정 성장 목표',         icon: '/influencer-icon.svg' },
+  { id: 'content',   label: '콘텐츠 수집', desc: 'UGC 리뷰 확보 - 콘텐츠 자산 구축',    icon: '/contents-icon.svg' },
 ];
 
 const KPIS = [
@@ -76,11 +76,11 @@ function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   return (
     <button
       onClick={onToggle}
-      className={`relative w-[51px] h-[31px] rounded-full transition-colors shrink-0
-        ${on ? 'bg-iris-500' : 'bg-stone-300'}`}
+      className={`relative w-[52px] h-[30px] rounded-full transition-colors shrink-0
+        ${on ? 'bg-[#6366F1]' : 'bg-[#E8E7E4]'}`}
     >
-      <div className={`absolute top-[2px] w-[27px] h-[27px] bg-white rounded-full shadow transition-transform
-        ${on ? 'translate-x-[22px]' : 'translate-x-[2px]'}`} />
+      <div className={`absolute top-[3px] w-[24px] h-[24px] bg-white rounded-full shadow transition-transform
+        ${on ? 'translate-x-[25px]' : 'translate-x-[3px]'}`} />
     </button>
   );
 }
@@ -377,51 +377,50 @@ function Step2({ form, updateForm, toggleKPI }: {
   toggleKPI: (id: string) => void;
 }) {
   return (
-    <div className="px-5 pt-6">
-      <h1 className="text-[22px] font-bold text-stone-900 mb-6">캠페인 목표</h1>
+    <div className="px-5 pt-6 flex flex-col gap-[30px]">
+      <h1 className="text-[22px] font-bold text-[#1C1A17]">캠페인 목표</h1>
 
-      <div className="mb-8">
-        <p className="text-[15px] font-semibold text-stone-800 mb-3">목표 유형</p>
-        <div className="flex flex-col gap-3">
-          {GOALS.map(goal => (
-            <button
-              key={goal.id}
-              onClick={() => updateForm('goal', goal.id)}
-              className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 text-left transition-all active:opacity-80
-                ${form.goal === goal.id ? 'border-iris-500 bg-[#f5f5ff]' : 'border-stone-200 bg-white'}`}
-            >
-              <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-[22px] shrink-0
-                ${form.goal === goal.id ? 'bg-iris-50' : 'bg-stone-100'}`}>
-                {goal.icon}
-              </div>
-              <div>
-                <p className="text-[16px] font-semibold text-stone-900">{goal.label}</p>
-                <p className="text-[13px] text-stone-400 mt-0.5">{goal.desc}</p>
-              </div>
-            </button>
-          ))}
+      <div className="flex flex-col gap-[30px]">
+        {/* 목표 유형 */}
+        <div className="flex flex-col gap-[12px]">
+          <p className="text-[18px] font-medium text-[#1C1A17]">목표 유형</p>
+          {GOALS.map(goal => {
+            const isActive = form.goal === goal.id;
+            return (
+              <button
+                key={goal.id}
+                onClick={() => updateForm('goal', goal.id)}
+                className={`w-full flex items-center gap-[14px] p-5 rounded-[10px] bg-white text-left transition-all active:opacity-80
+                  ${isActive ? 'border-2 border-[#6366F1]' : 'border border-[#E8E7E4]'}`}
+              >
+                <img src={goal.icon} alt={goal.label} className="w-[52px] h-[52px] shrink-0" />
+                <div className="flex flex-col gap-[6px]">
+                  <p className="text-[20px] font-medium text-[#1C1A17]">{goal.label}</p>
+                  <p className="text-[14px] font-medium text-[#B0ADA7]">{goal.desc}</p>
+                </div>
+              </button>
+            );
+          })}
         </div>
-      </div>
 
-      <div className="mb-5">
-        <p className="text-[18px] font-bold text-stone-900 mb-3">KPI 지표</p>
-        <div className="border border-stone-200 rounded-2xl overflow-hidden bg-white">
-          {KPIS.map((kpi, i) => (
-            <div
-              key={kpi.id}
-              className={`flex items-center justify-between px-5 py-4
-                ${i < KPIS.length - 1 ? 'border-b border-stone-100' : ''}`}
-            >
-              <div>
-                <p className="text-[16px] font-semibold text-stone-900">{kpi.label}</p>
-                <p className="text-[13px] text-stone-400 mt-0.5">{kpi.desc}</p>
+        {/* KPI 지표 */}
+        <div className="flex flex-col gap-[12px]">
+          <p className="text-[18px] font-medium text-[#1C1A17]">KPI 지표</p>
+          <div className="border border-[#E8E7E4] rounded-[14px] overflow-hidden bg-white">
+            {KPIS.map((kpi, i) => (
+              <div
+                key={kpi.id}
+                className={`flex items-center justify-between px-5 py-[14px]
+                  ${i > 0 ? 'border-t border-[#E8E7E4]' : ''}`}
+              >
+                <div className="flex flex-col gap-[6px]">
+                  <p className="text-[20px] font-medium text-[#1C1A17]">{kpi.label}</p>
+                  <p className="text-[14px] font-medium text-[#B0ADA7]">{kpi.desc}</p>
+                </div>
+                <Toggle on={form.kpis.includes(kpi.id)} onToggle={() => toggleKPI(kpi.id)} />
               </div>
-              <Toggle
-                on={form.kpis.includes(kpi.id)}
-                onToggle={() => toggleKPI(kpi.id)}
-              />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

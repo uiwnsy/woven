@@ -1057,11 +1057,11 @@ export default function CampaignNewPage() {
       </div>
 
       {/* Bottom CTA */}
-      <div className={`absolute bottom-0 w-full px-5 pb-8 pt-4 bg-white border-t border-[#f0f2f8] ${step === 4 && isStep4Editing ? 'hidden' : ''}`}>
+      <div className={`absolute bottom-0 w-full p-5 bg-white border-t border-[#E8E7E4] flex flex-col gap-[10px] ${step === 4 && isStep4Editing ? 'hidden' : ''}`}>
         {step === 1 && (
           <button
             onClick={() => step1Valid && setStep(2)}
-            className={`w-full h-[56px] text-white text-[18px] font-bold rounded-[12px] transition-colors
+            className={`w-full py-4 text-white text-[18px] font-bold rounded-[12px] transition-colors
               ${step1Valid ? 'bg-[#2E2C28] active:opacity-80' : 'bg-stone-300 cursor-not-allowed'}`}
           >
             다음
@@ -1071,7 +1071,7 @@ export default function CampaignNewPage() {
         {step === 2 && (
           <button
             onClick={() => setStep(3)}
-            className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80"
+            className="w-full py-4 bg-[#2E2C28] text-white text-[18px] font-bold rounded-[12px] active:opacity-80"
           >
             다음
           </button>
@@ -1082,7 +1082,7 @@ export default function CampaignNewPage() {
             <button
               onClick={handleGenerateBrief}
               disabled={isGenerating || !step3Valid}
-              className={`w-full h-[56px] text-white text-[18px] font-bold rounded-[12px] flex items-center justify-center gap-2 transition-colors
+              className={`w-full py-4 text-white text-[18px] font-bold rounded-[12px] flex items-center justify-center gap-2 transition-colors
                 ${step3Valid ? 'bg-[#2E2C28] active:opacity-80' : 'bg-stone-300 cursor-not-allowed'}`}
             >
               {isGenerating ? (
@@ -1094,7 +1094,7 @@ export default function CampaignNewPage() {
             </button>
             <button
               onClick={() => setStep(5)}
-              className="w-full py-3 text-[15px] text-stone-400 text-center active:opacity-60"
+              className="w-full py-4 text-[18px] font-medium text-[#B7B7B7] text-center active:opacity-60"
             >
               브리프 없이 캠페인 만들기
             </button>
@@ -1105,13 +1105,13 @@ export default function CampaignNewPage() {
           <>
             <button
               onClick={() => setStep(5)}
-              className="w-full h-[56px] bg-[#2E2C28] text-white text-[18px] font-bold rounded-[12px] active:opacity-80"
+              className="w-full py-4 bg-[#2E2C28] text-white text-[18px] font-bold rounded-[12px] active:opacity-80"
             >
               브리프 저장하고 캠페인 만들기
             </button>
             <button
               onClick={() => setStep(5)}
-              className="w-full h-[56px] text-[18px] font-medium text-[#B7B7B7] text-center active:opacity-60 flex items-center justify-center"
+              className="w-full py-4 text-[18px] font-medium text-[#B7B7B7] text-center active:opacity-60"
             >
               나중에 할게요
             </button>
@@ -1122,13 +1122,13 @@ export default function CampaignNewPage() {
           <>
             <button
               onClick={() => router.push('/board')}
-              className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80"
+              className="w-full py-4 bg-[#2E2C28] text-white text-[18px] font-bold rounded-[12px] active:opacity-80"
             >
               보드에서 인플루언서 관리하기
             </button>
             <button
               onClick={() => router.push('/campaign')}
-              className="w-full py-3 text-[15px] text-stone-400 text-center active:opacity-60"
+              className="w-full py-4 text-[18px] font-medium text-[#B7B7B7] text-center active:opacity-60"
             >
               나중에 할게요
             </button>

@@ -800,8 +800,8 @@ function Step4({ form, updateForm }: {
     <>
       {/* Full-screen edit overlay — avoids keyboard layout issues entirely */}
       {isEditing && (
-        <div className="fixed inset-0 z-50 bg-white flex flex-col">
-          <div className="flex items-center justify-between px-5 h-[56px] border-b border-[#E8E7E4] shrink-0">
+        <div className="fixed inset-x-0 top-0 z-50 bg-white flex flex-col" style={{ height: '100dvh' }}>
+          <div className="flex items-center justify-between px-5 h-[56px] border-b border-[#E8E7E4] shrink-0 bg-white">
             <span className="text-[18px] font-semibold text-black">브리프 수정</span>
             <button
               onClick={handleDoneEditing}
@@ -810,13 +810,12 @@ function Step4({ form, updateForm }: {
               완료
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-5">
+          <div className="flex-1 overflow-y-auto min-h-0 p-5">
             <textarea
               ref={textareaRef}
               defaultValue={displayBrief}
               autoFocus
-              className="w-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white"
-              style={{ minHeight: '100%' }}
+              className="w-full min-h-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white"
             />
           </div>
         </div>

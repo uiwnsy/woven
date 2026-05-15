@@ -175,7 +175,7 @@ export default function PerformancePage() {
           {/* Campaign Selector */}
           <button className="flex items-center justify-between w-full bg-white rounded-[46px] px-[22px] py-[14px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80">
             <span className="text-[18px] font-medium text-[#1C1A17]">루미에르 봄봄 프로모션</span>
-            <img src="/arrow-down.svg" alt="" width={24} height={24} />
+            <img src="/arrow-down-campaign.svg" alt="" width={24} height={24} />
           </button>
 
           {/* Period Filters */}

@@ -131,10 +131,10 @@ export default function BoardPage() {
         <div className="px-5 pt-5 pb-4 flex justify-center">
           <button
             onClick={() => setShowCampaignSheet(true)}
-            className="flex items-center justify-between bg-white rounded-full px-[22px] h-[56px] w-full max-w-[390px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80"
+            className="flex items-center justify-between bg-white rounded-[46px] px-[22px] py-[14px] w-full max-w-[390px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80"
           >
             <span className="text-[18px] font-medium text-[#1C1A17]">{selectedCampaign.title}</span>
-            <ChevronDown size={24} className="text-[#1C1A17] shrink-0" />
+            <img src="/arrow-down-campaign.svg" alt="" width={24} height={24} />
           </button>
         </div>
 

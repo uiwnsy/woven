@@ -167,6 +167,11 @@ export default function InfluencerDetailPage() {
   const id = params.id as string;
   const data = MOCK_DETAILS[id];
 
+  const [responseStatus, setResponseStatus] = useState<'positive' | 'negative' | 'none'>('none');
+  const [negotiationPrice, setNegotiationPrice] = useState('');
+  const [draftDeadline, setDraftDeadline] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [productShipped, setProductShipped] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<'ig' | 'yt' | 'tt'>('ig');
   const [guidelineUrl, setGuidelineUrl] = useState('');
   const [requests, setRequests] = useState('');
@@ -567,7 +572,7 @@ export default function InfluencerDetailPage() {
 
         </> /* end list-up only */}
 
-        {/* ── 컨택 전용: 발송 현황 + 발송된 브리프 ── */}
+        {/* ── 컨택 전용 섹션들 ── */}
         {data.stage === 'contacting' && <>
 
         <div className="h-2 bg-[#F5F5F3]" />
@@ -576,7 +581,6 @@ export default function InfluencerDetailPage() {
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
           <span className="text-[22px] font-bold text-black">발송 현황</span>
           <div style={{ border: '1px solid #ECECEF', borderRadius: 14, overflow: 'hidden' }}>
-            {/* 발송 완료 row */}
             <div className="flex items-center px-5 py-4" style={{ gap: 10, backgroundColor: '#F8FAFF' }}>
               <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: '#E8FFF1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -585,7 +589,6 @@ export default function InfluencerDetailPage() {
               </div>
               <span className="text-[16px] font-semibold text-black">브리프 발송 완료</span>
             </div>
-            {/* Info rows */}
             <div className="flex flex-col px-5 py-4 bg-white" style={{ gap: 12, borderTop: '1px solid #ECECEF' }}>
               <div className="flex items-center justify-between">
                 <span className="text-[14px] font-medium" style={{ color: '#899098' }}>발송일</span>
@@ -595,10 +598,164 @@ export default function InfluencerDetailPage() {
                 <span className="text-[14px] font-medium" style={{ color: '#899098' }}>경과</span>
                 <span className="text-[14px] font-semibold" style={{ color: '#EF8652', fontFamily: 'Manrope, sans-serif' }}>{data.dDay}</span>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>응답 상태</span>
-                <span className="text-[13px] font-semibold" style={{ backgroundColor: '#FEF6F1', color: '#D96430', borderRadius: 50, padding: '4px 10px' }}>응답 대기 중</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 응답 상태 (27:4351) */}
+        <div className="bg-white" style={{ padding: '30px 20px', gap: 24, display: 'flex', flexDirection: 'column' }}>
+          <span className="text-[22px] font-bold text-black">응답 상태</span>
+          <div style={{ display: 'flex', gap: 14 }}>
+            {/* 긍정 응답 */}
+            <button
+              onClick={() => setResponseStatus('positive')}
+              className="flex-1 flex flex-col items-center justify-center active:opacity-80"
+              style={{ gap: 6, padding: 20, backgroundColor: '#FFFFFF', border: `1px solid ${responseStatus === 'positive' ? '#6366F1' : '#EBEEF7'}`, borderRadius: 10 }}
+            >
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                <circle cx="26" cy="26" r="26" fill="#EEEEFF"/>
+                <path d="M18 27l5.5 5.5L34 20" stroke="#8486F3" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>긍정 응답</span>
+              <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>참여 의사 확인</span>
+            </button>
+            {/* 거절 */}
+            <button
+              onClick={() => setResponseStatus('negative')}
+              className="flex-1 flex flex-col items-center justify-center active:opacity-80"
+              style={{ gap: 6, padding: 20, backgroundColor: '#FFFFFF', border: `1px solid ${responseStatus === 'negative' ? '#6366F1' : '#EBEEF7'}`, borderRadius: 10 }}
+            >
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                <circle cx="26" cy="26" r="26" fill="#FFF0F0"/>
+                <path d="M19.5 19.5l13 13M32.5 19.5l-13 13" stroke="#FF686D" strokeWidth="2.2" strokeLinecap="round"/>
+              </svg>
+              <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>거절</span>
+              <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>참여 불가</span>
+            </button>
+            {/* 미응답 */}
+            <button
+              onClick={() => setResponseStatus('none')}
+              className="flex-1 flex flex-col items-center justify-center active:opacity-80"
+              style={{ gap: 6, padding: 20, backgroundColor: '#FFFFFF', border: `1px solid ${responseStatus === 'none' ? '#6366F1' : '#EBEEF7'}`, borderRadius: 10 }}
+            >
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                <circle cx="26" cy="26" r="26" fill="#FFFCE0"/>
+                <circle cx="20" cy="26" r="2" fill="#FFDD55"/>
+                <circle cx="26" cy="26" r="2" fill="#FFDD55"/>
+                <circle cx="32" cy="26" r="2" fill="#FFDD55"/>
+              </svg>
+              <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>미응답</span>
+              <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>응답 대기중</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 협의 정보 (27:4367) */}
+        <div className="bg-white" style={{ padding: '30px 20px', gap: 10, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <span className="text-[22px] font-bold text-black">협의 정보</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+
+              {/* 협의 단가 */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <span className="text-[18px] font-medium text-black">
+                  협의 단가 <span style={{ color: '#6366F1' }}>*</span>
+                </span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
+                    <input
+                      value={negotiationPrice}
+                      onChange={e => setNegotiationPrice(e.target.value)}
+                      placeholder="예: 300,000"
+                      className="w-full bg-transparent outline-none text-[16px] font-medium"
+                      style={{ color: '#1C1A17' }}
+                      inputMode="numeric"
+                    />
+                  </div>
+                  <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>VAT 별도 금액을 입력해주세요</span>
+                </div>
               </div>
+
+              {/* 시안 전달 예정일 */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <span className="text-[18px] font-medium text-black">
+                  시안 전달 예정일 <span style={{ color: '#6366F1' }}>*</span>
+                </span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
+                    <input
+                      value={draftDeadline}
+                      onChange={e => setDraftDeadline(e.target.value)}
+                      placeholder="YYYY.MM.DD"
+                      className="w-full bg-transparent outline-none text-[16px] font-medium"
+                      style={{ color: '#1C1A17' }}
+                    />
+                  </div>
+                  <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>인플루언서가 시안을 전달하는 예정일</span>
+                </div>
+              </div>
+
+              {/* 주소 */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <span className="text-[18px] font-medium text-black">주소</span>
+                <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
+                  <input
+                    value={deliveryAddress}
+                    onChange={e => setDeliveryAddress(e.target.value)}
+                    placeholder="주소를 입력해 주세요"
+                    className="w-full bg-transparent outline-none text-[16px] font-medium"
+                    style={{ color: '#1C1A17' }}
+                  />
+                </div>
+              </div>
+
+              {/* 제품 배송 완료 */}
+              <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: 20 }}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center" style={{ gap: 10 }}>
+                    {/* Ship icon */}
+                    <div style={{ width: 52, height: 52, borderRadius: 12, backgroundColor: '#FFF8EE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <svg width="28" height="24" viewBox="0 0 28 24" fill="none">
+                        <rect x="0" y="5" width="19" height="14" rx="2" fill="#F0A652"/>
+                        <rect x="0" y="5" width="19" height="5" rx="2" fill="#FFC77A"/>
+                        <path d="M19 10h4l3 5v4h-7V10z" fill="#FFC77A"/>
+                        <circle cx="6" cy="20" r="2.5" fill="#1C1A17"/>
+                        <circle cx="22" cy="20" r="2.5" fill="#1C1A17"/>
+                        <path d="M9 5V2h10v3" stroke="#F0A652" strokeWidth="1.2"/>
+                      </svg>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
+                      <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
+                    </div>
+                  </div>
+                  {/* Toggle */}
+                  <button
+                    onClick={() => setProductShipped(v => !v)}
+                    className="shrink-0 active:opacity-80 flex items-center"
+                    style={{ width: 52, height: 30, borderRadius: 40, padding: 3, backgroundColor: productShipped ? '#6366F1' : '#E8E7E4', transition: 'background-color 0.2s', justifyContent: productShipped ? 'flex-end' : 'flex-start', display: 'flex' }}
+                  >
+                    <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Info box */}
+              <div className="flex items-start" style={{ backgroundColor: '#EEF7FF', borderRadius: 14, padding: 20, gap: 8 }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[1px]">
+                  <path d="M8 1.5L1 14.5h14L8 1.5z" stroke="#2D92FE" strokeWidth="1.3" strokeLinejoin="round"/>
+                  <path d="M8 7v3" stroke="#2D92FE" strokeWidth="1.3" strokeLinecap="round"/>
+                  <circle cx="8" cy="11.5" r="0.6" fill="#2D92FE"/>
+                </svg>
+                <span className="text-[14px] font-semibold" style={{ color: '#2D92FE', lineHeight: '135%' }}>
+                  협의 확정 시 인플루언서 고유 UTM 링크가 자동 생성됩니다.
+                </span>
+              </div>
+
             </div>
           </div>
         </div>
@@ -733,15 +890,35 @@ export default function InfluencerDetailPage() {
       >
         {data.stage === 'contacting' ? (
           <>
+            {/* 상태 칩 (27:4440) */}
+            <div className="flex justify-center" style={{ gap: 10 }}>
+              {[
+                { label: '긍정 응답', active: responseStatus === 'positive' },
+                { label: '협의 단가', active: !!negotiationPrice },
+                { label: '시안 전달일', active: !!draftDeadline },
+              ].map(chip => (
+                <div
+                  key={chip.label}
+                  style={{
+                    backgroundColor: chip.active ? '#EEEEFF' : '#F5F5F3',
+                    borderRadius: 50, padding: '4px 8px',
+                  }}
+                >
+                  <span className="text-[14px] font-medium" style={{ color: chip.active ? '#6366F1' : '#B0ADA7', lineHeight: '16px' }}>
+                    {chip.label}
+                  </span>
+                </div>
+              ))}
+            </div>
             <button
               onClick={() => router.push('/board?tab=negotiated')}
               className="w-full flex items-center justify-center active:opacity-80"
               style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
             >
-              <span className="text-[18px] font-bold text-white">협의 완료</span>
+              <span className="text-[18px] font-bold text-white">협의 확정하기</span>
             </button>
             <button className="w-full flex items-center justify-center active:opacity-60">
-              <span className="text-[18px] font-medium" style={{ color: '#B7B7B7' }}>다시 연락하기</span>
+              <span className="text-[18px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
             </button>
           </>
         ) : (

@@ -331,19 +331,18 @@ export default function InfluencerDetailPage() {
                   <button
                     key={p.id}
                     onClick={() => setSelectedPlatform(p.id)}
-                    className="flex-1 flex flex-col active:opacity-70"
+                    className="flex-1 flex flex-col items-center active:opacity-70"
                     style={{
-                      backgroundColor: '#FFFFFF',
-                      border: isSelected ? '2px solid #6366F1' : '1px solid #E8E7E4',
+                      backgroundColor: isSelected ? '#EEEEFF' : '#FFFFFF',
+                      border: '1px solid #E8E7E4',
                       borderRadius: 10,
                       padding: 20,
                       gap: 6,
-                      alignItems: 'flex-start',
                     }}
                   >
                     <img src={p.icon} alt={p.label} width={52} height={52} />
-                    <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>{p.label}</span>
-                    <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>{p.format}</span>
+                    <span className="text-[16px] font-semibold text-center" style={{ color: '#1C1A17' }}>{p.label}</span>
+                    <span className="text-[14px] font-medium text-center" style={{ color: '#B0ADA7' }}>{p.format}</span>
                   </button>
                 );
               })}

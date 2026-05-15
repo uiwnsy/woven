@@ -86,55 +86,51 @@ function StageTracker({ stageId }: { stageId: Stage }) {
   const labels = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
 
   return (
-    <div className="relative w-full" style={{ height: 37 }}>
-      {/* Line: from left edge of first dot to right edge of last dot
-          Each item is flex-1 (20% each), dot is 14px centered → dot left edge = 10% - 7px */}
+    <div className="relative w-full flex">
+      {/* Line: center-to-center of first and last dot */}
       <div
         className="absolute"
-        style={{ top: 5.25, left: '10%', right: '10%', height: 3.5, backgroundColor: '#F0F2F8' }}
+        style={{ top: 5.25, left: '10%', right: '10%', height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }}
       />
 
-      {/* Steps — flex-1 equal width so dots are evenly distributed */}
-      <div className="absolute inset-0 flex">
-        {labels.map((label, i) => {
-          const isActive = i === currentIdx;
-          const isDone = i < currentIdx;
-          return (
-            <div key={label} className="flex-1 flex flex-col items-center">
-              {isActive ? (
-                /* Active: 14×14 outer ring + 6×6 inner filled dot */
-                <div
-                  className="rounded-full flex items-center justify-center shrink-0"
-                  style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}
-                >
-                  <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
-                </div>
-              ) : (
-                /* Inactive: 10×10 dot centered in 14px area */
-                <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14 }}>
-                  <div
-                    className="rounded-full"
-                    style={{ width: 10, height: 10, backgroundColor: isDone ? '#6366F1' : '#F0F2F8' }}
-                  />
-                </div>
-              )}
-              {/* Label */}
-              <span
-                className="whitespace-nowrap"
-                style={{
-                  fontSize: 14,
-                  lineHeight: '15px',
-                  fontWeight: isActive ? 600 : 500,
-                  color: isActive ? '#6366F1' : '#C0C4CF',
-                  marginTop: 8,
-                }}
+      {/* Steps — direct flex-1 children so full width is guaranteed */}
+      {labels.map((label, i) => {
+        const isActive = i === currentIdx;
+        const isDone = i < currentIdx;
+        return (
+          <div key={label} className="flex-1 flex flex-col items-center" style={{ position: 'relative', zIndex: 1 }}>
+            {isActive ? (
+              /* Active: 14×14 outer ring + 6×6 inner filled dot */
+              <div
+                className="rounded-full flex items-center justify-center shrink-0"
+                style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}
               >
-                {label}
-              </span>
-            </div>
-          );
-        })}
-      </div>
+                <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
+              </div>
+            ) : (
+              /* Inactive: 10×10 dot centered in 14px area */
+              <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14 }}>
+                <div
+                  className="rounded-full"
+                  style={{ width: 10, height: 10, backgroundColor: isDone ? '#6366F1' : '#F0F2F8' }}
+                />
+              </div>
+            )}
+            <span
+              className="whitespace-nowrap"
+              style={{
+                fontSize: 14,
+                lineHeight: '15px',
+                fontWeight: isActive ? 600 : 500,
+                color: isActive ? '#6366F1' : '#C0C4CF',
+                marginTop: 8,
+              }}
+            >
+              {label}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 }

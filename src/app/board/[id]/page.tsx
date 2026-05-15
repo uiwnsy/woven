@@ -87,21 +87,22 @@ function StageTracker({ stageId }: { stageId: Stage }) {
 
   return (
     <div className="relative w-full" style={{ height: 37 }}>
-      {/* Connecting line — vertically centered in 14px dot area, spans full width */}
+      {/* Line: from left edge of first dot to right edge of last dot
+          Each item is flex-1 (20% each), dot is 14px centered → dot left edge = 10% - 7px */}
       <div
         className="absolute"
-        style={{ top: 5.25, left: 0, right: 0, height: 3.5, backgroundColor: '#F0F2F8' }}
+        style={{ top: 5.25, left: 'calc(10% - 7px)', right: 'calc(10% - 7px)', height: 3.5, backgroundColor: '#F0F2F8' }}
       />
 
-      {/* Steps */}
-      <div className="absolute inset-0 flex justify-between">
+      {/* Steps — flex-1 equal width so dots are evenly distributed */}
+      <div className="absolute inset-0 flex">
         {labels.map((label, i) => {
           const isActive = i === currentIdx;
           const isDone = i < currentIdx;
           return (
-            <div key={label} className="flex flex-col items-center">
+            <div key={label} className="flex-1 flex flex-col items-center">
               {isActive ? (
-                /* Active: 14×14 outer ring + 8×8 inner filled dot */
+                /* Active: 14×14 outer ring + 6×6 inner filled dot */
                 <div
                   className="rounded-full flex items-center justify-center shrink-0"
                   style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}

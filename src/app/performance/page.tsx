@@ -283,7 +283,7 @@ export default function PerformancePage() {
                       <IGBadge />
                     </div>
                     {/* Name info */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-0">
                       <div className="flex items-end gap-1">
                         <span className="text-[16px] font-semibold text-black" style={MANROPE}>dearyq</span>
                         <span className="text-[13px] text-[#78756E]" style={MANROPE}>@dearyq</span>
@@ -333,7 +333,7 @@ export default function PerformancePage() {
                           </div>
                           <IGBadge />
                         </div>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-0">
                           <div className="flex items-end gap-1">
                             <span className="text-[16px] font-semibold text-black">{inf.name}</span>
                             <span className="text-[13px] text-[#78756E]">{inf.handle}</span>

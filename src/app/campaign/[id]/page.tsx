@@ -15,6 +15,7 @@ type CampaignDetail = {
   boardStages: { label: string; count: string }[];
   info: { label: string; value: string }[];
   coreMessage: string;
+  guidelineUrl?: string;
 };
 
 const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
@@ -50,6 +51,7 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
       { label: '플랫폼', value: '인스타그램' },
     ],
     coreMessage: '자외선 차단은 기본, 피부 장벽 케어까지. 매일 바르고 싶은 선케어를 강조',
+    guidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
   2: {
     id: 2,
@@ -104,6 +106,7 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
       { label: '플랫폼', value: '인스타그램' },
     ],
     coreMessage: '자연스러운 일상 속 선크림 사용을 통해 브랜드 인지도와 UGC 확보',
+    guidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
 };
 
@@ -254,7 +257,7 @@ export default function CampaignDetailPage() {
                     key={kpi.label}
                     className="flex-1 flex flex-col gap-[10px] border border-[#E8E7E4] rounded-[10px] px-[18px] py-[15px]"
                   >
-                    <span className="text-[18px] font-semibold text-[#1C1A17] leading-[20px] font-manrope">
+                    <span className="text-[14px] font-semibold text-[#1C1A17] leading-[20px] font-manrope">
                       {kpi.label}
                     </span>
                     <span className={`text-[20px] font-semibold leading-[20px] ${kpi.value === '데이터 집계 전' ? 'text-[#D4D2CE]' : 'text-[#1C1A17]'}`}>
@@ -290,13 +293,13 @@ export default function CampaignDetailPage() {
             <div className="w-full px-5">
               {/* container has px-5 (20px), rows have py-4 only — matches Figma padding: 0px 20px on container, 16px 0px on rows */}
               <div className="bg-[#F8FAFF] rounded-[14px] px-5">
-                {campaign.info.map((row, i) => (
+                {[...campaign.info, ...(campaign.guidelineUrl ? [{ label: '가이드라인', value: campaign.guidelineUrl }] : [])].map((row, i, arr) => (
                   <div
                     key={row.label}
-                    className={`flex items-center justify-between py-4 ${i < campaign.info.length - 1 ? 'border-b border-[#F0F2F8]' : ''}`}
+                    className={`flex items-center justify-between py-4 ${i < arr.length - 1 ? 'border-b border-[#F0F2F8]' : ''}`}
                   >
-                    <span className="text-[16px] font-medium text-[#8995A2]">{row.label}</span>
-                    <span className="text-[16px] font-medium text-[#1C1A17]">{row.value}</span>
+                    <span className="text-[16px] font-medium text-[#8995A2] shrink-0">{row.label}</span>
+                    <span className="text-[16px] font-medium text-[#1C1A17] text-right ml-4 break-all">{row.value}</span>
                   </div>
                 ))}
               </div>

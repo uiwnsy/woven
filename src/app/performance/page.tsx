@@ -152,12 +152,16 @@ export default function PerformancePage() {
       {/* ── Scrollable body ── */}
       <div className="flex-1 bg-[#FAFBFE] overflow-y-auto pb-[95px]">
 
-        {/* Campaign Selector + Period Filters */}
-        <div className="bg-white px-5 pt-[26px] pb-5 flex flex-col gap-5">
+        {/* ── Content Box: Selector + Filters + Summary ── */}
+        <div className="bg-white px-5 pt-[26px] pb-[26px] flex flex-col gap-5">
+
+          {/* Campaign Selector */}
           <button className="flex items-center justify-between w-full bg-white rounded-[46px] px-[22px] py-[14px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80">
             <span className="text-[18px] font-medium text-[#1C1A17]">루미에르 봄봄 프로모션</span>
             <img src="/arrow-down.svg" alt="" width={24} height={24} />
           </button>
+
+          {/* Period Filters */}
           <div className="flex items-center gap-[10px]">
             {(['전체', '7일', '14일', '30일'] as const).map(p => {
               const isActive = period === p;
@@ -173,10 +177,8 @@ export default function PerformancePage() {
               );
             })}
           </div>
-        </div>
 
-        {/* ── Summary Section ── */}
-        <div className="bg-white px-5 py-[30px] flex flex-col gap-5">
+          {/* Summary Card */}
           <div className="bg-[#F8FAFF] rounded-[14px] border border-[rgba(221,231,255,0.4)] px-5 py-[30px] flex flex-col gap-5">
 
             {/* ROAS headline */}

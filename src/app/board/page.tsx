@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, LayoutGrid, List } from 'lucide-react';
+import { ChevronDown, LayoutGrid, List, X, Check } from 'lucide-react';
 import {
   SearchIcon, AlertIcon,
   HomeDisabledIcon, BriefDisabledIcon,
@@ -11,40 +11,100 @@ import {
 } from '@/components/Icons';
 import InfluencerCard, { Influencer } from '@/components/InfluencerCard';
 
-const TABS = [
-  { id: 'list-up',    label: '리스트업',  count: '-' },
-  { id: 'contacting', label: '컨택',      count: '3' },
-  { id: 'negotiated', label: '협의중',    count: '2' },
-  { id: 'inProgress', label: '시안확인',  count: '2' },
-  { id: 'uploaded',   label: '업로드완료', count: '1' },
+type CampaignOption = {
+  id: number;
+  title: string;
+  status: '기획' | '진행중' | '완료';
+};
+
+const CAMPAIGNS: CampaignOption[] = [
+  { id: 1, title: '루미에르 봄봄 프로모션', status: '진행중' },
+  { id: 2, title: '루미에르 수분크림 마이크로 인플루언서', status: '기획' },
+  { id: 3, title: '누누비 선크림 런칭 캠페인', status: '완료' },
 ];
 
-const TAB_DATA: Record<string, Influencer[]> = {
-  'list-up': [],
-  'contacting': [
-    { id: '1', name: 'haye0',  handle: '@haye0',    followers: '10.4만', categories: ['뷰티', '패션'],               statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=1' },
-    { id: '2', name: 'zigoo',  handle: '@zigoo',    followers: '8만',    categories: ['뷰티', '패션'],               statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=5' },
-    { id: '3', name: '김지영', handle: '@jijizero', followers: '21만',   categories: ['뷰티', '연애/결혼', '일상'],  statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=9' },
-  ],
-  'negotiated': [
-    { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: 'D-8', profileImg: 'https://i.pravatar.cc/150?img=47' },
-    { id: '4', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],        statusText: 'D-3', profileImg: 'https://i.pravatar.cc/150?img=44' },
-  ],
-  'inProgress': [
-    { id: '5', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=47' },
-    { id: '5', name: 'zigoo',  handle: '@zigoo',  followers: '8만',   categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=5' },
-  ],
-  'uploaded': [
-    { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: '업로드 완료', profileImg: 'https://i.pravatar.cc/150?img=47' },
-  ],
+const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
+  진행중: { bg: 'bg-[#fef6f1]', text: 'text-[#d96430]' },
+  기획:   { bg: 'bg-[#fffbeb]', text: 'text-[#92400e]' },
+  완료:   { bg: 'bg-[#f0fdf4]', text: 'text-[#26af58]' },
 };
+
+const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
+  1: {
+    'list-up': [],
+    'contacting': [
+      { id: '1', name: 'haye0',  handle: '@haye0',    followers: '10.4만', categories: ['뷰티', '패션'],              statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=1' },
+      { id: '2', name: 'zigoo',  handle: '@zigoo',    followers: '8만',    categories: ['뷰티', '패션'],              statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=5' },
+      { id: '3', name: '김지영', handle: '@jijizero', followers: '21만',   categories: ['뷰티', '연애/결혼', '일상'], statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=9' },
+    ],
+    'negotiated': [
+      { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: 'D-8', profileImg: 'https://i.pravatar.cc/150?img=47' },
+      { id: '5', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: 'D-3', profileImg: 'https://i.pravatar.cc/150?img=44' },
+    ],
+    'inProgress': [
+      { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=47' },
+      { id: '2', name: 'zigoo',  handle: '@zigoo',  followers: '8만',   categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=5' },
+    ],
+    'uploaded': [
+      { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: '업로드 완료', profileImg: 'https://i.pravatar.cc/150?img=47' },
+    ],
+  },
+  2: {
+    'list-up': [],
+    'contacting': [],
+    'negotiated': [],
+    'inProgress': [],
+    'uploaded': [],
+  },
+  3: {
+    'list-up': [],
+    'contacting': [
+      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: '전송 D+5', profileImg: 'https://i.pravatar.cc/150?img=47' },
+      { id: '7', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],        statusText: '전송 D+5', profileImg: 'https://i.pravatar.cc/150?img=44' },
+      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '8만',    categories: ['뷰티', '패션'],        statusText: '전송 D+5', profileImg: 'https://i.pravatar.cc/150?img=5'  },
+    ],
+    'negotiated': [
+      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '협의 완료', profileImg: 'https://i.pravatar.cc/150?img=47' },
+      { id: '7', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '협의 완료', profileImg: 'https://i.pravatar.cc/150?img=44' },
+      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '8만',    categories: ['뷰티', '패션'],         statusText: '협의 완료', profileImg: 'https://i.pravatar.cc/150?img=5'  },
+    ],
+    'inProgress': [
+      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=47' },
+      { id: '7', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=44' },
+      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '8만',    categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=5'  },
+    ],
+    'uploaded': [
+      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '업로드 완료', profileImg: 'https://i.pravatar.cc/150?img=47' },
+      { id: '7', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '업로드 완료', profileImg: 'https://i.pravatar.cc/150?img=44' },
+      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '8만',    categories: ['뷰티', '패션'],         statusText: '업로드 완료', profileImg: 'https://i.pravatar.cc/150?img=5'  },
+    ],
+  },
+};
+
+const TAB_IDS = [
+  { id: 'list-up',    label: '리스트업'  },
+  { id: 'contacting', label: '컨택'      },
+  { id: 'negotiated', label: '협의중'    },
+  { id: 'inProgress', label: '시안확인'  },
+  { id: 'uploaded',   label: '업로드완료' },
+];
 
 export default function BoardPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('list-up');
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
+  const [selectedCampaignId, setSelectedCampaignId] = useState(1);
+  const [showCampaignSheet, setShowCampaignSheet] = useState(false);
 
-  const cards = TAB_DATA[activeTab] ?? [];
+  const selectedCampaign = CAMPAIGNS.find(c => c.id === selectedCampaignId) ?? CAMPAIGNS[0];
+  const boardData = CAMPAIGN_BOARD_DATA[selectedCampaignId] ?? {};
+
+  const tabs = TAB_IDS.map(t => ({
+    ...t,
+    count: (boardData[t.id]?.length ?? 0) > 0 ? String(boardData[t.id].length) : '-',
+  }));
+
+  const cards = boardData[activeTab] ?? [];
   const isEmpty = cards.length === 0;
 
   return (
@@ -69,8 +129,11 @@ export default function BoardPage() {
 
         {/* Campaign selector */}
         <div className="px-5 pt-5 pb-4 flex justify-center">
-          <button className="flex items-center justify-between bg-white rounded-full px-[22px] h-[56px] w-full max-w-[390px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80">
-            <span className="text-[18px] font-medium text-[#1C1A17]">2026 여름 선케어</span>
+          <button
+            onClick={() => setShowCampaignSheet(true)}
+            className="flex items-center justify-between bg-white rounded-full px-[22px] h-[56px] w-full max-w-[390px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80"
+          >
+            <span className="text-[18px] font-medium text-[#1C1A17]">{selectedCampaign.title}</span>
             <ChevronDown size={24} className="text-[#1C1A17] shrink-0" />
           </button>
         </div>
@@ -97,9 +160,9 @@ export default function BoardPage() {
           </div>
         </div>
 
-        {/* Board tabs */}
-        <div className="flex overflow-x-auto scrollbar-none">
-          {TABS.map(tab => {
+        {/* Board tabs — pl-5 for 20px left space */}
+        <div className="flex overflow-x-auto scrollbar-none pl-5">
+          {tabs.map(tab => {
             const isActive = activeTab === tab.id;
             return (
               <button
@@ -127,13 +190,13 @@ export default function BoardPage() {
         <div className="px-5 pt-5 flex flex-col gap-5">
 
           {isEmpty ? (
-            /* ── List-up empty state (Figma: info banner) ── */
             activeTab === 'list-up' ? (
-              <div className="flex items-start gap-2 bg-[#EEF7FF] rounded-[10px] p-5">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[1px]">
-                  <path d="M9 1.5L16.5 15H1.5L9 1.5Z" stroke="#2D92FE" strokeWidth="1.5" strokeLinejoin="round"/>
-                  <path d="M9 7v3.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
-                  <circle cx="9" cy="12.5" r="0.75" fill="#2D92FE"/>
+              /* List-up empty state: info banner with circle-i icon */
+              <div className="flex gap-2 bg-[#EEF7FF] rounded-[12px] p-5">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[2px]">
+                  <circle cx="9" cy="9" r="8" stroke="#2D92FE" strokeWidth="1.5"/>
+                  <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
                 </svg>
                 <p className="text-[14px] font-medium text-[#2D92FE] leading-[150%]">
                   인플루언서를 추가하면 리스트업 단계에 카드가 생성돼요.{'\n'}이후 컨택, 협의중, 시안확인, 업로드완료 단계로 이동하며 관리할 수 있어요.
@@ -190,6 +253,47 @@ export default function BoardPage() {
           </button>
         ))}
       </div>
+
+      {/* ── Campaign selector bottom sheet ── */}
+      {showCampaignSheet && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-end max-w-[430px] mx-auto">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setShowCampaignSheet(false)} />
+          <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-10">
+            <div className="flex items-center justify-between mb-5">
+              <span className="text-[18px] font-bold text-[#1C1A17]">캠페인 선택</span>
+              <button onClick={() => setShowCampaignSheet(false)} className="active:opacity-60">
+                <X size={22} className="text-stone-500" />
+              </button>
+            </div>
+            <div className="flex flex-col gap-2">
+              {CAMPAIGNS.map(campaign => {
+                const isSelected = campaign.id === selectedCampaignId;
+                const style = STATUS_STYLES[campaign.status];
+                return (
+                  <button
+                    key={campaign.id}
+                    onClick={() => {
+                      setSelectedCampaignId(campaign.id);
+                      setActiveTab('list-up');
+                      setShowCampaignSheet(false);
+                    }}
+                    className={`flex items-center justify-between px-4 py-4 rounded-[12px] active:opacity-70 transition-colors
+                      ${isSelected ? 'bg-[#f0f0fd]' : 'bg-[#fafbfe]'}`}
+                  >
+                    <div className="flex flex-col gap-[6px] text-left flex-1 pr-3">
+                      <span className="text-[16px] font-medium text-[#1C1A17] leading-snug">{campaign.title}</span>
+                      <span className={`${style.bg} ${style.text} text-[12px] font-semibold px-2 py-[3px] rounded-full w-fit`}>
+                        {campaign.status}
+                      </span>
+                    </div>
+                    {isSelected && <Check size={18} className="text-iris-500 shrink-0" />}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

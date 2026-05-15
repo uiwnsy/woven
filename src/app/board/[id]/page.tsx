@@ -159,6 +159,8 @@ export default function InfluencerDetailPage() {
   const [briefCopied, setBriefCopied] = useState(false);
   const [showMemoOverlay, setShowMemoOverlay] = useState(false);
   const [memoInput, setMemoInput] = useState('');
+  const [savedMemo, setSavedMemo] = useState(data.memo ?? '');
+  const [savedMemoDate, setSavedMemoDate] = useState(data.memoDate ?? '');
 
   if (!data) {
     return (
@@ -530,14 +532,14 @@ export default function InfluencerDetailPage() {
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
           <span className="text-[22px] font-bold text-black">내부 메모</span>
 
-          {data.memo && (
+          {savedMemo && (
             <div className="flex flex-col" style={{ backgroundColor: '#FFFDE5', borderRadius: 14, padding: 22, gap: 6 }}>
               <p className="text-[16px] font-medium whitespace-pre-line" style={{ color: '#705448', lineHeight: '22px' }}>
-                {data.memo}
+                {savedMemo}
               </p>
-              {data.memoDate && (
+              {savedMemoDate && (
                 <span className="text-[14px] font-medium" style={{ color: 'rgba(112,84,72,0.6)', lineHeight: '22px' }}>
-                  {data.memoDate}
+                  {savedMemoDate}
                 </span>
               )}
             </div>
@@ -631,7 +633,15 @@ export default function InfluencerDetailPage() {
 
             {/* Save button */}
             <button
-              onClick={() => setShowMemoOverlay(false)}
+              onClick={() => {
+                if (!memoInput.trim()) return;
+                const now = new Date();
+                const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} 작성`;
+                setSavedMemo(memoInput.trim());
+                setSavedMemoDate(dateStr);
+                setMemoInput('');
+                setShowMemoOverlay(false);
+              }}
               className="w-full flex items-center justify-center active:opacity-80"
               style={{ backgroundColor: memoInput.trim() ? '#6366F1' : '#E8E7E4', borderRadius: 12, padding: 16, transition: 'background-color 0.15s' }}
             >

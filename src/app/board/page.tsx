@@ -100,13 +100,40 @@ export default function BoardPage() {
 function BoardPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const sentId = searchParams.get('sent');
+
+  const [allBoardData] = useState<Record<number, Record<string, Influencer[]>>>(() => {
+    const clone: Record<number, Record<string, Influencer[]>> = {};
+    for (const [cId, stages] of Object.entries(CAMPAIGN_BOARD_DATA)) {
+      const numId = Number(cId);
+      clone[numId] = {};
+      for (const [stage, cards] of Object.entries(stages)) {
+        clone[numId][stage] = [...cards];
+      }
+    }
+    if (sentId) {
+      for (const cId of Object.keys(clone)) {
+        const numId = Number(cId);
+        const listUp = clone[numId]['list-up'];
+        const idx = listUp.findIndex(inf => inf.id === sentId);
+        if (idx !== -1) {
+          const [moved] = listUp.splice(idx, 1);
+          clone[numId]['list-up'] = [...listUp];
+          clone[numId]['contacting'] = [{ ...moved, statusText: '전송 완료' }, ...clone[numId]['contacting']];
+          break;
+        }
+      }
+    }
+    return clone;
+  });
+
   const [activeTab, setActiveTab] = useState(() => searchParams.get('tab') ?? 'list-up');
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
   const [selectedCampaignId, setSelectedCampaignId] = useState(1);
   const [showCampaignSheet, setShowCampaignSheet] = useState(false);
 
   const selectedCampaign = CAMPAIGNS.find(c => c.id === selectedCampaignId) ?? CAMPAIGNS[0];
-  const boardData = CAMPAIGN_BOARD_DATA[selectedCampaignId] ?? {};
+  const boardData = allBoardData[selectedCampaignId] ?? {};
 
   const tabs = TAB_IDS.map(t => ({
     ...t,

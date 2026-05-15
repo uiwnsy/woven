@@ -659,7 +659,7 @@ export default function InfluencerDetailPage() {
         <button
           onClick={() => {
             setShowToast(true);
-            setTimeout(() => router.push('/board?tab=contacting'), 1500);
+            setTimeout(() => router.push(`/board?tab=contacting&sent=${id}`), 1500);
           }}
           className="w-full flex items-center justify-center active:opacity-80"
           style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}

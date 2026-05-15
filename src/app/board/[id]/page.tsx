@@ -424,19 +424,19 @@ export default function InfluencerDetailPage() {
           </div>
 
           {/* Brief card */}
-          <div style={{ border: '1px solid #ECECEF', borderRadius: 14, overflow: 'hidden' }}>
-            {/* Card header */}
+          <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, overflow: 'hidden' }}>
+            {/* Card header — Figma 27-2832 */}
             <div
-              className="flex items-center"
-              style={{ backgroundColor: '#F8FAFF', padding: '15px 22px', gap: 10, borderBottom: '1px solid #ECECEF' }}
+              className="flex items-center justify-between"
+              style={{ padding: '20px', borderBottom: '1px solid #E8E7E4' }}
             >
-              <span className="text-[16px] font-medium text-black">생성된 브리프</span>
-              <span
-                className="text-[16px] font-bold text-white"
-                style={{ backgroundColor: '#6366F1', borderRadius: 7, padding: '3px 8px', fontFamily: 'Manrope, sans-serif' }}
-              >
-                AI
-              </span>
+              <div className="flex flex-col" style={{ gap: 4 }}>
+                <span style={{ fontSize: 18, fontWeight: 500, color: '#1C1A17' }}>AI 브리프 보기</span>
+                <span style={{ fontSize: 14, fontWeight: 400, color: '#B0ADA7' }}>브리프 편집 · 재생성</span>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M6 3l5 5-5 5" stroke="#B0ADA7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </div>
             {/* Brief body */}
             <div style={{ padding: '16px 22px' }}>
@@ -445,10 +445,10 @@ export default function InfluencerDetailPage() {
               </p>
             </div>
             {/* Card footer */}
-            <div className="flex" style={{ borderTop: '1px solid #ECECEF' }}>
+            <div className="flex" style={{ borderTop: '1px solid #E8E7E4' }}>
               <button
                 className="flex-1 flex items-center justify-center active:opacity-70"
-                style={{ backgroundColor: '#F8FAFF', padding: '15px 22px', borderRight: '1px solid #ECECEF' }}
+                style={{ backgroundColor: '#F8FAFF', padding: '15px 22px', borderRight: '1px solid #E8E7E4' }}
               >
                 <span className="text-[16px] font-medium text-black">수정하기</span>
               </button>

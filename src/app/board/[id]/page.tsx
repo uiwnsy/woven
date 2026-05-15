@@ -85,35 +85,39 @@ function StageTracker({ stageId }: { stageId: Stage }) {
   const currentIdx = STAGE_IDS.indexOf(stageId);
   const labels = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
 
-  // first step flush-left (aligns with chip), last step flush-right, middle centered
-  const alignItems = ['flex-start', 'center', 'center', 'center', 'flex-end'];
+  // text: first=flush-left, last=flush-right, middle=center
+  // dot: always centered above text via alignSelf:'center' on first/last
+  const textAlign = ['flex-start', 'center', 'center', 'center', 'flex-end'];
 
   return (
     <div className="relative w-full flex">
-      {/* Line: from center of first dot (7px) to center of last dot (right:7px) */}
+      {/* Line: first dot center (10%) to last dot center (10% from right) */}
       <div
         className="absolute"
-        style={{ top: 5.25, left: 7, right: 7, height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }}
+        style={{ top: 5.25, left: '10%', right: '10%', height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }}
       />
 
       {labels.map((label, i) => {
         const isActive = i === currentIdx;
         const isDone = i < currentIdx;
+        const isEdge = i === 0 || i === labels.length - 1;
+        // edge steps: text flush to edge, dot self-centers in the column
+        const dotSelf = isEdge ? 'center' : undefined;
         return (
           <div
             key={label}
             className="flex-1 flex flex-col"
-            style={{ position: 'relative', zIndex: 1, alignItems: alignItems[i] }}
+            style={{ position: 'relative', zIndex: 1, alignItems: textAlign[i] }}
           >
             {isActive ? (
               <div
                 className="rounded-full flex items-center justify-center shrink-0"
-                style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}
+                style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1', alignSelf: dotSelf }}
               >
                 <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
               </div>
             ) : (
-              <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14 }}>
+              <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14, alignSelf: dotSelf }}>
                 <div
                   className="rounded-full"
                   style={{ width: 10, height: 10, backgroundColor: isDone ? '#6366F1' : '#F0F2F8' }}

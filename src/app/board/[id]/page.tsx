@@ -465,7 +465,7 @@ export default function InfluencerDetailPage() {
             <button
               onClick={() => setIsEditingRequests(true)}
               className="w-full text-left active:opacity-70"
-              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '15px 20px', minHeight: 80 }}
+              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 10px 10px 20px' }}
             >
               {requests ? (
                 <span className="text-[16px] font-medium whitespace-pre-wrap" style={{ color: '#1C1A17', lineHeight: '1.6' }}>{requests}</span>

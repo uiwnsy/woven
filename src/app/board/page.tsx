@@ -41,8 +41,11 @@ const TAB_DATA: Record<string, Influencer[]> = {
 
 export default function BoardPage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('contacting');
+  const [activeTab, setActiveTab] = useState('list-up');
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
+
+  const cards = TAB_DATA[activeTab] ?? [];
+  const isEmpty = cards.length === 0;
 
   return (
     <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
@@ -65,64 +68,78 @@ export default function BoardPage() {
       <div className="flex-1 bg-[#fafbfe] overflow-y-auto pb-[95px]">
 
         {/* Campaign selector */}
-        <div className="px-5 pt-5 pb-3 flex justify-center">
-          <button className="flex items-center justify-between bg-white rounded-full px-5 py-[13px] w-full max-w-[390px] shadow-[0_0_12px_rgba(99,102,241,0.12)] active:opacity-80">
-            <span className="text-[18px] font-medium text-stone-900">루미에르 · 봄봄 프로모션</span>
-            <ChevronDown size={18} className="text-stone-700 shrink-0" />
+        <div className="px-5 pt-5 pb-4 flex justify-center">
+          <button className="flex items-center justify-between bg-white rounded-full px-[22px] h-[56px] w-full max-w-[390px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80">
+            <span className="text-[18px] font-medium text-[#1C1A17]">2026 여름 선케어</span>
+            <ChevronDown size={24} className="text-[#1C1A17] shrink-0" />
           </button>
         </div>
 
         {/* View toggle */}
         <div className="px-5 mb-4 flex justify-center">
-          <div className="flex bg-[#eff1f8] rounded-full p-1 w-full max-w-[390px] h-[50px]">
+          <div className="flex bg-[#F0F2F8] rounded-[36px] p-1 w-full max-w-[390px] h-[50px]">
             <button
               onClick={() => setActiveView('grid')}
-              className={`flex-1 flex items-center justify-center gap-1.5 rounded-full text-[16px] font-medium transition-all
-                ${activeView === 'grid' ? 'bg-white shadow-sm text-stone-900' : 'text-stone-400'}`}
+              className={`flex-1 flex items-center justify-center gap-1 rounded-[56px] text-[16px] font-medium transition-all
+                ${activeView === 'grid' ? 'bg-white shadow-sm text-[#1C1A17]' : 'text-[#9BA1AA]'}`}
             >
-              <LayoutGrid size={14} />
+              <LayoutGrid size={13} />
               단계별
             </button>
             <button
               onClick={() => setActiveView('list')}
-              className={`flex-1 flex items-center justify-center gap-1.5 rounded-full text-[16px] font-medium transition-all
-                ${activeView === 'list' ? 'bg-white shadow-sm text-stone-900' : 'text-stone-400'}`}
+              className={`flex-1 flex items-center justify-center gap-1 rounded-[36px] text-[16px] font-medium transition-all
+                ${activeView === 'list' ? 'bg-white shadow-sm text-[#1C1A17]' : 'text-[#9BA1AA]'}`}
             >
-              <List size={14} />
+              <List size={13} />
               리스트
             </button>
           </div>
         </div>
 
         {/* Board tabs */}
-        <div className="border-b border-[#eef0f6]">
-          <div className="flex overflow-x-auto px-3 scrollbar-none">
-            {TABS.map(tab => {
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-1 px-3 py-[10px] border-b-2 -mb-px shrink-0 whitespace-nowrap
-                    ${isActive ? 'border-iris-500' : 'border-transparent'}`}
+        <div className="flex overflow-x-auto scrollbar-none">
+          {TABS.map(tab => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-1 px-[10px] py-[10px] shrink-0 whitespace-nowrap border-b-[1.5px]
+                  ${isActive ? 'border-iris-500' : 'border-[#F0F2F8]'}`}
+              >
+                <span className={`text-[14px] ${isActive ? 'font-bold text-iris-500' : 'font-medium text-[#1C1A17]'}`}>
+                  {tab.label}
+                </span>
+                <span className={`text-[12px] px-[10px] leading-[20px] rounded-full font-manrope
+                  ${isActive
+                    ? 'bg-[#EEEEFF] font-bold text-iris-500'
+                    : 'bg-[#F0F2F8] font-medium text-[#64666C]'}`}
                 >
-                  <span className={`text-[14px] ${isActive ? 'font-bold text-iris-500' : 'font-medium text-stone-800'}`}>
-                    {tab.label}
-                  </span>
-                  <span className={`text-[12px] px-[9px] py-[2px] rounded-full
-                    ${isActive ? 'bg-iris-50 font-bold text-iris-500' : 'bg-[#eff1f8] font-medium text-stone-500'}`}>
-                    {tab.count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+                  {tab.count}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Card list */}
-        <div className="px-5 pt-5 flex justify-center">
-          <div className="w-full max-w-[390px]">
-            {(TAB_DATA[activeTab] ?? []).length === 0 ? (
+        {/* Content */}
+        <div className="px-5 pt-5 flex flex-col gap-5">
+
+          {isEmpty ? (
+            /* ── List-up empty state (Figma: info banner) ── */
+            activeTab === 'list-up' ? (
+              <div className="flex items-start gap-2 bg-[#EEF7FF] rounded-[10px] p-5">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[1px]">
+                  <path d="M9 1.5L16.5 15H1.5L9 1.5Z" stroke="#2D92FE" strokeWidth="1.5" strokeLinejoin="round"/>
+                  <path d="M9 7v3.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="9" cy="12.5" r="0.75" fill="#2D92FE"/>
+                </svg>
+                <p className="text-[14px] font-medium text-[#2D92FE] leading-[150%]">
+                  인플루언서를 추가하면 리스트업 단계에 카드가 생성돼요.{'\n'}이후 컨택, 협의중, 시안확인, 업로드완료 단계로 이동하며 관리할 수 있어요.
+                </p>
+              </div>
+            ) : (
               <div className="flex flex-col items-center justify-center py-16 text-stone-300">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="mb-3">
                   <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2"/>
@@ -130,26 +147,27 @@ export default function BoardPage() {
                 </svg>
                 <p className="text-[15px]">인플루언서를 추가해보세요</p>
               </div>
-            ) : (
-              (TAB_DATA[activeTab] ?? []).map((item, i) => (
-                <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id)} />
-              ))
-            )}
-          </div>
-        </div>
+            )
+          ) : (
+            cards.map((item, i) => (
+              <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id)} />
+            ))
+          )}
 
-        {/* Add influencer button */}
-        <button
-          onClick={() => router.push('/board/add')}
-          className="w-full h-[68px] flex items-center justify-center gap-[4px] rounded-[14px] mt-2 active:opacity-70"
-          style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
-        >
-          <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9" stroke="#8486F3" strokeWidth="1.5"/>
-            <path d="M10 6v8M6 10h8" stroke="#8486F3" strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
-          <span className="text-[16px] font-medium" style={{ color: '#8486F3' }}>인플루언서 추가</span>
-        </button>
+          {/* Add influencer button */}
+          <button
+            onClick={() => router.push('/board/add')}
+            className="w-full h-[68px] flex items-center justify-center gap-1 rounded-[14px] active:opacity-70"
+            style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="7.5" stroke="#8486F3"/>
+              <path d="M8 5v6M5 8h6" stroke="#8486F3" strokeWidth="1.2" strokeLinecap="round"/>
+            </svg>
+            <span className="text-[16px] font-medium text-[#8486F3]">인플루언서 추가</span>
+          </button>
+
+        </div>
       </div>
 
       {/* ── Bottom navigation ── */}

@@ -127,41 +127,40 @@ export default function BoardPage() {
       {/* ── Scrollable body ── */}
       <div className="flex-1 bg-[#fafbfe] overflow-y-auto pb-[95px]">
 
-        {/* Campaign selector */}
-        <div className="px-5 pt-[26px] pb-4 flex justify-center">
-          <button
-            onClick={() => setShowCampaignSheet(true)}
-            className="flex items-center justify-between bg-white rounded-[46px] px-[22px] py-[14px] w-full max-w-[390px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80"
-          >
-            <span className="text-[18px] font-medium text-[#1C1A17]">{selectedCampaign.title}</span>
-            <img src="/arrow-down-campaign.svg" alt="" width={24} height={24} />
-          </button>
-        </div>
-
-        {/* View toggle */}
-        <div className="px-5 mb-4 flex justify-center">
-          <div className="flex bg-[#F0F2F8] rounded-[36px] p-1 w-full max-w-[390px] h-[50px]">
+        {/* Campaign selector + View toggle + Board tabs */}
+        <div className="bg-white">
+          <div className="px-5 pt-[26px] pb-4 flex justify-center">
             <button
-              onClick={() => setActiveView('grid')}
-              className={`flex-1 flex items-center justify-center gap-1 rounded-[56px] text-[16px] font-medium transition-all
-                ${activeView === 'grid' ? 'bg-white shadow-sm text-[#1C1A17]' : 'text-[#9BA1AA]'}`}
+              onClick={() => setShowCampaignSheet(true)}
+              className="flex items-center justify-between bg-white rounded-[46px] px-[22px] py-[14px] w-full max-w-[390px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80"
             >
-              <LayoutGrid size={13} />
-              단계별
-            </button>
-            <button
-              onClick={() => setActiveView('list')}
-              className={`flex-1 flex items-center justify-center gap-1 rounded-[36px] text-[16px] font-medium transition-all
-                ${activeView === 'list' ? 'bg-white shadow-sm text-[#1C1A17]' : 'text-[#9BA1AA]'}`}
-            >
-              <List size={13} />
-              리스트
+              <span className="text-[18px] font-medium text-[#1C1A17]">{selectedCampaign.title}</span>
+              <img src="/arrow-down-campaign.svg" alt="" width={24} height={24} />
             </button>
           </div>
-        </div>
 
-        {/* Board tabs — pl-5 for 20px left space */}
-        <div className="flex overflow-x-auto scrollbar-none pl-5">
+          <div className="px-5 mb-4 flex justify-center">
+            <div className="flex bg-[#F0F2F8] rounded-[36px] p-1 w-full max-w-[390px] h-[50px]">
+              <button
+                onClick={() => setActiveView('grid')}
+                className={`flex-1 flex items-center justify-center gap-1 rounded-[56px] text-[16px] font-medium transition-all
+                  ${activeView === 'grid' ? 'bg-white shadow-sm text-[#1C1A17]' : 'text-[#9BA1AA]'}`}
+              >
+                <LayoutGrid size={13} />
+                단계별
+              </button>
+              <button
+                onClick={() => setActiveView('list')}
+                className={`flex-1 flex items-center justify-center gap-1 rounded-[36px] text-[16px] font-medium transition-all
+                  ${activeView === 'list' ? 'bg-white shadow-sm text-[#1C1A17]' : 'text-[#9BA1AA]'}`}
+              >
+                <List size={13} />
+                리스트
+              </button>
+            </div>
+          </div>
+
+          <div className="flex overflow-x-auto scrollbar-none pl-5">
           {tabs.map(tab => {
             const isActive = activeTab === tab.id;
             return (
@@ -186,6 +185,7 @@ export default function BoardPage() {
           })}
           {/* Right spacer — ensures 20px space after last tab when scrolled */}
           <div className="shrink-0 w-5" />
+          </div>
         </div>
 
         {/* Content */}

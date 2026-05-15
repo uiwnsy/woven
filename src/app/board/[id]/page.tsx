@@ -124,6 +124,14 @@ function StageTracker({ stageId }: { stageId: Stage }) {
       {/* Line: first-dot-center → last-dot-center */}
       <div className="absolute"
         style={{ top: 5.25, left: 28, right: 21, height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }} />
+      {/* Progress line in primary color up to current stage */}
+      {currentIdx > 0 && (
+        <div className="absolute"
+          style={{
+            top: 5.25, left: 28, height: 3.5, backgroundColor: '#6366F1', zIndex: 0,
+            width: ['0px', 'calc(25% - 14px)', 'calc(50% - 28px)', 'calc(75% - 38.5px)', 'calc(100% - 49px)'][currentIdx],
+          }} />
+      )}
 
       {labels.map((label, i) => {
         const isActive = i === currentIdx;
@@ -578,10 +586,8 @@ export default function InfluencerDetailPage() {
         {/* ── 컨택 전용 섹션들 ── */}
         {data.stage === 'contacting' && <>
 
-        <div className="h-2 bg-[#F5F5F3]" />
-
         {/* 발송 현황 */}
-        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+        <div className="bg-white" style={{ padding: '16px 20px 30px', gap: 20, display: 'flex', flexDirection: 'column' }}>
           <span className="text-[22px] font-bold text-black">발송 현황</span>
           <div style={{ border: '1px solid #ECECEF', borderRadius: 14, overflow: 'hidden' }}>
             <div className="flex items-center px-5 py-4" style={{ gap: 10, backgroundColor: '#F8FAFF' }}>
@@ -747,7 +753,7 @@ export default function InfluencerDetailPage() {
               onClick={() => setBriefExpanded(v => !v)}
               className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF] w-full active:opacity-70"
             >
-              <span className="text-[16px] font-medium text-black">발송된 브리프</span>
+              <span className="text-[16px] font-medium text-black">AI 브리프</span>
               <div className="flex items-center gap-2">
                 <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
                   <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>

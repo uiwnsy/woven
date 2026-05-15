@@ -202,7 +202,7 @@ export default function PerformancePage() {
 
             {/* CVR / CPC / CPA */}
             <div className="flex gap-3">
-              {[{ label: 'CVR', value: '0.61%' }, { label: 'Avg. CPC', value: '₩549' }, { label: 'Avg. CPA', value: '9만원' }].map(item => (
+              {[{ label: 'CVR', value: '0.61%' }, { label: 'CPC', value: '₩549' }, { label: 'CPA', value: '9만원' }].map(item => (
                 <div key={item.label} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-5 flex flex-col gap-[6px]">
                   <span className="text-[14px] font-medium text-[#78756E]" style={MANROPE}>{item.label}</span>
                   <span className="text-[18px] font-extrabold text-black" style={MANROPE}>{item.value}</span>
@@ -268,7 +268,7 @@ export default function PerformancePage() {
                     {/* Rank badge */}
                     <div className="relative shrink-0" style={{ width: 24, height: 24 }}>
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#FFC800" stroke="#ECBF13" strokeWidth="1.5" />
+                        <polygon points="12,1 21.5,6.5 21.5,17.5 12,23 2.5,17.5 2.5,6.5" fill="#FFC800" stroke="#ECBF13" strokeWidth="1.5" />
                       </svg>
                       <span
                         className="absolute inset-0 flex items-center justify-center text-white font-extrabold"

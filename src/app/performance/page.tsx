@@ -253,7 +253,7 @@ export default function PerformancePage() {
             <div className="flex items-center justify-between">
               <span className="text-[22px] font-bold text-black">인플루언서별 성과</span>
               <button className="border border-[#D4D2CE] rounded-full px-[10px] py-[7px] text-[14px] font-semibold text-[#78756E] active:opacity-70">
-                ROAS순
+                더보기
               </button>
             </div>
 

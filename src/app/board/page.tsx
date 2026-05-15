@@ -189,7 +189,7 @@ export default function BoardPage() {
         </div>
 
         {/* Content */}
-        <div className="px-5 pt-5 flex flex-col gap-[20px]">
+        <div className="px-5 pt-5 flex flex-col">
 
           {isEmpty ? (
             activeTab === 'list-up' ? (

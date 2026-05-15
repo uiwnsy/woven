@@ -535,9 +535,20 @@ export default function InfluencerDetailPage() {
 
           {memos.map((memo, i) => (
             <div key={i} className="flex flex-col" style={{ backgroundColor: '#FFFDE5', borderRadius: 14, padding: 22, gap: 6 }}>
-              <p className="text-[16px] font-medium whitespace-pre-line" style={{ color: '#705448', lineHeight: '22px' }}>
-                {memo.text}
-              </p>
+              <div className="flex items-start justify-between" style={{ gap: 10 }}>
+                <p className="text-[16px] font-medium whitespace-pre-line flex-1" style={{ color: '#705448', lineHeight: '22px' }}>
+                  {memo.text}
+                </p>
+                <button
+                  onClick={() => setMemos(prev => prev.filter((_, idx) => idx !== i))}
+                  className="shrink-0 active:opacity-60"
+                  style={{ marginTop: 2 }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 3l10 10M13 3L3 13" stroke="rgba(112,84,72,0.45)" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                </button>
+              </div>
               {memo.date && (
                 <span className="text-[14px] font-medium" style={{ color: 'rgba(112,84,72,0.6)', lineHeight: '22px' }}>
                   {memo.date}

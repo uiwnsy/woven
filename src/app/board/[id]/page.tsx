@@ -173,6 +173,7 @@ export default function InfluencerDetailPage() {
   const [isEditingRequests, setIsEditingRequests] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const briefTextareaRef = useRef<HTMLTextAreaElement>(null);
   const requestsTextareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -635,12 +636,31 @@ export default function InfluencerDetailPage() {
 
       </div>
 
+      {/* ── Toast ── */}
+      {showToast && (
+        <div
+          className="absolute left-5 right-5 z-[70] flex items-center gap-3 px-5 py-4 rounded-[14px]"
+          style={{ bottom: 110, backgroundColor: '#1C1A17' }}
+        >
+          <div className="w-6 h-6 rounded-full bg-[#6366F1] flex items-center justify-center shrink-0">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <span className="text-[15px] font-medium text-white">브리프 발송 완료! 컨택 단계로 이동했어요</span>
+        </div>
+      )}
+
       {/* ── Bottom action bar ── */}
       <div
         className="absolute bottom-0 w-full bg-white flex flex-col"
         style={{ borderTop: '1px solid #E8E7E4', padding: 20, gap: 10 }}
       >
         <button
+          onClick={() => {
+            setShowToast(true);
+            setTimeout(() => router.push('/board?tab=contacting'), 1500);
+          }}
           className="w-full flex items-center justify-center active:opacity-80"
           style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
         >

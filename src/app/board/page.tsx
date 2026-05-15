@@ -184,6 +184,8 @@ export default function BoardPage() {
               </button>
             );
           })}
+          {/* Right spacer — ensures 20px space after last tab when scrolled */}
+          <div className="shrink-0 w-5" />
         </div>
 
         {/* Content */}

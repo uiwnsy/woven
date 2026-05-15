@@ -119,7 +119,7 @@ function BoardPageContent() {
         if (idx !== -1) {
           const [moved] = listUp.splice(idx, 1);
           clone[numId]['list-up'] = [...listUp];
-          clone[numId]['contacting'] = [{ ...moved, statusText: '전송 완료' }, ...clone[numId]['contacting']];
+          clone[numId]['contacting'] = [{ ...moved, statusText: '전송 D+0' }, ...clone[numId]['contacting']];
           break;
         }
       }

@@ -187,7 +187,7 @@ export default function InfluencerDetailPage() {
               </div>
 
               {/* Name + handle */}
-              <div className="flex flex-col items-center w-full" style={{ gap: 10 }}>
+              <div className="flex flex-col items-center w-full" style={{ gap: 4 }}>
                 <span className="text-[22px] font-semibold text-black" style={MANROPE}>{data.name}</span>
                 <span className="text-[16px] text-[#78756E] text-center w-full" style={MANROPE}>{data.handle}</span>
               </div>

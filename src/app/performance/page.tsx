@@ -323,7 +323,7 @@ export default function PerformancePage() {
                     <div
                       key={inf.handle}
                       className={`flex items-center justify-between py-[14px]
-                        ${i < UPLOAD_WAITING.length - 1 ? 'border-b border-[#E8E7E4]' : ''}`}
+                        ${i < UPLOAD_WAITING.length - 1 ? 'border-b border-[#EBEEF7]' : ''}`}
                     >
                       {/* Left: avatar + name */}
                       <div className="flex items-center gap-3">

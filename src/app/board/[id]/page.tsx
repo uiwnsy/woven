@@ -166,60 +166,70 @@ export default function InfluencerDetailPage() {
         {/* ── Profile Card ── */}
         <div className="bg-white flex flex-col items-center" style={{ padding: '34px 44px', gap: 20 }}>
 
-          {/* Avatar */}
-          <div className="relative" style={{ width: 90, height: 90 }}>
-            <div className="w-full h-full rounded-full overflow-hidden bg-stone-200">
-              <img src={data.profileImg} alt={data.name} className="w-full h-full object-cover" />
+          {/* Top block: avatar + name/handle + stats + categories (max 295px) */}
+          <div className="flex flex-col items-center" style={{ width: 295, gap: 10 }}>
+
+            {/* Avatar + name + handle + stats */}
+            <div className="flex flex-col items-center w-full" style={{ gap: 10 }}>
+
+              {/* Avatar 76×76 */}
+              <div className="relative shrink-0" style={{ width: 76, height: 76 }}>
+                <div className="w-full h-full rounded-full overflow-hidden bg-stone-200">
+                  <img src={data.profileImg} alt={data.name} className="w-full h-full object-cover" />
+                </div>
+                <img
+                  src="/skill-icons_instagram.svg"
+                  alt="ig"
+                  width={22} height={22}
+                  className="absolute"
+                  style={{ bottom: 0, right: -2 }}
+                />
+              </div>
+
+              {/* Name + handle */}
+              <div className="flex flex-col items-center w-full" style={{ gap: 10 }}>
+                <span className="text-[22px] font-semibold text-black" style={MANROPE}>{data.name}</span>
+                <span className="text-[16px] text-[#78756E] text-center w-full" style={MANROPE}>{data.handle}</span>
+              </div>
+
+              {/* Stats row */}
+              <div className="flex items-center" style={{ gap: 10 }}>
+                <span className="text-[14px] text-black">인스타그램</span>
+                <div className="w-[4px] h-[4px] rounded-full bg-[#D9D9D9]" />
+                <span className="text-[14px] text-black">팔로워 {data.followers}</span>
+                <div className="w-[4px] h-[4px] rounded-full bg-[#D9D9D9]" />
+                <span className="text-[14px] text-black">게시물 {data.posts}</span>
+              </div>
             </div>
-            <img
-              src="/skill-icons_instagram.svg"
-              alt="ig"
-              width={24} height={24}
-              className="absolute"
-              style={{ bottom: 0, right: -2 }}
-            />
-          </div>
 
-          {/* Name + handle + stats */}
-          <div className="flex flex-col items-center" style={{ gap: 10 }}>
-            <span className="text-[24px] font-semibold text-black" style={MANROPE}>{data.name}</span>
-            <span className="text-[18px] text-[#78756E]" style={MANROPE}>{data.handle}</span>
-            <div className="flex items-center" style={{ gap: 10 }}>
-              <span className="text-[16px] text-black">인스타그램</span>
-              <div className="w-[4px] h-[4px] rounded-full bg-[#D9D9D9]" />
-              <span className="text-[16px] text-black">팔로워 {data.followers}</span>
-              <div className="w-[4px] h-[4px] rounded-full bg-[#D9D9D9]" />
-              <span className="text-[16px] text-black">게시물 {data.posts}</span>
+            {/* Category tags */}
+            <div className="flex items-center" style={{ gap: 6 }}>
+              {data.categories.map(cat => {
+                const { bg, text } = getCategoryStyle(cat);
+                return (
+                  <span
+                    key={cat}
+                    className="text-[14px] font-medium"
+                    style={{ backgroundColor: bg, color: text, borderRadius: 50, padding: '7px 10px' }}
+                  >
+                    {cat}
+                  </span>
+                );
+              })}
             </div>
           </div>
 
-          {/* Category tags */}
-          <div className="flex items-center" style={{ gap: 6 }}>
-            {data.categories.map(cat => {
-              const { bg, text } = getCategoryStyle(cat);
-              return (
-                <span
-                  key={cat}
-                  className="text-[16px] font-medium"
-                  style={{ backgroundColor: bg, color: text, borderRadius: 50, padding: '7px 10px' }}
-                >
-                  {cat}
-                </span>
-              );
-            })}
-          </div>
-
-          {/* Action buttons */}
+          {/* Action buttons (390px, full stretch) */}
           <div className="flex w-full" style={{ gap: 10 }}>
             <button
               className="flex-1 flex items-center justify-center active:opacity-80"
-              style={{ backgroundColor: '#6366F1', borderRadius: 48, padding: '14px 10px' }}
+              style={{ backgroundColor: '#6366F1', borderRadius: 48, padding: '14px 10px', height: 48 }}
             >
               <span className="text-[16px] font-bold text-white">연락하기</span>
             </button>
             <button
               className="flex-1 flex items-center justify-center active:opacity-80"
-              style={{ backgroundColor: '#FFFFFF', border: '2px solid #6366F1', borderRadius: 48, padding: '14px 10px' }}
+              style={{ backgroundColor: '#FFFFFF', border: '2px solid #6366F1', borderRadius: 48, padding: '14px 10px', height: 48 }}
             >
               <span className="text-[16px] font-bold" style={{ color: '#4F52E0' }}>연락 방법 변경</span>
             </button>

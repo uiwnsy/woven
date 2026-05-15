@@ -467,9 +467,9 @@ export default function InfluencerDetailPage() {
               style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 10px 10px 20px' }}
             >
               {requests ? (
-                <span className="text-[16px] font-medium whitespace-pre-wrap" style={{ color: '#1C1A17', lineHeight: '1.6' }}>{requests}</span>
+                <span className="text-[16px] font-medium whitespace-pre-wrap" style={{ color: '#1C1A17', lineHeight: '24px' }}>{requests}</span>
               ) : (
-                <span className="text-[16px] font-medium" style={{ color: '#C0C4CF' }}>예: 봄 컬러 위주로 촬영 부탁드려요</span>
+                <span className="text-[16px] font-medium" style={{ color: '#C0C4CF', lineHeight: '24px' }}>예: 봄 컬러 위주로 촬영 부탁드려요</span>
               )}
             </button>
             <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>

@@ -84,23 +84,27 @@ function getCategoryStyle(c: string) {
 function StageTracker({ stageId }: { stageId: Stage }) {
   const currentIdx = STAGE_IDS.indexOf(stageId);
   const labels = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
+  // first: left-align so text starts flush with container; last: right-align; middle: center
+  const alignItems = ['flex-start', 'center', 'center', 'center', 'flex-end'];
 
   return (
     <div className="relative w-full flex">
-      {/* Line: center-to-center of first and last dot */}
+      {/* Line: from center of first dot (left:7) to center of last dot (right:7) */}
       <div
         className="absolute"
-        style={{ top: 5.25, left: '10%', right: '10%', height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }}
+        style={{ top: 5.25, left: 7, right: 7, height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }}
       />
 
-      {/* Steps — direct flex-1 children so full width is guaranteed */}
       {labels.map((label, i) => {
         const isActive = i === currentIdx;
         const isDone = i < currentIdx;
         return (
-          <div key={label} className="flex-1 flex flex-col items-center" style={{ position: 'relative', zIndex: 1 }}>
+          <div
+            key={label}
+            className="flex-1 flex flex-col"
+            style={{ position: 'relative', zIndex: 1, alignItems: alignItems[i] }}
+          >
             {isActive ? (
-              /* Active: 14×14 outer ring + 6×6 inner filled dot */
               <div
                 className="rounded-full flex items-center justify-center shrink-0"
                 style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}
@@ -108,7 +112,6 @@ function StageTracker({ stageId }: { stageId: Stage }) {
                 <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
               </div>
             ) : (
-              /* Inactive: 10×10 dot centered in 14px area */
               <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14 }}>
                 <div
                   className="rounded-full"

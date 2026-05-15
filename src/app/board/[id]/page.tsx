@@ -441,7 +441,7 @@ export default function InfluencerDetailPage() {
                 onChange={e => setGuidelineUrl(e.target.value)}
                 placeholder="개별 가이드라인 링크"
                 className="flex-1 bg-transparent outline-none text-[16px] font-medium"
-                style={{ color: '#1C1A17' }}
+                style={{ color: '#1C1A17', height: '24px' }}
               />
               <button className="shrink-0 w-[34px] h-[34px] flex items-center justify-center rounded-[8px] active:opacity-70" style={{ backgroundColor: '#F2F4F6' }}>
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -471,7 +471,7 @@ export default function InfluencerDetailPage() {
                 readOnly
                 placeholder="예: 봄 컬러 위주로 촬영 부탁드려요"
                 className="flex-1 bg-transparent outline-none text-[16px] font-medium cursor-pointer pointer-events-none"
-                style={{ color: requests ? '#1C1A17' : undefined }}
+                style={{ color: requests ? '#1C1A17' : undefined, height: '24px' }}
               />
             </div>
             <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>

@@ -85,58 +85,49 @@ function StageTracker({ stageId }: { stageId: Stage }) {
   const currentIdx = STAGE_IDS.indexOf(stageId);
   const labels = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
 
+  // Each value is the x-center of that dot.
+  // 리스트업 center = 28px, 업로드 center = calc(100% - 21px)
+  // 협의중 = 50% (screen center)
+  // 컨택  = midpoint(28px, 50%)  = calc(25% + 14px)
+  // 시안확인 = midpoint(50%, 100%-21px) = calc(75% - 10.5px)
+  const positions = [
+    '28px',
+    'calc(25% + 14px)',
+    '50%',
+    'calc(75% - 10.5px)',
+    'calc(100% - 21px)',
+  ];
+
   return (
-    <div className="relative w-full flex">
-      {/* Line from first-dot-center (~28px from left) to last-dot-center (~21px from right) */}
-      <div
-        className="absolute"
-        style={{ top: 5.25, left: 28, right: 21, height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }}
-      />
+    <div className="relative w-full" style={{ height: 37 }}>
+      {/* Line: first-dot-center → last-dot-center */}
+      <div className="absolute"
+        style={{ top: 5.25, left: 28, right: 21, height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }} />
 
       {labels.map((label, i) => {
         const isActive = i === currentIdx;
         const isDone = i < currentIdx;
-        const isFirst = i === 0;
-        const isLast = i === labels.length - 1;
-
-        const dot = isActive ? (
-          <div className="rounded-full flex items-center justify-center shrink-0"
-            style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}>
-            <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
-          </div>
-        ) : (
-          <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14 }}>
-            <div className="rounded-full"
-              style={{ width: 10, height: 10, backgroundColor: isDone ? '#6366F1' : '#F0F2F8' }} />
-          </div>
-        );
-
-        const text = (
-          <span className="whitespace-nowrap"
-            style={{ fontSize: 14, lineHeight: '15px', fontWeight: isActive ? 600 : 500,
-              color: isActive ? '#6366F1' : '#C0C4CF', marginTop: 8 }}>
-            {label}
-          </span>
-        );
-
-        if (isFirst || isLast) {
-          // Outer column anchors to edge; fit-content inner wrapper centers dot above text
-          return (
-            <div key={label} className="flex-1 flex flex-col"
-              style={{ position: 'relative', zIndex: 1, alignItems: isFirst ? 'flex-start' : 'flex-end' }}>
-              <div className="flex flex-col items-center" style={{ width: 'fit-content' }}>
-                {dot}
-                {text}
-              </div>
-            </div>
-          );
-        }
-
         return (
-          <div key={label} className="flex-1 flex flex-col items-center"
-            style={{ position: 'relative', zIndex: 1 }}>
-            {dot}
-            {text}
+          // Each step is absolutely centered at positions[i] via translateX(-50%)
+          <div key={label}
+            className="absolute flex flex-col items-center"
+            style={{ left: positions[i], top: 0, transform: 'translateX(-50%)', zIndex: 1 }}>
+            {isActive ? (
+              <div className="rounded-full flex items-center justify-center shrink-0"
+                style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}>
+                <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
+              </div>
+            ) : (
+              <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14 }}>
+                <div className="rounded-full"
+                  style={{ width: 10, height: 10, backgroundColor: isDone ? '#6366F1' : '#F0F2F8' }} />
+              </div>
+            )}
+            <span className="whitespace-nowrap"
+              style={{ fontSize: 14, lineHeight: '15px', fontWeight: isActive ? 600 : 500,
+                color: isActive ? '#6366F1' : '#C0C4CF', marginTop: 8 }}>
+              {label}
+            </span>
           </div>
         );
       })}

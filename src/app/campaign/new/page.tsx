@@ -1085,7 +1085,7 @@ export default function CampaignNewPage() {
     <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
 
       {/* Header */}
-      <div className="flex items-center justify-center px-5 h-[65px] border-b border-[#f0f2f8] bg-white shrink-0 relative">
+      <div className="flex items-center justify-center px-5 h-[56px] border-b border-[#f0f2f8] bg-white shrink-0 relative">
         {step < 5 && (
           <button onClick={goBack} className="absolute left-5 active:opacity-60">
             <ChevronLeft size={24} className="text-stone-900" />

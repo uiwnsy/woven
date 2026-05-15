@@ -124,7 +124,7 @@ export default function CampaignDetailPage() {
 
       {/* ── Header ── */}
       <div
-        className="flex items-center justify-between px-4 h-[48px] border-b shrink-0 bg-white"
+        className="flex items-center justify-between px-4 h-[56px] border-b shrink-0 bg-white"
         style={{ borderColor: 'rgba(203, 213, 225, 0.2)' }}
       >
         <button

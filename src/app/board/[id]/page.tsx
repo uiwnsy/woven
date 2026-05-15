@@ -159,8 +159,9 @@ export default function InfluencerDetailPage() {
   const [briefCopied, setBriefCopied] = useState(false);
   const [showMemoOverlay, setShowMemoOverlay] = useState(false);
   const [memoInput, setMemoInput] = useState('');
-  const [savedMemo, setSavedMemo] = useState(data.memo ?? '');
-  const [savedMemoDate, setSavedMemoDate] = useState(data.memoDate ?? '');
+  const [memos, setMemos] = useState<{ text: string; date: string }[]>(
+    data.memo ? [{ text: data.memo, date: data.memoDate ?? '' }] : []
+  );
 
   if (!data) {
     return (
@@ -532,18 +533,18 @@ export default function InfluencerDetailPage() {
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
           <span className="text-[22px] font-bold text-black">내부 메모</span>
 
-          {savedMemo && (
-            <div className="flex flex-col" style={{ backgroundColor: '#FFFDE5', borderRadius: 14, padding: 22, gap: 6 }}>
+          {memos.map((memo, i) => (
+            <div key={i} className="flex flex-col" style={{ backgroundColor: '#FFFDE5', borderRadius: 14, padding: 22, gap: 6 }}>
               <p className="text-[16px] font-medium whitespace-pre-line" style={{ color: '#705448', lineHeight: '22px' }}>
-                {savedMemo}
+                {memo.text}
               </p>
-              {savedMemoDate && (
+              {memo.date && (
                 <span className="text-[14px] font-medium" style={{ color: 'rgba(112,84,72,0.6)', lineHeight: '22px' }}>
-                  {savedMemoDate}
+                  {memo.date}
                 </span>
               )}
             </div>
-          )}
+          ))}
 
           {/* 메모 추가 버튼 */}
           <button
@@ -637,8 +638,7 @@ export default function InfluencerDetailPage() {
                 if (!memoInput.trim()) return;
                 const now = new Date();
                 const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} 작성`;
-                setSavedMemo(memoInput.trim());
-                setSavedMemoDate(dateStr);
+                setMemos(prev => [...prev, { text: memoInput.trim(), date: dateStr }]);
                 setMemoInput('');
                 setShowMemoOverlay(false);
               }}

@@ -162,7 +162,7 @@ export default function CampaignPage() {
       <div className="flex-1 bg-[#fafbfe] overflow-y-auto pb-[125px]">
 
         {/* Filter chips */}
-        <div className="flex gap-2 px-5 py-4 overflow-x-auto scrollbar-none">
+        <div className="flex gap-2 px-5 pt-[26px] pb-4 overflow-x-auto scrollbar-none">
           {(['전체', '마감 임박순', '기획', '진행중', '완료'] as const).map(filter => {
             const isActive = activeFilter === filter;
             return (

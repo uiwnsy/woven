@@ -28,6 +28,13 @@ type InfluencerDetail = {
 
 const STAGES = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
 const STAGE_IDS: Stage[] = ['list-up', 'contacting', 'negotiating', 'reviewing', 'uploaded'];
+const STAGE_LABELS: Record<Stage, string> = {
+  'list-up': '리스트업',
+  'contacting': '컨택',
+  'negotiating': '협의중',
+  'reviewing': '시안확인',
+  'uploaded': '업로드',
+};
 
 const BRIEF_VARIANTS = [
   `안녕하세요 minj_님! 😊\n루미에르입니다.\n\n루미에르 여름 선케어 캠페인에 함께할 크리에이터를 찾고 있어요. minj_님의 뷰티 콘텐츠를 보고 저희 톤과 잘 맞을 것 같아 연락드렸어요!\n\n🎁 제품: 루미에르 선블럭 크림 (신제품)\n🎬 콘텐츠: 인스타그램 릴스 1건 — 봄 무드 데일리 메이크업 룩\n🏷 필수 태그: #선케어 #자외선차단 #수분 #루미에르\n📎 가이드라인: docs.google.com/fxB2eY1zadeox4dkz\n🚫 경쟁 브랜드 언급 금지 · 프로모션 용어 사용 금지 · 과장 표현 금지`,
@@ -329,7 +336,7 @@ export default function InfluencerDetailPage() {
                 className="text-[14px] font-semibold"
                 style={{ backgroundColor: '#EEEEFF', color: '#3D3FC7', borderRadius: 50, padding: '6px 10px' }}
               >
-                리스트업
+                {STAGE_LABELS[data.stage]}
               </span>
               <span className="text-[20px] font-semibold text-black">{data.campaignName}</span>
             </div>
@@ -346,6 +353,9 @@ export default function InfluencerDetailPage() {
         </div>
 
         <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* ── 리스트업 전용: 협의 조건 + AI 브리프 ── */}
+        {data.stage === 'list-up' && <>
 
         {/* ── 협의 조건 ── */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
@@ -555,6 +565,71 @@ export default function InfluencerDetailPage() {
           </div>
         </div>
 
+        </> /* end list-up only */}
+
+        {/* ── 컨택 전용: 발송 현황 + 발송된 브리프 ── */}
+        {data.stage === 'contacting' && <>
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 발송 현황 */}
+        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+          <span className="text-[22px] font-bold text-black">발송 현황</span>
+          <div style={{ border: '1px solid #ECECEF', borderRadius: 14, overflow: 'hidden' }}>
+            {/* 발송 완료 row */}
+            <div className="flex items-center px-5 py-4" style={{ gap: 10, backgroundColor: '#F8FAFF' }}>
+              <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: '#E8FFF1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M2.5 7l3 3 6-6" stroke="#26AF58" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <span className="text-[16px] font-semibold text-black">브리프 발송 완료</span>
+            </div>
+            {/* Info rows */}
+            <div className="flex flex-col px-5 py-4 bg-white" style={{ gap: 12, borderTop: '1px solid #ECECEF' }}>
+              <div className="flex items-center justify-between">
+                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>발송일</span>
+                <span className="text-[14px] font-medium" style={{ color: '#1C1A17' }}>2025.04.17</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>경과</span>
+                <span className="text-[14px] font-semibold" style={{ color: '#EF8652', fontFamily: 'Manrope, sans-serif' }}>{data.dDay}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>응답 상태</span>
+                <span className="text-[13px] font-semibold" style={{ backgroundColor: '#FEF6F1', color: '#D96430', borderRadius: 50, padding: '4px 10px' }}>응답 대기 중</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 발송된 브리프 */}
+        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+          <span className="text-[22px] font-bold text-black">발송된 브리프</span>
+          <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF]">
+              <span className="text-[16px] font-medium text-black">발송된 브리프</span>
+              <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
+                <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
+              </div>
+            </div>
+            <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
+              <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
+                {BRIEF_VARIANTS[0]}
+              </p>
+            </div>
+            <div className="border-t border-[#ECECEF]">
+              <button onClick={handleCopyBrief} className="w-full py-[15px] flex items-center justify-center bg-[#F8FAFF] active:opacity-70">
+                <span className="text-[16px] font-medium text-black">{briefCopied ? '복사됨 ✓' : '복사하기'}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        </> /* end contacting only */}
+
         <div className="h-2 bg-[#F5F5F3]" />
 
         {/* ── 협업 이력 ── */}
@@ -656,19 +731,36 @@ export default function InfluencerDetailPage() {
         className="absolute bottom-0 w-full bg-white flex flex-col"
         style={{ borderTop: '1px solid #E8E7E4', padding: 20, gap: 10 }}
       >
-        <button
-          onClick={() => {
-            setShowToast(true);
-            setTimeout(() => router.push(`/board?tab=contacting&sent=${id}`), 1500);
-          }}
-          className="w-full flex items-center justify-center active:opacity-80"
-          style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
-        >
-          <span className="text-[18px] font-bold text-white">발송 완료</span>
-        </button>
-        <button className="w-full flex items-center justify-center active:opacity-60">
-          <span className="text-[18px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
-        </button>
+        {data.stage === 'contacting' ? (
+          <>
+            <button
+              onClick={() => router.push('/board?tab=negotiated')}
+              className="w-full flex items-center justify-center active:opacity-80"
+              style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
+            >
+              <span className="text-[18px] font-bold text-white">협의 완료</span>
+            </button>
+            <button className="w-full flex items-center justify-center active:opacity-60">
+              <span className="text-[18px] font-medium" style={{ color: '#B7B7B7' }}>다시 연락하기</span>
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => {
+                setShowToast(true);
+                setTimeout(() => router.push(`/board?tab=contacting&sent=${id}`), 1500);
+              }}
+              className="w-full flex items-center justify-center active:opacity-80"
+              style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
+            >
+              <span className="text-[18px] font-bold text-white">발송 완료</span>
+            </button>
+            <button className="w-full flex items-center justify-center active:opacity-60">
+              <span className="text-[18px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
+            </button>
+          </>
+        )}
       </div>
 
       {/* ── 브리프 수정 오버레이 (portal) ── */}

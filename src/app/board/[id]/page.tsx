@@ -113,9 +113,14 @@ function StageTracker({ stageId }: { stageId: Stage }) {
             className="absolute flex flex-col items-center"
             style={{ left: positions[i], top: 0, transform: 'translateX(-50%)', zIndex: 1 }}>
             {isActive ? (
-              <div className="rounded-full flex items-center justify-center shrink-0"
-                style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}>
-                <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
+              <div className="relative flex items-center justify-center shrink-0" style={{ width: 14, height: 14 }}>
+                {/* Ping ripple behind the dot */}
+                <div className="absolute rounded-full animate-ping"
+                  style={{ width: 14, height: 14, backgroundColor: '#6366F1', opacity: 0.35 }} />
+                <div className="relative rounded-full flex items-center justify-center"
+                  style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}>
+                  <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
+                </div>
               </div>
             ) : (
               <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14 }}>

@@ -219,18 +219,20 @@ export default function BoardPage() {
             ))
           )}
 
-          {/* Add influencer button */}
-          <button
-            onClick={() => router.push('/board/add')}
-            className="w-full h-[68px] flex items-center justify-center gap-1 rounded-[14px] active:opacity-70"
-            style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="8" r="7.5" stroke="#8486F3"/>
-              <path d="M8 5v6M5 8h6" stroke="#8486F3" strokeWidth="1.2" strokeLinecap="round"/>
-            </svg>
-            <span className="text-[16px] font-medium text-[#8486F3]">인플루언서 추가</span>
-          </button>
+          {/* Add influencer button — 리스트업 단계에만 표시 */}
+          {activeTab === 'list-up' && (
+            <button
+              onClick={() => router.push('/board/add')}
+              className="w-full h-[68px] flex items-center justify-center gap-1 rounded-[14px] active:opacity-70 mt-[20px]"
+              style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="7.5" stroke="#8486F3"/>
+                <path d="M8 5v6M5 8h6" stroke="#8486F3" strokeWidth="1.2" strokeLinecap="round"/>
+              </svg>
+              <span className="text-[16px] font-medium text-[#8486F3]">인플루언서 추가</span>
+            </button>
+          )}
 
         </div>
       </div>

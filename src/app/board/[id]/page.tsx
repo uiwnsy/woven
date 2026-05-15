@@ -638,7 +638,7 @@ export default function InfluencerDetailPage() {
                 if (!memoInput.trim()) return;
                 const now = new Date();
                 const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} 작성`;
-                setMemos(prev => [...prev, { text: memoInput.trim(), date: dateStr }]);
+                setMemos(prev => [{ text: memoInput.trim(), date: dateStr }, ...prev]);
                 setMemoInput('');
                 setShowMemoOverlay(false);
               }}

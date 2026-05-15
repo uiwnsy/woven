@@ -461,17 +461,19 @@ export default function InfluencerDetailPage() {
             <div className="flex items-center" style={{ gap: 6 }}>
               <span className="text-[18px] font-medium text-black">개별 요청사항</span>
             </div>
-            <button
+            <div
               onClick={() => setIsEditingRequests(true)}
-              className="w-full text-left active:opacity-70"
-              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 10px 10px 20px', lineHeight: '24px' }}
+              className="flex items-center cursor-pointer active:opacity-70"
+              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}
             >
-              {requests ? (
-                <span className="text-[16px] font-medium whitespace-pre-wrap" style={{ color: '#1C1A17' }}>{requests}</span>
-              ) : (
-                <span className="text-[16px] font-medium" style={{ color: '#C0C4CF' }}>예: 봄 컬러 위주로 촬영 부탁드려요</span>
-              )}
-            </button>
+              <input
+                value={requests}
+                readOnly
+                placeholder="예: 봄 컬러 위주로 촬영 부탁드려요"
+                className="flex-1 bg-transparent outline-none text-[16px] font-medium cursor-pointer pointer-events-none"
+                style={{ color: requests ? '#1C1A17' : undefined }}
+              />
+            </div>
             <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>
           </div>
 

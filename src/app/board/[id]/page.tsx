@@ -177,13 +177,6 @@ export default function InfluencerDetailPage() {
                 <div className="w-full h-full rounded-full overflow-hidden bg-stone-200">
                   <img src={data.profileImg} alt={data.name} className="w-full h-full object-cover" />
                 </div>
-                <img
-                  src="/skill-icons_instagram.svg"
-                  alt="ig"
-                  width={22} height={22}
-                  className="absolute"
-                  style={{ bottom: 0, right: -2 }}
-                />
               </div>
 
               {/* Name + handle */}

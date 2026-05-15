@@ -76,12 +76,12 @@ function DocumentIcon({ done }: { done: boolean }) {
   );
 }
 
-function CampaignCard({ campaign }: { campaign: Campaign }) {
+function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () => void }) {
   const statusStyle = STATUS_STYLES[campaign.status];
   const hasProgress = campaign.progressPct !== undefined;
 
   return (
-    <div className="bg-white rounded-[14px] border border-[#EBEEF7] px-5 py-[22px] flex flex-col gap-4">
+    <div onClick={onClick} className="bg-white rounded-[14px] border border-[#EBEEF7] px-5 py-[22px] flex flex-col gap-4 active:opacity-70 cursor-pointer">
       {/* Section 1: Title+status + Info row */}
       <div className="flex flex-col gap-[6px]">
         <div className="flex items-center justify-between">
@@ -184,7 +184,7 @@ export default function CampaignPage() {
         <div className="flex flex-col gap-[20px] px-5">
           <div className="flex flex-col gap-[10px]">
             {filtered.map(campaign => (
-              <CampaignCard key={campaign.id} campaign={campaign} />
+              <CampaignCard key={campaign.id} campaign={campaign} onClick={() => router.push('/campaign/' + campaign.id)} />
             ))}
           </div>
 

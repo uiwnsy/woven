@@ -85,57 +85,58 @@ function StageTracker({ stageId }: { stageId: Stage }) {
   const currentIdx = STAGE_IDS.indexOf(stageId);
   const labels = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
 
-  // text: first=flush-left, last=flush-right, middle=center
-  // dot: always centered above text via alignSelf:'center' on first/last
-  const textAlign = ['flex-start', 'center', 'center', 'center', 'flex-end'];
-
   return (
     <div className="relative w-full flex">
-      {/* Line: first dot center (10%) to last dot center (10% from right) */}
+      {/* Line from first-dot-center (~28px from left) to last-dot-center (~21px from right) */}
       <div
         className="absolute"
-        style={{ top: 5.25, left: '10%', right: '10%', height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }}
+        style={{ top: 5.25, left: 28, right: 21, height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }}
       />
 
       {labels.map((label, i) => {
         const isActive = i === currentIdx;
         const isDone = i < currentIdx;
-        const isEdge = i === 0 || i === labels.length - 1;
-        // edge steps: text flush to edge, dot self-centers in the column
-        const dotSelf = isEdge ? 'center' : undefined;
+        const isFirst = i === 0;
+        const isLast = i === labels.length - 1;
+
+        const dot = isActive ? (
+          <div className="rounded-full flex items-center justify-center shrink-0"
+            style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}>
+            <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
+          </div>
+        ) : (
+          <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14 }}>
+            <div className="rounded-full"
+              style={{ width: 10, height: 10, backgroundColor: isDone ? '#6366F1' : '#F0F2F8' }} />
+          </div>
+        );
+
+        const text = (
+          <span className="whitespace-nowrap"
+            style={{ fontSize: 14, lineHeight: '15px', fontWeight: isActive ? 600 : 500,
+              color: isActive ? '#6366F1' : '#C0C4CF', marginTop: 8 }}>
+            {label}
+          </span>
+        );
+
+        if (isFirst || isLast) {
+          // Outer column anchors to edge; fit-content inner wrapper centers dot above text
+          return (
+            <div key={label} className="flex-1 flex flex-col"
+              style={{ position: 'relative', zIndex: 1, alignItems: isFirst ? 'flex-start' : 'flex-end' }}>
+              <div className="flex flex-col items-center" style={{ width: 'fit-content' }}>
+                {dot}
+                {text}
+              </div>
+            </div>
+          );
+        }
+
         return (
-          <div
-            key={label}
-            className="flex-1 flex flex-col"
-            style={{ position: 'relative', zIndex: 1, alignItems: textAlign[i] }}
-          >
-            {isActive ? (
-              <div
-                className="rounded-full flex items-center justify-center shrink-0"
-                style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1', alignSelf: dotSelf }}
-              >
-                <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
-              </div>
-            ) : (
-              <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14, alignSelf: dotSelf }}>
-                <div
-                  className="rounded-full"
-                  style={{ width: 10, height: 10, backgroundColor: isDone ? '#6366F1' : '#F0F2F8' }}
-                />
-              </div>
-            )}
-            <span
-              className="whitespace-nowrap"
-              style={{
-                fontSize: 14,
-                lineHeight: '15px',
-                fontWeight: isActive ? 600 : 500,
-                color: isActive ? '#6366F1' : '#C0C4CF',
-                marginTop: 8,
-              }}
-            >
-              {label}
-            </span>
+          <div key={label} className="flex-1 flex flex-col items-center"
+            style={{ position: 'relative', zIndex: 1 }}>
+            {dot}
+            {text}
           </div>
         );
       })}

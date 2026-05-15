@@ -133,7 +133,7 @@ export default function CampaignDetailPage() {
         >
           <ChevronLeft size={24} className="text-stone-900" />
         </button>
-        <span className="text-[20px] font-bold text-black">캠페인 상세</span>
+        <span className="text-[18px] font-bold text-black">캠페인 상세</span>
         <button className="w-[42px] h-[42px] flex items-center justify-center active:opacity-60">
           <MoreHorizontal size={24} className="text-stone-900" />
         </button>

@@ -264,7 +264,7 @@ export default function InfluencerDetailPage() {
       </div>
 
       {/* ── Scrollable body ── */}
-      <div className="flex-1 overflow-y-auto pb-[120px]">
+      <div className={`flex-1 overflow-y-auto ${data.stage === 'contacting' ? 'pb-[200px]' : 'pb-[120px]'}`}>
 
         {/* ── Profile Card ── */}
         <div className="bg-white flex flex-col items-center w-full" style={{ padding: '34px 20px', gap: 20 }}>
@@ -585,11 +585,9 @@ export default function InfluencerDetailPage() {
           <span className="text-[22px] font-bold text-black">발송 현황</span>
           <div style={{ border: '1px solid #ECECEF', borderRadius: 14, overflow: 'hidden' }}>
             <div className="flex items-center px-5 py-4" style={{ gap: 10, backgroundColor: '#F8FAFF' }}>
-              <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: '#E8FFF1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2.5 7l3 3 6-6" stroke="#26AF58" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="shrink-0">
+                <path d="M3.5 10.5l4.5 4.5 8.5-9" stroke="#6366F1" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
               <span className="text-[16px] font-semibold text-black">브리프 발송 완료</span>
             </div>
             <div className="flex flex-col px-5 py-4 bg-white" style={{ gap: 12, borderTop: '1px solid #ECECEF' }}>
@@ -612,10 +610,10 @@ export default function InfluencerDetailPage() {
           <span className="text-[22px] font-bold text-black">응답 상태</span>
           <div style={{ display: 'flex', gap: 14 }}>
             {([
-              { key: 'positive', icon: '/done-icon.svg',    label: '긍정 응답', sub: '참여 의사 확인', activeBg: '#EEEEFF' },
-              { key: 'negative', icon: '/no-icon.svg',      label: '거절',      sub: '참여 불가',     activeBg: '#FFF0F0' },
-              { key: 'none',     icon: '/nothing-icon.svg', label: '미응답',    sub: '응답 대기중',   activeBg: '#FFFCE0' },
-            ] as const).map(({ key, icon, label, sub, activeBg }) => {
+              { key: 'positive', icon: '/done-icon.svg',    label: '긍정 응답', sub: '참여 의사 확인' },
+              { key: 'negative', icon: '/no-icon.svg',      label: '거절',      sub: '참여 불가'     },
+              { key: 'none',     icon: '/nothing-icon.svg', label: '미응답',    sub: '응답 대기중'   },
+            ] as const).map(({ key, icon, label, sub }) => {
               const isActive = responseStatus === key;
               return (
                 <button
@@ -624,7 +622,7 @@ export default function InfluencerDetailPage() {
                   className="flex-1 flex flex-col items-center justify-center active:opacity-80"
                   style={{
                     gap: 6, padding: 20, borderRadius: 10,
-                    backgroundColor: isActive ? activeBg : '#FFFFFF',
+                    backgroundColor: isActive ? '#EEEEFF' : '#FFFFFF',
                     border: `1px solid ${isActive ? '#6366F1' : '#EBEEF7'}`,
                   }}
                 >
@@ -654,7 +652,10 @@ export default function InfluencerDetailPage() {
                   <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
                     <input
                       value={negotiationPrice}
-                      onChange={e => setNegotiationPrice(e.target.value)}
+                      onChange={e => {
+                        const raw = e.target.value.replace(/[^0-9]/g, '');
+                        setNegotiationPrice(raw ? Number(raw).toLocaleString('ko-KR') : '');
+                      }}
                       placeholder="예: 300,000"
                       className="w-full bg-transparent outline-none text-[16px] font-medium"
                       style={{ color: '#1C1A17' }}

@@ -1,7 +1,8 @@
 'use client';
 
 import { useRouter, useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 const MANROPE: React.CSSProperties = { fontFamily: 'Manrope, sans-serif' };
 
@@ -159,6 +160,34 @@ export default function InfluencerDetailPage() {
   const [briefCopied, setBriefCopied] = useState(false);
   const [showMemoOverlay, setShowMemoOverlay] = useState(false);
   const [memoInput, setMemoInput] = useState('');
+  const [isEditingBrief, setIsEditingBrief] = useState(false);
+  const [editedBrief, setEditedBrief] = useState<string | null>(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  const briefTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => { setMounted(true); }, []);
+
+  useEffect(() => {
+    if (!isEditingBrief) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const vv = window.visualViewport;
+    const onViewport = () => { if (vv) setKeyboardHeight(Math.max(0, window.innerHeight - vv.height)); };
+    if (vv) { vv.addEventListener('resize', onViewport); onViewport(); }
+    return () => {
+      document.body.style.overflow = prev;
+      if (vv) vv.removeEventListener('resize', onViewport);
+      setKeyboardHeight(0);
+    };
+  }, [isEditingBrief]);
+
+  useLayoutEffect(() => {
+    if (!isEditingBrief || !briefTextareaRef.current) return;
+    const el = briefTextareaRef.current;
+    el.style.height = '0px';
+    el.style.height = el.scrollHeight + 'px';
+  }, [isEditingBrief]);
   const [memos, setMemos] = useState<{ text: string; date: string }[]>(
     data.memo ? [{ text: data.memo, date: data.memoDate ?? '' }] : []
   );
@@ -457,38 +486,31 @@ export default function InfluencerDetailPage() {
           </div>
 
           {/* Brief card */}
-          <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, overflow: 'hidden' }}>
-            {/* Card header — Figma 27-2832 */}
-            <div
-              className="flex items-center justify-between"
-              style={{ padding: '20px', borderBottom: '1px solid #E8E7E4' }}
-            >
-              <div className="flex flex-col" style={{ gap: 4 }}>
-                <span style={{ fontSize: 18, fontWeight: 500, color: '#1C1A17' }}>AI 브리프 보기</span>
-                <span style={{ fontSize: 14, fontWeight: 400, color: '#B0ADA7' }}>브리프 편집 · 재생성</span>
+          <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden flex flex-col">
+            {/* Card header */}
+            <div className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF]">
+              <span className="text-[16px] font-medium text-black">생성된 브리프</span>
+              <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
+                <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
               </div>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M6 3l5 5-5 5" stroke="#B0ADA7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
             </div>
             {/* Brief body */}
-            <div style={{ padding: '16px 22px' }}>
-              <p className="text-[18px] font-medium whitespace-pre-line" style={{ color: '#1C1A17', lineHeight: '150%' }}>
-                {data.brief}
+            <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
+              <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
+                {editedBrief ?? data.brief}
               </p>
             </div>
             {/* Card footer */}
-            <div className="flex" style={{ borderTop: '1px solid #E8E7E4' }}>
+            <div className="flex border-t border-[#ECECEF]">
               <button
-                className="flex-1 flex items-center justify-center active:opacity-70"
-                style={{ backgroundColor: '#F8FAFF', padding: '15px 22px', borderRight: '1px solid #E8E7E4' }}
+                onClick={() => setIsEditingBrief(true)}
+                className="flex-1 py-[15px] flex items-center justify-center bg-[#F8FAFF] border-r border-[#ECECEF] rounded-bl-[14px] active:opacity-70"
               >
                 <span className="text-[16px] font-medium text-black">수정하기</span>
               </button>
               <button
                 onClick={handleCopyBrief}
-                className="flex-1 flex items-center justify-center active:opacity-70"
-                style={{ backgroundColor: '#F8FAFF', padding: '15px 22px' }}
+                className="flex-1 py-[15px] flex items-center justify-center bg-[#F8FAFF] rounded-br-[14px] active:opacity-70"
               >
                 <span className="text-[16px] font-medium text-black">{briefCopied ? '복사됨 ✓' : '복사하기'}</span>
               </button>
@@ -592,6 +614,45 @@ export default function InfluencerDetailPage() {
           <span className="text-[18px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
         </button>
       </div>
+
+      {/* ── 브리프 수정 오버레이 (portal) ── */}
+      {mounted && isEditingBrief && createPortal(
+        <>
+          <div className="fixed inset-0 z-50 bg-white" />
+          <div className="fixed inset-x-0 top-0 z-[60] h-[56px] flex items-center justify-between px-5 bg-white border-b border-[#E8E7E4]">
+            <span className="text-[18px] font-semibold text-black">브리프 수정</span>
+            <button
+              onClick={() => {
+                if (briefTextareaRef.current) setEditedBrief(briefTextareaRef.current.value);
+                setIsEditingBrief(false);
+              }}
+              className="text-[16px] font-semibold text-[#6366F1] px-2 py-2 active:opacity-70"
+            >
+              완료
+            </button>
+          </div>
+          <div
+            className="fixed inset-x-0 z-[60] overflow-y-auto bg-white"
+            style={{ top: '56px', bottom: `${keyboardHeight}px`, WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}
+          >
+            <div className="p-5 pb-[50px]">
+              <textarea
+                ref={briefTextareaRef}
+                defaultValue={editedBrief ?? data.brief}
+                autoFocus
+                onInput={e => {
+                  const el = e.currentTarget;
+                  el.style.height = '0px';
+                  el.style.height = el.scrollHeight + 'px';
+                }}
+                className="w-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white block"
+                style={{ overflowY: 'hidden' }}
+              />
+            </div>
+          </div>
+        </>,
+        document.body
+      )}
 
       {/* ── 메모 추가 오버레이 ── */}
       {showMemoOverlay && (

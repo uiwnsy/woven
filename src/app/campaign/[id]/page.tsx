@@ -293,20 +293,46 @@ export default function CampaignDetailPage() {
             <div className="w-full px-5">
               {/* container has px-5 (20px), rows have py-4 only — matches Figma padding: 0px 20px on container, 16px 0px on rows */}
               <div className="bg-[#F8FAFF] rounded-[14px] px-5">
-                {[...campaign.info, ...(campaign.guidelineUrl ? [{ label: '가이드라인', value: campaign.guidelineUrl }] : [])].map((row, i, arr) => (
+                {campaign.info.map((row, i) => (
                   <div
                     key={row.label}
-                    className={`flex items-center justify-between py-4 ${i < arr.length - 1 ? 'border-b border-[#F0F2F8]' : ''}`}
+                    className={`flex items-center justify-between py-4 ${i < campaign.info.length - 1 ? 'border-b border-[#F0F2F8]' : ''}`}
                   >
-                    <span className="text-[16px] font-medium text-[#8995A2] shrink-0">{row.label}</span>
-                    <span className="text-[16px] font-medium text-[#1C1A17] text-right ml-4 break-all">{row.value}</span>
+                    <span className="text-[16px] font-medium text-[#8995A2]">{row.label}</span>
+                    <span className="text-[16px] font-medium text-[#1C1A17]">{row.value}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* ── 6. 핵심 메시지 ── */}
+          {/* ── 6. 콘텐츠 가이드라인 ── */}
+          {campaign.guidelineUrl && (
+            <div className="bg-white py-[30px] flex flex-col gap-5">
+              <div className="px-5">
+                <span className="text-[20px] font-semibold text-black">콘텐츠 가이드라인</span>
+              </div>
+              <a
+                href={`https://${campaign.guidelineUrl}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-5 flex items-center justify-between bg-white border border-[#E8E7E4] rounded-[10px] px-5 py-[18px] active:opacity-70"
+              >
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <div className="shrink-0 w-9 h-9 rounded-[10px] bg-[#F0F2F8] flex items-center justify-center">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path d="M7.5 9.75a3.375 3.375 0 0 0 5.032.329l1.5-1.5a3.375 3.375 0 0 0-4.773-4.773l-.86.853" stroke="#6366F1" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M10.5 8.25a3.375 3.375 0 0 0-5.032-.329l-1.5 1.5a3.375 3.375 0 0 0 4.773 4.773l.854-.853" stroke="#6366F1" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <span className="text-[15px] font-medium text-[#4B5969] truncate">{campaign.guidelineUrl}</span>
+                </div>
+                <img src="/arrow-right.svg" alt="" className="w-5 h-5 shrink-0 ml-3" />
+              </a>
+            </div>
+          )}
+
+          {/* ── 7. 핵심 메시지 ── */}
           {campaign.coreMessage && (
             <div className="bg-white py-[30px] pb-[70px] flex flex-col items-center gap-5">
               <div className="w-full px-5">

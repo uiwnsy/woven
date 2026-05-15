@@ -362,10 +362,9 @@ export default function InfluencerDetailPage() {
           </div>
 
           {/* 개별 가이드라인 */}
-          <div className="flex flex-col" style={{ gap: 12 }}>
+          <div className="flex flex-col" style={{ gap: 12, marginTop: 8 }}>
             <div className="flex items-center" style={{ gap: 6 }}>
               <span className="text-[18px] font-medium text-black">개별 가이드라인</span>
-              <span className="text-[15px]" style={{ color: '#91929F' }}>(선택)</span>
             </div>
 
             {/* 캠페인 기본값: 캠페인 추가 시 가이드라인을 입력한 경우에만 표시 */}
@@ -388,12 +387,12 @@ export default function InfluencerDetailPage() {
 
             <div
               className="flex items-center justify-between"
-              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '15px 20px' }}
+              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 10px 10px 20px' }}
             >
               <input
                 value={guidelineUrl}
                 onChange={e => setGuidelineUrl(e.target.value)}
-                placeholder="개별 가이드라인 링크 (선택)"
+                placeholder="개별 가이드라인 링크"
                 className="flex-1 bg-transparent outline-none text-[16px] font-medium"
                 style={{ color: '#1C1A17' }}
               />
@@ -422,7 +421,7 @@ export default function InfluencerDetailPage() {
               placeholder="예: 봄 컬러 위주로 촬영 부탁드려요"
               rows={3}
               className="w-full outline-none resize-none text-[16px] font-medium"
-              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px', color: '#1C1A17' }}
+              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '15px 20px 10px', color: '#1C1A17' }}
             />
             <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>
           </div>
@@ -445,9 +444,14 @@ export default function InfluencerDetailPage() {
           {/* Info note */}
           <div
             className="flex items-start"
-            style={{ backgroundColor: '#EEF7FF', borderRadius: 12, padding: 20, gap: 7 }}
+            style={{ backgroundColor: '#EEF7FF', borderRadius: 12, padding: 20, gap: 8 }}
           >
-            <span className="text-[16px] font-semibold" style={{ color: '#2D92FE', lineHeight: '135%' }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[1px]">
+              <circle cx="8" cy="8" r="7" stroke="#2D92FE" strokeWidth="1.4"/>
+              <path d="M8 7v3.5" stroke="#2D92FE" strokeWidth="1.4" strokeLinecap="round"/>
+              <circle cx="8" cy="5" r="0.7" fill="#2D92FE"/>
+            </svg>
+            <span className="text-[14px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
               캠페인 정보를 기반으로 AI가 자동 생성한 브리프예요. 바로 보내거나 수정 후 전송할 수 있어요.
             </span>
           </div>

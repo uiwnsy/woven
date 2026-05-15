@@ -150,16 +150,14 @@ export default function PerformancePage() {
       </div>
 
       {/* ── Scrollable body ── */}
-      <div className="flex-1 bg-[#FAFBFE] overflow-y-auto">
-        <div className="px-5 pt-[26px] pb-[115px] flex flex-col gap-5">
+      <div className="flex-1 bg-[#FAFBFE] overflow-y-auto pb-[95px]">
 
-          {/* Campaign Selector */}
+        {/* Campaign Selector + Period Filters */}
+        <div className="px-5 pt-[26px] pb-5 flex flex-col gap-5">
           <button className="flex items-center justify-between w-full bg-white rounded-[46px] px-[22px] py-[14px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80">
             <span className="text-[18px] font-medium text-[#1C1A17]">루미에르 봄봄 프로모션</span>
             <img src="/arrow-down.svg" alt="" width={24} height={24} />
           </button>
-
-          {/* Period Filters */}
           <div className="flex items-center gap-[10px]">
             {(['전체', '7일', '14일', '30일'] as const).map(p => {
               const isActive = period === p;
@@ -175,8 +173,10 @@ export default function PerformancePage() {
               );
             })}
           </div>
+        </div>
 
-          {/* ── Summary Container ── */}
+        {/* ── Summary Section ── */}
+        <div className="bg-white px-5 py-[30px] flex flex-col gap-5">
           <div className="bg-[#F8FAFF] rounded-[14px] border border-[rgba(221,231,255,0.4)] px-5 py-[30px] flex flex-col gap-5">
 
             {/* ROAS headline */}
@@ -208,9 +208,12 @@ export default function PerformancePage() {
               ))}
             </div>
           </div>
+        </div>
 
-          {/* ── Chart Section ── */}
-          <div className="py-10 flex flex-col gap-5">
+        <div className="h-2 bg-stone-100" />
+
+        {/* ── Chart Section ── */}
+        <div className="bg-white px-5 py-10 flex flex-col gap-5">
             <div className="flex items-center justify-between">
               <span className="text-[22px] font-bold text-black">성과 추이</span>
               <div className="flex items-center bg-[#EAEDF5] rounded-full p-[2px]">
@@ -239,10 +242,12 @@ export default function PerformancePage() {
                 </div>
               </div>
             </div>
-          </div>
+        </div>
 
-          {/* ── Performance Section ── */}
-          <div className="py-10 flex flex-col gap-5">
+        <div className="h-2 bg-stone-100" />
+
+        {/* ── Performance Section ── */}
+        <div className="bg-white px-5 py-10 flex flex-col gap-5">
             <div className="flex items-center justify-between">
               <span className="text-[22px] font-bold text-black">인플루언서별 성과</span>
               <button className="border border-[#D4D2CE] rounded-full px-[10px] py-[7px] text-[14px] font-semibold text-[#78756E] active:opacity-70">
@@ -351,10 +356,12 @@ export default function PerformancePage() {
               </div>
 
             </div>
-          </div>
+        </div>
 
-          {/* ── Report Section ── */}
-          <div className="py-10 flex flex-col gap-5">
+        <div className="h-2 bg-stone-100" />
+
+        {/* ── Report Section ── */}
+        <div className="bg-white px-5 py-10 flex flex-col gap-5">
             <span className="text-[22px] font-bold text-black">리포트 내보내기</span>
             <div className="flex flex-col gap-[10px]">
               <button className="bg-white border border-[#E8E7E4] rounded-[10px] p-5 flex items-center gap-[14px] active:opacity-70 text-left w-full">
@@ -372,9 +379,8 @@ export default function PerformancePage() {
                 </div>
               </button>
             </div>
-          </div>
-
         </div>
+
       </div>
 
       {/* ── Bottom navigation ── */}

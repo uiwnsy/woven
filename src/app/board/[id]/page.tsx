@@ -460,7 +460,6 @@ export default function InfluencerDetailPage() {
           <div className="flex flex-col" style={{ gap: 12 }}>
             <div className="flex items-center" style={{ gap: 6 }}>
               <span className="text-[18px] font-medium text-black">개별 요청사항</span>
-              <span className="text-[15px]" style={{ color: '#91929F' }}>(선택)</span>
             </div>
             <button
               onClick={() => setIsEditingRequests(true)}

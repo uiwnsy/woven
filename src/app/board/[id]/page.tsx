@@ -640,7 +640,7 @@ export default function InfluencerDetailPage() {
       {showToast && (
         <div
           className="absolute left-5 right-5 z-[70] flex items-center gap-3 px-5 py-4 rounded-[14px]"
-          style={{ bottom: 140, backgroundColor: '#1C1A17' }}
+          style={{ bottom: 175, backgroundColor: '#1C1A17' }}
         >
           <div className="w-6 h-6 rounded-full bg-[#6366F1] flex items-center justify-center shrink-0">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

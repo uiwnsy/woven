@@ -334,7 +334,7 @@ export default function InfluencerDetailPage() {
                     className="flex-1 flex flex-col items-center active:opacity-70"
                     style={{
                       backgroundColor: isSelected ? '#EEEEFF' : '#FFFFFF',
-                      border: '1px solid #E8E7E4',
+                      border: isSelected ? '1px solid #6366F1' : '1px solid #E8E7E4',
                       borderRadius: 10,
                       padding: 20,
                       gap: 6,

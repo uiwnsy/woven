@@ -29,7 +29,13 @@ type InfluencerDetail = {
 const STAGES = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
 const STAGE_IDS: Stage[] = ['list-up', 'contacting', 'negotiating', 'reviewing', 'uploaded'];
 
-const BRIEF_TEXT = `안녕하세요 minj_님! 😊\n루미에르입니다.\n\n루미에르 여름 선케어 캠페인에 함께할 크리에이터를 찾고 있어요. minj_님의 뷰티 콘텐츠를 보고 저희 톤과 잘 맞을 것 같아 연락드렸어요!\n\n🎁 제품: 루미에르 선블럭 크림 (신제품)\n🎬 콘텐츠: 인스타그램 릴스 1건 — 봄 무드 데일리 메이크업 룩\n🏷 필수 태그: #선케어 #자외선차단 #수분 #루미에르\n📎 가이드라인: docs.google.com/fxB2eY1zadeox4dkz\n🚫 경쟁 브랜드 언급 금지 · 프로모션 용어 사용 금지 · 과장 표현 금지`;
+const BRIEF_VARIANTS = [
+  `안녕하세요 minj_님! 😊\n루미에르입니다.\n\n루미에르 여름 선케어 캠페인에 함께할 크리에이터를 찾고 있어요. minj_님의 뷰티 콘텐츠를 보고 저희 톤과 잘 맞을 것 같아 연락드렸어요!\n\n🎁 제품: 루미에르 선블럭 크림 (신제품)\n🎬 콘텐츠: 인스타그램 릴스 1건 — 봄 무드 데일리 메이크업 룩\n🏷 필수 태그: #선케어 #자외선차단 #수분 #루미에르\n📎 가이드라인: docs.google.com/fxB2eY1zadeox4dkz\n🚫 경쟁 브랜드 언급 금지 · 프로모션 용어 사용 금지 · 과장 표현 금지`,
+  `안녕하세요 minj_님,\n뷰티 브랜드 루미에르 마케팅팀입니다.\n\n이번 봄봄 선케어 캠페인을 위해 협업을 제안드리고 싶어 연락드렸습니다. 평소 minj_님의 진정성 있는 리뷰 콘텐츠를 인상 깊게 보았습니다.\n\n■ 제품: 루미에르 선블럭 크림\n■ 게시 채널: 인스타그램 릴스 1건\n■ 콘텐츠 방향: 일상 속 자연스러운 선케어 루틴\n■ 필수 해시태그: #루미에르 #선케어 #자외선차단\n■ 참고 가이드라인: docs.google.com/fxB2eY1zadeox4dkz\n\n※ 경쟁사 언급 및 과장 광고 표현은 삼가 주시기 바랍니다.`,
+  `minj_ 님, 안녕하세요 🌿\n루미에르 팀이에요!\n\nminj_ 님 피드 보다가 꼭 함께하고 싶어서 연락드렸어요. 이번에 출시한 선블럭 크림, 뷰티 루틴 좋아하시는 분들이 진짜 좋아할 것 같거든요 ☀️\n\n📦 제품: 루미에르 선블럭 크림\n📱 형식: 인스타 릴스 1개 — 데일리 메이크업 or 스킨케어 루틴에 자연스럽게\n🏷 태그: #루미에르 #선케어 #자외선차단 #수분크림\n🔗 가이드: docs.google.com/fxB2eY1zadeox4dkz\n\n경쟁 브랜드 언급이나 과장 표현만 피해주시면 나머지는 minj_ 님 스타일대로 자유롭게 해주세요!`,
+];
+
+const BRIEF_TEXT = BRIEF_VARIANTS[0];
 
 const MOCK_DETAILS: Record<string, InfluencerDetail> = {
   'lu1': {
@@ -162,6 +168,8 @@ export default function InfluencerDetailPage() {
   const [memoInput, setMemoInput] = useState('');
   const [isEditingBrief, setIsEditingBrief] = useState(false);
   const [editedBrief, setEditedBrief] = useState<string | null>(null);
+  const [briefVersion, setBriefVersion] = useState(0);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [mounted, setMounted] = useState(false);
   const briefTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -457,13 +465,24 @@ export default function InfluencerDetailPage() {
 
           {/* Regenerate brief button */}
           <button
+            onClick={() => {
+              setIsGenerating(true);
+              setEditedBrief(null);
+              setTimeout(() => {
+                setBriefVersion(v => (v + 1) % BRIEF_VARIANTS.length);
+                setIsGenerating(false);
+              }, 1200);
+            }}
+            disabled={isGenerating}
             className="w-full flex items-center justify-center gap-2 active:opacity-80"
-            style={{ backgroundColor: '#6366F1', borderRadius: 12, padding: 16 }}
+            style={{ backgroundColor: isGenerating ? '#A5A8F5' : '#6366F1', borderRadius: 12, padding: 16, transition: 'background-color 0.2s' }}
           >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className={isGenerating ? 'animate-spin' : ''}>
               <path d="M15 9A6 6 0 1 1 9 3h3m0 0l-2-2m2 2l-2 2" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            <span className="text-[18px] font-bold text-white">브리프 다시 생성하기</span>
+            <span className="text-[18px] font-bold text-white">
+              {isGenerating ? 'AI 생성 중...' : '브리프 다시 생성하기'}
+            </span>
           </button>
         </div>
 
@@ -500,7 +519,7 @@ export default function InfluencerDetailPage() {
             {/* Brief body */}
             <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
               <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
-                {editedBrief ?? data.brief}
+                {editedBrief ?? BRIEF_VARIANTS[briefVersion]}
               </p>
             </div>
             {/* Card footer */}
@@ -641,7 +660,7 @@ export default function InfluencerDetailPage() {
             <div className="p-5 pb-[50px]">
               <textarea
                 ref={briefTextareaRef}
-                defaultValue={editedBrief ?? data.brief}
+                defaultValue={editedBrief ?? BRIEF_VARIANTS[briefVersion]}
                 autoFocus
                 onInput={e => {
                   const el = e.currentTarget;

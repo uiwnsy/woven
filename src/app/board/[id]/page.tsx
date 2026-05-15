@@ -170,14 +170,17 @@ export default function InfluencerDetailPage() {
   const [editedBrief, setEditedBrief] = useState<string | null>(null);
   const [briefVersion, setBriefVersion] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isEditingRequests, setIsEditingRequests] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [mounted, setMounted] = useState(false);
   const briefTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const requestsTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => { setMounted(true); }, []);
 
+  const isAnyOverlayOpen = isEditingBrief || isEditingRequests;
   useEffect(() => {
-    if (!isEditingBrief) return;
+    if (!isAnyOverlayOpen) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const vv = window.visualViewport;
@@ -188,7 +191,7 @@ export default function InfluencerDetailPage() {
       if (vv) vv.removeEventListener('resize', onViewport);
       setKeyboardHeight(0);
     };
-  }, [isEditingBrief]);
+  }, [isAnyOverlayOpen]);
 
   useLayoutEffect(() => {
     if (!isEditingBrief || !briefTextareaRef.current) return;
@@ -196,6 +199,13 @@ export default function InfluencerDetailPage() {
     el.style.height = '0px';
     el.style.height = el.scrollHeight + 'px';
   }, [isEditingBrief]);
+
+  useLayoutEffect(() => {
+    if (!isEditingRequests || !requestsTextareaRef.current) return;
+    const el = requestsTextareaRef.current;
+    el.style.height = '0px';
+    el.style.height = el.scrollHeight + 'px';
+  }, [isEditingRequests]);
   const [memos, setMemos] = useState<{ text: string; date: string }[]>(
     data.memo ? [{ text: data.memo, date: data.memoDate ?? '' }] : []
   );
@@ -452,14 +462,17 @@ export default function InfluencerDetailPage() {
               <span className="text-[18px] font-medium text-black">개별 요청사항</span>
               <span className="text-[15px]" style={{ color: '#91929F' }}>(선택)</span>
             </div>
-            <textarea
-              value={requests}
-              onChange={e => setRequests(e.target.value)}
-              placeholder="예: 봄 컬러 위주로 촬영 부탁드려요"
-              rows={3}
-              className="w-full outline-none resize-none text-[16px] font-medium"
-              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '15px 20px 10px', color: '#1C1A17' }}
-            />
+            <button
+              onClick={() => setIsEditingRequests(true)}
+              className="w-full text-left active:opacity-70"
+              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '15px 20px', minHeight: 80 }}
+            >
+              {requests ? (
+                <span className="text-[16px] font-medium whitespace-pre-wrap" style={{ color: '#1C1A17', lineHeight: '1.6' }}>{requests}</span>
+              ) : (
+                <span className="text-[16px] font-medium" style={{ color: '#C0C4CF' }}>예: 봄 컬러 위주로 촬영 부탁드려요</span>
+              )}
+            </button>
             <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>
           </div>
 
@@ -668,6 +681,46 @@ export default function InfluencerDetailPage() {
                   el.style.height = el.scrollHeight + 'px';
                 }}
                 className="w-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white block"
+                style={{ overflowY: 'hidden' }}
+              />
+            </div>
+          </div>
+        </>,
+        document.body
+      )}
+
+      {/* ── 개별 요청사항 수정 오버레이 (portal) ── */}
+      {mounted && isEditingRequests && createPortal(
+        <>
+          <div className="fixed inset-0 z-50 bg-white" />
+          <div className="fixed inset-x-0 top-0 z-[60] h-[56px] flex items-center justify-between px-5 bg-white border-b border-[#E8E7E4]">
+            <span className="text-[18px] font-semibold text-black">개별 요청사항</span>
+            <button
+              onClick={() => {
+                if (requestsTextareaRef.current) setRequests(requestsTextareaRef.current.value);
+                setIsEditingRequests(false);
+              }}
+              className="text-[16px] font-semibold text-[#6366F1] px-2 py-2 active:opacity-70"
+            >
+              완료
+            </button>
+          </div>
+          <div
+            className="fixed inset-x-0 z-[60] overflow-y-auto bg-white"
+            style={{ top: '56px', bottom: `${keyboardHeight}px`, WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}
+          >
+            <div className="p-5 pb-[50px]">
+              <textarea
+                ref={requestsTextareaRef}
+                defaultValue={requests}
+                autoFocus
+                placeholder="예: 봄 컬러 위주로 촬영 부탁드려요"
+                onInput={e => {
+                  const el = e.currentTarget;
+                  el.style.height = '0px';
+                  el.style.height = el.scrollHeight + 'px';
+                }}
+                className="w-full text-[16px] font-medium text-[#1C1A17] leading-[150%] outline-none resize-none bg-white block placeholder:text-[#C0C4CF]"
                 style={{ overflowY: 'hidden' }}
               />
             </div>

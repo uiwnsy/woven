@@ -164,7 +164,7 @@ export default function InfluencerDetailPage() {
       <div className="flex-1 overflow-y-auto pb-[120px]">
 
         {/* ── Profile Card ── */}
-        <div className="bg-white flex flex-col items-center" style={{ padding: '34px 0', gap: 20, width: 390 }}>
+        <div className="bg-white flex flex-col items-center mx-auto" style={{ padding: '34px 0', gap: 20, width: 390 }}>
 
           {/* Top block: avatar + name/handle + stats + categories (max 295px) */}
           <div className="flex flex-col items-center" style={{ width: 295, gap: 10 }}>

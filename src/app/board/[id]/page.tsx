@@ -536,13 +536,13 @@ export default function InfluencerDetailPage() {
 
           {data.isFirstCollab ? (
             <div
-              className="flex flex-col"
+              className="flex flex-col items-center text-center"
               style={{ backgroundColor: '#F8F8FF', borderRadius: 14, padding: 22, gap: 6 }}
             >
-              <span className="text-[18px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
+              <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
                 첫 협업 인플루언서예요!
               </span>
-              <span className="text-[18px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
+              <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
                 이번 캠페인 성과가{' '}
                 <span className="font-bold" style={{ color: '#6366F1' }}>첫 이력으로 기록</span>
                 됩니다.

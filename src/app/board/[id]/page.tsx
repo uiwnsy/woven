@@ -464,7 +464,7 @@ export default function InfluencerDetailPage() {
             <div
               onClick={() => setIsEditingRequests(true)}
               className="flex items-center cursor-pointer active:opacity-70"
-              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}
+              style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '15px 20px' }}
             >
               <input
                 value={requests}

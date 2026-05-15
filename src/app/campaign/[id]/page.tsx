@@ -271,7 +271,7 @@ export default function CampaignDetailPage() {
                     <span className="text-[14px] font-semibold text-[#1C1A17] leading-[20px] font-manrope">
                       {kpi.label}
                     </span>
-                    <span className="text-[20px] font-semibold text-[#D4D2CE] leading-[20px]">
+                    <span className={`text-[20px] font-semibold leading-[20px] ${kpi.value === '데이터 집계 전' ? 'text-[#D4D2CE]' : 'text-[#1C1A17]'}`}>
                       {kpi.value}
                     </span>
                   </div>

@@ -234,7 +234,7 @@ export default function PerformancePage() {
         {/* ── Chart Section ── */}
         <div className="bg-white px-5 py-10 flex flex-col gap-5">
             <div className="flex items-center justify-between">
-              <span className="text-[20px] font-bold text-black">성과 추이</span>
+              <span className="text-[22px] font-bold text-black">성과 추이</span>
               <div className="flex items-center bg-[#EAEDF5] rounded-full p-[2px]">
                 {(['일별', '주별'] as const).map(g => (
                   <button
@@ -268,7 +268,7 @@ export default function PerformancePage() {
         {/* ── Performance Section ── */}
         <div className="bg-white px-5 py-10 flex flex-col gap-5">
             <div className="flex items-center justify-between">
-              <span className="text-[20px] font-bold text-black">인플루언서별 성과</span>
+              <span className="text-[22px] font-bold text-black">인플루언서별 성과</span>
               <button className="border border-[#D4D2CE] rounded-full px-[10px] py-[7px] text-[14px] font-semibold text-[#78756E] active:opacity-70">
                 더보기
               </button>
@@ -381,7 +381,7 @@ export default function PerformancePage() {
 
         {/* ── Report Section ── */}
         <div className="bg-white px-5 py-10 flex flex-col gap-5">
-            <span className="text-[20px] font-bold text-black">리포트 내보내기</span>
+            <span className="text-[22px] font-bold text-black">리포트 내보내기</span>
             <div className="flex flex-col gap-[10px]">
               <button className="bg-white border border-[#E8E7E4] rounded-[10px] p-5 flex items-center gap-[14px] active:opacity-70 text-left w-full">
                 <img src="/performance-icon.svg" alt="" width={52} height={52} className="shrink-0" />

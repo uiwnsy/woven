@@ -128,7 +128,7 @@ export default function BoardPage() {
       <div className="flex-1 bg-[#fafbfe] overflow-y-auto pb-[95px]">
 
         {/* Campaign selector */}
-        <div className="px-5 pt-5 pb-4 flex justify-center">
+        <div className="px-5 pt-[26px] pb-4 flex justify-center">
           <button
             onClick={() => setShowCampaignSheet(true)}
             className="flex items-center justify-between bg-white rounded-[46px] px-[22px] py-[14px] w-full max-w-[390px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80"

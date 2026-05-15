@@ -19,8 +19,8 @@ type CampaignOption = {
 
 const CAMPAIGNS: CampaignOption[] = [
   { id: 1, title: '루미에르 봄봄 프로모션', status: '진행중' },
-  { id: 2, title: '루미에르 수분크림 마이크로 인플루언서', status: '기획' },
-  { id: 3, title: '누누비 선크림 런칭 캠페인', status: '완료' },
+  { id: 2, title: '수분크림 마이크로 인플루언서', status: '기획' },
+  { id: 3, title: '선크림 런칭 캠페인', status: '완료' },
 ];
 
 const STATUS_STYLES: Record<string, { bg: string; text: string }> = {

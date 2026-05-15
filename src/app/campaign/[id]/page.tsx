@@ -55,7 +55,7 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
   },
   2: {
     id: 2,
-    title: '루미에르 수분크림 마이크로 인플루언서',
+    title: '수분크림 마이크로 인플루언서',
     productName: '루미에르 수분크림',
     status: '기획',
     dateRange: '5.10 - 5.17',
@@ -73,7 +73,7 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
       { label: '업로드', count: '-' },
     ],
     info: [
-      { label: '캠페인명', value: '루미에르 수분크림 마이크로 인플루언서' },
+      { label: '캠페인명', value: '수분크림 마이크로 인플루언서' },
       { label: '기간', value: '5.10 ~ 5.17' },
       { label: '목표', value: '인지도 확대' },
       { label: '플랫폼', value: '인스타그램' },
@@ -83,7 +83,7 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
   },
   3: {
     id: 3,
-    title: '누누비 선크림 런칭 캠페인',
+    title: '선크림 런칭 캠페인',
     productName: '누누비 선크림',
     status: '완료',
     dateRange: '3.23 - 3.29',
@@ -101,7 +101,7 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
       { label: '업로드', count: '3' },
     ],
     info: [
-      { label: '캠페인명', value: '누누비 선크림 런칭 캠페인' },
+      { label: '캠페인명', value: '선크림 런칭 캠페인' },
       { label: '기간', value: '3.23 ~ 3.29' },
       { label: '목표', value: '콘텐츠 수집' },
       { label: '플랫폼', value: '인스타그램' },

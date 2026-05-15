@@ -15,7 +15,6 @@ type CampaignDetail = {
   boardStages: { label: string; count: string }[];
   info: { label: string; value: string }[];
   coreMessage: string;
-  hasBrief: boolean;
 };
 
 const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
@@ -51,7 +50,6 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
       { label: '플랫폼', value: '인스타그램' },
     ],
     coreMessage: '자외선 차단은 기본, 피부 장벽 케어까지. 매일 바르고 싶은 선케어를 강조',
-    hasBrief: true,
   },
   2: {
     id: 2,
@@ -79,7 +77,6 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
       { label: '플랫폼', value: '인스타그램' },
     ],
     coreMessage: '',
-    hasBrief: false,
   },
   3: {
     id: 3,
@@ -107,7 +104,6 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
       { label: '플랫폼', value: '인스타그램' },
     ],
     coreMessage: '자연스러운 일상 속 선크림 사용을 통해 브랜드 인지도와 UGC 확보',
-    hasBrief: true,
   },
 };
 
@@ -194,7 +190,7 @@ export default function CampaignDetailPage() {
                     <span className="text-[20px] font-extrabold text-[#1C1A17] leading-[20px] font-manrope">
                       {stage.count}
                     </span>
-                    <span className="text-[14px] font-medium text-[#1C1A17] text-center leading-none">
+                    <span className="text-[16px] font-medium text-[#1C1A17] text-center leading-none">
                       {stage.label}
                     </span>
                   </div>
@@ -234,26 +230,16 @@ export default function CampaignDetailPage() {
           </div>
 
           {/* ── 3. AI 브리프 ── */}
-          <div className="bg-white py-[30px] flex flex-col items-center gap-[18px]">
-            <div className="w-full px-5">
+          <div className="bg-white py-[30px] flex flex-col gap-[18px]">
+            <div className="px-5">
               <span className="text-[20px] font-semibold text-black">AI 브리프</span>
             </div>
-            <div
-              className="flex items-center justify-between bg-white border border-[#E8E7E4] rounded-[10px] px-5 py-[18px] mx-5"
-              style={{ width: 'calc(100% - 40px)' }}
-            >
-              <div className="flex flex-col">
+            <div className="flex items-center justify-between px-5 py-[18px]">
+              <div className="flex flex-col gap-1">
                 <span className="text-[18px] font-medium text-[#1C1A17]">AI 브리프 보기</span>
                 <span className="text-[14px] font-normal text-[#B0ADA7]">브리프 편집 · 재생성</span>
               </div>
-              <div className="flex items-center gap-2">
-                {campaign.hasBrief ? (
-                  <span className="text-[13px] font-semibold text-[#26af58] bg-[#f0fdf4] px-2 py-1 rounded-full">생성완료</span>
-                ) : (
-                  <span className="text-[13px] font-semibold text-[#92400e] bg-[#fffbeb] px-2 py-1 rounded-full">생성 필요</span>
-                )}
-                <img src="/arrow-right.svg" alt="" className="w-6 h-6 shrink-0" />
-              </div>
+              <img src="/arrow-right.svg" alt="" className="w-6 h-6 shrink-0" />
             </div>
           </div>
 
@@ -268,7 +254,7 @@ export default function CampaignDetailPage() {
                     key={kpi.label}
                     className="flex-1 flex flex-col gap-[10px] border border-[#E8E7E4] rounded-[10px] px-[18px] py-[15px]"
                   >
-                    <span className="text-[14px] font-semibold text-[#1C1A17] leading-[20px] font-manrope">
+                    <span className="text-[18px] font-semibold text-[#1C1A17] leading-[20px] font-manrope">
                       {kpi.label}
                     </span>
                     <span className={`text-[20px] font-semibold leading-[20px] ${kpi.value === '데이터 집계 전' ? 'text-[#D4D2CE]' : 'text-[#1C1A17]'}`}>

@@ -83,31 +83,57 @@ function getCategoryStyle(c: string) {
 
 function StageTracker({ stageId }: { stageId: Stage }) {
   const currentIdx = STAGE_IDS.indexOf(stageId);
+  const labels = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
+
   return (
-    <div className="flex items-start w-full" style={{ gap: 0 }}>
-      {STAGES.map((label, i) => {
-        const isActive = i === currentIdx;
-        const isDone = i < currentIdx;
-        return (
-          <div key={label} className="flex items-start flex-1">
-            <div className="flex flex-col items-center shrink-0">
-              <div className={`w-[10px] h-[10px] rounded-full mt-0 ${isActive || isDone ? 'bg-iris-500' : 'bg-[#F0F2F8]'}`} />
+    <div className="relative w-full" style={{ height: 37 }}>
+      {/* Connecting line — behind dots, at vertical center of 14px dot area (y=7) */}
+      <div
+        className="absolute"
+        style={{ top: 7, left: 7, right: 7, height: 3.5, backgroundColor: '#F0F2F8' }}
+      />
+
+      {/* Steps */}
+      <div className="absolute inset-0 flex justify-between">
+        {labels.map((label, i) => {
+          const isActive = i === currentIdx;
+          const isDone = i < currentIdx;
+          return (
+            <div key={label} className="flex flex-col items-center">
+              {isActive ? (
+                /* Active: 14×14 outer ring + 8×8 inner filled dot */
+                <div
+                  className="rounded-full flex items-center justify-center shrink-0"
+                  style={{ width: 14, height: 14, backgroundColor: '#FFFFFF', border: '2px solid #6366F1' }}
+                >
+                  <div className="rounded-full" style={{ width: 6, height: 6, backgroundColor: '#6366F1' }} />
+                </div>
+              ) : (
+                /* Inactive: 10×10 dot centered in 14px area */
+                <div className="flex items-center justify-center shrink-0" style={{ width: 14, height: 14 }}>
+                  <div
+                    className="rounded-full"
+                    style={{ width: 10, height: 10, backgroundColor: isDone ? '#6366F1' : '#F0F2F8' }}
+                  />
+                </div>
+              )}
+              {/* Label */}
               <span
-                className="text-[14px] leading-[15px] mt-[10px] whitespace-nowrap"
-                style={{ fontWeight: isActive ? 600 : 500, color: isActive ? '#6366F1' : '#C0C4CF' }}
+                className="whitespace-nowrap"
+                style={{
+                  fontSize: 14,
+                  lineHeight: '15px',
+                  fontWeight: isActive ? 600 : 500,
+                  color: isActive ? '#6366F1' : '#C0C4CF',
+                  marginTop: 8,
+                }}
               >
                 {label}
               </span>
             </div>
-            {i < STAGES.length - 1 && (
-              <div
-                className="flex-1 mt-[4px]"
-                style={{ height: 3.5, backgroundColor: isDone ? '#6366F1' : '#F0F2F8' }}
-              />
-            )}
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }

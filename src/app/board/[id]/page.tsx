@@ -91,7 +91,7 @@ function StageTracker({ stageId }: { stageId: Stage }) {
           Each item is flex-1 (20% each), dot is 14px centered → dot left edge = 10% - 7px */}
       <div
         className="absolute"
-        style={{ top: 5.25, left: 'calc(10% - 7px)', right: 'calc(10% - 7px)', height: 3.5, backgroundColor: '#F0F2F8' }}
+        style={{ top: 5.25, left: '10%', right: '10%', height: 3.5, backgroundColor: '#F0F2F8' }}
       />
 
       {/* Steps — flex-1 equal width so dots are evenly distributed */}

@@ -353,6 +353,27 @@ export default function PerformancePage() {
             </div>
           </div>
 
+          {/* ── Report Section ── */}
+          <div className="py-10 flex flex-col gap-5">
+            <span className="text-[22px] font-bold text-black">리포트 내보내기</span>
+            <div className="flex flex-col gap-[10px]">
+              <button className="bg-white border border-[#E8E7E4] rounded-[10px] p-5 flex items-center gap-[14px] active:opacity-70 text-left w-full">
+                <img src="/performance-icon.svg" alt="" width={52} height={52} className="shrink-0" />
+                <div className="flex flex-col gap-2">
+                  <span className="text-[18px] font-semibold text-[#1C1A17]">캠페인 전체 요약</span>
+                  <span className="text-[14px] text-[#555553]">핵심 KPI + 인플루언서별 성과 요약</span>
+                </div>
+              </button>
+              <button className="bg-white border border-[#E8E7E4] rounded-[10px] p-5 flex items-center gap-[14px] active:opacity-70 text-left w-full">
+                <img src="/summary-icon.svg" alt="" width={52} height={52} className="shrink-0" />
+                <div className="flex flex-col gap-2">
+                  <span className="text-[18px] font-semibold text-[#1C1A17]">인플루언서별 상세 데이터</span>
+                  <span className="text-[14px] font-medium text-[#B0ADA7]">일별 클릭·전환·ROAS 상세 리포트</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
 

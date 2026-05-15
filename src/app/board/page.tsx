@@ -31,7 +31,11 @@ const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
 
 const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
   1: {
-    'list-up': [],
+    'list-up': [
+      { id: 'lu1', name: 'minj_',  handle: '@minj_',   followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-kimminji.png' },
+      { id: 'lu2', name: '박서연', handle: '@ppseo0',  followers: '48만',   categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-parkseo.png' },
+      { id: 'lu3', name: 'leezsu', handle: '@leezsu',  followers: '12만',   categories: ['뷰티', '일상'],         statusText: '리스트업', profileImg: '/profile-paooar.png' },
+    ],
     'contacting': [
       { id: '1', name: 'haye0',  handle: '@haye0',    followers: '10.4만', categories: ['뷰티', '패션'],              statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=1' },
       { id: '2', name: 'zigoo',  handle: '@zigoo',    followers: '8만',    categories: ['뷰티', '패션'],              statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=5' },

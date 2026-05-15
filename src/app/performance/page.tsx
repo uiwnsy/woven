@@ -106,13 +106,13 @@ function BarChart() {
           {[0, 1, 2, 3, 4].map(i => (
             <div key={i} className="absolute w-full border-t border-[#E4E8F4]" style={{ top: `${(i / 4) * 100}%` }} />
           ))}
-          {/* Bars: grow from the 0-line at the bottom */}
-          <div className="absolute inset-x-0 bottom-0 flex justify-between items-end">
+          {/* Bars: equal-width columns, centered */}
+          <div className="absolute inset-x-0 bottom-0 flex items-end">
             {CHART_DATA.map(d => {
               const clickH = Math.round((d.clicks / MAX_CLICKS) * CHART_H);
               const convH = d.conversions > 0 ? Math.max(2, Math.round((d.conversions / MAX_CLICKS) * CHART_H)) : 0;
               return (
-                <div key={d.date} className="flex items-end gap-[2px]">
+                <div key={d.date} className="flex-1 flex justify-center items-end gap-[2px]">
                   <div className="w-[14px] rounded-t-sm bg-[#A5A8F5]" style={{ height: clickH }} />
                   {convH > 0 && <div className="w-[14px] rounded-t-sm bg-iris-500" style={{ height: convH }} />}
                 </div>
@@ -120,10 +120,10 @@ function BarChart() {
             })}
           </div>
         </div>
-        {/* Date labels: each 30px wide (= bar group width) centered under bars */}
-        <div className="flex justify-between mt-2">
+        {/* Date labels: equal-width columns matching bars */}
+        <div className="flex mt-2">
           {CHART_DATA.map(d => (
-            <div key={d.date} className="text-center" style={{ width: 30 }}>
+            <div key={d.date} className="flex-1 text-center">
               <span className="text-[12px] font-medium leading-none" style={{ color: 'rgba(155,161,170,0.6)' }}>{d.date}</span>
             </div>
           ))}

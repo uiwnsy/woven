@@ -157,6 +157,8 @@ export default function InfluencerDetailPage() {
   const [guidelineUrl, setGuidelineUrl] = useState('');
   const [requests, setRequests] = useState('');
   const [briefCopied, setBriefCopied] = useState(false);
+  const [showMemoOverlay, setShowMemoOverlay] = useState(false);
+  const [memoInput, setMemoInput] = useState('');
 
   if (!data) {
     return (
@@ -189,7 +191,7 @@ export default function InfluencerDetailPage() {
         <button onClick={() => router.back()} className="w-[42px] h-[42px] flex items-center justify-center active:opacity-60">
           <img src="/back-icon.svg" alt="back" width={24} height={24} />
         </button>
-        <span className="text-[20px] font-bold text-black">인플루언서 상세</span>
+        <span className="text-[18px] font-bold text-black">인플루언서 상세</span>
         <button className="w-[42px] h-[42px] flex items-center justify-center active:opacity-60">
           <img src="/details-icon.svg" alt="more" width={24} height={24} />
         </button>
@@ -389,7 +391,7 @@ export default function InfluencerDetailPage() {
                 value={guidelineUrl}
                 onChange={e => setGuidelineUrl(e.target.value)}
                 placeholder="개별 가이드라인 링크 (선택)"
-                className="flex-1 bg-transparent outline-none text-[18px] font-medium"
+                className="flex-1 bg-transparent outline-none text-[16px] font-medium"
                 style={{ color: '#1C1A17' }}
               />
               <button className="shrink-0 w-[34px] h-[34px] flex items-center justify-center rounded-[8px] active:opacity-70" style={{ backgroundColor: '#F2F4F6' }}>
@@ -416,7 +418,7 @@ export default function InfluencerDetailPage() {
               onChange={e => setRequests(e.target.value)}
               placeholder="예: 봄 컬러 위주로 촬영 부탁드려요"
               rows={3}
-              className="w-full outline-none resize-none text-[18px] font-medium"
+              className="w-full outline-none resize-none text-[16px] font-medium"
               style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px', color: '#1C1A17' }}
             />
             <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>
@@ -543,6 +545,7 @@ export default function InfluencerDetailPage() {
 
           {/* 메모 추가 버튼 */}
           <button
+            onClick={() => setShowMemoOverlay(true)}
             className="w-full flex items-center justify-center active:opacity-70"
             style={{ backgroundColor: 'rgba(221,223,253,0.3)', borderRadius: 14, height: 68, gap: 4 }}
           >
@@ -571,6 +574,72 @@ export default function InfluencerDetailPage() {
           <span className="text-[18px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
         </button>
       </div>
+
+      {/* ── 메모 추가 오버레이 ── */}
+      {showMemoOverlay && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-40"
+            style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+            onClick={() => setShowMemoOverlay(false)}
+          />
+          {/* Bottom sheet */}
+          <div
+            className="fixed bottom-0 left-1/2 z-50 w-full max-w-[430px] bg-white flex flex-col"
+            style={{ transform: 'translateX(-50%)', borderRadius: '20px 20px 0 0', padding: '20px 20px 40px' }}
+          >
+            {/* Handle bar */}
+            <div className="flex justify-center mb-4">
+              <div className="w-10 h-[4px] rounded-full bg-[#E8E7E4]" />
+            </div>
+
+            {/* Title row */}
+            <div className="flex items-center justify-between mb-5">
+              <span className="text-[18px] font-bold text-black">메모 추가</span>
+              <button
+                onClick={() => setShowMemoOverlay(false)}
+                className="w-[36px] h-[36px] flex items-center justify-center rounded-full active:opacity-60"
+                style={{ backgroundColor: '#F2F4F6' }}
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 3l10 10M13 3L3 13" stroke="#78756E" strokeWidth="1.6" strokeLinecap="round"/>
+                </svg>
+              </button>
+            </div>
+
+            {/* Textarea */}
+            <textarea
+              value={memoInput}
+              onChange={e => setMemoInput(e.target.value)}
+              placeholder="팀 내부에서만 볼 수 있는 메모를 입력하세요"
+              rows={5}
+              autoFocus
+              className="w-full outline-none resize-none text-[16px] font-medium mb-3"
+              style={{
+                backgroundColor: '#FAFAFA',
+                border: '1px solid #E8E7E4',
+                borderRadius: 12,
+                padding: '14px 16px',
+                color: '#1C1A17',
+                lineHeight: '1.6',
+              }}
+            />
+            <span className="text-[13px] font-medium mb-5" style={{ color: '#C0C4CF' }}>
+              메모는 팀 내부에서만 확인할 수 있어요.
+            </span>
+
+            {/* Save button */}
+            <button
+              onClick={() => setShowMemoOverlay(false)}
+              className="w-full flex items-center justify-center active:opacity-80"
+              style={{ backgroundColor: memoInput.trim() ? '#6366F1' : '#E8E7E4', borderRadius: 12, padding: 16, transition: 'background-color 0.15s' }}
+            >
+              <span className="text-[16px] font-bold" style={{ color: memoInput.trim() ? '#FFFFFF' : '#B0ADA7' }}>저장</span>
+            </button>
+          </div>
+        </>
+      )}
 
     </div>
   );

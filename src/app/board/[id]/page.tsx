@@ -350,7 +350,7 @@ export default function InfluencerDetailPage() {
               <circle cx="8" cy="5" r="0.7" fill="#2D92FE"/>
             </svg>
             <span className="text-[14px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
-              캠페인 기본값이 자동으로 채워져 있어요. 변경하면 브리프가 실시간 업데이트돼요.
+              캠페인 기본값이 자동으로 채워져 있어요. 조건을 바꾼 뒤 브리프를 다시 생성해보세요.
             </span>
           </div>
 
@@ -455,12 +455,15 @@ export default function InfluencerDetailPage() {
             <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>
           </div>
 
-          {/* Save button */}
+          {/* Regenerate brief button */}
           <button
-            className="w-full flex items-center justify-center active:opacity-80"
+            className="w-full flex items-center justify-center gap-2 active:opacity-80"
             style={{ backgroundColor: '#6366F1', borderRadius: 12, padding: 16 }}
           >
-            <span className="text-[18px] font-bold text-white">저장</span>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M15 9A6 6 0 1 1 9 3h3m0 0l-2-2m2 2l-2 2" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span className="text-[18px] font-bold text-white">브리프 다시 생성하기</span>
           </button>
         </div>
 

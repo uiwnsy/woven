@@ -172,6 +172,9 @@ export default function InfluencerDetailPage() {
   const [draftDeadline, setDraftDeadline] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [productShipped, setProductShipped] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [calendarDate, setCalendarDate] = useState(() => new Date());
+  const [briefExpanded, setBriefExpanded] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<'ig' | 'yt' | 'tt'>('ig');
   const [guidelineUrl, setGuidelineUrl] = useState('');
   const [requests, setRequests] = useState('');
@@ -608,47 +611,29 @@ export default function InfluencerDetailPage() {
         <div className="bg-white" style={{ padding: '30px 20px', gap: 24, display: 'flex', flexDirection: 'column' }}>
           <span className="text-[22px] font-bold text-black">응답 상태</span>
           <div style={{ display: 'flex', gap: 14 }}>
-            {/* 긍정 응답 */}
-            <button
-              onClick={() => setResponseStatus('positive')}
-              className="flex-1 flex flex-col items-center justify-center active:opacity-80"
-              style={{ gap: 6, padding: 20, backgroundColor: '#FFFFFF', border: `1px solid ${responseStatus === 'positive' ? '#6366F1' : '#EBEEF7'}`, borderRadius: 10 }}
-            >
-              <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-                <circle cx="26" cy="26" r="26" fill="#EEEEFF"/>
-                <path d="M18 27l5.5 5.5L34 20" stroke="#8486F3" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>긍정 응답</span>
-              <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>참여 의사 확인</span>
-            </button>
-            {/* 거절 */}
-            <button
-              onClick={() => setResponseStatus('negative')}
-              className="flex-1 flex flex-col items-center justify-center active:opacity-80"
-              style={{ gap: 6, padding: 20, backgroundColor: '#FFFFFF', border: `1px solid ${responseStatus === 'negative' ? '#6366F1' : '#EBEEF7'}`, borderRadius: 10 }}
-            >
-              <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-                <circle cx="26" cy="26" r="26" fill="#FFF0F0"/>
-                <path d="M19.5 19.5l13 13M32.5 19.5l-13 13" stroke="#FF686D" strokeWidth="2.2" strokeLinecap="round"/>
-              </svg>
-              <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>거절</span>
-              <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>참여 불가</span>
-            </button>
-            {/* 미응답 */}
-            <button
-              onClick={() => setResponseStatus('none')}
-              className="flex-1 flex flex-col items-center justify-center active:opacity-80"
-              style={{ gap: 6, padding: 20, backgroundColor: '#FFFFFF', border: `1px solid ${responseStatus === 'none' ? '#6366F1' : '#EBEEF7'}`, borderRadius: 10 }}
-            >
-              <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-                <circle cx="26" cy="26" r="26" fill="#FFFCE0"/>
-                <circle cx="20" cy="26" r="2" fill="#FFDD55"/>
-                <circle cx="26" cy="26" r="2" fill="#FFDD55"/>
-                <circle cx="32" cy="26" r="2" fill="#FFDD55"/>
-              </svg>
-              <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>미응답</span>
-              <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>응답 대기중</span>
-            </button>
+            {([
+              { key: 'positive', icon: '/done-icon.svg',    label: '긍정 응답', sub: '참여 의사 확인', activeBg: '#EEEEFF' },
+              { key: 'negative', icon: '/no-icon.svg',      label: '거절',      sub: '참여 불가',     activeBg: '#FFF0F0' },
+              { key: 'none',     icon: '/nothing-icon.svg', label: '미응답',    sub: '응답 대기중',   activeBg: '#FFFCE0' },
+            ] as const).map(({ key, icon, label, sub, activeBg }) => {
+              const isActive = responseStatus === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setResponseStatus(key)}
+                  className="flex-1 flex flex-col items-center justify-center active:opacity-80"
+                  style={{
+                    gap: 6, padding: 20, borderRadius: 10,
+                    backgroundColor: isActive ? activeBg : '#FFFFFF',
+                    border: `1px solid ${isActive ? '#6366F1' : '#EBEEF7'}`,
+                  }}
+                >
+                  <img src={icon} alt={label} width={52} height={52} />
+                  <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>{label}</span>
+                  <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>{sub}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -686,15 +671,15 @@ export default function InfluencerDetailPage() {
                   시안 전달 예정일 <span style={{ color: '#6366F1' }}>*</span>
                 </span>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
-                    <input
-                      value={draftDeadline}
-                      onChange={e => setDraftDeadline(e.target.value)}
-                      placeholder="YYYY.MM.DD"
-                      className="w-full bg-transparent outline-none text-[16px] font-medium"
-                      style={{ color: '#1C1A17' }}
-                    />
-                  </div>
+                  <button
+                    onClick={() => setShowCalendar(true)}
+                    className="w-full text-left active:opacity-70"
+                    style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}
+                  >
+                    <span className="text-[16px] font-medium" style={{ color: draftDeadline ? '#1C1A17' : '#D4D2CE' }}>
+                      {draftDeadline || 'YYYY.MM.DD'}
+                    </span>
+                  </button>
                   <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>인플루언서가 시안을 전달하는 예정일</span>
                 </div>
               </div>
@@ -717,17 +702,7 @@ export default function InfluencerDetailPage() {
               <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: 20 }}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center" style={{ gap: 10 }}>
-                    {/* Ship icon */}
-                    <div style={{ width: 52, height: 52, borderRadius: 12, backgroundColor: '#FFF8EE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <svg width="28" height="24" viewBox="0 0 28 24" fill="none">
-                        <rect x="0" y="5" width="19" height="14" rx="2" fill="#F0A652"/>
-                        <rect x="0" y="5" width="19" height="5" rx="2" fill="#FFC77A"/>
-                        <path d="M19 10h4l3 5v4h-7V10z" fill="#FFC77A"/>
-                        <circle cx="6" cy="20" r="2.5" fill="#1C1A17"/>
-                        <circle cx="22" cy="20" r="2.5" fill="#1C1A17"/>
-                        <path d="M9 5V2h10v3" stroke="#F0A652" strokeWidth="1.2"/>
-                      </svg>
-                    </div>
+                    <img src="/ship-icon.svg" alt="배송" width={52} height={52} className="shrink-0" />
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                       <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
                       <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
@@ -762,26 +737,42 @@ export default function InfluencerDetailPage() {
 
         <div className="h-2 bg-[#F5F5F3]" />
 
-        {/* 발송된 브리프 */}
+        {/* 발송된 브리프 (접기/펼치기) */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
           <span className="text-[22px] font-bold text-black">발송된 브리프</span>
           <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden flex flex-col">
-            <div className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF]">
+            {/* 헤더 - 탭하면 펼침 */}
+            <button
+              onClick={() => setBriefExpanded(v => !v)}
+              className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF] w-full active:opacity-70"
+            >
               <span className="text-[16px] font-medium text-black">발송된 브리프</span>
-              <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
-                <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
+              <div className="flex items-center gap-2">
+                <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
+                  <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
+                </div>
+                <svg
+                  width="18" height="18" viewBox="0 0 18 18" fill="none"
+                  style={{ transform: briefExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+                >
+                  <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </div>
-            </div>
-            <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
-              <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
-                {BRIEF_VARIANTS[0]}
-              </p>
-            </div>
-            <div className="border-t border-[#ECECEF]">
-              <button onClick={handleCopyBrief} className="w-full py-[15px] flex items-center justify-center bg-[#F8FAFF] active:opacity-70">
-                <span className="text-[16px] font-medium text-black">{briefCopied ? '복사됨 ✓' : '복사하기'}</span>
-              </button>
-            </div>
+            </button>
+            {briefExpanded && (
+              <>
+                <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
+                  <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
+                    {BRIEF_VARIANTS[0]}
+                  </p>
+                </div>
+                <div className="border-t border-[#ECECEF]">
+                  <button onClick={handleCopyBrief} className="w-full py-[15px] flex items-center justify-center bg-[#F8FAFF] active:opacity-70">
+                    <span className="text-[16px] font-medium text-black">{briefCopied ? '복사됨 ✓' : '복사하기'}</span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -1018,6 +1009,80 @@ export default function InfluencerDetailPage() {
         </>,
         document.body
       )}
+
+      {/* ── 캘린더 오버레이 ── */}
+      {showCalendar && (() => {
+        const y = calendarDate.getFullYear();
+        const m = calendarDate.getMonth();
+        const firstDay = new Date(y, m, 1).getDay();
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        const weeks: (number | null)[][] = [];
+        let week: (number | null)[] = Array(firstDay).fill(null);
+        for (let d = 1; d <= daysInMonth; d++) {
+          week.push(d);
+          if (week.length === 7) { weeks.push(week); week = []; }
+        }
+        if (week.length) weeks.push([...week, ...Array(7 - week.length).fill(null)]);
+        const selectedParts = draftDeadline.split('.');
+        const selY = parseInt(selectedParts[0]), selM = parseInt(selectedParts[1]) - 1, selD = parseInt(selectedParts[2]);
+
+        return (
+          <>
+            <div className="fixed inset-0 z-40 bg-black/40" onClick={() => setShowCalendar(false)} />
+            <div className="fixed bottom-0 left-1/2 z-50 w-full max-w-[430px] bg-white flex flex-col" style={{ transform: 'translateX(-50%)', borderRadius: '20px 20px 0 0', padding: '20px 20px 40px' }}>
+              {/* Handle */}
+              <div className="flex justify-center mb-4">
+                <div className="w-10 h-[4px] rounded-full bg-[#E8E7E4]" />
+              </div>
+              {/* Month nav */}
+              <div className="flex items-center justify-between mb-5">
+                <button onClick={() => setCalendarDate(new Date(y, m - 1, 1))} className="w-9 h-9 flex items-center justify-center active:opacity-60">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11.25 13.5L6.75 9L11.25 4.5" stroke="#1C1A17" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <span className="text-[18px] font-bold text-black">{y}년 {m + 1}월</span>
+                <button onClick={() => setCalendarDate(new Date(y, m + 1, 1))} className="w-9 h-9 flex items-center justify-center active:opacity-60">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6.75 4.5L11.25 9L6.75 13.5" stroke="#1C1A17" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+              </div>
+              {/* Day labels */}
+              <div className="grid grid-cols-7 mb-2">
+                {['일','월','화','수','목','금','토'].map(d => (
+                  <span key={d} className="text-center text-[13px] font-medium" style={{ color: '#B0ADA7' }}>{d}</span>
+                ))}
+              </div>
+              {/* Dates */}
+              <div className="flex flex-col gap-1">
+                {weeks.map((week, wi) => (
+                  <div key={wi} className="grid grid-cols-7">
+                    {week.map((day, di) => {
+                      const isSelected = day !== null && selY === y && selM === m && selD === day;
+                      return (
+                        <button
+                          key={di}
+                          onClick={() => {
+                            if (!day) return;
+                            const str = `${y}.${String(m + 1).padStart(2, '0')}.${String(day).padStart(2, '0')}`;
+                            setDraftDeadline(str);
+                            setShowCalendar(false);
+                          }}
+                          disabled={!day}
+                          className="h-9 flex items-center justify-center active:opacity-70"
+                        >
+                          {day && (
+                            <div className="w-9 h-9 flex items-center justify-center rounded-full" style={{ backgroundColor: isSelected ? '#6366F1' : 'transparent' }}>
+                              <span className="text-[15px] font-medium" style={{ color: isSelected ? '#FFFFFF' : di === 0 ? '#FF686D' : '#1C1A17' }}>{day}</span>
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        );
+      })()}
 
       {/* ── 메모 추가 오버레이 ── */}
       {showMemoOverlay && (

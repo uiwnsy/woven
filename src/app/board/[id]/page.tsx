@@ -22,6 +22,7 @@ type InfluencerDetail = {
   memo?: string;
   memoDate?: string;
   brief: string;
+  campaignGuidelineUrl?: string; // 캠페인 추가 시 입력한 가이드라인 링크 (없으면 기본값 미표시)
 };
 
 const STAGES = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
@@ -38,36 +39,42 @@ const MOCK_DETAILS: Record<string, InfluencerDetail> = {
     memo: '뷰티 리뷰 콘텐츠 퀄리티 높음 / 팔로워 대비 참여율 상위권,, 릴스 편집 스타일이 브랜드 톤에 잘 맞음!',
     memoDate: '2025.04.15 작성',
     brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
   'lu2': {
     id: 'lu2', name: '박서연', handle: '@ppseo0', followers: '48만', posts: '2,310',
     categories: ['뷰티', '패션'], profileImg: '/profile-parkseo.png',
     stage: 'list-up', campaignName: '루미에르 봄봄 프로모션', dDay: 'D-8',
     isFirstCollab: true, brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
   'lu3': {
     id: 'lu3', name: 'leezsu', handle: '@leezsu', followers: '12만', posts: '987',
     categories: ['뷰티', '일상'], profileImg: '/profile-paooar.png',
     stage: 'list-up', campaignName: '루미에르 봄봄 프로모션', dDay: 'D-8',
     isFirstCollab: false, brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
   '1': {
     id: '1', name: 'haye0', handle: '@haye0', followers: '10.4만', posts: '1,234',
     categories: ['뷰티', '패션'], profileImg: '/profile-haye0.png',
     stage: 'contacting', campaignName: '루미에르 봄봄 프로모션', dDay: 'D+26',
     brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
   '2': {
     id: '2', name: 'zigoo', handle: '@zigoo', followers: '8만', posts: '934',
     categories: ['뷰티', '패션'], profileImg: '/profile-zigoo.png',
     stage: 'contacting', campaignName: '루미에르 봄봄 프로모션', dDay: 'D+26',
     brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
   '3': {
     id: '3', name: '김지영', handle: '@jijizero', followers: '21만', posts: '2,103',
     categories: ['뷰티', '연애/결혼', '일상'], profileImg: '/profile-kimjiyoung.png',
     stage: 'contacting', campaignName: '루미에르 봄봄 프로모션', dDay: 'D+26',
     brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
 };
 
@@ -355,12 +362,25 @@ export default function InfluencerDetailPage() {
               <span className="text-[18px] font-medium text-black">개별 가이드라인</span>
               <span className="text-[15px]" style={{ color: '#91929F' }}>(선택)</span>
             </div>
-            <div
-              className="flex items-center"
-              style={{ backgroundColor: '#F9FAFB', borderRadius: 10, padding: '12px 20px' }}
-            >
-              <span className="text-[16px] font-medium" style={{ color: '#4B5969' }}>캠페인 기본: Google Sheets 링크</span>
-            </div>
+
+            {/* 캠페인 기본값: 캠페인 추가 시 가이드라인을 입력한 경우에만 표시 */}
+            {data.campaignGuidelineUrl ? (
+              <div
+                className="flex items-center"
+                style={{ backgroundColor: '#F9FAFB', borderRadius: 10, padding: '12px 20px' }}
+              >
+                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>캠페인 기본 &nbsp;</span>
+                <span className="text-[14px] font-medium" style={{ color: '#4B5969' }}>{data.campaignGuidelineUrl}</span>
+              </div>
+            ) : (
+              <div
+                className="flex items-center"
+                style={{ backgroundColor: '#F9FAFB', borderRadius: 10, padding: '12px 20px' }}
+              >
+                <span className="text-[14px] font-medium" style={{ color: '#C7C4BE' }}>캠페인 기본값 없음 (캠페인 추가 시 미입력)</span>
+              </div>
+            )}
+
             <div
               className="flex items-center justify-between"
               style={{ backgroundColor: '#FFFFFF', border: '1px solid #E8E7E4', borderRadius: 10, padding: '15px 20px' }}
@@ -368,7 +388,7 @@ export default function InfluencerDetailPage() {
               <input
                 value={guidelineUrl}
                 onChange={e => setGuidelineUrl(e.target.value)}
-                placeholder="개별 가이드라인 링크"
+                placeholder="개별 가이드라인 링크 (선택)"
                 className="flex-1 bg-transparent outline-none text-[18px] font-medium"
                 style={{ color: '#1C1A17' }}
               />
@@ -378,7 +398,11 @@ export default function InfluencerDetailPage() {
                 </svg>
               </button>
             </div>
-            <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>캠페인 기본 가이드라인과 함께 브리프에 포함돼요.</span>
+            <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>
+              {data.campaignGuidelineUrl
+                ? '입력 시 캠페인 기본 가이드라인과 함께 브리프에 포함돼요.'
+                : '링크를 입력하면 AI 브리프에 가이드라인으로 포함돼요.'}
+            </span>
           </div>
 
           {/* 개별 요청사항 */}

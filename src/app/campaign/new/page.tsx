@@ -728,11 +728,14 @@ function Step3({ form, updateForm }: {
                 type="text"
                 value={form.contentGuide}
                 onChange={e => updateForm('contentGuide', e.target.value)}
-                placeholder="구글 문서 등 가이드라인 링크를 입력해주세요"
+                placeholder="구글 문서·시트 등 가이드라인 링크를 입력해주세요"
                 className="flex-1 text-[16px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
               />
             </div>
-            <p className="text-[14px] text-[#B0ADA7]">* 링크 입력 시 AI 브리프에 자동 반영돼요.</p>
+            <p className="text-[14px] text-[#B0ADA7]">
+              * 링크 입력 시 AI 브리프에 자동 반영돼요.<br />
+              * 인플루언서 상세에서 &apos;캠페인 기본값&apos;으로 표시되며, 개별 변경도 가능해요.
+            </p>
           </div>
         </div>
 

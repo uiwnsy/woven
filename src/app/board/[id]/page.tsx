@@ -84,15 +84,13 @@ function getCategoryStyle(c: string) {
 function StageTracker({ stageId }: { stageId: Stage }) {
   const currentIdx = STAGE_IDS.indexOf(stageId);
   const labels = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
-  // first: left-align so text starts flush with container; last: right-align; middle: center
-  const alignItems = ['flex-start', 'center', 'center', 'center', 'flex-end'];
 
   return (
     <div className="relative w-full flex">
-      {/* Line: from center of first dot (left:7) to center of last dot (right:7) */}
+      {/* Line: center-to-center of first and last dot (10% inset = first/last dot center in flex-1 layout) */}
       <div
         className="absolute"
-        style={{ top: 5.25, left: 7, right: 7, height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }}
+        style={{ top: 5.25, left: '10%', right: '10%', height: 3.5, backgroundColor: '#F0F2F8', zIndex: 0 }}
       />
 
       {labels.map((label, i) => {
@@ -101,8 +99,8 @@ function StageTracker({ stageId }: { stageId: Stage }) {
         return (
           <div
             key={label}
-            className="flex-1 flex flex-col"
-            style={{ position: 'relative', zIndex: 1, alignItems: alignItems[i] }}
+            className="flex-1 flex flex-col items-center"
+            style={{ position: 'relative', zIndex: 1 }}
           >
             {isActive ? (
               <div

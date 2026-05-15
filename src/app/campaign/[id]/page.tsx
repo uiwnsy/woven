@@ -11,7 +11,7 @@ type CampaignDetail = {
   dateRange: string;
   platform: string;
   goal: string;
-  kpis: { label: string; sub?: string; value: string }[];
+  kpis: { label: string; value: string }[];
   boardStages: { label: string; count: string }[];
   info: { label: string; value: string }[];
   coreMessage: string;
@@ -35,7 +35,7 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
     goal: '구매전환',
     kpis: [
       { label: 'ROAS', value: '데이터 집계 전' },
-      { label: 'CTR', sub: '(클릭률)', value: '데이터 집계 전' },
+      { label: 'CTR', value: '데이터 집계 전' },
     ],
     boardStages: [
       { label: '리스트업', count: '-' },
@@ -268,14 +268,9 @@ export default function CampaignDetailPage() {
                     key={kpi.label}
                     className="flex-1 flex flex-col gap-[10px] border border-[#E8E7E4] rounded-[10px] px-[18px] py-[15px]"
                   >
-                    <div className="flex items-baseline gap-[2px]">
-                      <span className="text-[18px] font-semibold text-[#1C1A17] leading-[20px] font-manrope">
-                        {kpi.label}
-                      </span>
-                      {kpi.sub && (
-                        <span className="text-[14px] font-medium text-[#1C1A17]">{kpi.sub}</span>
-                      )}
-                    </div>
+                    <span className="text-[14px] font-semibold text-[#1C1A17] leading-[20px] font-manrope">
+                      {kpi.label}
+                    </span>
                     <span className="text-[20px] font-semibold text-[#D4D2CE] leading-[20px]">
                       {kpi.value}
                     </span>
@@ -307,11 +302,12 @@ export default function CampaignDetailPage() {
               <span className="text-[20px] font-semibold text-black">캠페인 정보</span>
             </div>
             <div className="w-full px-5">
-              <div className="bg-[#F8FAFF] rounded-[14px] overflow-hidden">
+              {/* container has px-5 (20px), rows have py-4 only — matches Figma padding: 0px 20px on container, 16px 0px on rows */}
+              <div className="bg-[#F8FAFF] rounded-[14px] px-5">
                 {campaign.info.map((row, i) => (
                   <div
                     key={row.label}
-                    className={`flex items-center justify-between px-5 py-4 ${i < campaign.info.length - 1 ? 'border-b border-[#E8E7E4]' : ''}`}
+                    className={`flex items-center justify-between py-4 ${i < campaign.info.length - 1 ? 'border-b border-[#F0F2F8]' : ''}`}
                   >
                     <span className="text-[16px] font-medium text-[#8995A2]">{row.label}</span>
                     <span className="text-[16px] font-medium text-[#1C1A17]">{row.value}</span>

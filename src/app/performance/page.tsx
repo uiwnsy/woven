@@ -83,32 +83,49 @@ function BarChart() {
   const yLabels = [600, 450, 300, 150, 0];
   return (
     <div className="flex gap-2">
-      <div className="flex flex-col justify-between shrink-0" style={{ gap: 36 }}>
-        {yLabels.map(v => (
-          <span key={v} className="text-[12px] text-right leading-none" style={{ color: 'rgba(155,161,170,0.5)' }}>{v}</span>
+      {/* Y-axis: absolutely positioned so each label centers on its grid line */}
+      <div className="relative shrink-0" style={{ height: CHART_H, width: 28 }}>
+        {yLabels.map((v, i) => (
+          <span
+            key={v}
+            className="absolute text-[12px] leading-none w-full text-right"
+            style={{
+              color: 'rgba(155,161,170,0.5)',
+              top: `${(i / 4) * 100}%`,
+              transform: 'translateY(-50%)',
+            }}
+          >
+            {v}
+          </span>
         ))}
       </div>
+
       <div className="flex-1 flex flex-col">
         <div className="relative" style={{ height: CHART_H }}>
+          {/* Grid lines */}
           {[0, 1, 2, 3, 4].map(i => (
             <div key={i} className="absolute w-full border-t border-[#E4E8F4]" style={{ top: `${(i / 4) * 100}%` }} />
           ))}
-          <div className="absolute inset-0 flex items-end justify-between">
+          {/* Bars: grow from the 0-line at the bottom */}
+          <div className="absolute inset-x-0 bottom-0 flex justify-between items-end">
             {CHART_DATA.map(d => {
               const clickH = Math.round((d.clicks / MAX_CLICKS) * CHART_H);
-              const convH = d.conversions > 0 ? Math.max(2, Math.round((d.conversions / MAX_CLICKS) * CHART_H)) : 1;
+              const convH = d.conversions > 0 ? Math.max(2, Math.round((d.conversions / MAX_CLICKS) * CHART_H)) : 0;
               return (
                 <div key={d.date} className="flex items-end gap-[2px]">
                   <div className="w-[14px] rounded-t-sm bg-[#A5A8F5]" style={{ height: clickH }} />
-                  <div className="w-[14px] rounded-t-sm bg-iris-500" style={{ height: convH, opacity: d.conversions > 0 ? 1 : 0.12 }} />
+                  {convH > 0 && <div className="w-[14px] rounded-t-sm bg-iris-500" style={{ height: convH }} />}
                 </div>
               );
             })}
           </div>
         </div>
+        {/* Date labels: each 30px wide (= bar group width) centered under bars */}
         <div className="flex justify-between mt-2">
           {CHART_DATA.map(d => (
-            <span key={d.date} className="text-[12px] font-medium leading-none" style={{ color: 'rgba(155,161,170,0.6)' }}>{d.date}</span>
+            <div key={d.date} className="text-center" style={{ width: 30 }}>
+              <span className="text-[12px] font-medium leading-none" style={{ color: 'rgba(155,161,170,0.6)' }}>{d.date}</span>
+            </div>
           ))}
         </div>
       </div>

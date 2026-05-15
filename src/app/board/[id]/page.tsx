@@ -303,9 +303,10 @@ export default function InfluencerDetailPage() {
             className="flex items-start"
             style={{ backgroundColor: '#EEF7FF', borderRadius: 14, padding: 20, gap: 8 }}
           >
-            <svg width="16" height="15" viewBox="0 0 16 15" fill="none" className="shrink-0 mt-[2px]">
-              <path d="M8 1L15 13.5H1L8 1Z" stroke="#2D92FE" strokeWidth="1.4" strokeLinejoin="round"/>
-              <path d="M8 6v3M8 10.5v.5" stroke="#2D92FE" strokeWidth="1.4" strokeLinecap="round"/>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[2px]">
+              <circle cx="8" cy="8" r="7" stroke="#2D92FE" strokeWidth="1.4"/>
+              <path d="M8 7v3.5" stroke="#2D92FE" strokeWidth="1.4" strokeLinecap="round"/>
+              <circle cx="8" cy="5" r="0.7" fill="#2D92FE"/>
             </svg>
             <span className="text-[14px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
               캠페인 기본값이 자동으로 채워져 있어요. 변경하면 브리프가 실시간 업데이트돼요.

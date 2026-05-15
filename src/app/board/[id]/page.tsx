@@ -87,10 +87,10 @@ function StageTracker({ stageId }: { stageId: Stage }) {
 
   return (
     <div className="relative w-full" style={{ height: 37 }}>
-      {/* Connecting line — behind dots, at vertical center of 14px dot area (y=7) */}
+      {/* Connecting line — vertically centered in 14px dot area, spans full width */}
       <div
         className="absolute"
-        style={{ top: 7, left: 7, right: 7, height: 3.5, backgroundColor: '#F0F2F8' }}
+        style={{ top: 5.25, left: 0, right: 0, height: 3.5, backgroundColor: '#F0F2F8' }}
       />
 
       {/* Steps */}

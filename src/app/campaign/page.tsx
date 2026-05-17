@@ -85,17 +85,17 @@ function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () 
       {/* Section 1: Title+status + Info row */}
       <div className="flex flex-col gap-[6px]">
         <div className="flex items-center justify-between">
-          <span className="text-[18px] font-semibold text-black leading-[1.3] flex-1 pr-3">
+          <span className="text-[16px] font-semibold text-black leading-[1.3] flex-1 pr-3">
             {campaign.title}
           </span>
-          <span className={`${statusStyle.bg} ${statusStyle.text} text-[14px] font-semibold px-[8px] py-[6px] rounded-full shrink-0`}>
+          <span className={`${statusStyle.bg} ${statusStyle.text} text-[13px] font-semibold px-[8px] py-[6px] rounded-full shrink-0`}>
             {campaign.status}
           </span>
         </div>
         <div className="flex items-center gap-[14px]">
           <div className="flex items-center gap-[3px]">
             <Calendar size={16} className="shrink-0" style={{ color: '#78756E' }} />
-            <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>{campaign.dateRange}</span>
+            <span className="text-[13px] font-medium" style={{ color: '#78756E' }}>{campaign.dateRange}</span>
           </div>
           <div className="flex items-center gap-[2px]">
             <Users size={16} className="shrink-0" style={{ color: '#78756E' }} />
@@ -110,7 +110,7 @@ function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () 
       {hasProgress && (
         <div className="flex flex-col gap-[6px]">
           <div className="flex items-center justify-between">
-            <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>{campaign.progressLabel}</span>
+            <span className="text-[13px] font-medium" style={{ color: '#78756E' }}>{campaign.progressLabel}</span>
             <span className="text-[13px] font-medium" style={{ color: '#78756E' }}>{campaign.progressFraction}</span>
           </div>
           <div className="w-full h-[5px] bg-stone-200 rounded-full">
@@ -125,7 +125,7 @@ function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () 
       {/* Section 3: Brief status */}
       <div className="flex items-center gap-[2px]">
         <DocumentIcon done={campaign.briefDone} />
-        <span className={`text-[14px] font-semibold ${campaign.briefDone ? 'text-[#3d3fc7]' : 'text-[#78756E]'}`}>
+        <span className={`text-[13px] font-semibold ${campaign.briefDone ? 'text-[#3d3fc7]' : 'text-[#78756E]'}`}>
           {campaign.briefDone ? '브리프 생성 완료' : '브리프 생성 필요'}
         </span>
       </div>
@@ -146,7 +146,7 @@ export default function CampaignPage() {
 
       {/* ── Header ── */}
       <div className="flex items-center justify-between px-5 h-[65px] border-b border-[#f0f2f8] bg-white shrink-0">
-        <span className="text-[22px] font-bold text-stone-900 tracking-[-0.4px]">캠페인</span>
+        <span className="text-[20px] font-bold text-stone-900 tracking-[-0.4px]">캠페인</span>
         <div className="flex items-center gap-3">
           <button className="active:opacity-60">
             <SearchIcon size={32} className="text-stone-900" />
@@ -169,7 +169,7 @@ export default function CampaignPage() {
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`shrink-0 h-8 px-3 rounded-full text-[14px] transition-all active:opacity-70
+                className={`shrink-0 h-8 px-3 rounded-full text-[13px] transition-all active:opacity-70
                   ${isActive
                     ? 'bg-iris-500 text-white font-medium'
                     : 'border border-[#d4d2ce] text-[#899098] font-semibold bg-white'}`}

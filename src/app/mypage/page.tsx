@@ -90,7 +90,7 @@ export default function MyPage() {
 
       {/* ── Header ── */}
       <div className="flex items-center justify-between px-5 h-[65px] border-b border-[#f0f2f8] bg-white shrink-0">
-        <span className="text-[22px] font-bold text-stone-900 tracking-[-0.4px]">마이페이지</span>
+        <span className="text-[20px] font-bold text-stone-900 tracking-[-0.4px]">마이페이지</span>
         <button className="active:opacity-60">
           <Pencil size={22} className="text-stone-700" />
         </button>
@@ -108,8 +108,8 @@ export default function MyPage() {
             </svg>
           </div>
           <div>
-            <p className="text-[18px] font-bold text-stone-900">김지은</p>
-            <p className="text-[14px] text-stone-500 mt-0.5">jieun@lumiere.co.kr</p>
+            <p className="text-[16px] font-bold text-stone-900">김지은</p>
+            <p className="text-[13px] text-stone-500 mt-0.5">jieun@lumiere.co.kr</p>
           </div>
         </div>
 
@@ -151,7 +151,7 @@ export default function MyPage() {
                   ) : (
                     <div className="flex items-center gap-1 shrink-0">
                       {item.value && (
-                        <span className="text-[14px] text-stone-500">{item.value}</span>
+                        <span className="text-[13px] text-stone-500">{item.value}</span>
                       )}
                       {item.chevron && (
                         <ChevronRight size={18} className="text-stone-400" />

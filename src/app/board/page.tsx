@@ -148,7 +148,7 @@ function BoardPageContent() {
 
       {/* ── Header ── */}
       <div className="flex items-center justify-between px-5 h-[65px] border-b border-[#f0f2f8] bg-white shrink-0">
-        <span className="text-[22px] font-bold text-stone-900 tracking-[-0.4px]">보드</span>
+        <span className="text-[20px] font-bold text-stone-900 tracking-[-0.4px]">보드</span>
         <div className="flex items-center gap-3">
           <button className="active:opacity-60">
             <SearchIcon size={32} className="text-stone-900" />
@@ -170,7 +170,7 @@ function BoardPageContent() {
               onClick={() => setShowCampaignSheet(true)}
               className="flex items-center justify-between bg-white rounded-[46px] px-[22px] py-[14px] w-full max-w-[390px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80"
             >
-              <span className="text-[18px] font-medium text-[#1C1A17]">{selectedCampaign.title}</span>
+              <span className="text-[16px] font-medium text-[#1C1A17]">{selectedCampaign.title}</span>
               <img src="/arrow-down-campaign.svg" alt="" width={24} height={24} />
             </button>
           </div>
@@ -206,7 +206,7 @@ function BoardPageContent() {
                 className={`flex items-center gap-1 px-[10px] py-[10px] shrink-0 whitespace-nowrap border-b-[1.5px]
                   ${isActive ? 'border-iris-500' : 'border-[#F0F2F8]'}`}
               >
-                <span className={`text-[14px] ${isActive ? 'font-bold text-iris-500' : 'font-medium text-[#1C1A17]'}`}>
+                <span className={`text-[13px] ${isActive ? 'font-bold text-iris-500' : 'font-medium text-[#1C1A17]'}`}>
                   {tab.label}
                 </span>
                 <span className={`text-[12px] px-[10px] leading-[20px] rounded-full font-manrope
@@ -236,7 +236,7 @@ function BoardPageContent() {
                   <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
                   <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
                 </svg>
-                <p className="text-[14px] font-medium text-[#2D92FE] leading-[150%]">
+                <p className="text-[13px] font-medium text-[#2D92FE] leading-[150%]">
                   인플루언서를 추가하면 리스트업 단계에 카드가 생성돼요.{'\n'}이후 컨택, 협의중, 시안확인, 업로드완료 단계로 이동하며 관리할 수 있어요.
                 </p>
               </div>
@@ -300,7 +300,7 @@ function BoardPageContent() {
           <div className="absolute inset-0 bg-black/40" onClick={() => setShowCampaignSheet(false)} />
           <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-10">
             <div className="flex items-center justify-between mb-5">
-              <span className="text-[18px] font-bold text-[#1C1A17]">캠페인 선택</span>
+              <span className="text-[16px] font-bold text-[#1C1A17]">캠페인 선택</span>
               <button onClick={() => setShowCampaignSheet(false)} className="active:opacity-60">
                 <X size={22} className="text-stone-500" />
               </button>

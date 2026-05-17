@@ -265,7 +265,7 @@ export default function InfluencerDetailPage() {
         <button onClick={() => router.back()} className="w-[42px] h-[42px] flex items-center justify-center active:opacity-60">
           <img src="/back-icon.svg" alt="back" width={24} height={24} />
         </button>
-        <span className="text-[18px] font-bold text-black">인플루언서 상세</span>
+        <span className="text-[16px] font-bold text-black">인플루언서 상세</span>
         <button className="w-[42px] h-[42px] flex items-center justify-center active:opacity-60">
           <img src="/details-icon.svg" alt="more" width={24} height={24} />
         </button>
@@ -292,17 +292,17 @@ export default function InfluencerDetailPage() {
 
               {/* Name + handle */}
               <div className="flex flex-col items-center w-full" style={{ gap: 4 }}>
-                <span className="text-[22px] font-semibold text-black" style={MANROPE}>{data.name}</span>
+                <span className="text-[20px] font-semibold text-black" style={MANROPE}>{data.name}</span>
                 <span className="text-[16px] text-[#78756E] text-center w-full" style={MANROPE}>{data.handle}</span>
               </div>
 
               {/* Stats row */}
               <div className="flex items-center" style={{ gap: 10 }}>
-                <span className="text-[14px] text-black">인스타그램</span>
+                <span className="text-[13px] text-black">인스타그램</span>
                 <div className="w-[4px] h-[4px] rounded-full bg-[#D9D9D9]" />
-                <span className="text-[14px] text-black">팔로워 {data.followers}</span>
+                <span className="text-[13px] text-black">팔로워 {data.followers}</span>
                 <div className="w-[4px] h-[4px] rounded-full bg-[#D9D9D9]" />
-                <span className="text-[14px] text-black">게시물 {data.posts}</span>
+                <span className="text-[13px] text-black">게시물 {data.posts}</span>
               </div>
             </div>
 
@@ -313,7 +313,7 @@ export default function InfluencerDetailPage() {
                 return (
                   <span
                     key={cat}
-                    className="text-[14px] font-medium"
+                    className="text-[13px] font-medium"
                     style={{ backgroundColor: bg, color: text, borderRadius: 50, padding: '7px 10px' }}
                   >
                     {cat}
@@ -349,7 +349,7 @@ export default function InfluencerDetailPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center" style={{ gap: 8 }}>
               <span
-                className="text-[14px] font-semibold"
+                className="text-[13px] font-semibold"
                 style={{ backgroundColor: '#EEEEFF', color: '#3D3FC7', borderRadius: 50, padding: '6px 10px' }}
               >
                 {STAGE_LABELS[data.stage]}
@@ -357,7 +357,7 @@ export default function InfluencerDetailPage() {
               <span className="text-[20px] font-semibold text-black">{data.campaignName}</span>
             </div>
             <span
-              className="text-[14px] font-semibold shrink-0"
+              className="text-[13px] font-semibold shrink-0"
               style={{ backgroundColor: '#FEF6F1', color: '#EF8652', borderRadius: 50, padding: '6px 10px', fontFamily: 'Manrope, sans-serif' }}
             >
               {data.dDay}
@@ -378,7 +378,7 @@ export default function InfluencerDetailPage() {
 
           {/* Title */}
           <div className="flex flex-col" style={{ gap: 8 }}>
-            <span className="text-[22px] font-bold text-black">협의 조건</span>
+            <span className="text-[20px] font-bold text-black">협의 조건</span>
             <span className="text-[16px] font-medium" style={{ color: '#899098', lineHeight: '150%' }}>
               이 인플루언서에게 맞는 조건을 설정하면 AI 브리프에 자동 반영돼요.
             </span>
@@ -394,7 +394,7 @@ export default function InfluencerDetailPage() {
               <path d="M8 7v3.5" stroke="#2D92FE" strokeWidth="1.4" strokeLinecap="round"/>
               <circle cx="8" cy="5" r="0.7" fill="#2D92FE"/>
             </svg>
-            <span className="text-[14px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
+            <span className="text-[13px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
               캠페인 기본값이 자동으로 채워져 있어요. 조건을 바꾼 뒤 브리프를 다시 생성해보세요.
             </span>
           </div>
@@ -402,9 +402,9 @@ export default function InfluencerDetailPage() {
           {/* Platform & Format */}
           <div className="flex flex-col" style={{ gap: 12 }}>
             <div className="flex items-center" style={{ gap: 8 }}>
-              <span className="text-[18px] font-medium text-black">플랫폼 &amp; 포맷</span>
+              <span className="text-[16px] font-medium text-black">플랫폼 &amp; 포맷</span>
               <span
-                className="text-[14px] font-semibold"
+                className="text-[13px] font-semibold"
                 style={{ backgroundColor: '#F2F4F6', color: '#939EA9', borderRadius: 30, padding: '7px 10px' }}
               >
                 캠페인 기본값
@@ -428,7 +428,7 @@ export default function InfluencerDetailPage() {
                   >
                     <img src={p.icon} alt={p.label} width={52} height={52} />
                     <span className="text-[16px] font-semibold text-center" style={{ color: '#1C1A17' }}>{p.label}</span>
-                    <span className="text-[14px] font-medium text-center" style={{ color: '#B0ADA7' }}>{p.format}</span>
+                    <span className="text-[13px] font-medium text-center" style={{ color: '#B0ADA7' }}>{p.format}</span>
                   </button>
                 );
               })}
@@ -438,7 +438,7 @@ export default function InfluencerDetailPage() {
           {/* 개별 가이드라인 */}
           <div className="flex flex-col" style={{ gap: 12, marginTop: 8 }}>
             <div className="flex items-center" style={{ gap: 6 }}>
-              <span className="text-[18px] font-medium text-black">개별 가이드라인</span>
+              <span className="text-[16px] font-medium text-black">개별 가이드라인</span>
             </div>
 
             {/* 캠페인 기본값: 캠페인 추가 시 가이드라인을 입력한 경우에만 표시 */}
@@ -447,15 +447,15 @@ export default function InfluencerDetailPage() {
                 className="flex items-center"
                 style={{ backgroundColor: '#F9FAFB', borderRadius: 10, padding: '12px 20px' }}
               >
-                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>캠페인 기본 &nbsp;</span>
-                <span className="text-[14px] font-medium" style={{ color: '#4B5969' }}>{data.campaignGuidelineUrl}</span>
+                <span className="text-[13px] font-medium" style={{ color: '#899098' }}>캠페인 기본 &nbsp;</span>
+                <span className="text-[13px] font-medium" style={{ color: '#4B5969' }}>{data.campaignGuidelineUrl}</span>
               </div>
             ) : (
               <div
                 className="flex items-center"
                 style={{ backgroundColor: '#F9FAFB', borderRadius: 10, padding: '12px 20px' }}
               >
-                <span className="text-[14px] font-medium" style={{ color: '#C7C4BE' }}>캠페인 기본값 없음 (캠페인 추가 시 미입력)</span>
+                <span className="text-[13px] font-medium" style={{ color: '#C7C4BE' }}>캠페인 기본값 없음 (캠페인 추가 시 미입력)</span>
               </div>
             )}
 
@@ -476,7 +476,7 @@ export default function InfluencerDetailPage() {
                 </svg>
               </button>
             </div>
-            <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>
+            <span className="text-[13px] font-medium" style={{ color: '#D4D2CE' }}>
               {data.campaignGuidelineUrl
                 ? '입력 시 캠페인 기본 가이드라인과 함께 브리프에 포함돼요.'
                 : '링크를 입력하면 AI 브리프에 가이드라인으로 포함돼요.'}
@@ -486,7 +486,7 @@ export default function InfluencerDetailPage() {
           {/* 개별 요청사항 */}
           <div className="flex flex-col" style={{ gap: 12 }}>
             <div className="flex items-center" style={{ gap: 6 }}>
-              <span className="text-[18px] font-medium text-black">개별 요청사항</span>
+              <span className="text-[16px] font-medium text-black">개별 요청사항</span>
             </div>
             <div
               onClick={() => setIsEditingRequests(true)}
@@ -501,7 +501,7 @@ export default function InfluencerDetailPage() {
                 style={{ color: requests ? '#1C1A17' : undefined, height: '24px' }}
               />
             </div>
-            <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>
+            <span className="text-[13px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>
           </div>
 
           {/* Regenerate brief button */}
@@ -521,7 +521,7 @@ export default function InfluencerDetailPage() {
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className={isGenerating ? 'animate-spin' : ''}>
               <path d="M15 9A6 6 0 1 1 9 3h3m0 0l-2-2m2 2l-2 2" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            <span className="text-[18px] font-bold text-white">
+            <span className="text-[16px] font-bold text-white">
               {isGenerating ? 'AI 생성 중...' : '브리프 다시 생성하기'}
             </span>
           </button>
@@ -531,7 +531,7 @@ export default function InfluencerDetailPage() {
 
         {/* ── AI 브리프 ── */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
-          <span className="text-[22px] font-bold text-black">AI 브리프</span>
+          <span className="text-[20px] font-bold text-black">AI 브리프</span>
 
           {/* Info note */}
           <div
@@ -543,7 +543,7 @@ export default function InfluencerDetailPage() {
               <path d="M8 7v3.5" stroke="#2D92FE" strokeWidth="1.4" strokeLinecap="round"/>
               <circle cx="8" cy="5" r="0.7" fill="#2D92FE"/>
             </svg>
-            <span className="text-[14px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
+            <span className="text-[13px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
               캠페인 정보를 기반으로 AI가 자동 생성한 브리프예요. 바로 보내거나 수정 후 전송할 수 있어요.
             </span>
           </div>
@@ -588,7 +588,7 @@ export default function InfluencerDetailPage() {
 
         {/* 발송 현황 */}
         <div className="bg-white" style={{ padding: '16px 20px 30px', gap: 20, display: 'flex', flexDirection: 'column' }}>
-          <span className="text-[22px] font-bold text-black">발송 현황</span>
+          <span className="text-[20px] font-bold text-black">발송 현황</span>
           <div style={{ border: '1px solid #ECECEF', borderRadius: 14, overflow: 'hidden' }}>
             <div className="flex items-center px-5 py-4" style={{ gap: 10, backgroundColor: '#F8FAFF' }}>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="shrink-0">
@@ -598,12 +598,12 @@ export default function InfluencerDetailPage() {
             </div>
             <div className="flex flex-col px-5 py-4 bg-white" style={{ gap: 12, borderTop: '1px solid #ECECEF' }}>
               <div className="flex items-center justify-between">
-                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>발송일</span>
-                <span className="text-[14px] font-medium" style={{ color: '#1C1A17' }}>2025.04.17</span>
+                <span className="text-[13px] font-medium" style={{ color: '#899098' }}>발송일</span>
+                <span className="text-[13px] font-medium" style={{ color: '#1C1A17' }}>2025.04.17</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>경과</span>
-                <span className="text-[14px] font-semibold" style={{ color: '#EF8652', fontFamily: 'Manrope, sans-serif' }}>{data.dDay}</span>
+                <span className="text-[13px] font-medium" style={{ color: '#899098' }}>경과</span>
+                <span className="text-[13px] font-semibold" style={{ color: '#EF8652', fontFamily: 'Manrope, sans-serif' }}>{data.dDay}</span>
               </div>
             </div>
           </div>
@@ -613,7 +613,7 @@ export default function InfluencerDetailPage() {
 
         {/* 응답 상태 (27:4351) */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 24, display: 'flex', flexDirection: 'column' }}>
-          <span className="text-[22px] font-bold text-black">응답 상태</span>
+          <span className="text-[20px] font-bold text-black">응답 상태</span>
           <div style={{ display: 'flex', gap: 14 }}>
             {([
               { key: 'positive', icon: '/done-icon.svg',    label: '긍정 응답', sub: '참여 의사 확인' },
@@ -633,8 +633,8 @@ export default function InfluencerDetailPage() {
                   }}
                 >
                   <img src={icon} alt={label} width={52} height={52} />
-                  <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>{label}</span>
-                  <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>{sub}</span>
+                  <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>{label}</span>
+                  <span className="text-[13px] font-medium" style={{ color: '#B0ADA7' }}>{sub}</span>
                 </button>
               );
             })}
@@ -646,12 +646,12 @@ export default function InfluencerDetailPage() {
         {/* 협의 정보 (27:4367) */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 10, display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <span className="text-[22px] font-bold text-black">협의 정보</span>
+            <span className="text-[20px] font-bold text-black">협의 정보</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
 
               {/* 협의 단가 */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <span className="text-[18px] font-medium text-black">
+                <span className="text-[16px] font-medium text-black">
                   협의 단가 <span style={{ color: '#6366F1' }}>*</span>
                 </span>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -668,13 +668,13 @@ export default function InfluencerDetailPage() {
                       inputMode="numeric"
                     />
                   </div>
-                  <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>VAT 별도 금액을 입력해주세요</span>
+                  <span className="text-[13px] font-medium" style={{ color: '#D4D2CE' }}>VAT 별도 금액을 입력해주세요</span>
                 </div>
               </div>
 
               {/* 시안 전달 예정일 */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <span className="text-[18px] font-medium text-black">
+                <span className="text-[16px] font-medium text-black">
                   시안 전달 예정일 <span style={{ color: '#6366F1' }}>*</span>
                 </span>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -687,13 +687,13 @@ export default function InfluencerDetailPage() {
                       {draftDeadline || 'YYYY.MM.DD'}
                     </span>
                   </button>
-                  <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>인플루언서가 시안을 전달하는 예정일</span>
+                  <span className="text-[13px] font-medium" style={{ color: '#D4D2CE' }}>인플루언서가 시안을 전달하는 예정일</span>
                 </div>
               </div>
 
               {/* 주소 */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <span className="text-[18px] font-medium text-black">주소</span>
+                <span className="text-[16px] font-medium text-black">주소</span>
                 <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
                   <input
                     value={deliveryAddress}
@@ -711,8 +711,8 @@ export default function InfluencerDetailPage() {
                   <div className="flex items-center" style={{ gap: 10 }}>
                     <img src="/ship-icon.svg" alt="배송" width={52} height={52} className="shrink-0" />
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                      <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
-                      <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
+                      <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
+                      <span className="text-[13px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
                     </div>
                   </div>
                   {/* Toggle */}
@@ -733,7 +733,7 @@ export default function InfluencerDetailPage() {
                   <path d="M8 7v3" stroke="#2D92FE" strokeWidth="1.3" strokeLinecap="round"/>
                   <circle cx="8" cy="11.5" r="0.6" fill="#2D92FE"/>
                 </svg>
-                <span className="text-[14px] font-semibold" style={{ color: '#2D92FE', lineHeight: '135%' }}>
+                <span className="text-[13px] font-semibold" style={{ color: '#2D92FE', lineHeight: '135%' }}>
                   협의 확정 시 인플루언서 고유 UTM 링크가 자동 생성됩니다.
                 </span>
               </div>
@@ -746,7 +746,7 @@ export default function InfluencerDetailPage() {
 
         {/* 발송된 브리프 (접기/펼치기) */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
-          <span className="text-[22px] font-bold text-black">발송된 브리프</span>
+          <span className="text-[20px] font-bold text-black">발송된 브리프</span>
           <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden flex flex-col">
             {/* 헤더 - 탭하면 펼침 */}
             <button
@@ -790,10 +790,10 @@ export default function InfluencerDetailPage() {
         {/* ── 협업 이력 ── */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
           <div className="flex items-center justify-between">
-            <span className="text-[22px] font-bold text-black">협업 이력</span>
+            <span className="text-[20px] font-bold text-black">협업 이력</span>
             {data.isFirstCollab && (
               <span
-                className="text-[14px] font-medium"
+                className="text-[13px] font-medium"
                 style={{ backgroundColor: '#EEEEFF', color: '#3D3FC7', borderRadius: 50, padding: '4px 8px' }}
               >
                 첫 협업
@@ -824,7 +824,7 @@ export default function InfluencerDetailPage() {
 
         {/* ── 내부 메모 ── */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
-          <span className="text-[22px] font-bold text-black">내부 메모</span>
+          <span className="text-[20px] font-bold text-black">내부 메모</span>
 
           {memos.map((memo, i) => (
             <div key={i} className="flex flex-col" style={{ backgroundColor: '#FFFDE5', borderRadius: 14, padding: 22, gap: 6 }}>
@@ -843,7 +843,7 @@ export default function InfluencerDetailPage() {
                 </button>
               </div>
               {memo.date && (
-                <span className="text-[14px] font-medium" style={{ color: 'rgba(112,84,72,0.6)', lineHeight: '22px' }}>
+                <span className="text-[13px] font-medium" style={{ color: 'rgba(112,84,72,0.6)', lineHeight: '22px' }}>
                   {memo.date}
                 </span>
               )}
@@ -902,7 +902,7 @@ export default function InfluencerDetailPage() {
                     borderRadius: 50, padding: '4px 8px',
                   }}
                 >
-                  <span className="text-[14px] font-medium" style={{ color: chip.active ? '#6366F1' : '#B0ADA7', lineHeight: '16px' }}>
+                  <span className="text-[13px] font-medium" style={{ color: chip.active ? '#6366F1' : '#B0ADA7', lineHeight: '16px' }}>
                     {chip.label}
                   </span>
                 </div>
@@ -913,10 +913,10 @@ export default function InfluencerDetailPage() {
               className="w-full flex items-center justify-center active:opacity-80"
               style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
             >
-              <span className="text-[18px] font-bold text-white">협의 확정하기</span>
+              <span className="text-[16px] font-bold text-white">협의 확정하기</span>
             </button>
             <button className="w-full flex items-center justify-center active:opacity-60">
-              <span className="text-[18px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
+              <span className="text-[16px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
             </button>
           </>
         ) : (
@@ -929,10 +929,10 @@ export default function InfluencerDetailPage() {
               className="w-full flex items-center justify-center active:opacity-80"
               style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
             >
-              <span className="text-[18px] font-bold text-white">발송 완료</span>
+              <span className="text-[16px] font-bold text-white">발송 완료</span>
             </button>
             <button className="w-full flex items-center justify-center active:opacity-60">
-              <span className="text-[18px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
+              <span className="text-[16px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
             </button>
           </>
         )}
@@ -943,7 +943,7 @@ export default function InfluencerDetailPage() {
         <>
           <div className="fixed inset-0 z-50 bg-white" />
           <div className="fixed inset-x-0 top-0 z-[60] h-[56px] flex items-center justify-between px-5 bg-white border-b border-[#E8E7E4]">
-            <span className="text-[18px] font-semibold text-black">브리프 수정</span>
+            <span className="text-[16px] font-semibold text-black">브리프 수정</span>
             <button
               onClick={() => {
                 if (briefTextareaRef.current) setEditedBrief(briefTextareaRef.current.value);
@@ -982,7 +982,7 @@ export default function InfluencerDetailPage() {
         <>
           <div className="fixed inset-0 z-50 bg-white" />
           <div className="fixed inset-x-0 top-0 z-[60] h-[56px] flex items-center justify-between px-5 bg-white border-b border-[#E8E7E4]">
-            <span className="text-[18px] font-semibold text-black">개별 요청사항</span>
+            <span className="text-[16px] font-semibold text-black">개별 요청사항</span>
             <button
               onClick={() => {
                 if (requestsTextareaRef.current) setRequests(requestsTextareaRef.current.value);
@@ -1046,7 +1046,7 @@ export default function InfluencerDetailPage() {
                 <button onClick={() => setCalendarDate(new Date(y, m - 1, 1))} className="w-9 h-9 flex items-center justify-center active:opacity-60">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11.25 13.5L6.75 9L11.25 4.5" stroke="#1C1A17" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </button>
-                <span className="text-[18px] font-bold text-black">{y}년 {m + 1}월</span>
+                <span className="text-[16px] font-bold text-black">{y}년 {m + 1}월</span>
                 <button onClick={() => setCalendarDate(new Date(y, m + 1, 1))} className="w-9 h-9 flex items-center justify-center active:opacity-60">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6.75 4.5L11.25 9L6.75 13.5" stroke="#1C1A17" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </button>
@@ -1112,7 +1112,7 @@ export default function InfluencerDetailPage() {
 
             {/* Title row */}
             <div className="flex items-center justify-between mb-5">
-              <span className="text-[18px] font-bold text-black">메모 추가</span>
+              <span className="text-[16px] font-bold text-black">메모 추가</span>
               <button
                 onClick={() => setShowMemoOverlay(false)}
                 className="w-[36px] h-[36px] flex items-center justify-center rounded-full active:opacity-60"

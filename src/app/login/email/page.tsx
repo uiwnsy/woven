@@ -23,7 +23,7 @@ export default function EmailLoginPage() {
         <button onClick={() => router.back()} className="absolute left-5 active:opacity-60">
           <ChevronLeft size={24} className="text-stone-900" />
         </button>
-        <span className="text-[18px] font-semibold text-stone-900">이메일 로그인</span>
+        <span className="text-[16px] font-semibold text-stone-900">이메일 로그인</span>
       </div>
 
       {/* Form */}
@@ -60,10 +60,10 @@ export default function EmailLoginPage() {
                 </svg>
               )}
             </div>
-            <span className="text-[14px] text-stone-600">자동 로그인</span>
+            <span className="text-[13px] text-stone-600">자동 로그인</span>
           </button>
 
-          <div className="flex items-center gap-3 text-[14px] text-stone-400">
+          <div className="flex items-center gap-3 text-[13px] text-stone-400">
             <button className="active:opacity-60">아이디 찾기</button>
             <span>|</span>
             <button className="active:opacity-60">비밀번호 찾기</button>
@@ -74,7 +74,7 @@ export default function EmailLoginPage() {
         <button
           onClick={handleLogin}
           disabled={!isFilled}
-          className={`w-full h-[56px] rounded-xl text-[18px] font-semibold mt-2 transition-colors
+          className={`w-full h-[56px] rounded-xl text-[16px] font-semibold mt-2 transition-colors
             ${isFilled
               ? 'bg-stone-900 text-white active:opacity-80'
               : 'bg-stone-100 text-stone-400 cursor-not-allowed'}`}

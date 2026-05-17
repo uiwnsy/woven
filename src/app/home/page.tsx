@@ -167,7 +167,7 @@ export default function HomePage() {
           <img src="/woven-logo.svg" alt="Woven" width={76.14} height={13.66} />
           <div className="flex items-center gap-2">
             <div className="w-[30px] h-[30px] rounded-full bg-[#f7b898] flex items-center justify-center">
-              <span className="text-white text-[14px] font-semibold">김</span>
+              <span className="text-white text-[13px] font-semibold">김</span>
             </div>
           </div>
         </div>
@@ -182,7 +182,7 @@ export default function HomePage() {
             {/* Greeting */}
             <div className="pt-[30px] pb-[52px]">
               <p className="text-[17px] font-semibold text-white mb-2">✳︎ 안녕하세요, 김지은님!</p>
-              <p className="text-[24px] font-bold text-white leading-[1.45]">
+              <p className="text-[22px] font-bold text-white leading-[1.45]">
                 현재 진행 중인 캠페인은<br />루미에르 봄봄 프로모션이에요.
               </p>
             </div>
@@ -232,13 +232,13 @@ export default function HomePage() {
             {/* 성과 순위 */}
             <div className="bg-white px-5 pt-[40px] pb-[40px] mb-[10px]">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-[22px] font-bold text-stone-900">성과 순위</h2>
+                <h2 className="text-[20px] font-bold text-stone-900">성과 순위</h2>
                 <div className="flex gap-2 overflow-x-auto scrollbar-none">
                   {RANK_FILTERS.map(f => (
                     <button
                       key={f}
                       onClick={() => setRankFilter(f)}
-                      className={`shrink-0 h-7 px-3 rounded-full text-[14px] transition-all active:opacity-70
+                      className={`shrink-0 h-7 px-3 rounded-full text-[13px] transition-all active:opacity-70
                         ${rankFilter === f
                           ? 'bg-iris-500 text-white font-medium'
                           : 'border border-[#d4d2ce] text-[#899098] font-semibold bg-white'}`}
@@ -288,12 +288,12 @@ export default function HomePage() {
                   ) : (
                     <div className="flex items-center gap-1.5">
                       {inf.stage && (
-                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[14px] font-medium px-3 py-1 rounded-full`}>
+                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[13px] font-medium px-3 py-1 rounded-full`}>
                           {inf.stage.label}
                         </span>
                       )}
                       {inf.status && (
-                        <span className={`${inf.status.bg} ${inf.status.text} text-[14px] font-medium px-3 py-1 rounded-full`}>
+                        <span className={`${inf.status.bg} ${inf.status.text} text-[13px] font-medium px-3 py-1 rounded-full`}>
                           {inf.status.label}
                         </span>
                       )}
@@ -310,10 +310,10 @@ export default function HomePage() {
         <>
         <div className="bg-white px-5 py-[40px] mb-[10px]">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[22px] font-bold text-stone-900">루미에르 봄봄 프로모션</span>
-            <span className="bg-iris-500 text-white text-[14px] font-bold rounded-full shrink-0 ml-2" style={{ padding: '3px 8px 3px 9px' }}>D-8</span>
+            <span className="text-[20px] font-bold text-stone-900">루미에르 봄봄 프로모션</span>
+            <span className="bg-iris-500 text-white text-[13px] font-bold rounded-full shrink-0 ml-2" style={{ padding: '3px 8px 3px 9px' }}>D-8</span>
           </div>
-          <p className="text-[14px] font-medium text-[#8995a2] mb-[32px]">
+          <p className="text-[13px] font-medium text-[#8995a2] mb-[32px]">
             4월 26일 마감 &nbsp;·&nbsp; 오늘 오전 8:41
           </p>
 
@@ -321,8 +321,8 @@ export default function HomePage() {
           <div className="flex justify-between mb-[30px]">
             {STAGES.map(stage => (
               <div key={stage.id} className="flex flex-col items-center w-[70px]">
-                <span className="text-[24px] font-bold text-stone-900 leading-none">{stage.count}</span>
-                <span className="text-[14px] text-stone-800 mt-1.5">{stage.label}</span>
+                <span className="text-[22px] font-bold text-stone-900 leading-none">{stage.count}</span>
+                <span className="text-[13px] text-stone-800 mt-1.5">{stage.label}</span>
               </div>
             ))}
           </div>
@@ -335,18 +335,18 @@ export default function HomePage() {
                 className="flex-1 min-w-0 bg-white border border-[#ebeef7] rounded-[14px] px-5 py-[22px] flex flex-col gap-3"
               >
                 <div className="flex flex-col gap-1.5">
-                  <p className="text-[14px] font-medium leading-none" style={{ color: '#5C5A54' }}>{kpi.label}</p>
-                  <p className="text-[26px] font-bold text-black leading-none">{kpi.value}</p>
+                  <p className="text-[13px] font-medium leading-none" style={{ color: '#5C5A54' }}>{kpi.label}</p>
+                  <p className="text-[24px] font-bold text-black leading-none">{kpi.value}</p>
                 </div>
                 <div className={`${kpi.badgeBg} px-[10px] py-1 rounded-full inline-flex self-start`}>
-                  <span className={`text-[14px] font-semibold ${kpi.badgeText} whitespace-nowrap`}>{kpi.badge}</span>
+                  <span className={`text-[13px] font-semibold ${kpi.badgeText} whitespace-nowrap`}>{kpi.badge}</span>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Urgent section */}
-          <h2 className="text-[18px] font-bold text-stone-900 mb-3 pt-[40px]">긴급 확인 필요</h2>
+          <h2 className="text-[16px] font-bold text-stone-900 mb-3 pt-[40px]">긴급 확인 필요</h2>
           <div className="flex flex-col gap-3">
             {URGENT_ITEMS.map((item) => (
               <button
@@ -357,7 +357,7 @@ export default function HomePage() {
                   <img src={item.icon} alt="" width={52} height={52} className="shrink-0" />
                   <div className="text-left">
                     <p className="text-[16px] font-semibold text-black">{item.title}</p>
-                    <p className="text-[14px] text-black/60 mt-1">{item.subtitle}</p>
+                    <p className="text-[13px] text-black/60 mt-1">{item.subtitle}</p>
                   </div>
                 </div>
                 <img src="/arrow-right.svg" alt="" width={20} height={20} className="shrink-0 ml-2" />
@@ -371,7 +371,7 @@ export default function HomePage() {
 
         {/* AI 인사이트 */}
         <div className="bg-white pt-[40px] pb-[40px] mb-[10px]">
-          <h2 className="text-[22px] font-bold text-stone-900 px-5 mb-4">AI 인사이트</h2>
+          <h2 className="text-[20px] font-bold text-stone-900 px-5 mb-4">AI 인사이트</h2>
           <div className="flex gap-3 overflow-x-auto px-5 pb-1 scrollbar-none">
             {AI_INSIGHTS.map(insight => (
               <div
@@ -394,9 +394,9 @@ export default function HomePage() {
         {/* 전체 캠페인 */}
         <div className="bg-white pt-[40px] pb-[40px] mb-[10px]">
           <div className="flex items-center justify-between px-5 mb-4">
-            <h2 className="text-[22px] font-bold text-stone-900">전체 캠페인</h2>
+            <h2 className="text-[20px] font-bold text-stone-900">전체 캠페인</h2>
             <button className="border border-[#D4D2CE] rounded-[30px] px-[10px] pt-[3px] pb-1 active:opacity-70">
-              <span className="text-[14px] font-semibold" style={{ color: '#78756E' }}>더보기</span>
+              <span className="text-[13px] font-semibold" style={{ color: '#78756E' }}>더보기</span>
             </button>
           </div>
           <div className="flex gap-[17px] overflow-x-auto px-5 pb-1 scrollbar-none">
@@ -407,10 +407,10 @@ export default function HomePage() {
               >
                 {/* Title box */}
                 <div className="flex flex-col gap-[14px]">
-                  <span className={`${campaign.statusBg} ${campaign.statusText} text-[14px] font-semibold px-[10px] py-[6px] rounded-[30px] self-start`}>
+                  <span className={`${campaign.statusBg} ${campaign.statusText} text-[13px] font-semibold px-[10px] py-[6px] rounded-[30px] self-start`}>
                     {campaign.status}
                   </span>
-                  <p className="text-[18px] font-bold text-black leading-[1.35] whitespace-pre-line">{campaign.name}</p>
+                  <p className="text-[16px] font-bold text-black leading-[1.35] whitespace-pre-line">{campaign.name}</p>
                 </div>
                 {/* Active: progress bar */}
                 {campaign.type === 'active' && (
@@ -420,8 +420,8 @@ export default function HomePage() {
                         style={{ width: `${campaign.progressPct * 100}%` }} />
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-[14px] font-bold" style={{ color: '#78756E' }}>{campaign.progress}</span>
-                      <span className="text-[14px] font-bold text-[#D96430]">{campaign.dday}</span>
+                      <span className="text-[13px] font-bold" style={{ color: '#78756E' }}>{campaign.progress}</span>
+                      <span className="text-[13px] font-bold text-[#D96430]">{campaign.dday}</span>
                     </div>
                   </div>
                 )}
@@ -431,18 +431,18 @@ export default function HomePage() {
                     {/* analysis inside titlebox with bottom border */}
                     <div className="flex gap-5 pb-[14px] border-b border-[#E8E7E4]">
                       <div className="flex flex-col gap-[3px] py-[5px]">
-                        <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>ROAS</span>
+                        <span className="text-[13px] font-medium" style={{ color: '#78756E' }}>ROAS</span>
                         <span className="text-[20px] font-bold leading-[22px]" style={{ color: '#166534' }}>{campaign.roas}</span>
                       </div>
                       <div className="flex flex-col gap-[3px] py-[5px]">
-                        <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>클릭수</span>
+                        <span className="text-[13px] font-medium" style={{ color: '#78756E' }}>클릭수</span>
                         <span className="text-[20px] font-bold leading-[22px]" style={{ color: '#166534' }}>{campaign.clicks}</span>
                       </div>
                     </div>
                     {/* info below titlebox border */}
                     <div className="flex items-center justify-between">
-                      <span className="text-[14px] font-bold" style={{ color: '#78756E' }}>{campaign.influencerCount}</span>
-                      <span className="text-[14px] font-bold" style={{ color: '#5C5A54' }}>{campaign.completedMonth}</span>
+                      <span className="text-[13px] font-bold" style={{ color: '#78756E' }}>{campaign.influencerCount}</span>
+                      <span className="text-[13px] font-bold" style={{ color: '#5C5A54' }}>{campaign.completedMonth}</span>
                     </div>
                   </>
                 )}

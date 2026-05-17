@@ -208,7 +208,7 @@ function FormLabel({ children, required, optional, autoFill }: {
     <div className="flex items-center justify-between mb-2">
       <div className="flex items-center gap-1">
         <span className="text-[15px] font-semibold text-stone-800">{children}</span>
-        {required && <span className="text-iris-500 text-[14px]">*</span>}
+        {required && <span className="text-iris-500 text-[13px]">*</span>}
         {optional && <span className="text-stone-400 text-[13px] ml-0.5">(선택)</span>}
       </div>
       {autoFill && <span className="text-[13px] text-iris-500 font-medium">자동 채움</span>}
@@ -261,7 +261,7 @@ function TagInput({ tags, onAdd, onRemove, placeholder }: {
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-2">
           {tags.map(tag => (
-            <span key={tag} className="flex items-center gap-1 bg-stone-100 text-stone-700 text-[14px] px-3 py-1 rounded-full">
+            <span key={tag} className="flex items-center gap-1 bg-stone-100 text-stone-700 text-[13px] px-3 py-1 rounded-full">
               {tag}
               <button onClick={() => onRemove(tag)} className="active:opacity-60">
                 <X size={12} />
@@ -327,12 +327,12 @@ function Step1({ form, updateForm, togglePlatform }: {
   return (
     <>
       <div className="px-5 pt-6 pb-2">
-        <h1 className="text-[22px] font-bold text-[#1C1A17] mb-6">캠페인 기본 정보</h1>
+        <h1 className="text-[20px] font-bold text-[#1C1A17] mb-6">캠페인 기본 정보</h1>
 
         {/* 캠페인명 */}
         <div className="mb-6">
           <div className="flex items-center gap-1 mb-2">
-            <span className="text-[18px] font-medium text-[#1C1A17]">캠페인명</span>
+            <span className="text-[16px] font-medium text-[#1C1A17]">캠페인명</span>
             <span className="text-iris-500">*</span>
           </div>
           <input
@@ -347,7 +347,7 @@ function Step1({ form, updateForm, togglePlatform }: {
         {/* 제품명 */}
         <div className="mb-6">
           <div className="flex items-center gap-1 mb-2">
-            <span className="text-[18px] font-medium text-[#1C1A17]">제품명</span>
+            <span className="text-[16px] font-medium text-[#1C1A17]">제품명</span>
             <span className="text-iris-500">*</span>
           </div>
           <input
@@ -362,7 +362,7 @@ function Step1({ form, updateForm, togglePlatform }: {
         {/* 캠페인 기간 */}
         <div className="mb-6">
           <div className="flex items-center gap-1 mb-2">
-            <span className="text-[18px] font-medium text-[#1C1A17]">캠페인 기간</span>
+            <span className="text-[16px] font-medium text-[#1C1A17]">캠페인 기간</span>
             <span className="text-iris-500">*</span>
           </div>
           <div className="flex items-center gap-2">
@@ -375,7 +375,7 @@ function Step1({ form, updateForm, togglePlatform }: {
         {/* 플랫폼 */}
         <div className="mb-6">
           <div className="flex items-center gap-1 mb-2">
-            <span className="text-[18px] font-medium text-[#1C1A17]">플랫폼</span>
+            <span className="text-[16px] font-medium text-[#1C1A17]">플랫폼</span>
             <span className="text-iris-500">*</span>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -397,7 +397,7 @@ function Step1({ form, updateForm, togglePlatform }: {
         {/* 예산 */}
         <div className="mb-6">
           <div className="flex items-center gap-1 mb-2">
-            <span className="text-[18px] font-medium text-[#1C1A17]">예산</span>
+            <span className="text-[16px] font-medium text-[#1C1A17]">예산</span>
             <span className="text-[16px] font-medium text-[#78756E]">(선택)</span>
           </div>
           <div className="flex items-center border border-[#E8E7E4] rounded-[10px] px-5 h-[52px] bg-white">
@@ -415,7 +415,7 @@ function Step1({ form, updateForm, togglePlatform }: {
         {/* 담당자 */}
         <div className="mb-6">
           <div className="flex items-center gap-1 mb-2">
-            <span className="text-[18px] font-medium text-[#1C1A17]">담당자</span>
+            <span className="text-[16px] font-medium text-[#1C1A17]">담당자</span>
             <span className="text-[16px] font-medium text-[#78756E]">(선택)</span>
           </div>
           <button
@@ -427,11 +427,11 @@ function Step1({ form, updateForm, togglePlatform }: {
                 className="w-[50px] h-[50px] rounded-full flex items-center justify-center shrink-0"
                 style={{ backgroundColor: selectedManager.color }}
               >
-                <span className="text-white text-[18px] font-semibold">{selectedManager.initial}</span>
+                <span className="text-white text-[16px] font-semibold">{selectedManager.initial}</span>
               </div>
               <div className="flex flex-col gap-[6px] text-left">
-                <p className="text-[18px] font-medium text-[#1C1A17] leading-none">{selectedManager.name}</p>
-                <p className="text-[14px] font-medium text-[#B0ADA7] leading-none">{selectedManager.team}</p>
+                <p className="text-[16px] font-medium text-[#1C1A17] leading-none">{selectedManager.name}</p>
+                <p className="text-[13px] font-medium text-[#B0ADA7] leading-none">{selectedManager.team}</p>
               </div>
             </div>
             <img src="/arrow-down.svg" alt="" className="w-5 h-5" />
@@ -445,7 +445,7 @@ function Step1({ form, updateForm, togglePlatform }: {
           <div className="absolute inset-0 bg-black/40" onClick={() => setShowManagerSheet(false)} />
           <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-8">
             <div className="flex items-center justify-between mb-5">
-              <span className="text-[18px] font-bold text-[#1C1A17]">담당자 선택</span>
+              <span className="text-[16px] font-bold text-[#1C1A17]">담당자 선택</span>
               <button onClick={() => setShowManagerSheet(false)} className="active:opacity-60">
                 <X size={22} className="text-stone-500" />
               </button>
@@ -491,12 +491,12 @@ function Step2({ form, updateForm, toggleKPI }: {
 }) {
   return (
     <div className="px-5 pt-6 flex flex-col gap-[30px]">
-      <h1 className="text-[22px] font-bold text-[#1C1A17]">캠페인 목표</h1>
+      <h1 className="text-[20px] font-bold text-[#1C1A17]">캠페인 목표</h1>
 
       <div className="flex flex-col gap-[30px]">
         {/* 목표 유형 */}
         <div className="flex flex-col gap-[12px]">
-          <p className="text-[18px] font-medium text-[#1C1A17]">목표 유형</p>
+          <p className="text-[16px] font-medium text-[#1C1A17]">목표 유형</p>
           {GOALS.map(goal => {
             const isActive = form.goal === goal.id;
             return (
@@ -511,8 +511,8 @@ function Step2({ form, updateForm, toggleKPI }: {
               >
                 <img src={goal.icon} alt={goal.label} className="w-[52px] h-[52px] shrink-0" />
                 <div className="flex flex-col gap-[6px]">
-                  <p className="text-[18px] font-medium text-[#1C1A17]">{goal.label}</p>
-                  <p className="text-[14px] font-medium text-[#B0ADA7]">{goal.desc}</p>
+                  <p className="text-[16px] font-medium text-[#1C1A17]">{goal.label}</p>
+                  <p className="text-[13px] font-medium text-[#B0ADA7]">{goal.desc}</p>
                 </div>
               </button>
             );
@@ -521,7 +521,7 @@ function Step2({ form, updateForm, toggleKPI }: {
 
         {/* KPI 지표 */}
         <div className="flex flex-col gap-[12px]">
-          <p className="text-[18px] font-medium text-[#1C1A17]">KPI 지표</p>
+          <p className="text-[16px] font-medium text-[#1C1A17]">KPI 지표</p>
           <div className="border border-[#E8E7E4] rounded-[14px] overflow-hidden bg-white">
             {KPIS.map((kpi, i) => (
               <div
@@ -530,8 +530,8 @@ function Step2({ form, updateForm, toggleKPI }: {
                   ${i > 0 ? 'border-t border-[#E8E7E4]' : ''}`}
               >
                 <div className="flex flex-col gap-[6px]">
-                  <p className="text-[18px] font-medium text-[#1C1A17]">{kpi.label}</p>
-                  <p className="text-[14px] font-medium text-[#B0ADA7]">{kpi.desc}</p>
+                  <p className="text-[16px] font-medium text-[#1C1A17]">{kpi.label}</p>
+                  <p className="text-[13px] font-medium text-[#B0ADA7]">{kpi.desc}</p>
                 </div>
                 <Toggle on={form.kpis.includes(kpi.id)} onToggle={() => toggleKPI(kpi.id)} />
               </div>
@@ -554,7 +554,7 @@ const DEFAULT_RESTRICTIONS = [
 
 function AutoFillBadge() {
   return (
-    <span className="text-[14px] font-semibold text-[#26B059] bg-[#F0FDF4] px-[8px] py-[6px] rounded-full shrink-0">
+    <span className="text-[13px] font-semibold text-[#26B059] bg-[#F0FDF4] px-[8px] py-[6px] rounded-full shrink-0">
       자동 채움
     </span>
   );
@@ -574,7 +574,7 @@ function HashtagSection({ title, tags, onAdd, onRemove }: {
   return (
     <div className="flex flex-col gap-[10px]">
       <div className="flex flex-col gap-[12px]">
-        <span className="text-[18px] font-semibold text-black">{title}</span>
+        <span className="text-[16px] font-semibold text-black">{title}</span>
         <div
           className="flex items-center justify-between border border-[#E8E7E4] rounded-[10px] bg-white h-[56px]"
           style={{ padding: '0 12px 0 20px' }}
@@ -601,7 +601,7 @@ function HashtagSection({ title, tags, onAdd, onRemove }: {
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-[6px]">
           {tags.map(tag => (
-            <span key={tag} className="flex items-center gap-2 bg-[#F5F5F3] text-[14px] font-medium text-[#78756E] px-[14px] py-[8px] rounded-full">
+            <span key={tag} className="flex items-center gap-2 bg-[#F5F5F3] text-[13px] font-medium text-[#78756E] px-[14px] py-[8px] rounded-full">
               #{tag}
               <button onClick={() => onRemove(tag)} className="active:opacity-60 flex items-center">
                 <X size={9} className="text-[#78756E]" />
@@ -628,14 +628,14 @@ function Step3({ form, updateForm }: {
 
       {/* Header + info */}
       <div className="flex flex-col gap-[18px]">
-        <h1 className="text-[22px] font-bold text-black">AI 브리프 재료 입력</h1>
+        <h1 className="text-[20px] font-bold text-black">AI 브리프 재료 입력</h1>
         <div className="flex gap-2 bg-[#EEF7FF] rounded-[12px] p-5">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[2px]">
             <circle cx="9" cy="9" r="8" stroke="#2D92FE" strokeWidth="1.5"/>
             <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
             <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
           </svg>
-          <p className="text-[14px] font-medium text-[#2D92FE] leading-[135%]">
+          <p className="text-[13px] font-medium text-[#2D92FE] leading-[135%]">
             입력하신 정보를 반영해 AI 브리프를 만들 수 있어요.<br />
             아래 내용을 채울수록 메시지가 정교해집니다.
           </p>
@@ -648,7 +648,7 @@ function Step3({ form, updateForm }: {
         {/* 브랜드 소개 */}
         <div className="flex flex-col gap-[12px]">
           <div className="flex items-center justify-between">
-            <span className="text-[18px] font-semibold text-black">브랜드 소개</span>
+            <span className="text-[16px] font-semibold text-black">브랜드 소개</span>
             <AutoFillBadge />
           </div>
           <div className="flex flex-col gap-[6px]">
@@ -658,14 +658,14 @@ function Step3({ form, updateForm }: {
             >
               <p className="text-[16px] font-medium text-[#8995A2] leading-[150%]">{form.brandDesc}</p>
             </div>
-            <p className="text-[14px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
+            <p className="text-[13px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
           </div>
         </div>
 
         {/* 제품 특징 */}
         <div className="flex flex-col gap-[12px]">
           <div className="flex items-center gap-1">
-            <span className="text-[18px] font-semibold text-black">제품 특징</span>
+            <span className="text-[16px] font-semibold text-black">제품 특징</span>
           </div>
           <textarea
             value={form.productFeatures}
@@ -681,7 +681,7 @@ function Step3({ form, updateForm }: {
         {/* 핵심 메시지 */}
         <div className="flex flex-col gap-[12px]">
           <div className="flex items-center gap-[6px]">
-            <span className="text-[18px] font-semibold text-black">핵심 메시지</span>
+            <span className="text-[16px] font-semibold text-black">핵심 메시지</span>
           </div>
           <textarea
             value={form.coreMessage}
@@ -697,7 +697,7 @@ function Step3({ form, updateForm }: {
         {/* 금지 사항 */}
         <div className="flex flex-col gap-[12px]">
           <div className="flex items-center justify-between">
-            <span className="text-[18px] font-semibold text-black">금지 사항</span>
+            <span className="text-[16px] font-semibold text-black">금지 사항</span>
             <AutoFillBadge />
           </div>
           <div className="flex flex-col gap-[6px]">
@@ -709,14 +709,14 @@ function Step3({ form, updateForm }: {
                 <p key={r} className="text-[16px] font-medium text-[#8995A2] leading-[150%]">- {r}</p>
               ))}
             </div>
-            <p className="text-[14px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
+            <p className="text-[13px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
           </div>
         </div>
 
         {/* 콘텐츠 가이드라인 */}
         <div className="flex flex-col gap-[12px]">
           <div className="flex items-center gap-[6px]">
-            <span className="text-[18px] font-semibold text-black">콘텐츠 가이드라인</span>
+            <span className="text-[16px] font-semibold text-black">콘텐츠 가이드라인</span>
             <span className="text-[15px] font-normal text-[#91929F]">(선택)</span>
           </div>
           <div className="flex flex-col gap-[6px]">
@@ -732,7 +732,7 @@ function Step3({ form, updateForm }: {
                 className="flex-1 text-[16px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
               />
             </div>
-            <p className="text-[14px] text-[#B0ADA7]">
+            <p className="text-[13px] text-[#B0ADA7]">
               * 링크 입력 시 AI 브리프에 자동 반영돼요.<br />
               * 인플루언서 상세에서 &apos;캠페인 기본값&apos;으로 표시되며, 개별 변경도 가능해요.
             </p>
@@ -845,7 +845,7 @@ function Step4({ form, updateForm }: {
           />
           {/* Layer 2: header — truly fixed to viewport top, never scrolls */}
           <div className="fixed inset-x-0 top-0 z-[60] h-[56px] flex items-center justify-between px-5 bg-white border-b border-[#E8E7E4]">
-            <span className="text-[18px] font-semibold text-black">브리프 수정</span>
+            <span className="text-[16px] font-semibold text-black">브리프 수정</span>
             <button
               onClick={handleDoneEditing}
               className="text-[16px] font-semibold text-[#6366F1] px-2 py-2 active:opacity-70"
@@ -886,14 +886,14 @@ function Step4({ form, updateForm }: {
 
         {/* Header */}
         <div className="flex flex-col gap-[18px]">
-          <h1 className="text-[22px] font-bold text-black">브리프를 확인해주세요</h1>
+          <h1 className="text-[20px] font-bold text-black">브리프를 확인해주세요</h1>
           <div className="flex gap-2 bg-[#EEF7FF] rounded-[12px] p-5">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[2px]">
               <circle cx="9" cy="9" r="8" stroke="#2D92FE" strokeWidth="1.5"/>
               <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
               <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
             </svg>
-            <p className="text-[14px] font-medium text-[#2D92FE] leading-[135%]">
+            <p className="text-[13px] font-medium text-[#2D92FE] leading-[135%]">
               캠페인 정보 기반으로 AI가 생성한 브리프예요.<br />
               내용을 확인하고, 필요한 부분을 수정한 뒤 저장하세요.
             </p>
@@ -902,7 +902,7 @@ function Step4({ form, updateForm }: {
 
         {/* Tone selector */}
         <div className="flex flex-col gap-[14px]">
-          <span className="text-[18px] font-semibold text-black">브리프 톤</span>
+          <span className="text-[16px] font-semibold text-black">브리프 톤</span>
           <div className="flex gap-[14px]">
             {TONES.map(tone => {
               const isActive = form.briefTone === tone.id;
@@ -914,7 +914,7 @@ function Step4({ form, updateForm }: {
                     ${isActive ? 'border border-[#E8E7E4] bg-[#EEEEFF]' : 'border border-[#E8E7E4] bg-white'}`}
                 >
                   <img src={tone.icon} alt={tone.label} className="w-[52px] h-[52px]" />
-                  <span className="text-[18px] font-semibold text-[#1C1A17]">{tone.label}</span>
+                  <span className="text-[16px] font-semibold text-[#1C1A17]">{tone.label}</span>
                 </button>
               );
             })}
@@ -952,7 +952,7 @@ function Step4({ form, updateForm }: {
               </button>
             </div>
           </div>
-          <p className="text-[14px] font-normal text-[#B0ADA7] leading-[135%]">
+          <p className="text-[13px] font-normal text-[#B0ADA7] leading-[135%]">
             인플루언서별 발송 시 이름과 핸들이 자동으로 반영돼요.
           </p>
         </div>
@@ -962,7 +962,7 @@ function Step4({ form, updateForm }: {
           onClick={handleRegenerate}
           className="w-full h-[56px] bg-[#F0F2FB] rounded-[12px] flex items-center justify-center active:opacity-70"
         >
-          <span className="text-[18px] font-bold text-[#6366F1]">다시 생성하기</span>
+          <span className="text-[16px] font-bold text-[#6366F1]">다시 생성하기</span>
         </button>
 
       </div>
@@ -992,7 +992,7 @@ function Step5({ form, router }: { form: FormData; router: ReturnType<typeof use
         <Check size={36} className="text-white" strokeWidth={3} />
       </div>
 
-      <h1 className="text-[26px] font-bold text-stone-900 mb-3">캠페인이 추가됐어요!</h1>
+      <h1 className="text-[24px] font-bold text-stone-900 mb-3">캠페인이 추가됐어요!</h1>
       <p className="text-[15px] text-stone-500 text-center mb-8 leading-relaxed">
         이제 인플루언서를 추가하고<br />보드에서 관리해보세요
       </p>
@@ -1094,7 +1094,7 @@ export default function CampaignNewPage() {
             <ChevronLeft size={24} className="text-stone-900" />
           </button>
         )}
-        <span className="text-[18px] font-semibold text-stone-900">캠페인 추가</span>
+        <span className="text-[16px] font-semibold text-stone-900">캠페인 추가</span>
       </div>
 
       {/* Progress bar */}
@@ -1119,7 +1119,7 @@ export default function CampaignNewPage() {
         {step === 1 && (
           <button
             onClick={() => step1Valid && setStep(2)}
-            className={`w-full py-4 text-white text-[18px] font-bold rounded-[12px] transition-colors
+            className={`w-full py-4 text-white text-[16px] font-bold rounded-[12px] transition-colors
               ${step1Valid ? 'bg-[#2E2C28] active:opacity-80' : 'bg-stone-300 cursor-not-allowed'}`}
           >
             다음
@@ -1129,7 +1129,7 @@ export default function CampaignNewPage() {
         {step === 2 && (
           <button
             onClick={() => setStep(3)}
-            className="w-full py-4 bg-[#2E2C28] text-white text-[18px] font-bold rounded-[12px] active:opacity-80"
+            className="w-full py-4 bg-[#2E2C28] text-white text-[16px] font-bold rounded-[12px] active:opacity-80"
           >
             다음
           </button>
@@ -1140,7 +1140,7 @@ export default function CampaignNewPage() {
             <button
               onClick={handleGenerateBrief}
               disabled={isGenerating}
-              className="w-full py-4 bg-[#2E2C28] text-white text-[18px] font-bold rounded-[12px] flex items-center justify-center gap-2 active:opacity-80"
+              className="w-full py-4 bg-[#2E2C28] text-white text-[16px] font-bold rounded-[12px] flex items-center justify-center gap-2 active:opacity-80"
             >
               {isGenerating ? (
                 <>
@@ -1151,7 +1151,7 @@ export default function CampaignNewPage() {
             </button>
             <button
               onClick={() => setStep(5)}
-              className="w-full py-4 text-[18px] font-medium text-[#B7B7B7] text-center active:opacity-60"
+              className="w-full py-4 text-[16px] font-medium text-[#B7B7B7] text-center active:opacity-60"
             >
               브리프 없이 캠페인 만들기
             </button>
@@ -1162,13 +1162,13 @@ export default function CampaignNewPage() {
           <>
             <button
               onClick={() => setStep(5)}
-              className="w-full py-4 bg-[#2E2C28] text-white text-[18px] font-bold rounded-[12px] active:opacity-80"
+              className="w-full py-4 bg-[#2E2C28] text-white text-[16px] font-bold rounded-[12px] active:opacity-80"
             >
               브리프 저장하고 캠페인 만들기
             </button>
             <button
               onClick={() => setStep(5)}
-              className="w-full py-4 text-[18px] font-medium text-[#B7B7B7] text-center active:opacity-60"
+              className="w-full py-4 text-[16px] font-medium text-[#B7B7B7] text-center active:opacity-60"
             >
               나중에 할게요
             </button>
@@ -1179,13 +1179,13 @@ export default function CampaignNewPage() {
           <>
             <button
               onClick={() => router.push('/board')}
-              className="w-full py-4 bg-[#2E2C28] text-white text-[18px] font-bold rounded-[12px] active:opacity-80"
+              className="w-full py-4 bg-[#2E2C28] text-white text-[16px] font-bold rounded-[12px] active:opacity-80"
             >
               보드에서 인플루언서 관리하기
             </button>
             <button
               onClick={() => router.push('/campaign')}
-              className="w-full py-4 text-[18px] font-medium text-[#B7B7B7] text-center active:opacity-60"
+              className="w-full py-4 text-[16px] font-medium text-[#B7B7B7] text-center active:opacity-60"
             >
               나중에 할게요
             </button>

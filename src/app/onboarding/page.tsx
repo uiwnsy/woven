@@ -225,7 +225,7 @@ export default function OnboardingPage() {
       {/* Text + dots + CTA */}
       <div className="px-6 pb-10">
         {/* Title */}
-        <h1 className="text-[26px] font-bold text-stone-900 leading-tight mb-3 text-center whitespace-pre-line">
+        <h1 className="text-[24px] font-bold text-stone-900 leading-tight mb-3 text-center whitespace-pre-line">
           {slide.title}
         </h1>
         <p className="text-[15px] text-stone-400 text-center leading-relaxed mb-8 whitespace-pre-line">
@@ -248,7 +248,7 @@ export default function OnboardingPage() {
         {/* CTA */}
         <button
           onClick={next}
-          className="w-full h-[56px] bg-stone-900 text-white text-[18px] font-semibold rounded-2xl active:opacity-80"
+          className="w-full h-[56px] bg-stone-900 text-white text-[16px] font-semibold rounded-2xl active:opacity-80"
         >
           {slide.cta}
         </button>

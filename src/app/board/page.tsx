@@ -264,7 +264,7 @@ function BoardPageContent() {
                     <button
                       key={item.id + i}
                       onClick={() => router.push('/board/' + item.id)}
-                      className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col gap-3 w-full text-left active:opacity-80 transition-opacity"
+                      className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col gap-1.5 w-full text-left active:opacity-80 transition-opacity"
                     >
                       {/* 상단: 프로필 + 상태/금액 */}
                       <div className="flex items-center justify-between gap-3">
@@ -355,7 +355,7 @@ function BoardPageContent() {
                         <button
                           key={item.id + i}
                           onClick={() => router.push('/board/' + item.id)}
-                          className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col gap-3 w-full text-left active:opacity-80 transition-opacity"
+                          className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col gap-1.5 w-full text-left active:opacity-80 transition-opacity"
                         >
                           <div className="flex items-center justify-between gap-3">
                             <div className="flex items-center gap-3 flex-1 min-w-0">

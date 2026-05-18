@@ -77,6 +77,18 @@ const UPLOAD_WAITING = [
   },
 ];
 
+const CAMPAIGNS = [
+  { id: 1, title: '루미에르 봄봄 프로모션', status: '진행중' },
+  { id: 2, title: '수분크림 마이크로 인플루언서', status: '기획' },
+  { id: 3, title: '선크림 런칭 캠페인', status: '완료' },
+] as const;
+
+const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
+  진행중: { bg: '#FEF6F1', text: '#D96430' },
+  기획:   { bg: '#FFFBEB', text: '#92400E' },
+  완료:   { bg: '#F0FDF4', text: '#26AF58' },
+};
+
 const MANROPE: React.CSSProperties = { fontFamily: 'Manrope, sans-serif' };
 
 function BarChart() {
@@ -150,6 +162,9 @@ export default function PerformancePage() {
   const router = useRouter();
   const [period, setPeriod] = useState<'전체' | '7일' | '14일' | '30일'>('7일');
   const [chartGranularity, setChartGranularity] = useState<'일별' | '주별'>('일별');
+  const [selectedCampaignId, setSelectedCampaignId] = useState(1);
+  const [showCampaignSheet, setShowCampaignSheet] = useState(false);
+  const selectedCampaign = CAMPAIGNS.find(c => c.id === selectedCampaignId)!;
 
   return (
     <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
@@ -173,8 +188,17 @@ export default function PerformancePage() {
         <div className="bg-white px-5 pt-[26px] pb-[26px] flex flex-col gap-5">
 
           {/* Campaign Selector */}
-          <button className="flex items-center justify-between w-full bg-white rounded-[46px] px-[22px] py-[14px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80">
-            <span className="text-[16px] font-medium text-[#1C1A17]">루미에르 봄봄 프로모션</span>
+          <button
+            onClick={() => setShowCampaignSheet(true)}
+            className="flex items-center justify-between w-full bg-white rounded-[46px] px-[22px] py-[14px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80"
+          >
+            <div className="flex items-center gap-2">
+              <span className="text-[16px] font-medium text-[#1C1A17]">{selectedCampaign.title}</span>
+              <span className="text-[12px] font-semibold rounded-full px-[8px] py-[3px] shrink-0"
+                style={{ backgroundColor: STATUS_STYLES[selectedCampaign.status].bg, color: STATUS_STYLES[selectedCampaign.status].text }}>
+                {selectedCampaign.status}
+              </span>
+            </div>
             <img src="/arrow-down-campaign.svg" alt="" width={24} height={24} />
           </button>
 
@@ -400,6 +424,50 @@ export default function PerformancePage() {
         </div>
 
       </div>
+
+      {/* ── 캠페인 선택 바텀시트 ── */}
+      {showCampaignSheet && (
+        <div className="absolute inset-0 z-50 flex flex-col justify-end">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setShowCampaignSheet(false)} />
+          <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-10">
+            <div className="flex items-center justify-between mb-5">
+              <span className="text-[16px] font-bold text-[#1C1A17]">캠페인 선택</span>
+              <button onClick={() => setShowCampaignSheet(false)} className="active:opacity-60">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M4 4l12 12M16 4L4 16" stroke="#1C1A17" strokeWidth="1.8" strokeLinecap="round"/>
+                </svg>
+              </button>
+            </div>
+            <div className="flex flex-col gap-2">
+              {CAMPAIGNS.map(campaign => {
+                const isSelected = campaign.id === selectedCampaignId;
+                const style = STATUS_STYLES[campaign.status];
+                return (
+                  <button
+                    key={campaign.id}
+                    onClick={() => { setSelectedCampaignId(campaign.id); setShowCampaignSheet(false); }}
+                    className="flex items-center justify-between px-4 py-4 rounded-[12px] active:opacity-70 transition-colors"
+                    style={{ backgroundColor: isSelected ? '#F0F0FF' : '#FAFBFE', border: isSelected ? '1.5px solid #6366F1' : '1.5px solid transparent' }}
+                  >
+                    <div className="flex flex-col gap-[6px] text-left flex-1 pr-3">
+                      <span className="text-[16px] font-medium text-[#1C1A17] leading-snug">{campaign.title}</span>
+                      <span className="text-[13px] font-semibold px-[10px] py-[4px] rounded-full w-fit"
+                        style={{ backgroundColor: style.bg, color: style.text }}>
+                        {campaign.status}
+                      </span>
+                    </div>
+                    {isSelected && (
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">
+                        <path d="M3 9l4.5 4.5L15 5" stroke="#6366F1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── Bottom navigation ── */}
       <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-[2px] bg-white border-t border-[#F5F5F3] z-20">

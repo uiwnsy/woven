@@ -111,6 +111,13 @@ const MOCK_DETAILS: Record<string, InfluencerDetail> = {
     isFirstCollab: true, brief: BRIEF_TEXT,
     campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
+  '7': {
+    id: '7', name: 'dearyq', handle: '@dearyq', followers: '10.1만', posts: '3,421',
+    categories: ['뷰티', '패션', '일상'], profileImg: '/profile-dearyq.png',
+    stage: 'uploaded', campaignName: '루미에르 봄봄 프로모션', dDay: 'D+1',
+    isFirstCollab: true, brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
+  },
 };
 
 function getCategoryStyle(c: string) {
@@ -215,7 +222,7 @@ export default function InfluencerDetailPage() {
   const [memoInput, setMemoInput] = useState('');
   const [driveLink, setDriveLink] = useState('');
   const [draftReviewState, setDraftReviewState] = useState<'empty' | 'has-draft' | 'revision-sent' | 'approved'>(
-    () => effectiveStage === 'reviewing' ? 'approved' : 'empty'
+    () => (effectiveStage === 'reviewing' || effectiveStage === 'uploaded') ? 'approved' : 'empty'
   );
   const [draftType, setDraftType] = useState<'file' | 'link'>('file');
   const [revisionText, setRevisionText] = useState('');
@@ -228,15 +235,15 @@ export default function InfluencerDetailPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isEditingRequests, setIsEditingRequests] = useState(false);
   const [negotiatingBriefExpanded, setNegotiatingBriefExpanded] = useState(false);
-  const [postingUrl, setPostingUrl] = useState('');
-  const [postingDate, setPostingDate] = useState('');
-  const [captionHasUtm, setCaptionHasUtm] = useState(false);
+  const [postingUrl, setPostingUrl] = useState(() => effectiveStage === 'uploaded' ? 'https://instagram.com/p/C4xBkQFP5Xx/' : '');
+  const [postingDate, setPostingDate] = useState(() => effectiveStage === 'uploaded' ? '2025.05.02' : '');
+  const [captionHasUtm, setCaptionHasUtm] = useState(() => effectiveStage === 'uploaded');
   const [rvDraftExpanded, setRvDraftExpanded] = useState(false);
   const [rvUtmExpanded, setRvUtmExpanded] = useState(false);
   const [rvNegInfoExpanded, setRvNegInfoExpanded] = useState(false);
   const [rvBriefExpanded, setRvBriefExpanded] = useState(false);
   const [collabHistoryExpanded, setCollabHistoryExpanded] = useState(
-    () => effectiveStage !== 'contacting' && effectiveStage !== 'negotiating' && effectiveStage !== 'reviewing'
+    () => effectiveStage !== 'contacting' && effectiveStage !== 'negotiating' && effectiveStage !== 'reviewing' && effectiveStage !== 'uploaded'
   );
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -1139,75 +1146,140 @@ export default function InfluencerDetailPage() {
 
         </> /* end negotiating only */}
 
-        {/* ── 시안확인 전용 섹션 ── */}
-        {effectiveStage === 'reviewing' && <>
+        {/* ── 시안확인 / 업로드 공통 섹션 ── */}
+        {(effectiveStage === 'reviewing' || effectiveStage === 'uploaded') && <>
 
-        {/* 업로드 정보 */}
-        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <span className="text-[20px] font-bold text-black">업로드 정보</span>
-            <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>
-              포스팅 정보와 정산 내역을 입력하면 업로드완료 단계로 이동합니다.
-            </span>
-          </div>
-
-          {/* 포스팅 URL */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <span className="text-[17px] font-medium text-black">
-                포스팅 URL <span style={{ color: '#6366F1' }}>*</span>
-              </span>
-              <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
-                <input
-                  value={postingUrl}
-                  onChange={e => setPostingUrl(e.target.value)}
-                  placeholder="https://instagram.com/p/..."
-                  className="w-full bg-transparent outline-none text-[16px] font-medium"
-                  style={{ color: '#1C1A17' }}
-                />
+        {effectiveStage === 'uploaded' ? (
+          /* ── 업로드된 콘텐츠 (업로드 단계 전용) ── */
+          <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+            <div className="flex items-center gap-2">
+              <span className="text-[20px] font-bold text-black">업로드된 콘텐츠</span>
+              <div className="flex items-center justify-center" style={{ backgroundColor: '#F0FDF4', borderRadius: 50, padding: '3px 10px' }}>
+                <span className="text-[13px] font-semibold" style={{ color: '#22C55E' }}>업로드 완료</span>
               </div>
             </div>
-            <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>
-              인플루언서가 올린 게시물의 URL을 붙여넣기 해주세요
-            </span>
-          </div>
 
-          {/* 게시일 */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <span className="text-[17px] font-medium text-black">
-                게시일 <span style={{ color: '#6366F1' }}>*</span>
-              </span>
-              <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
-                <input
-                  value={postingDate}
-                  onChange={e => setPostingDate(e.target.value)}
-                  placeholder="YYYY.MM.DD"
-                  className="w-full bg-transparent outline-none text-[16px] font-medium"
-                  style={{ color: '#1C1A17' }}
-                  inputMode="numeric"
-                />
+            {/* 포스팅 URL */}
+            <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, overflow: 'hidden' }}>
+              <div className="flex items-center justify-between px-5 py-4" style={{ gap: 12, backgroundColor: '#FAFAFA' }}>
+                <div className="flex flex-col flex-1 min-w-0" style={{ gap: 3 }}>
+                  <span className="text-[13px] font-medium" style={{ color: '#B0ADA7' }}>포스팅 URL</span>
+                  <span className="text-[15px] font-semibold truncate" style={{ color: '#6366F1', fontFamily: 'Manrope, sans-serif' }}>
+                    {postingUrl || 'https://instagram.com/p/C4xBkQFP5Xx/'}
+                  </span>
+                </div>
+                <a
+                  href={postingUrl || 'https://instagram.com/p/C4xBkQFP5Xx/'}
+                  target="_blank" rel="noopener noreferrer"
+                  className="shrink-0 flex items-center justify-center active:opacity-70"
+                  style={{ width: 36, height: 36, backgroundColor: '#EEEEFF', borderRadius: 10 }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M7 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1V9" stroke="#6366F1" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M10 2h4v4" stroke="#6366F1" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M14 2L7.5 8.5" stroke="#6366F1" strokeWidth="1.4" strokeLinecap="round"/>
+                  </svg>
+                </a>
               </div>
             </div>
-            <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>
-              콘텐츠가 실제로 업로드된 날짜
-            </span>
-          </div>
 
-          {/* 캡션에 UTM 링크 포함 */}
-          <div style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)', borderRadius: 10, padding: 20 }}>
-            <div className="flex items-center justify-between">
-              <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>캡션에 UTM 링크 포함</span>
-              <button
-                onClick={() => setCaptionHasUtm(v => !v)}
-                className="shrink-0 active:opacity-80 flex items-center"
-                style={{ width: 52, height: 30, borderRadius: 40, padding: 3, backgroundColor: captionHasUtm ? '#6366F1' : '#E8E7E4', transition: 'background-color 0.2s', justifyContent: captionHasUtm ? 'flex-end' : 'flex-start', display: 'flex' }}
-              >
-                <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-              </button>
+            {/* 게시일 + UTM */}
+            <div className="flex gap-3">
+              <div className="flex-1 flex flex-col" style={{ gap: 3, backgroundColor: '#F8FAFF', borderRadius: 14, padding: '16px 18px' }}>
+                <span className="text-[13px] font-medium" style={{ color: '#B0ADA7' }}>게시일</span>
+                <span className="text-[17px] font-bold" style={{ color: '#1C1A17', fontFamily: 'Manrope, sans-serif' }}>
+                  {postingDate || '2025.05.02'}
+                </span>
+              </div>
+              <div className="flex-1 flex flex-col" style={{ gap: 3, backgroundColor: '#F8FAFF', borderRadius: 14, padding: '16px 18px' }}>
+                <span className="text-[13px] font-medium" style={{ color: '#B0ADA7' }}>UTM 링크</span>
+                <span className="text-[17px] font-bold" style={{ color: captionHasUtm ? '#6366F1' : '#B0ADA7' }}>
+                  {captionHasUtm ? '포함' : '미포함'}
+                </span>
+              </div>
+            </div>
+
+            {/* 성과 보기 버튼 */}
+            <button
+              onClick={() => router.push('/performance')}
+              className="w-full flex items-center justify-center gap-2 active:opacity-80"
+              style={{ backgroundColor: '#2E2C28', borderRadius: 14, padding: 18 }}
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M3 13.5L7 9l3 3 5-6" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="15" cy="3.5" r="2" fill="#6366F1"/>
+              </svg>
+              <span className="text-[16px] font-bold text-white">인플루언서별 성과 보기</span>
+            </button>
+          </div>
+        ) : (
+          /* ── 업로드 정보 (시안확인 단계) ── */
+          <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <span className="text-[20px] font-bold text-black">업로드 정보</span>
+              <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>
+                포스팅 정보와 정산 내역을 입력하면 업로드완료 단계로 이동합니다.
+              </span>
+            </div>
+
+            {/* 포스팅 URL */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <span className="text-[17px] font-medium text-black">
+                  포스팅 URL <span style={{ color: '#6366F1' }}>*</span>
+                </span>
+                <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
+                  <input
+                    value={postingUrl}
+                    onChange={e => setPostingUrl(e.target.value)}
+                    placeholder="https://instagram.com/p/..."
+                    className="w-full bg-transparent outline-none text-[16px] font-medium"
+                    style={{ color: '#1C1A17' }}
+                  />
+                </div>
+              </div>
+              <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>
+                인플루언서가 올린 게시물의 URL을 붙여넣기 해주세요
+              </span>
+            </div>
+
+            {/* 게시일 */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <span className="text-[17px] font-medium text-black">
+                  게시일 <span style={{ color: '#6366F1' }}>*</span>
+                </span>
+                <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
+                  <input
+                    value={postingDate}
+                    onChange={e => setPostingDate(e.target.value)}
+                    placeholder="YYYY.MM.DD"
+                    className="w-full bg-transparent outline-none text-[16px] font-medium"
+                    style={{ color: '#1C1A17' }}
+                    inputMode="numeric"
+                  />
+                </div>
+              </div>
+              <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>
+                콘텐츠가 실제로 업로드된 날짜
+              </span>
+            </div>
+
+            {/* 캡션에 UTM 링크 포함 */}
+            <div style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)', borderRadius: 10, padding: 20 }}>
+              <div className="flex items-center justify-between">
+                <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>캡션에 UTM 링크 포함</span>
+                <button
+                  onClick={() => setCaptionHasUtm(v => !v)}
+                  className="shrink-0 active:opacity-80 flex items-center"
+                  style={{ width: 52, height: 30, borderRadius: 40, padding: 3, backgroundColor: captionHasUtm ? '#6366F1' : '#E8E7E4', transition: 'background-color 0.2s', justifyContent: captionHasUtm ? 'flex-end' : 'flex-start', display: 'flex' }}
+                >
+                  <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="h-2 bg-[#F5F5F3]" />
 
@@ -1445,7 +1517,7 @@ export default function InfluencerDetailPage() {
           )}
         </div>
 
-        </> /* end reviewing only */}
+        </> /* end reviewing/uploaded */}
 
         <div className="h-2 bg-[#F5F5F3]" />
 
@@ -1574,7 +1646,32 @@ export default function InfluencerDetailPage() {
         className="absolute bottom-0 w-full bg-white flex flex-col"
         style={{ borderTop: '1px solid #E8E7E4', padding: 20, gap: 10 }}
       >
-        {effectiveStage === 'negotiating' ? (
+        {effectiveStage === 'uploaded' ? (
+          <button
+            onClick={() => router.push('/performance')}
+            className="w-full flex items-center justify-center gap-2 active:opacity-80"
+            style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M3 13.5L7 9l3 3 5-6" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="15" cy="3.5" r="2" fill="#6366F1"/>
+            </svg>
+            <span className="text-[16px] font-bold text-white">인플루언서별 성과 보기</span>
+          </button>
+        ) : effectiveStage === 'reviewing' ? (
+          <>
+            <button
+              onClick={() => router.push('/board?tab=uploaded')}
+              className="w-full flex items-center justify-center active:opacity-80"
+              style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
+            >
+              <span className="text-[16px] font-bold text-white">업로드 완료로 이동</span>
+            </button>
+            <button className="w-full flex items-center justify-center active:opacity-60">
+              <span className="text-[16px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
+            </button>
+          </>
+        ) : effectiveStage === 'negotiating' ? (
           <>
             <button
               onClick={() => router.push('/board?tab=inProgress')}

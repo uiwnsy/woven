@@ -54,7 +54,7 @@ const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
         profileImg: '/profile-igaheun.png' },
     ],
     'uploaded': [
-      { id: '4', name: 'dearyq', handle: '@dearyq', followers: '10.1만', categories: ['뷰티', '패션', '일상'], statusText: '업로드 D+1', amount: '₩450,000',
+      { id: '7', name: 'dearyq', handle: '@dearyq', followers: '10.1만', categories: ['뷰티', '패션', '일상'], statusText: '업로드 D+1', amount: '₩450,000',
         bottomTags: [{ label: 'UTM 포함', bg: 'bg-[#EFF6FF]', text: 'text-[#3D3FC7]' }, { label: '입금 대기', bg: 'bg-[#FFFBEB]', text: 'text-[#F59E0B]' }],
         profileImg: '/profile-dearyq.png' },
     ],
@@ -263,7 +263,7 @@ function BoardPageContent() {
                   activeTab === 'negotiated' || activeTab === 'inProgress' || activeTab === 'uploaded' ? (
                     <button
                       key={item.id + i}
-                      onClick={() => router.push('/board/' + item.id)}
+                      onClick={() => router.push('/board/' + item.id + (activeTab === 'negotiated' ? '?stage=negotiating' : activeTab === 'inProgress' ? '?stage=reviewing' : activeTab === 'uploaded' ? '?stage=uploaded' : ''))}
                       className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col gap-[4px] w-full text-left active:opacity-80 transition-opacity"
                     >
                       {/* 상단: 프로필 + 상태/금액 */}
@@ -308,7 +308,7 @@ function BoardPageContent() {
                       )}
                     </button>
                   ) : (
-                    <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id + (activeTab === 'contacting' ? '?stage=contacting' : activeTab === 'negotiated' ? '?stage=negotiating' : activeTab === 'inProgress' ? '?stage=reviewing' : ''))} />
+                    <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id + (activeTab === 'contacting' ? '?stage=contacting' : activeTab === 'negotiated' ? '?stage=negotiating' : activeTab === 'inProgress' ? '?stage=reviewing' : activeTab === 'uploaded' ? '?stage=uploaded' : ''))} />
                   )
                 )
               )}
@@ -354,7 +354,7 @@ function BoardPageContent() {
                       tab.id === 'negotiated' || tab.id === 'inProgress' || tab.id === 'uploaded' ? (
                         <button
                           key={item.id + i}
-                          onClick={() => router.push('/board/' + item.id + (tab.id === 'negotiated' ? '?stage=negotiating' : tab.id === 'inProgress' ? '?stage=reviewing' : ''))}
+                          onClick={() => router.push('/board/' + item.id + (tab.id === 'negotiated' ? '?stage=negotiating' : tab.id === 'inProgress' ? '?stage=reviewing' : tab.id === 'uploaded' ? '?stage=uploaded' : ''))}
                           className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col gap-[4px] w-full text-left active:opacity-80 transition-opacity"
                         >
                           <div className="flex items-center justify-between gap-3">
@@ -386,7 +386,7 @@ function BoardPageContent() {
                           </div>
                         </button>
                       ) : (
-                        <InfluencerCard key={item.id + i} data={{ ...item, categories: [] }} onPress={() => router.push('/board/' + item.id + (tab.id === 'contacting' ? '?stage=contacting' : tab.id === 'negotiated' ? '?stage=negotiating' : tab.id === 'inProgress' ? '?stage=reviewing' : ''))} />
+                        <InfluencerCard key={item.id + i} data={{ ...item, categories: [] }} onPress={() => router.push('/board/' + item.id + (tab.id === 'contacting' ? '?stage=contacting' : tab.id === 'negotiated' ? '?stage=negotiating' : tab.id === 'inProgress' ? '?stage=reviewing' : tab.id === 'uploaded' ? '?stage=uploaded' : ''))} />
                       )
                     )}
                   </div>

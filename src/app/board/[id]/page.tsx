@@ -104,6 +104,13 @@ const MOCK_DETAILS: Record<string, InfluencerDetail> = {
     isFirstCollab: true, brief: BRIEF_TEXT,
     campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
+  '6': {
+    id: '6', name: 'leeum', handle: '@leeum', followers: '18.3만', posts: '892',
+    categories: ['뷰티', '일상'], profileImg: '/profile-leeum.png',
+    stage: 'reviewing', campaignName: '루미에르 봄봄 프로모션', dDay: 'D+12',
+    isFirstCollab: true, brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
+  },
 };
 
 function getCategoryStyle(c: string) {
@@ -207,7 +214,9 @@ export default function InfluencerDetailPage() {
   const [showMemoOverlay, setShowMemoOverlay] = useState(false);
   const [memoInput, setMemoInput] = useState('');
   const [driveLink, setDriveLink] = useState('');
-  const [draftReviewState, setDraftReviewState] = useState<'empty' | 'has-draft' | 'revision-sent' | 'approved'>('empty');
+  const [draftReviewState, setDraftReviewState] = useState<'empty' | 'has-draft' | 'revision-sent' | 'approved'>(
+    () => effectiveStage === 'reviewing' ? 'approved' : 'empty'
+  );
   const [draftType, setDraftType] = useState<'file' | 'link'>('file');
   const [revisionText, setRevisionText] = useState('');
   const [revisionHistory, setRevisionHistory] = useState<{ text: string; date: string; round: number }[]>([]);
@@ -219,6 +228,13 @@ export default function InfluencerDetailPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isEditingRequests, setIsEditingRequests] = useState(false);
   const [negotiatingBriefExpanded, setNegotiatingBriefExpanded] = useState(false);
+  const [postingUrl, setPostingUrl] = useState('');
+  const [postingDate, setPostingDate] = useState('');
+  const [captionHasUtm, setCaptionHasUtm] = useState(false);
+  const [rvDraftExpanded, setRvDraftExpanded] = useState(false);
+  const [rvUtmExpanded, setRvUtmExpanded] = useState(false);
+  const [rvNegInfoExpanded, setRvNegInfoExpanded] = useState(false);
+  const [rvBriefExpanded, setRvBriefExpanded] = useState(false);
   const [collabHistoryExpanded, setCollabHistoryExpanded] = useState(
     () => effectiveStage !== 'contacting' && effectiveStage !== 'negotiating'
   );
@@ -1122,6 +1138,272 @@ export default function InfluencerDetailPage() {
         </div>
 
         </> /* end negotiating only */}
+
+        {/* ── 시안확인 전용 섹션 ── */}
+        {effectiveStage === 'reviewing' && <>
+
+        {/* 업로드 정보 */}
+        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <span className="text-[20px] font-bold text-black">업로드 정보</span>
+            <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>
+              포스팅 정보와 정산 내역을 입력하면 업로드완료 단계로 이동합니다.
+            </span>
+          </div>
+
+          {/* 포스팅 URL */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <span className="text-[18px] font-medium text-black">
+                포스팅 URL <span style={{ color: '#6366F1' }}>*</span>
+              </span>
+              <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
+                <input
+                  value={postingUrl}
+                  onChange={e => setPostingUrl(e.target.value)}
+                  placeholder="https://instagram.com/p/..."
+                  className="w-full bg-transparent outline-none text-[20px] font-medium"
+                  style={{ color: '#1C1A17' }}
+                />
+              </div>
+            </div>
+            <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>
+              인플루언서가 올린 게시물의 URL을 붙여넣기 해주세요
+            </span>
+          </div>
+
+          {/* 게시일 */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <span className="text-[18px] font-medium text-black">
+                게시일 <span style={{ color: '#6366F1' }}>*</span>
+              </span>
+              <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
+                <input
+                  value={postingDate}
+                  onChange={e => setPostingDate(e.target.value)}
+                  placeholder="YYYY.MM.DD"
+                  className="w-full bg-transparent outline-none text-[20px] font-medium"
+                  style={{ color: '#1C1A17' }}
+                  inputMode="numeric"
+                />
+              </div>
+            </div>
+            <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>
+              콘텐츠가 실제로 업로드된 날짜
+            </span>
+          </div>
+
+          {/* 캡션에 UTM 링크 포함 */}
+          <div style={{ backgroundColor: '#FAFAF9', borderRadius: 10, padding: 20 }}>
+            <div className="flex items-center justify-between">
+              <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>캡션에 UTM 링크 포함</span>
+              <button
+                onClick={() => setCaptionHasUtm(v => !v)}
+                className="shrink-0 active:opacity-80 flex items-center"
+                style={{ width: 52, height: 30, borderRadius: 40, padding: 3, backgroundColor: captionHasUtm ? '#6366F1' : '#E8E7E4', transition: 'background-color 0.2s', justifyContent: captionHasUtm ? 'flex-end' : 'flex-start', display: 'flex' }}
+              >
+                <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 시안 (접힘) */}
+        <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
+          <button
+            onClick={() => setRvDraftExpanded(v => !v)}
+            className="flex items-center justify-between w-full active:opacity-70"
+            style={{ padding: '24px 20px' }}
+          >
+            <span className="text-[20px] font-bold text-black">시안</span>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+              style={{ transform: rvDraftExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+              <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          {rvDraftExpanded && (
+            <div style={{ padding: '0 20px 24px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <button
+                onClick={() => { setOverlayMode('review'); setShowDraftOverlay(true); }}
+                className="flex items-center justify-between px-5 py-4 rounded-[14px] w-full active:opacity-70"
+                style={{ backgroundColor: '#F0FDF4', border: '1px solid #BBF7D0' }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-[10px] bg-white flex items-center justify-center shrink-0" style={{ border: '1px solid #EBEEF7' }}>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path d="M5 2.5h7l4 4v11a1 1 0 01-1 1H5a1 1 0 01-1-1v-14a1 1 0 011-1z" stroke="#22c55e" strokeWidth="1.3" fill="none"/>
+                      <path d="M12 2.5V7H16.5" stroke="#22c55e" strokeWidth="1.3" strokeLinecap="round"/>
+                      <path d="M7 11h6M7 13.5h4" stroke="#22c55e" strokeWidth="1.2" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[14px] font-semibold" style={{ color: '#1C1A17' }}>시안_파일.mp4</p>
+                    <p className="text-[13px] font-medium" style={{ color: '#22c55e' }}>승인 완료</p>
+                  </div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0">
+                  <path d="M6 3l5 5-5 5" stroke="#899098" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 개인 UTM 링크 (접힘) */}
+        {(() => {
+          const handle = data.handle.replace('@', '');
+          const shortId = handle.slice(0, 6).padEnd(6, '0');
+          const shortLink = `https://lumi.re/${shortId}`;
+          return (
+            <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
+              <button
+                onClick={() => setRvUtmExpanded(v => !v)}
+                className="flex items-center justify-between w-full active:opacity-70"
+                style={{ padding: '24px 20px' }}
+              >
+                <span className="text-[20px] font-bold text-black">개인 UTM 링크</span>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                  style={{ transform: rvUtmExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+                  <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              {rvUtmExpanded && (
+                <div style={{ padding: '0 20px 24px' }}>
+                  <div style={{ border: '1px solid #EBEEF7', borderRadius: 14, overflow: 'hidden' }}>
+                    <div className="flex items-center justify-between px-5 py-4" style={{ gap: 12, backgroundColor: '#FAFAFC' }}>
+                      <div className="flex items-center gap-2 flex-1 min-w-0">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0">
+                          <path d="M6.5 9.5a3.5 3.5 0 005 0l2-2a3.5 3.5 0 00-5-5l-1 1" stroke="#6366F1" strokeWidth="1.4" strokeLinecap="round"/>
+                          <path d="M9.5 6.5a3.5 3.5 0 00-5 0l-2 2a3.5 3.5 0 005 5l1-1" stroke="#6366F1" strokeWidth="1.4" strokeLinecap="round"/>
+                        </svg>
+                        <span className="text-[16px] font-bold truncate" style={{ color: '#6366F1', fontFamily: 'Manrope, sans-serif' }}>{shortLink}</span>
+                      </div>
+                      <button
+                        onClick={async () => { await navigator.clipboard.writeText(shortLink).catch(() => {}); setUtmCopied(true); setTimeout(() => setUtmCopied(false), 2000); }}
+                        className="shrink-0 flex items-center justify-center active:opacity-70"
+                        style={{ backgroundColor: utmCopied ? '#6366F1' : '#EEEEFF', borderRadius: 8, padding: '8px 14px', transition: 'background-color 0.15s' }}
+                      >
+                        <span className="text-[13px] font-semibold" style={{ color: utmCopied ? '#fff' : '#6366F1' }}>{utmCopied ? '복사됨' : '복사'}</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })()}
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 협의 정보 (접힘) */}
+        <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
+          <button
+            onClick={() => setRvNegInfoExpanded(v => !v)}
+            className="flex items-center justify-between w-full active:opacity-70"
+            style={{ padding: '24px 20px' }}
+          >
+            <span className="text-[20px] font-bold text-black">협의 정보</span>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+              style={{ transform: rvNegInfoExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+              <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          {rvNegInfoExpanded && (
+            <div style={{ padding: '0 20px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ border: '1px solid #EBEEF7', borderRadius: 14, overflow: 'hidden', backgroundColor: '#F8FAFF' }}>
+                <div className="grid grid-cols-2">
+                  <div className="flex flex-col" style={{ gap: 2, padding: '24px 22px 18px', backgroundColor: '#FAFAFC' }}>
+                    <p className="text-[14px] font-medium leading-[135%]" style={{ color: '#78756E' }}>협의 단가</p>
+                    <p className="text-[19px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>350,000원</p>
+                  </div>
+                  <div className="flex flex-col" style={{ gap: 2, padding: '24px 22px 18px', backgroundColor: '#FAFAFC' }}>
+                    <p className="text-[14px] font-medium leading-[135%]" style={{ color: '#78756E' }}>콘텐츠 형식</p>
+                    <p className="text-[19px] font-semibold leading-[135%]" style={{ color: '#1C1A17' }}>릴스 1건</p>
+                  </div>
+                  <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px 24px', backgroundColor: '#FAFAFC' }}>
+                    <p className="text-[14px] font-medium leading-[135%]" style={{ color: '#78756E' }}>시안 전달 예정일</p>
+                    <p className="text-[19px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>2025.04.25</p>
+                  </div>
+                  <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px 24px', backgroundColor: '#FAFAFC' }}>
+                    <p className="text-[14px] font-medium leading-[135%]" style={{ color: '#78756E' }}>플랫폼</p>
+                    <p className="text-[19px] font-semibold leading-[135%]" style={{ color: '#1C1A17' }}>인스타그램</p>
+                  </div>
+                </div>
+              </div>
+              <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: '14px 20px' }}>
+                <div className="flex items-start justify-between" style={{ gap: 12 }}>
+                  <span className="text-[14px] font-medium shrink-0" style={{ color: '#78756E' }}>배송 주소</span>
+                  <span className="text-[14px] font-medium text-right" style={{ color: '#1C1A17' }}>
+                    {deliveryAddress || '서울 강남구 테헤란로 635, 3층'}
+                  </span>
+                </div>
+              </div>
+              <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: 20 }}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center" style={{ gap: 10 }}>
+                    <img src="/ship-icon.svg" alt="배송" width={52} height={52} className="shrink-0" />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
+                      <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setProductShipped(v => !v)}
+                    className="shrink-0 active:opacity-80 flex items-center"
+                    style={{ width: 52, height: 30, borderRadius: 40, padding: 3, backgroundColor: productShipped ? '#6366F1' : '#E8E7E4', transition: 'background-color 0.2s', justifyContent: productShipped ? 'flex-end' : 'flex-start', display: 'flex' }}
+                  >
+                    <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 발송된 브리프 (접힘) */}
+        <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
+          <button
+            onClick={() => setRvBriefExpanded(v => !v)}
+            className="flex items-center justify-between w-full active:opacity-70"
+            style={{ padding: '24px 20px' }}
+          >
+            <span className="text-[20px] font-bold text-black">발송된 브리프</span>
+            <div className="flex items-center gap-2">
+              <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
+                <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                style={{ transform: rvBriefExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+                <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </button>
+          {rvBriefExpanded && (
+            <div style={{ padding: '0 20px 24px' }}>
+              <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden">
+                <div className="bg-white px-5 py-[14px]">
+                  <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
+                    {data.brief ?? BRIEF_VARIANTS[0]}
+                  </p>
+                </div>
+                <div className="border-t border-[#ECECEF]">
+                  <button onClick={handleCopyBrief} className="w-full py-[15px] flex items-center justify-center bg-[#F8FAFF] active:opacity-70">
+                    <span className="text-[16px] font-medium text-black">{briefCopied ? '복사됨 ✓' : '복사하기'}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        </> /* end reviewing only */}
 
         <div className="h-2 bg-[#F5F5F3]" />
 

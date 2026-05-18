@@ -238,10 +238,10 @@ export default function HomePage() {
                     <button
                       key={f}
                       onClick={() => setRankFilter(f)}
-                      className={`shrink-0 h-7 px-3 rounded-full text-[13px] transition-all active:opacity-70
+                      className={`shrink-0 px-[8px] py-[3px] rounded-full text-[13px] transition-all active:opacity-70
                         ${rankFilter === f
-                          ? 'bg-iris-500 text-white font-medium'
-                          : 'border border-[#d4d2ce] text-[#899098] font-semibold bg-white'}`}
+                          ? 'bg-iris-500 text-white font-bold'
+                          : 'border border-[#d4d2ce] text-[#899098] font-bold bg-white'}`}
                     >
                       {f}
                     </button>
@@ -288,12 +288,12 @@ export default function HomePage() {
                   ) : (
                     <div className="flex items-center gap-1.5">
                       {inf.stage && (
-                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[13px] font-medium px-3 py-1 rounded-full`}>
+                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[13px] font-bold px-[8px] py-[3px] rounded-full`}>
                           {inf.stage.label}
                         </span>
                       )}
                       {inf.status && (
-                        <span className={`${inf.status.bg} ${inf.status.text} text-[13px] font-medium px-3 py-1 rounded-full`}>
+                        <span className={`${inf.status.bg} ${inf.status.text} text-[13px] font-bold px-[8px] py-[3px] rounded-full`}>
                           {inf.status.label}
                         </span>
                       )}
@@ -407,7 +407,7 @@ export default function HomePage() {
               >
                 {/* Title box */}
                 <div className="flex flex-col gap-[14px]">
-                  <span className={`${campaign.statusBg} ${campaign.statusText} text-[13px] font-semibold px-[10px] py-[6px] rounded-[30px] self-start`}>
+                  <span className={`${campaign.statusBg} ${campaign.statusText} text-[13px] font-bold px-[8px] py-[3px] rounded-full self-start`}>
                     {campaign.status}
                   </span>
                   <p className="text-[16px] font-bold text-black leading-[1.35] whitespace-pre-line">{campaign.name}</p>

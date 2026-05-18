@@ -326,7 +326,7 @@ function BoardPageContent() {
                   >
                     <div className="flex flex-col gap-[6px] text-left flex-1 pr-3">
                       <span className="text-[16px] font-medium text-[#1C1A17] leading-snug">{campaign.title}</span>
-                      <span className={`${style.bg} ${style.text} text-[12px] font-semibold px-2 py-[3px] rounded-full w-fit`}>
+                      <span className={`${style.bg} ${style.text} text-[13px] font-bold px-[8px] py-[3px] rounded-full w-fit`}>
                         {campaign.status}
                       </span>
                     </div>

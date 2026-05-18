@@ -186,7 +186,7 @@ export default function PerformancePage() {
                 <button
                   key={p}
                   onClick={() => setPeriod(p)}
-                  className={`rounded-full px-3 py-2 text-[13px] font-medium active:opacity-70 transition-all
+                  className={`rounded-full px-[8px] py-[3px] text-[13px] font-bold active:opacity-70 transition-all
                     ${isActive ? 'bg-iris-500 text-white' : 'border border-[#D4D2CE] text-[#78756E] bg-white'}`}
                 >
                   {p}
@@ -210,7 +210,7 @@ export default function PerformancePage() {
                 <div key={item.label} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-5 flex flex-col gap-[6px]">
                   <span className="text-[13px] font-medium text-[#78756E]">{item.label}</span>
                   <span className="text-[20px] font-extrabold text-black" style={MANROPE}>{item.value}</span>
-                  <span className="self-start bg-[#F0FDF4] text-[#22C55E] text-[13px] font-semibold rounded-full px-[10px] py-1">
+                  <span className="self-start bg-[#F0FDF4] text-[#22C55E] text-[13px] font-bold rounded-full px-[8px] py-[3px]">
                     UTM 추적
                   </span>
                 </div>
@@ -317,8 +317,8 @@ export default function PerformancePage() {
 
                 {/* Action tags */}
                 <div className="flex items-center gap-1">
-                  <span className="bg-[#F0FDF4] text-[#22C55E] text-[13px] font-semibold rounded-full px-[10px] py-[6px]">업로드완료</span>
-                  <span className="bg-[#EFF6FF] text-[#3D3FC7] text-[13px] font-semibold rounded-full px-[8px] py-[6px]">UTM 포함</span>
+                  <span className="bg-[#F0FDF4] text-[#22C55E] text-[13px] font-bold rounded-full px-[8px] py-[3px]">업로드완료</span>
+                  <span className="bg-[#EFF6FF] text-[#3D3FC7] text-[13px] font-bold rounded-full px-[8px] py-[3px]">UTM 포함</span>
                 </div>
 
                 {/* Stats row */}
@@ -360,11 +360,11 @@ export default function PerformancePage() {
                       </div>
                       {/* Right: badges */}
                       <div className="flex items-center gap-1 shrink-0 ml-2">
-                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[13px] font-semibold rounded-full px-[10px] py-[6px]`}>
+                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[13px] font-bold rounded-full px-[8px] py-[3px]`}>
                           {inf.stage.label}
                         </span>
                         {inf.status && (
-                          <span className={`${inf.status.bg} ${inf.status.text} text-[13px] font-semibold rounded-full px-[10px] py-[6px]`}>
+                          <span className={`${inf.status.bg} ${inf.status.text} text-[13px] font-bold rounded-full px-[8px] py-[3px]`}>
                             {inf.status.label}
                           </span>
                         )}

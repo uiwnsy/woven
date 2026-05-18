@@ -154,21 +154,21 @@ export default function CampaignDetailPage() {
                   {campaign.productName}
                 </span>
               </div>
-              <span className={`${statusStyle.bg} ${statusStyle.text} text-[13px] font-semibold px-[8px] py-[6px] rounded-full shrink-0 mt-1`}>
+              <span className={`${statusStyle.bg} ${statusStyle.text} text-[13px] font-bold px-[8px] py-[3px] rounded-full shrink-0 mt-1`}>
                 {campaign.status}
               </span>
             </div>
 
             {/* Tag chips */}
             <div className="flex flex-wrap gap-[6px]">
-              <span className="flex items-center gap-1 border border-[#E8E7E4] rounded-full px-3 py-2 text-[13px] font-medium text-[#1C1A17]">
+              <span className="flex items-center gap-1 border border-[#E8E7E4] rounded-full px-[8px] py-[3px] text-[13px] font-bold text-[#1C1A17]">
                 <Calendar size={14} className="text-[#78756E] shrink-0" />
                 {campaign.dateRange}
               </span>
-              <span className="border border-[#E8E7E4] rounded-full px-3 py-2 text-[13px] font-medium text-[#1C1A17]">
+              <span className="border border-[#E8E7E4] rounded-full px-[8px] py-[3px] text-[13px] font-bold text-[#1C1A17]">
                 {campaign.platform}
               </span>
-              <span className="border border-[#E8E7E4] rounded-full px-3 py-2 text-[13px] font-medium text-[#1C1A17]">
+              <span className="border border-[#E8E7E4] rounded-full px-[8px] py-[3px] text-[13px] font-bold text-[#1C1A17]">
                 {campaign.goal}
               </span>
             </div>

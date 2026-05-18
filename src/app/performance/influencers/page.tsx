@@ -204,8 +204,6 @@ export default function InfluencerPerformancePage() {
           )}
         </div>
 
-        <div className="h-2 bg-stone-100" />
-
         {view === 'campaign' ? (
           /* ── 캠페인별 ── */
           <div className="bg-white px-5 py-6 flex flex-col gap-4">

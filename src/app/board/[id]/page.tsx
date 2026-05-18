@@ -1195,7 +1195,7 @@ export default function InfluencerDetailPage() {
           </div>
 
           {/* 캡션에 UTM 링크 포함 */}
-          <div style={{ backgroundColor: '#FAFAF9', borderRadius: 10, padding: 20 }}>
+          <div style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)', borderRadius: 10, padding: 20 }}>
             <div className="flex items-center justify-between">
               <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>캡션에 UTM 링크 포함</span>
               <button

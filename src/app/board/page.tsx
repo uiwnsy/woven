@@ -264,7 +264,7 @@ function BoardPageContent() {
                     <button
                       key={item.id + i}
                       onClick={() => router.push('/board/' + item.id)}
-                      className="bg-white rounded-[14px] border border-[#F5F5F3] p-[22px] flex flex-col gap-3 mb-[10px] w-full text-left active:opacity-70"
+                      className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col gap-3 w-full text-left active:opacity-80 transition-opacity"
                     >
                       {/* 상단: 프로필 + 상태/금액 */}
                       <div className="flex items-center justify-between gap-3">

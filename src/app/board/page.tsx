@@ -285,7 +285,7 @@ function BoardPageContent() {
                           </div>
                         </div>
                         {/* 상태 + 금액 */}
-                        <div className="flex flex-col items-end gap-[10px] shrink-0">
+                        <div className="flex flex-col items-end gap-[5px] shrink-0">
                           {item.statusText && (
                             <div className="bg-stone-100 px-[10px] pt-[4px] pb-[6px] rounded-full shrink-0">
                               <span className="text-[13px] font-semibold text-stone-600 leading-none whitespace-nowrap">{item.statusText}</span>
@@ -373,7 +373,7 @@ function BoardPageContent() {
                                 <span className="text-[13px] text-[#78756E]">{item.followers}</span>
                               </div>
                             </div>
-                            <div className="flex flex-col items-end gap-[10px] shrink-0">
+                            <div className="flex flex-col items-end gap-[5px] shrink-0">
                               {item.statusText && (
                                 <span className="bg-stone-100 text-stone-600 text-[13px] font-semibold px-[10px] pt-[4px] pb-[6px] rounded-full leading-none whitespace-nowrap">
                                   {item.statusText}

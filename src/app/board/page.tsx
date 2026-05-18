@@ -384,18 +384,9 @@ function BoardPageContent() {
                               )}
                             </div>
                           </div>
-                          {item.bottomTags && item.bottomTags.length > 0 && (
-                            <div className="flex items-center gap-1">
-                              {item.bottomTags.map((tag, ti) => (
-                                <span key={ti} className={`${tag.bg} ${tag.text} text-[13px] font-medium px-[8px] pt-[4px] pb-[6px] rounded-full leading-none`}>
-                                  {tag.label}
-                                </span>
-                              ))}
-                            </div>
-                          )}
                         </button>
                       ) : (
-                        <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id)} />
+                        <InfluencerCard key={item.id + i} data={{ ...item, categories: [] }} onPress={() => router.push('/board/' + item.id)} />
                       )
                     )}
                   </div>

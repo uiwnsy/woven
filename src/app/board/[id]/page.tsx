@@ -1154,7 +1154,7 @@ export default function InfluencerDetailPage() {
           {/* 포스팅 URL */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <span className="text-[18px] font-medium text-black">
+              <span className="text-[17px] font-medium text-black">
                 포스팅 URL <span style={{ color: '#6366F1' }}>*</span>
               </span>
               <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
@@ -1175,7 +1175,7 @@ export default function InfluencerDetailPage() {
           {/* 게시일 */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <span className="text-[18px] font-medium text-black">
+              <span className="text-[17px] font-medium text-black">
                 게시일 <span style={{ color: '#6366F1' }}>*</span>
               </span>
               <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>

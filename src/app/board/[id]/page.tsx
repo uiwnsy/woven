@@ -207,7 +207,10 @@ export default function InfluencerDetailPage() {
   const [showMemoOverlay, setShowMemoOverlay] = useState(false);
   const [memoInput, setMemoInput] = useState('');
   const [driveLink, setDriveLink] = useState('');
-  const [draftFileAdded, setDraftFileAdded] = useState(false);
+  const [draftReviewState, setDraftReviewState] = useState<'empty' | 'has-draft' | 'requesting' | 'revision-sent' | 'approved'>('empty');
+  const [draftType, setDraftType] = useState<'file' | 'link'>('file');
+  const [revisionText, setRevisionText] = useState('');
+  const [revisionHistory, setRevisionHistory] = useState<{ text: string; date: string; round: number }[]>([]);
   const [isEditingBrief, setIsEditingBrief] = useState(false);
   const [editedBrief, setEditedBrief] = useState<string | null>(null);
   const [briefVersion, setBriefVersion] = useState(0);
@@ -808,88 +811,232 @@ export default function InfluencerDetailPage() {
         {effectiveStage === 'negotiating' && <>
 
         {/* 시안 섹션 */}
-        <div className="bg-white" style={{ padding: '30px 20px', gap: 24, display: 'flex', flexDirection: 'column' }}>
+        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+
+          {/* 헤더 */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <span className="text-[20px] font-bold text-black">시안</span>
+            <div className="flex items-center justify-between">
+              <span className="text-[20px] font-bold text-black">시안</span>
+              {revisionHistory.length > 0 && (
+                <span className="text-[14px] font-semibold" style={{ color: '#EF8652' }}>
+                  수정 요청 {revisionHistory.length}회차
+                </span>
+              )}
+            </div>
             <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>
               인플루언서로부터 받은 시안을 첨부하고 검토하세요.
             </span>
           </div>
 
-          {/* 첨부된 파일 */}
-          {draftFileAdded && (
+          {/* ── EMPTY: 파일·링크 입력 ── */}
+          {draftReviewState === 'empty' && (
+            <>
+              <button
+                onClick={() => { setDraftType('file'); setDraftReviewState('has-draft'); }}
+                className="w-full flex flex-col items-center justify-center gap-[10px] active:opacity-70"
+                style={{ border: '1px dashed #B0ADA7', borderRadius: 14, padding: '30px 0' }}
+              >
+                <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                  <rect width="52" height="52" rx="12" fill="#F2F4F6"/>
+                  <path d="M17 33c0 1.1.9 2 2 2h14a2 2 0 002-2V25l-5-5H19a2 2 0 00-2 2v11z"
+                    stroke="#78756E" strokeWidth="1.4" fill="none" strokeLinejoin="round"/>
+                  <path d="M30 20v5h5" stroke="#78756E" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M26 27v6M23 30l3-3 3 3" stroke="#8486F3" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>시안 파일 첨부하기</span>
+              </button>
+              <div className="flex items-center gap-3">
+                <div className="flex-1 h-[1px] bg-[#E8E7E4]" />
+                <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>또는</span>
+                <div className="flex-1 h-[1px] bg-[#E8E7E4]" />
+              </div>
+              <div>
+                <div className="flex items-center justify-between"
+                  style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 10px 10px 20px' }}>
+                  <input
+                    value={driveLink}
+                    onChange={e => setDriveLink(e.target.value)}
+                    placeholder="Google Drive 링크 붙여넣기"
+                    className="flex-1 bg-transparent outline-none text-[16px] font-medium"
+                    style={{ color: '#1C1A17' }}
+                  />
+                  <button
+                    onClick={() => { if (driveLink.trim()) { setDraftType('link'); setDraftReviewState('has-draft'); } }}
+                    className="shrink-0 w-[34px] h-[34px] flex items-center justify-center rounded-[8px] active:opacity-70"
+                    style={{ backgroundColor: driveLink ? '#6366F1' : '#F2F4F6' }}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path d="M10 8l-6 6M10 8H6m4 0v4" stroke={driveLink ? '#fff' : '#78756E'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M7 4H4a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3" stroke={driveLink ? '#fff' : '#78756E'} strokeWidth="1.5" strokeLinecap="round"/>
+                    </svg>
+                  </button>
+                </div>
+                <p className="text-[14px] font-medium mt-2" style={{ color: '#D4D2CE' }}>
+                  Google Drive, Dropbox 등 클라우드 링크를 붙여넣으세요.
+                </p>
+              </div>
+            </>
+          )}
+
+          {/* ── 첨부 카드 (empty 제외 모든 상태) ── */}
+          {draftReviewState !== 'empty' && (
             <div className="flex items-center justify-between px-5 py-4 rounded-[14px]"
-              style={{ backgroundColor: '#F0F2FF', border: '1px solid #C7C9F5' }}>
+              style={{
+                backgroundColor: draftReviewState === 'approved' ? '#F0FDF4' : '#F0F2FF',
+                border: `1px solid ${draftReviewState === 'approved' ? '#BBF7D0' : '#C7C9F5'}`,
+              }}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-[10px] bg-white flex items-center justify-center shrink-0"
                   style={{ border: '1px solid #EBEEF7' }}>
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M5 2.5h7l4 4v11a1 1 0 01-1 1H5a1 1 0 01-1-1v-14a1 1 0 011-1z" stroke="#6366F1" strokeWidth="1.3" fill="none"/>
-                    <path d="M12 2.5V7H16.5" stroke="#6366F1" strokeWidth="1.3" strokeLinecap="round"/>
-                    <path d="M7 11h6M7 13.5h4" stroke="#6366F1" strokeWidth="1.2" strokeLinecap="round"/>
-                  </svg>
+                  {draftType === 'file' ? (
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path d="M5 2.5h7l4 4v11a1 1 0 01-1 1H5a1 1 0 01-1-1v-14a1 1 0 011-1z"
+                        stroke={draftReviewState === 'approved' ? '#22c55e' : '#6366F1'} strokeWidth="1.3" fill="none"/>
+                      <path d="M12 2.5V7H16.5"
+                        stroke={draftReviewState === 'approved' ? '#22c55e' : '#6366F1'} strokeWidth="1.3" strokeLinecap="round"/>
+                      <path d="M7 11h6M7 13.5h4"
+                        stroke={draftReviewState === 'approved' ? '#22c55e' : '#6366F1'} strokeWidth="1.2" strokeLinecap="round"/>
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path d="M13 3h4v4M10 10l7-7M9 5H5a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-4"
+                        stroke={draftReviewState === 'approved' ? '#22c55e' : '#6366F1'} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
                 </div>
                 <div>
-                  <p className="text-[14px] font-semibold" style={{ color: '#1C1A17' }}>시안_파일.jpg</p>
-                  <p className="text-[12px]" style={{ color: '#8486F3' }}>첨부 완료</p>
+                  <p className="text-[14px] font-semibold" style={{ color: '#1C1A17' }}>
+                    {draftType === 'file' ? '시안_파일.jpg' : (driveLink.length > 26 ? driveLink.slice(0, 26) + '…' : driveLink)}
+                  </p>
+                  <p className="text-[12px] font-medium mt-[2px]"
+                    style={{ color: draftReviewState === 'approved' ? '#22c55e' : draftReviewState === 'revision-sent' ? '#EF8652' : '#8486F3' }}>
+                    {draftReviewState === 'approved' ? '✓ 승인됨' : draftReviewState === 'revision-sent' ? '수정 요청 전송됨' : '첨부 완료'}
+                  </p>
                 </div>
               </div>
-              <button onClick={() => setDraftFileAdded(false)} className="active:opacity-60">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M4 4l10 10M14 4L4 14" stroke="#B0ADA7" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
+              {draftReviewState === 'has-draft' && (
+                <button onClick={() => { setDraftReviewState('empty'); setDriveLink(''); }} className="active:opacity-60">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M4 4l10 10M14 4L4 14" stroke="#B0ADA7" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* ── 수정 요청 이력 ── */}
+          {revisionHistory.map((rev, i) => (
+            <div key={i} style={{ backgroundColor: '#FFFDE5', borderRadius: 14, padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div className="flex items-center justify-between">
+                <span className="text-[12px] font-semibold px-[8px] py-[3px] rounded-full"
+                  style={{ backgroundColor: '#FEF3C7', color: '#D97706' }}>
+                  수정 요청 {rev.round}회차
+                </span>
+                <span className="text-[12px]" style={{ color: '#B0ADA7' }}>{rev.date}</span>
+              </div>
+              <p className="text-[14px] font-medium" style={{ color: '#705448', lineHeight: '1.55' }}>{rev.text}</p>
+            </div>
+          ))}
+
+          {/* ── HAS-DRAFT: 승인 / 수정 요청 ── */}
+          {draftReviewState === 'has-draft' && (
+            <div className="flex gap-3">
+              <button
+                onClick={() => setDraftReviewState('approved')}
+                className="flex-1 flex items-center justify-center active:opacity-70"
+                style={{ border: '1.5px solid #6366F1', borderRadius: 12, padding: 14 }}
+              >
+                <span className="text-[16px] font-semibold" style={{ color: '#6366F1' }}>승인</span>
+              </button>
+              <button
+                onClick={() => setDraftReviewState('requesting')}
+                className="flex-1 flex items-center justify-center active:opacity-70"
+                style={{ backgroundColor: '#6366F1', borderRadius: 12, padding: 14 }}
+              >
+                <span className="text-[16px] font-semibold text-white">수정 요청</span>
               </button>
             </div>
           )}
 
-          {/* 파일 첨부 영역 (dashed) */}
-          {!draftFileAdded && (
+          {/* ── REQUESTING: 수정 내용 작성 ── */}
+          {draftReviewState === 'requesting' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div className="flex items-start gap-2 rounded-xl px-4 py-3" style={{ backgroundColor: '#FFF7ED' }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[1px]">
+                  <path d="M8 1.5L1 14.5h14L8 1.5z" stroke="#D97706" strokeWidth="1.3" strokeLinejoin="round"/>
+                  <path d="M8 7v3" stroke="#D97706" strokeWidth="1.3" strokeLinecap="round"/>
+                  <circle cx="8" cy="11.5" r="0.6" fill="#D97706"/>
+                </svg>
+                <span className="text-[14px] font-medium" style={{ color: '#D97706', lineHeight: '135%' }}>
+                  수정이 필요한 내용을 구체적으로 적어 주세요. 인플루언서에게 전달됩니다.
+                </span>
+              </div>
+              <textarea
+                value={revisionText}
+                onChange={e => setRevisionText(e.target.value)}
+                placeholder={'예: 제품 클로즈업 컷을 추가해 주세요.\n배경을 밝은 톤으로 수정해 주세요.'}
+                rows={4}
+                autoFocus
+                className="w-full outline-none resize-none text-[15px] font-medium"
+                style={{ backgroundColor: '#FAFAFA', border: '1px solid #E8E7E4', borderRadius: 10, padding: '14px 16px', color: '#1C1A17', lineHeight: '1.6' }}
+              />
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setDraftReviewState('has-draft')}
+                  className="flex-1 flex items-center justify-center active:opacity-70"
+                  style={{ border: '1px solid #E8E7E4', borderRadius: 12, padding: 14 }}
+                >
+                  <span className="text-[16px] font-semibold" style={{ color: '#78756E' }}>취소</span>
+                </button>
+                <button
+                  onClick={() => {
+                    if (!revisionText.trim()) return;
+                    const now = new Date();
+                    const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+                    setRevisionHistory(prev => [...prev, { text: revisionText.trim(), date: dateStr, round: prev.length + 1 }]);
+                    setRevisionText('');
+                    setDraftReviewState('revision-sent');
+                  }}
+                  disabled={!revisionText.trim()}
+                  className="flex-[2] flex items-center justify-center active:opacity-70"
+                  style={{ backgroundColor: revisionText.trim() ? '#2E2C28' : '#E8E7E4', borderRadius: 12, padding: 14, transition: 'background-color 0.15s' }}
+                >
+                  <span className="text-[16px] font-semibold" style={{ color: revisionText.trim() ? '#FFFFFF' : '#B0ADA7' }}>수정 요청 전송</span>
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ── REVISION-SENT: 새 시안 받기 ── */}
+          {draftReviewState === 'revision-sent' && (
             <button
-              onClick={() => setDraftFileAdded(true)}
-              className="w-full flex flex-col items-center justify-center gap-[10px] active:opacity-70"
-              style={{ border: '1px dashed #B0ADA7', borderRadius: 14, padding: '30px 0' }}
+              onClick={() => { setDraftType('file'); setDraftReviewState('has-draft'); }}
+              className="w-full flex items-center justify-center gap-2 active:opacity-70"
+              style={{ border: '1px dashed #B0ADA7', borderRadius: 14, padding: '18px 0' }}
             >
-              <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-                <rect width="52" height="52" rx="12" fill="#F2F4F6"/>
-                <path d="M17 33c0 1.1.9 2 2 2h14a2 2 0 002-2V25l-5-5H19a2 2 0 00-2 2v11z"
-                  stroke="#78756E" strokeWidth="1.4" fill="none" strokeLinejoin="round"/>
-                <path d="M30 20v5h5" stroke="#78756E" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M26 27v6M23 30l3-3 3 3" stroke="#8486F3" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 3v10M3 8h10" stroke="#78756E" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
-              <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>시안 파일 첨부하기</span>
+              <span className="text-[15px] font-semibold" style={{ color: '#78756E' }}>새 시안 파일 받기</span>
             </button>
           )}
 
-          {/* 또는 구분선 */}
-          <div className="flex items-center gap-3">
-            <div className="flex-1 h-[1px] bg-[#E8E7E4]" />
-            <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>또는</span>
-            <div className="flex-1 h-[1px] bg-[#E8E7E4]" />
-          </div>
-
-          {/* Drive 링크 입력 */}
-          <div>
-            <div className="flex items-center justify-between"
-              style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 10px 10px 20px' }}>
-              <input
-                value={driveLink}
-                onChange={e => setDriveLink(e.target.value)}
-                placeholder="Google Drive 링크 붙여넣기"
-                className="flex-1 bg-transparent outline-none text-[16px] font-medium"
-                style={{ color: '#1C1A17' }}
-              />
-              <button className="shrink-0 w-[34px] h-[34px] flex items-center justify-center rounded-[8px] active:opacity-70"
-                style={{ backgroundColor: driveLink ? '#6366F1' : '#F2F4F6' }}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M10 8l-6 6M10 8H6m4 0v4" stroke={driveLink ? '#fff' : '#78756E'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M7 4H4a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3" stroke={driveLink ? '#fff' : '#78756E'} strokeWidth="1.5" strokeLinecap="round"/>
+          {/* ── APPROVED: 승인 완료 배너 ── */}
+          {draftReviewState === 'approved' && (
+            <div className="flex items-center gap-3 px-5 py-4 rounded-[14px]"
+              style={{ backgroundColor: '#F0FDF4', border: '1px solid #BBF7D0' }}>
+              <div className="w-8 h-8 rounded-full bg-[#22c55e] flex items-center justify-center shrink-0">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M2.5 7l3 3 6-6" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </button>
+              </div>
+              <div>
+                <p className="text-[14px] font-semibold" style={{ color: '#166534' }}>시안이 승인되었어요!</p>
+                <p className="text-[12px] font-medium mt-[2px]" style={{ color: '#22c55e' }}>시안 확인 단계로 이동할 수 있어요.</p>
+              </div>
             </div>
-            <p className="text-[14px] font-medium mt-2" style={{ color: '#D4D2CE' }}>
-              Google Drive, Dropbox 등 클라우드 링크를 붙여넣으세요.
-            </p>
-          </div>
+          )}
+
         </div>
 
         <div className="h-2 bg-[#F5F5F3]" />

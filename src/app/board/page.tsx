@@ -315,7 +315,7 @@ function BoardPageContent() {
               {activeTab === 'list-up' && (
                 <button
                   onClick={() => router.push('/board/add')}
-                  className="w-full h-[68px] flex items-center justify-center gap-1 rounded-[14px] active:opacity-70 mt-[10px]"
+                  className="w-full h-[68px] flex items-center justify-center gap-1 rounded-[14px] active:opacity-70 mt-[10px] mb-[30px]"
                   style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
                 >
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">

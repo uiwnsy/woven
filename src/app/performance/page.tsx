@@ -269,9 +269,7 @@ export default function PerformancePage() {
         <div className="bg-white px-5 py-10 flex flex-col gap-5">
             <div className="flex items-center justify-between">
               <span className="text-[20px] font-bold text-black">인플루언서별 성과</span>
-              <button className="border border-[#D4D2CE] rounded-full px-[10px] py-[7px] text-[13px] font-semibold text-[#78756E] active:opacity-70">
-                더보기
-              </button>
+              <button className="border border-[#D4D2CE] rounded-full px-[10px] py-[5px] text-[13px] font-semibold text-[#78756E] active:opacity-70">더보기</button>
             </div>
 
             <div className="flex flex-col gap-[30px]">

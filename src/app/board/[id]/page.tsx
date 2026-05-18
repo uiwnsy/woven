@@ -236,7 +236,7 @@ export default function InfluencerDetailPage() {
   const [rvNegInfoExpanded, setRvNegInfoExpanded] = useState(false);
   const [rvBriefExpanded, setRvBriefExpanded] = useState(false);
   const [collabHistoryExpanded, setCollabHistoryExpanded] = useState(
-    () => effectiveStage !== 'contacting' && effectiveStage !== 'negotiating'
+    () => effectiveStage !== 'contacting' && effectiveStage !== 'negotiating' && effectiveStage !== 'reviewing'
   );
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [mounted, setMounted] = useState(false);

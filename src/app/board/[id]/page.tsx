@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -172,8 +172,11 @@ function StageTracker({ stageId }: { stageId: Stage }) {
 export default function InfluencerDetailPage() {
   const router = useRouter();
   const params = useParams();
+  const searchParams = useSearchParams();
   const id = params.id as string;
   const data = MOCK_DETAILS[id];
+  const stageParam = searchParams.get('stage') as Stage | null;
+  const effectiveStage: Stage = (stageParam && STAGE_IDS.includes(stageParam)) ? stageParam : data?.stage;
 
   const [responseStatus, setResponseStatus] = useState<'positive' | 'negative' | 'none'>('none');
   const [negotiationPrice, setNegotiationPrice] = useState('');
@@ -272,7 +275,7 @@ export default function InfluencerDetailPage() {
       </div>
 
       {/* ── Scrollable body ── */}
-      <div className={`flex-1 overflow-y-auto ${data.stage === 'contacting' ? 'pb-[200px]' : 'pb-[120px]'}`}>
+      <div className={`flex-1 overflow-y-auto ${effectiveStage === 'contacting' ? 'pb-[200px]' : 'pb-[120px]'}`}>
 
         {/* ── Profile Card ── */}
         <div className="bg-white flex flex-col items-center w-full" style={{ padding: '34px 20px', gap: 20 }}>
@@ -352,7 +355,7 @@ export default function InfluencerDetailPage() {
                 className="text-[14px] font-semibold"
                 style={{ backgroundColor: '#EEEEFF', color: '#3D3FC7', borderRadius: 50, padding: '6px 10px' }}
               >
-                {STAGE_LABELS[data.stage]}
+                {STAGE_LABELS[effectiveStage]}
               </span>
               <span className="text-[20px] font-semibold text-black">{data.campaignName}</span>
             </div>
@@ -365,13 +368,13 @@ export default function InfluencerDetailPage() {
           </div>
 
           {/* Step tracker */}
-          <StageTracker stageId={data.stage} />
+          <StageTracker stageId={effectiveStage} />
         </div>
 
         <div className="h-2 bg-[#F5F5F3]" />
 
         {/* ── 리스트업 전용: 협의 조건 + AI 브리프 ── */}
-        {data.stage === 'list-up' && <>
+        {effectiveStage === 'list-up' && <>
 
         {/* ── 협의 조건 ── */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
@@ -584,7 +587,7 @@ export default function InfluencerDetailPage() {
         </> /* end list-up only */}
 
         {/* ── 컨택 전용 섹션들 ── */}
-        {data.stage === 'contacting' && <>
+        {effectiveStage === 'contacting' && <>
 
         {/* 발송 현황 */}
         <div className="bg-white" style={{ padding: '16px 20px 30px', gap: 20, display: 'flex', flexDirection: 'column' }}>
@@ -886,7 +889,7 @@ export default function InfluencerDetailPage() {
         className="absolute bottom-0 w-full bg-white flex flex-col"
         style={{ borderTop: '1px solid #E8E7E4', padding: 20, gap: 10 }}
       >
-        {data.stage === 'contacting' ? (
+        {effectiveStage === 'contacting' ? (
           <>
             {/* 상태 칩 (27:4440) */}
             <div className="flex justify-center" style={{ gap: 10 }}>

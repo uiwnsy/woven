@@ -308,7 +308,7 @@ function BoardPageContent() {
                       )}
                     </button>
                   ) : (
-                    <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id)} />
+                    <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id + (activeTab === 'contacting' ? '?stage=contacting' : ''))} />
                   )
                 )
               )}
@@ -386,7 +386,7 @@ function BoardPageContent() {
                           </div>
                         </button>
                       ) : (
-                        <InfluencerCard key={item.id + i} data={{ ...item, categories: [] }} onPress={() => router.push('/board/' + item.id)} />
+                        <InfluencerCard key={item.id + i} data={{ ...item, categories: [] }} onPress={() => router.push('/board/' + item.id + (tab.id === 'contacting' ? '?stage=contacting' : ''))} />
                       )
                     )}
                   </div>

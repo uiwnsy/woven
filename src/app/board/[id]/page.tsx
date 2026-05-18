@@ -839,13 +839,7 @@ export default function InfluencerDetailPage() {
                 className="w-full flex flex-col items-center justify-center gap-[10px] active:opacity-70"
                 style={{ border: '1px dashed #B0ADA7', borderRadius: 14, padding: '30px 0' }}
               >
-                <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-                  <rect width="52" height="52" rx="12" fill="#F2F4F6"/>
-                  <path d="M17 33c0 1.1.9 2 2 2h14a2 2 0 002-2V25l-5-5H19a2 2 0 00-2 2v11z"
-                    stroke="#78756E" strokeWidth="1.4" fill="none" strokeLinejoin="round"/>
-                  <path d="M30 20v5h5" stroke="#78756E" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M26 27v6M23 30l3-3 3 3" stroke="#8486F3" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                <img src="/assets/icon/contents-icon.svg" alt="시안 첨부" width={52} height={52} />
                 <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>시안 파일 첨부하기</span>
               </button>
               <div className="flex items-center gap-3">

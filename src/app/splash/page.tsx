@@ -14,7 +14,7 @@ export default function SplashPage() {
   return (
     <div className="flex flex-col items-center justify-center h-screen max-w-[430px] mx-auto"
       style={{ backgroundColor: '#15163a' }}>
-      <img src="/woven-logo.svg" alt="Woven" width={115} height={21} />
+      <img src="/woven-logo.svg" alt="Woven" width={91.17} height={16.38} />
     </div>
   );
 }

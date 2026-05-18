@@ -218,6 +218,9 @@ export default function InfluencerDetailPage() {
   const [briefVersion, setBriefVersion] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isEditingRequests, setIsEditingRequests] = useState(false);
+  const [collabHistoryExpanded, setCollabHistoryExpanded] = useState(
+    () => effectiveStage !== 'contacting' && effectiveStage !== 'negotiating'
+  );
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -1076,36 +1079,51 @@ export default function InfluencerDetailPage() {
           <div className="flex items-center justify-between">
             <span className="text-[20px] font-bold text-black">협업 이력</span>
             {data.isFirstCollab && (
-              <span
-                className="text-[14px] font-medium"
-                style={{ backgroundColor: '#EEEEFF', color: '#3D3FC7', borderRadius: 50, padding: '4px 8px' }}
+              <button
+                onClick={() => {
+                  if (effectiveStage === 'contacting' || effectiveStage === 'negotiating') {
+                    setCollabHistoryExpanded(v => !v);
+                  }
+                }}
+                className="flex items-center gap-[6px]"
+                style={{ backgroundColor: '#EEEEFF', borderRadius: 50, padding: '4px 10px 4px 8px' }}
               >
-                첫 협업
-              </span>
+                <span className="text-[14px] font-medium" style={{ color: '#3D3FC7' }}>첫 협업</span>
+                {(effectiveStage === 'contacting' || effectiveStage === 'negotiating') && (
+                  <svg
+                    width="14" height="14" viewBox="0 0 14 14" fill="none"
+                    style={{ transform: collabHistoryExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+                  >
+                    <path d="M3 5l4 4 4-4" stroke="#3D3FC7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </button>
             )}
           </div>
 
-          <div
-            className="flex flex-col items-center text-center"
-            style={{ backgroundColor: '#F8F8FF', borderRadius: 14, padding: 22, gap: 6 }}
-          >
-            {data.isFirstCollab ? (
-              <>
+          {collabHistoryExpanded && (
+            <div
+              className="flex flex-col items-center text-center"
+              style={{ backgroundColor: '#F8F8FF', borderRadius: 14, padding: 22, gap: 6 }}
+            >
+              {data.isFirstCollab ? (
+                <>
+                  <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
+                    첫 협업 인플루언서예요!
+                  </span>
+                  <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
+                    이번 캠페인 성과가{' '}
+                    <span className="font-bold" style={{ color: '#6366F1' }}>첫 이력으로 기록</span>
+                    됩니다.
+                  </span>
+                </>
+              ) : (
                 <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
-                  첫 협업 인플루언서예요!
+                  이전 협업 이력이 없어요.
                 </span>
-                <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
-                  이번 캠페인 성과가{' '}
-                  <span className="font-bold" style={{ color: '#6366F1' }}>첫 이력으로 기록</span>
-                  됩니다.
-                </span>
-              </>
-            ) : (
-              <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
-                이전 협업 이력이 없어요.
-              </span>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="h-2 bg-[#F5F5F3]" />

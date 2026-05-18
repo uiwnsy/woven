@@ -258,12 +258,6 @@ function CampaignCard({ c, defaultOpen }: { c: CampaignPerf; defaultOpen: boolea
       {/* 펼쳐지는 내용 */}
       {open && (
         <div className="flex flex-col gap-4 px-5 pb-5 pt-1">
-          {/* 태그 */}
-          <div className="flex items-center gap-1">
-            <span className="bg-[#F0FDF4] text-[#22C55E] text-[13px] font-semibold rounded-full px-[10px] py-[4px]">업로드완료</span>
-            {c.hasUtm && <span className="bg-[#EFF6FF] text-[#3D3FC7] text-[13px] font-semibold rounded-full px-[10px] py-[4px]">UTM 포함</span>}
-          </div>
-
           {/* 지표 */}
           <div className="grid grid-cols-2 gap-2">
             {[

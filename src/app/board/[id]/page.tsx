@@ -1022,26 +1022,24 @@ export default function InfluencerDetailPage() {
 
           {/* 2x2 그리드 카드 */}
           <div style={{ border: '1px solid #EBEEF7', borderRadius: 14, overflow: 'hidden', backgroundColor: '#F8FAFF' }}>
-            <div className="grid grid-cols-2" style={{ borderBottom: '1px solid #EBEEF7' }}>
+            <div className="grid grid-cols-2">
               {/* 협의 단가 */}
-              <div className="flex flex-col" style={{ gap: 2, padding: '15px 22px', borderRight: '1px solid #EBEEF7', backgroundColor: '#FAFAFC' }}>
+              <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px', backgroundColor: '#FAFAFC' }}>
                 <p className="text-[14px] font-semibold leading-[135%]" style={{ color: '#78756E' }}>협의 단가</p>
                 <p className="text-[20px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#6366F1' }}>350,000원</p>
               </div>
               {/* 콘텐츠 형식 */}
-              <div className="flex flex-col" style={{ gap: 2, padding: '15px 22px', backgroundColor: '#FAFAFC' }}>
+              <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px', backgroundColor: '#FAFAFC' }}>
                 <p className="text-[14px] font-semibold leading-[135%]" style={{ color: '#78756E' }}>콘텐츠 형식</p>
                 <p className="text-[20px] font-semibold leading-[135%]" style={{ color: '#1C1A17' }}>릴스 1건</p>
               </div>
-            </div>
-            <div className="grid grid-cols-2">
               {/* 시안 전달 예정일 */}
-              <div className="flex flex-col" style={{ gap: 2, padding: '15px 22px', borderRight: '1px solid #EBEEF7', backgroundColor: '#FAFAFC' }}>
+              <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px', backgroundColor: '#FAFAFC' }}>
                 <p className="text-[14px] font-semibold leading-[135%]" style={{ color: '#78756E' }}>시안 전달 예정일</p>
                 <p className="text-[20px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>2025.04.25</p>
               </div>
               {/* 플랫폼 */}
-              <div className="flex flex-col" style={{ gap: 2, padding: '15px 22px', backgroundColor: '#FAFAFC' }}>
+              <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px', backgroundColor: '#FAFAFC' }}>
                 <p className="text-[14px] font-semibold leading-[135%]" style={{ color: '#78756E' }}>플랫폼</p>
                 <p className="text-[20px] font-semibold leading-[135%]" style={{ color: '#1C1A17' }}>인스타그램</p>
               </div>

@@ -277,8 +277,8 @@ function Step3({
         {/* Contact type cards */}
         <div className="flex gap-3 mb-8">
           {[
-            { id: 'direct',  label: '직접 연락',   sub: 'DM 또는 이메일',   icon: '✈️' },
-            { id: 'agency',  label: '에이전시 경유', sub: '담당자에게 연락', icon: '✉️' },
+            { id: 'direct',  label: '직접 연락',   sub: 'DM 또는 이메일',   icon: '/icon/send-icon.svg' },
+            { id: 'agency',  label: '에이전시 경유', sub: '담당자에게 연락', icon: '/icon/message-icon.svg' },
           ].map(opt => (
             <button
               key={opt.id}
@@ -286,7 +286,7 @@ function Step3({
               className={`flex-1 flex flex-col items-center gap-2 py-5 rounded-2xl border-2 transition-all active:opacity-80
                 ${contactType === opt.id ? 'border-iris-500 bg-[#f5f5ff]' : 'border-stone-200 bg-white'}`}
             >
-              <span className="text-[22px]">{opt.icon}</span>
+              <img src={opt.icon} alt="" width={32} height={32} />
               <p className="text-[15px] font-semibold text-stone-900">{opt.label}</p>
               <p className="text-[12px] text-stone-400">{opt.sub}</p>
             </button>

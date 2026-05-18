@@ -942,18 +942,18 @@ export default function InfluencerDetailPage() {
           {draftReviewState === 'has-draft' && (
             <div className="flex gap-3">
               <button
-                onClick={() => setDraftReviewState('approved')}
+                onClick={() => setDraftReviewState('requesting')}
                 className="flex-1 flex items-center justify-center active:opacity-70"
                 style={{ border: '1.5px solid #6366F1', borderRadius: 12, padding: 14 }}
               >
-                <span className="text-[16px] font-semibold" style={{ color: '#6366F1' }}>승인</span>
+                <span className="text-[16px] font-semibold" style={{ color: '#6366F1' }}>수정 요청</span>
               </button>
               <button
-                onClick={() => setDraftReviewState('requesting')}
+                onClick={() => setDraftReviewState('approved')}
                 className="flex-1 flex items-center justify-center active:opacity-70"
                 style={{ backgroundColor: '#6366F1', borderRadius: 12, padding: 14 }}
               >
-                <span className="text-[16px] font-semibold text-white">수정 요청</span>
+                <span className="text-[16px] font-semibold text-white">승인</span>
               </button>
             </div>
           )}

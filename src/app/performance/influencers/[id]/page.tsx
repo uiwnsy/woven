@@ -257,7 +257,7 @@ function CampaignCard({ c, defaultOpen }: { c: CampaignPerf; defaultOpen: boolea
 
       {/* 펼쳐지는 내용 */}
       {open && (
-        <div className="flex flex-col gap-4 px-5 pb-5 pt-1">
+        <div className="flex flex-col gap-4 px-5 pb-5 pt-5">
           {/* 지표 */}
           <div className="grid grid-cols-2 gap-2">
             {[

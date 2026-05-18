@@ -984,16 +984,6 @@ export default function InfluencerDetailPage() {
                     className="shrink-0 flex items-center justify-center gap-[6px] active:opacity-70"
                     style={{ backgroundColor: utmCopied ? '#6366F1' : '#EEEEFF', borderRadius: 8, padding: '8px 14px', transition: 'background-color 0.15s' }}
                   >
-                    {utmCopied ? (
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M2 7l3.5 3.5 6.5-7" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    ) : (
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <rect x="4.5" y="1" width="8.5" height="9" rx="1.5" stroke="#6366F1" strokeWidth="1.3"/>
-                        <path d="M1 4.5h2.5v8H10V11" stroke="#6366F1" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    )}
                     <span className="text-[13px] font-semibold" style={{ color: utmCopied ? '#fff' : '#6366F1' }}>
                       {utmCopied ? '복사됨' : '복사'}
                     </span>

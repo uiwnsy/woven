@@ -928,7 +928,7 @@ export default function InfluencerDetailPage() {
           {/* ── REVISION-SENT: 새 시안 받기 ── */}
           {draftReviewState === 'revision-sent' && (
             <button
-              onClick={() => { setDraftType('file'); setDraftReviewState('has-draft'); }}
+              onClick={() => setDraftReviewState('empty')}
               className="w-full flex items-center justify-center gap-2 active:opacity-70"
               style={{ border: '1px dashed #B0ADA7', borderRadius: 14, padding: '18px 0' }}
             >
@@ -1543,7 +1543,23 @@ export default function InfluencerDetailPage() {
                   <span className="text-[16px] font-bold" style={{ color: revisionText.trim() ? '#FFFFFF' : '#B0ADA7' }}>수정 요청 기록</span>
                 </button>
               </div>
-            ) : draftReviewState === 'approved' || draftReviewState === 'revision-sent' ? (
+            ) : draftReviewState === 'approved' ? (
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => setShowDraftOverlay(false)}
+                  className="w-full flex items-center justify-center active:opacity-80"
+                  style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
+                >
+                  <span className="text-[16px] font-bold text-white">닫기</span>
+                </button>
+                <button
+                  onClick={() => setDraftReviewState('has-draft')}
+                  className="w-full flex items-center justify-center active:opacity-60"
+                >
+                  <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>승인 취소하기</span>
+                </button>
+              </div>
+            ) : draftReviewState === 'revision-sent' ? (
               <button
                 onClick={() => setShowDraftOverlay(false)}
                 className="w-full flex items-center justify-center active:opacity-80"

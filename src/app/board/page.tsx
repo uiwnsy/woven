@@ -196,78 +196,137 @@ function BoardPageContent() {
             </div>
           </div>
 
-          <div className="flex overflow-x-auto scrollbar-none pl-5">
-          {tabs.map(tab => {
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-1 px-[10px] py-[10px] shrink-0 whitespace-nowrap border-b-[1.5px]
-                  ${isActive ? 'border-iris-500' : 'border-[#F0F2F8]'}`}
-              >
-                <span className={`text-[13px] ${isActive ? 'font-bold text-iris-500' : 'font-medium text-[#1C1A17]'}`}>
-                  {tab.label}
-                </span>
-                <span className={`text-[12px] px-[10px] leading-[20px] rounded-full font-manrope
-                  ${isActive
-                    ? 'bg-[#EEEEFF] font-bold text-iris-500'
-                    : 'bg-[#F0F2F8] font-medium text-[#64666C]'}`}
+          {/* 단계별 탭 — grid 뷰에서만 표시 */}
+          {activeView === 'grid' && (
+            <div className="flex overflow-x-auto scrollbar-none pl-5">
+            {tabs.map(tab => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-1 px-[10px] py-[10px] shrink-0 whitespace-nowrap border-b-[1.5px]
+                    ${isActive ? 'border-iris-500' : 'border-[#F0F2F8]'}`}
                 >
-                  {tab.count}
-                </span>
-              </button>
-            );
-          })}
-          {/* Right spacer — ensures 20px space after last tab when scrolled */}
-          <div className="shrink-0 w-5" />
-          </div>
+                  <span className={`text-[13px] ${isActive ? 'font-bold text-iris-500' : 'font-medium text-[#1C1A17]'}`}>
+                    {tab.label}
+                  </span>
+                  <span className={`text-[12px] px-[10px] leading-[20px] rounded-full font-manrope
+                    ${isActive
+                      ? 'bg-[#EEEEFF] font-bold text-iris-500'
+                      : 'bg-[#F0F2F8] font-medium text-[#64666C]'}`}
+                  >
+                    {tab.count}
+                  </span>
+                </button>
+              );
+            })}
+            <div className="shrink-0 w-5" />
+            </div>
+          )}
         </div>
 
         {/* Content */}
         <div className="px-5 pt-5 flex flex-col">
 
-          {isEmpty ? (
-            activeTab === 'list-up' ? (
-              /* List-up empty state: info banner with circle-i icon */
-              <div className="flex gap-2 bg-[#EEF7FF] rounded-[12px] p-5">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[2px]">
-                  <circle cx="9" cy="9" r="8" stroke="#2D92FE" strokeWidth="1.5"/>
-                  <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
-                  <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
-                </svg>
-                <p className="text-[13px] font-medium text-[#2D92FE] leading-[150%]">
-                  인플루언서를 추가하면 리스트업 단계에 카드가 생성돼요.{'\n'}이후 컨택, 협의중, 시안확인, 업로드완료 단계로 이동하며 관리할 수 있어요.
-                </p>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-16 text-stone-300">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="mb-3">
-                  <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M16 24h16M24 16v16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-                <p className="text-[15px]">인플루언서를 추가해보세요</p>
-              </div>
-            )
+          {activeView === 'grid' ? (
+            <>
+              {isEmpty ? (
+                activeTab === 'list-up' ? (
+                  <div className="flex gap-2 bg-[#EEF7FF] rounded-[12px] p-5">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[2px]">
+                      <circle cx="9" cy="9" r="8" stroke="#2D92FE" strokeWidth="1.5"/>
+                      <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
+                      <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
+                    </svg>
+                    <p className="text-[13px] font-medium text-[#2D92FE] leading-[150%]">
+                      인플루언서를 추가하면 리스트업 단계에 카드가 생성돼요.{'\n'}이후 컨택, 협의중, 시안확인, 업로드완료 단계로 이동하며 관리할 수 있어요.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-16 text-stone-300">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="mb-3">
+                      <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2"/>
+                      <path d="M16 24h16M24 16v16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                    <p className="text-[15px]">인플루언서를 추가해보세요</p>
+                  </div>
+                )
+              ) : (
+                cards.map((item, i) => (
+                  <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id)} />
+                ))
+              )}
+              {activeTab === 'list-up' && (
+                <button
+                  onClick={() => router.push('/board/add')}
+                  className="w-full h-[68px] flex items-center justify-center gap-1 rounded-[14px] active:opacity-70 mt-[20px]"
+                  style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="7.5" stroke="#8486F3"/>
+                    <path d="M8 5v6M5 8h6" stroke="#8486F3" strokeWidth="1.2" strokeLinecap="round"/>
+                  </svg>
+                  <span className="text-[16px] font-medium text-[#8486F3]">인플루언서 추가</span>
+                </button>
+              )}
+            </>
           ) : (
-            cards.map((item, i) => (
-              <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id)} />
-            ))
-          )}
-
-          {/* Add influencer button — 리스트업 단계에만 표시 */}
-          {activeTab === 'list-up' && (
-            <button
-              onClick={() => router.push('/board/add')}
-              className="w-full h-[68px] flex items-center justify-center gap-1 rounded-[14px] active:opacity-70 mt-[20px]"
-              style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)' }}
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <circle cx="8" cy="8" r="7.5" stroke="#8486F3"/>
-                <path d="M8 5v6M5 8h6" stroke="#8486F3" strokeWidth="1.2" strokeLinecap="round"/>
-              </svg>
-              <span className="text-[16px] font-medium text-[#8486F3]">인플루언서 추가</span>
-            </button>
+            /* ── 리스트 뷰 ── */
+            <div className="bg-white rounded-[14px] border border-[#EBEEF7] overflow-hidden">
+              {TAB_IDS.map((tab, tabIdx) => {
+                const stageCards = boardData[tab.id] ?? [];
+                if (stageCards.length === 0) return null;
+                const STAGE_STYLES: Record<string, { bg: string; text: string }> = {
+                  'list-up':    { bg: 'bg-[#f5f5f3]', text: 'text-stone-600' },
+                  'contacting': { bg: 'bg-[#eef2ff]', text: 'text-iris-600' },
+                  'negotiated': { bg: 'bg-[#fef6f1]', text: 'text-[#d96430]' },
+                  'inProgress': { bg: 'bg-[#f0fdf4]', text: 'text-[#22c55e]' },
+                  'uploaded':   { bg: 'bg-[#f0fdf4]', text: 'text-[#166534]' },
+                };
+                const stageStyle = STAGE_STYLES[tab.id];
+                return (
+                  <div key={tab.id}>
+                    {/* 단계 헤더 */}
+                    <div className={`flex items-center gap-2 px-5 py-[10px] bg-[#fafbfe] ${tabIdx > 0 ? 'border-t border-[#EBEEF7]' : ''}`}>
+                      <span className={`${stageStyle.bg} ${stageStyle.text} text-[13px] font-semibold px-[10px] pt-[4px] pb-[6px] rounded-full leading-none`}>
+                        {tab.label}
+                      </span>
+                      <span className="text-[13px] font-medium text-[#9BA1AA]">{stageCards.length}명</span>
+                    </div>
+                    {/* 인플루언서 행 */}
+                    {stageCards.map((item, i) => (
+                      <button
+                        key={item.id + i}
+                        onClick={() => router.push('/board/' + item.id)}
+                        className={`w-full flex items-center justify-between px-5 py-[13px] active:opacity-70 bg-white
+                          ${i < stageCards.length - 1 ? 'border-b border-[#f0f2f8]' : ''}`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="relative shrink-0">
+                            <div className="w-9 h-9 rounded-full bg-stone-200 overflow-hidden">
+                              {item.profileImg && (
+                                <img src={item.profileImg} alt={item.name} className="w-full h-full object-cover" />
+                              )}
+                            </div>
+                            <img src="/skill-icons_instagram.svg" alt="ig" className="absolute w-[14px] h-[14px] bottom-0 -right-[1px]" />
+                          </div>
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-[15px] font-semibold text-black leading-none">{item.name}</span>
+                            <span className="text-[13px] text-stone-500">{item.handle} · {item.followers}</span>
+                          </div>
+                        </div>
+                        {item.statusText && (
+                          <span className="bg-stone-100 px-[10px] pt-[4px] pb-[6px] rounded-full text-[13px] font-semibold text-stone-600 leading-none shrink-0 ml-3">
+                            {item.statusText}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
           )}
 
         </div>

@@ -25,13 +25,6 @@ const MOCK_PROFILES: Record<string, Omit<InfluencerProfile, 'handle' | 'selected
   'leezsu': { name: 'leezsu', followers: '12만',  categories: ['뷰티', '여행/관광'],        profileImg: 'https://i.pravatar.cc/150?img=49' },
 };
 
-const CATEGORY_COLORS: Record<string, string> = {
-  '뷰티': 'bg-[#fce7f3] text-[#9d174d]',
-  '패션': 'bg-[#ede9fe] text-[#5b21b6]',
-  '일상': 'bg-[#fef3c7] text-[#92400e]',
-  '여행/관광': 'bg-[#d1fae5] text-[#065f46]',
-  '연애/결혼': 'bg-[#fee2e2] text-[#991b1b]',
-};
 
 function parseHandles(raw: string): string[] {
   return raw
@@ -172,50 +165,69 @@ function Step2({
         </div>
 
         {/* Influencer cards */}
-        <div className="flex flex-col gap-3 mb-6">
-          {profiles.map(inf => (
-            <button
-              key={inf.handle}
-              onClick={() => toggleOne(inf.handle)}
-              className={`w-full flex items-start gap-3 p-4 rounded-2xl border-2 text-left transition-all active:opacity-80
-                ${inf.selected ? 'border-iris-500 bg-[#f5f5ff]' : 'border-stone-200 bg-white'}`}
-            >
-              {/* Profile image */}
-              <div className="relative shrink-0">
-                <img src={inf.profileImg} alt={inf.name} className="w-12 h-12 rounded-full object-cover" />
-                {/* Instagram icon */}
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] rounded-full flex items-center justify-center">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
-                    <rect x="2" y="2" width="20" height="20" rx="6" stroke="white" strokeWidth="2"/>
-                    <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="2"/>
-                    <circle cx="17.5" cy="6.5" r="1" fill="white"/>
-                  </svg>
+        <div className="flex flex-col mb-6">
+          {profiles.map(inf => {
+            const getCategoryStyle = (cat: string) => {
+              switch (cat) {
+                case '뷰티':      return { bg: 'bg-[#fdf2fe]', text: 'text-[#87588a]' };
+                case '패션':      return { bg: 'bg-[#eef2ff]', text: 'text-[#3e37c3]' };
+                case '연애/결혼': return { bg: 'bg-[#fffbeb]', text: 'text-[#92400e]' };
+                case '일상':      return { bg: 'bg-[#fef6f1]', text: 'text-[#d96430]' };
+                default:          return { bg: 'bg-stone-100',  text: 'text-stone-600' };
+              }
+            };
+            return (
+              <button
+                key={inf.handle}
+                onClick={() => toggleOne(inf.handle)}
+                className={`flex flex-col w-full text-left rounded-2xl px-[22px] py-[22px] mb-[10px] border active:opacity-80 transition-all
+                  ${inf.selected ? 'border-iris-400 bg-[#fafaff]' : 'border-[#ebeef7] bg-white'}`}
+              >
+                {/* Top row */}
+                <div className={`flex flex-row items-center justify-between ${inf.categories.length > 0 ? 'mb-[10px]' : ''}`}>
+                  <div className="flex flex-row items-center flex-1 min-w-0">
+                    {/* Profile image */}
+                    <div className="relative mr-3 shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-stone-200 overflow-hidden flex items-center justify-center">
+                        {inf.profileImg
+                          ? <img src={inf.profileImg} alt={inf.name} className="w-full h-full object-cover" />
+                          : <span className="text-stone-500 font-bold text-sm">{inf.name.charAt(0)}</span>}
+                      </div>
+                      <div className="absolute -bottom-0.5 -right-0.5 bg-white rounded-full p-[2px] shadow-sm">
+                        <img src="/skill-icons_instagram.svg" alt="Instagram" className="w-4 h-4" />
+                      </div>
+                    </div>
+                    {/* Name + followers */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-row items-baseline gap-1.5 mb-1">
+                        <span className="text-[16px] font-semibold text-stone-900 leading-4">{inf.name}</span>
+                        <span className="text-[13px] text-stone-500 leading-4">@{inf.handle}</span>
+                      </div>
+                      <p className="text-[13px] text-stone-500 leading-4">{inf.followers}</p>
+                    </div>
+                  </div>
+                  {/* Radio button */}
+                  <div className={`w-[22px] h-[22px] rounded-full border-2 flex items-center justify-center shrink-0 ml-3 transition-colors
+                    ${inf.selected ? 'border-iris-500 bg-iris-500' : 'border-stone-300 bg-white'}`}>
+                    {inf.selected && <div className="w-2 h-2 rounded-full bg-white" />}
+                  </div>
                 </div>
-              </div>
-
-              {/* Info */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-[15px] font-bold text-stone-900">{inf.name}</span>
-                  <span className="text-[13px] text-stone-400">@{inf.handle}</span>
-                </div>
-                <p className="text-[13px] text-stone-500 mb-2">{inf.followers}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {inf.categories.map(cat => (
-                    <span key={cat} className={`text-[12px] font-medium px-2 py-0.5 rounded-full ${CATEGORY_COLORS[cat] ?? 'bg-stone-100 text-stone-600'}`}>
-                      {cat}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Checkmark */}
-              <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors
-                ${inf.selected ? 'bg-iris-500' : 'border-2 border-stone-200 bg-white'}`}>
-                {inf.selected && <Check size={14} className="text-white" strokeWidth={3} />}
-              </div>
-            </button>
-          ))}
+                {/* Categories */}
+                {inf.categories.length > 0 && (
+                  <div className="flex flex-row gap-1.5 flex-wrap">
+                    {inf.categories.map((cat, idx) => {
+                      const { bg, text } = getCategoryStyle(cat);
+                      return (
+                        <span key={idx} className={`px-[10px] pt-[4px] pb-[6px] rounded-full text-[13px] font-semibold leading-none ${bg} ${text}`}>
+                          {cat}
+                        </span>
+                      );
+                    })}
+                  </div>
+                )}
+              </button>
+            );
+          })}
         </div>
 
         {/* Campaign */}

@@ -180,7 +180,7 @@ export default function HomePage() {
         <div style={{ background: 'linear-gradient(139deg, #8486F3 0.32%, #6366F1 104.47%)' }}>
           <div className="px-5">
             {/* Greeting */}
-            <div className="py-[30px]">
+            <div className="py-[50px]">
               <p className="text-[17px] font-semibold text-white mb-2">✳︎ 안녕하세요, 김지은님!</p>
               <p className="text-[22px] font-bold text-white leading-[1.45]">
                 현재 진행 중인 캠페인은<br />루미에르 봄봄 프로모션이에요.

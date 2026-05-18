@@ -118,7 +118,7 @@ const INFLUENCER_RANKS: InfluencerRank[] = [
   { id: '8', name: '김지영', handle: '@jijizero', followers: '21만', profileImg: '/profile-kimjiyoung.png',
     stage:  { label: '컨택', bg: 'bg-[#eef2ff]', text: 'text-iris-600' },
     status: { label: '미응답', bg: 'bg-[#fef2f2]', text: 'text-red-500' } },
-  { id: '9', name: '김민지', handle: '@minj_',   followers: '24.9만', profileImg: '/profile-kimminji.png',
+  { id: '9', name: 'minj_', handle: '@minj_',   followers: '24.9만', profileImg: '/profile-kimminji.png',
     stage: { label: '리스트업', bg: 'bg-[#f5f5f3]', text: 'text-stone-600' } },
   { id: '10', name: '박서연', handle: '@ppseoo',  followers: '4만',   profileImg: '/profile-parkseo.png',
     stage: { label: '리스트업', bg: 'bg-[#f5f5f3]', text: 'text-stone-600' } },

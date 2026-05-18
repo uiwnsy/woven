@@ -1021,8 +1021,8 @@ export default function InfluencerDetailPage() {
           <span className="text-[20px] font-bold text-black">협의 정보</span>
 
           {/* 2x2 그리드 카드 */}
-          <div style={{ border: '1px solid #EBEEF7', borderRadius: 14, overflow: 'hidden', backgroundColor: '#F8FAFF' }}>
-            <div className="grid grid-cols-2">
+          <div style={{ border: '1px solid #EBEEF7', borderRadius: 14, overflow: 'hidden', backgroundColor: '#EBEEF7' }}>
+            <div className="grid grid-cols-2" style={{ rowGap: 1 }}>
               {/* 협의 단가 */}
               <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px', backgroundColor: '#FAFAFC' }}>
                 <p className="text-[14px] font-semibold leading-[135%]" style={{ color: '#78756E' }}>협의 단가</p>

@@ -11,6 +11,7 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: 'Woven',
   description: '뷰티 브랜드 인하우스 마케터를 위한 인플루언서 캠페인 관리 앱',
+  themeColor: '#ffffff',
 };
 
 export default function RootLayout({

@@ -32,7 +32,7 @@ const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
 const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
   1: {
     'list-up': [
-      { id: 'lu1', name: '김민지', handle: '@minj_',    followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-kimminji.png' },
+      { id: 'lu1', name: 'minj_', handle: '@minj_',    followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-kimminji.png' },
       { id: 'lu2', name: '박서연', handle: '@ppseoo',   followers: '4만',    categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-parkseo.png' },
       { id: 'lu3', name: '박진이', handle: '@jinstlee', followers: '6.8만',  categories: ['뷰티', '일상'],         statusText: '리스트업', profileImg: '/profile-parkjini.png' },
     ],
@@ -43,7 +43,7 @@ const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
     ],
     'negotiated': [
       { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '시안 전달 D+1', amount: '350,000원', profileImg: '/profile-paooar.png' },
-      { id: '5', name: '김민지', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 전달 D+3', amount: '280,000원', profileImg: '/profile-kimminji.png' },
+      { id: '5', name: 'minj_', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 전달 D+3', amount: '280,000원', profileImg: '/profile-kimminji.png' },
     ],
     'inProgress': [
       { id: '4', name: 'leeum',  handle: '@leeum',  followers: '4.6만', categories: ['뷰티', '패션'], statusText: '포스팅 D-1', amount: '350,000원',
@@ -70,22 +70,22 @@ const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
     'list-up': [],
     'contacting': [
       { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '전송 D+5', profileImg: '/profile-paooar.png' },
-      { id: '7', name: '김민지', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '전송 D+5', profileImg: '/profile-kimminji.png' },
+      { id: '7', name: 'minj_', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '전송 D+5', profileImg: '/profile-kimminji.png' },
       { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '2만',    categories: ['뷰티', '패션'],         statusText: '전송 D+5', profileImg: '/profile-zigoo.png' },
     ],
     'negotiated': [
       { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '협의 완료', profileImg: '/profile-paooar.png' },
-      { id: '7', name: '김민지', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '협의 완료', profileImg: '/profile-kimminji.png' },
+      { id: '7', name: 'minj_', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '협의 완료', profileImg: '/profile-kimminji.png' },
       { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '2만',    categories: ['뷰티', '패션'],         statusText: '협의 완료', profileImg: '/profile-zigoo.png' },
     ],
     'inProgress': [
       { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '시안 확인 중', profileImg: '/profile-paooar.png' },
-      { id: '7', name: '김민지', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: '/profile-kimminji.png' },
+      { id: '7', name: 'minj_', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: '/profile-kimminji.png' },
       { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '2만',    categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: '/profile-zigoo.png' },
     ],
     'uploaded': [
       { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '업로드 완료', profileImg: '/profile-paooar.png' },
-      { id: '7', name: '김민지', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '업로드 완료', profileImg: '/profile-kimminji.png' },
+      { id: '7', name: 'minj_', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '업로드 완료', profileImg: '/profile-kimminji.png' },
       { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '2만',    categories: ['뷰티', '패션'],         statusText: '업로드 완료', profileImg: '/profile-zigoo.png' },
     ],
   },

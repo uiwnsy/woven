@@ -103,9 +103,9 @@ function RankBadge({ rank }: { rank: number }) {
   );
 }
 
-function StatCard({ inf }: { inf: InfluencerStat }) {
+function StatCard({ inf, onClick }: { inf: InfluencerStat; onClick: () => void }) {
   return (
-    <div className="bg-[#F8FAFF] border border-[#F5F5F3] rounded-[14px] p-[22px] flex flex-col gap-[10px]">
+    <button onClick={onClick} className="bg-[#F8FAFF] border border-[#F5F5F3] rounded-[14px] p-[22px] flex flex-col gap-[10px] w-full text-left active:opacity-70">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-[14px]">
           <RankBadge rank={inf.rank} />
@@ -140,7 +140,7 @@ function StatCard({ inf }: { inf: InfluencerStat }) {
           </div>
         ))}
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -212,7 +212,7 @@ export default function InfluencerPerformancePage() {
                 <span className="text-[14px] font-semibold" style={{ color: '#B0ADA7' }}>
                   업로드 완료 {campaignStats.length}명
                 </span>
-                {campaignStats.map(inf => <StatCard key={inf.handle} inf={inf} />)}
+                {campaignStats.map(inf => <StatCard key={inf.handle} inf={inf} onClick={() => router.push(`/performance/influencers/${inf.handle.replace('@', '')}`)} />)}
               </>
             ) : (
               <div className="flex flex-col items-center justify-center py-16 gap-3">
@@ -231,7 +231,7 @@ export default function InfluencerPerformancePage() {
               총 {ALL_TIME.length}명 · 평균 ROAS 기준
             </span>
             {ALL_TIME.map(inf => (
-              <div key={inf.handle} className="bg-[#F8FAFF] border border-[#F5F5F3] rounded-[14px] p-[22px] flex flex-col gap-[10px]">
+              <button key={inf.handle} onClick={() => router.push(`/performance/influencers/${inf.handle.replace('@', '')}`)} className="bg-[#F8FAFF] border border-[#F5F5F3] rounded-[14px] p-[22px] flex flex-col gap-[10px] w-full text-left active:opacity-70">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-[14px]">
                     <RankBadge rank={inf.rank} />
@@ -268,7 +268,7 @@ export default function InfluencerPerformancePage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         )}

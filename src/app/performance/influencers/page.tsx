@@ -107,7 +107,7 @@ export default function InfluencerPerformancePage() {
       <div className="flex-1 bg-[#FAFBFE] overflow-y-auto pb-10">
 
         {/* ── 캠페인 셀렉터 ── */}
-        <div className="bg-white px-5 pt-5 pb-5">
+        <div className="bg-white px-5 pt-5 pb-3">
           <button
             onClick={() => setShowSheet(true)}
             className="flex items-center justify-between w-full bg-white rounded-[46px] px-[22px] py-[14px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80"
@@ -131,7 +131,7 @@ export default function InfluencerPerformancePage() {
 
         {selectedId === 'all' ? (
           /* ── 전체 캠페인 ── */
-          <div className="bg-white px-5 py-6 flex flex-col gap-4">
+          <div className="bg-white px-5 pt-3 pb-6 flex flex-col gap-4">
             <span className="text-[14px] font-semibold" style={{ color: '#B0ADA7' }}>
               총 {ALL_TIME.length}명 · 평균 ROAS 기준
             </span>
@@ -183,7 +183,7 @@ export default function InfluencerPerformancePage() {
           </div>
         ) : (
           /* ── 특정 캠페인 ── */
-          <div className="bg-white px-5 py-6 flex flex-col gap-4">
+          <div className="bg-white px-5 pt-3 pb-6 flex flex-col gap-4">
             {campaignStats.length > 0 ? (
               <>
                 <span className="text-[14px] font-semibold" style={{ color: '#B0ADA7' }}>

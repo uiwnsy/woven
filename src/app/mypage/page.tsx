@@ -119,8 +119,8 @@ export default function MyPage() {
             <p className="text-[16px] font-bold text-white mb-1">Woven Plus Plan</p>
             <p className="text-[13px] text-stone-400">다음 결제일 5월 18일</p>
           </div>
-          <div className="bg-iris-500 px-[10px] py-[5px] rounded-full shrink-0 ml-3">
-            <span className="text-white text-[13px] font-semibold whitespace-nowrap">멤버십 124 일째 이용 중</span>
+          <div className="bg-iris-500 px-[10px] pt-[4px] pb-[6px] rounded-full shrink-0 ml-3">
+            <span className="text-white text-[13px] font-semibold whitespace-nowrap leading-none">멤버십 124 일째 이용 중</span>
           </div>
         </div>
 

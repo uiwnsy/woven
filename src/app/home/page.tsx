@@ -253,7 +253,8 @@ export default function HomePage() {
               {INFLUENCER_RANKS.map((inf, i) => (
                 <div
                   key={inf.id}
-                  className={`flex items-center justify-between py-[14px]
+                  onClick={() => router.push('/performance/influencers/' + inf.handle.replace('@', ''))}
+                  className={`flex items-center justify-between py-[14px] cursor-pointer active:opacity-70
                     ${i < INFLUENCER_RANKS.length - 1 ? 'border-b border-[#f0f2f8]' : ''}`}
                 >
                   {/* Left: avatar + info */}

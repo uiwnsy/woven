@@ -83,7 +83,7 @@ function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () 
   return (
     <div onClick={onClick} className="bg-white rounded-[14px] border border-[#EBEEF7] px-5 py-[22px] flex flex-col gap-4 active:opacity-70 cursor-pointer">
       {/* Section 1: Title+status + Info row */}
-      <div className="flex flex-col gap-[6px]">
+      <div className="flex flex-col gap-[3px]">
         <div className="flex items-center justify-between">
           <span className="text-[16px] font-semibold text-black leading-[1.3] flex-1 pr-3">
             {campaign.title}

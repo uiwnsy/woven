@@ -162,7 +162,7 @@ export default function HomePage() {
     <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
 
       {/* ── Fixed nav bar ── */}
-      <div className="shrink-0" style={{ background: 'linear-gradient(139deg, #8486F3 0.32%, #6366F1 104.47%)' }}>
+      <div className="shrink-0" style={{ background: '#8486F3' }}>
         <div className="px-5 flex items-center justify-between h-[65px]">
           <img src="/woven-logo.svg" alt="Woven" width={76.14} height={13.66} />
           <div className="flex items-center gap-2">
@@ -177,7 +177,7 @@ export default function HomePage() {
       <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden pb-[95px]">
 
         {/* Gradient greeting + tabs (scrolls away) */}
-        <div style={{ background: 'linear-gradient(139deg, #8486F3 0.32%, #6366F1 104.47%)' }}>
+        <div style={{ background: '#8486F3' }}>
           <div className="px-5">
             {/* Greeting */}
             <div className="py-[50px]">

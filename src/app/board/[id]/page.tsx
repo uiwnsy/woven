@@ -1199,18 +1199,6 @@ export default function InfluencerDetailPage() {
               </div>
             </div>
 
-            {/* 성과 보기 버튼 */}
-            <button
-              onClick={() => router.push('/performance')}
-              className="w-full flex items-center justify-center gap-2 active:opacity-80"
-              style={{ backgroundColor: '#2E2C28', borderRadius: 14, padding: 18 }}
-            >
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M3 13.5L7 9l3 3 5-6" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                <circle cx="15" cy="3.5" r="2" fill="#6366F1"/>
-              </svg>
-              <span className="text-[16px] font-bold text-white">인플루언서별 성과 보기</span>
-            </button>
           </div>
         ) : (
           /* ── 업로드 정보 (시안확인 단계) ── */
@@ -1649,13 +1637,9 @@ export default function InfluencerDetailPage() {
         {effectiveStage === 'uploaded' ? (
           <button
             onClick={() => router.push('/performance')}
-            className="w-full flex items-center justify-center gap-2 active:opacity-80"
+            className="w-full flex items-center justify-center active:opacity-80"
             style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
           >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M3 13.5L7 9l3 3 5-6" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-              <circle cx="15" cy="3.5" r="2" fill="#6366F1"/>
-            </svg>
             <span className="text-[16px] font-bold text-white">인플루언서별 성과 보기</span>
           </button>
         ) : effectiveStage === 'reviewing' ? (

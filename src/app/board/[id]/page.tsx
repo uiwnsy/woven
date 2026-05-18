@@ -90,6 +90,20 @@ const MOCK_DETAILS: Record<string, InfluencerDetail> = {
     brief: BRIEF_TEXT,
     campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
+  '4': {
+    id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만', posts: '1,423',
+    categories: ['뷰티', '패션', '일상'], profileImg: '/profile-paooar.png',
+    stage: 'negotiating', campaignName: '루미에르 봄봄 프로모션', dDay: 'D+5',
+    brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
+  },
+  '5': {
+    id: '5', name: 'minj_', handle: '@minj_', followers: '24.5만', posts: '1,842',
+    categories: ['뷰티', '패션'], profileImg: '/profile-kimminji.png',
+    stage: 'negotiating', campaignName: '루미에르 봄봄 프로모션', dDay: 'D+3',
+    brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
+  },
 };
 
 function getCategoryStyle(c: string) {
@@ -192,6 +206,8 @@ export default function InfluencerDetailPage() {
   const [briefCopied, setBriefCopied] = useState(false);
   const [showMemoOverlay, setShowMemoOverlay] = useState(false);
   const [memoInput, setMemoInput] = useState('');
+  const [driveLink, setDriveLink] = useState('');
+  const [draftFileAdded, setDraftFileAdded] = useState(false);
   const [isEditingBrief, setIsEditingBrief] = useState(false);
   const [editedBrief, setEditedBrief] = useState<string | null>(null);
   const [briefVersion, setBriefVersion] = useState(0);
@@ -275,7 +291,7 @@ export default function InfluencerDetailPage() {
       </div>
 
       {/* ── Scrollable body ── */}
-      <div className={`flex-1 overflow-y-auto ${effectiveStage === 'contacting' ? 'pb-[200px]' : 'pb-[120px]'}`}>
+      <div className={`flex-1 overflow-y-auto ${effectiveStage === 'contacting' || effectiveStage === 'negotiating' ? 'pb-[200px]' : 'pb-[120px]'}`}>
 
         {/* ── Profile Card ── */}
         <div className="bg-white flex flex-col items-center w-full" style={{ padding: '34px 20px', gap: 20 }}>
@@ -788,6 +804,150 @@ export default function InfluencerDetailPage() {
 
         </> /* end contacting only */}
 
+        {/* ── 협의중 전용 섹션들 ── */}
+        {effectiveStage === 'negotiating' && <>
+
+        {/* 시안 섹션 */}
+        <div className="bg-white" style={{ padding: '30px 20px', gap: 24, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <span className="text-[20px] font-bold text-black">시안</span>
+            <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>
+              인플루언서로부터 받은 시안을 첨부하고 검토하세요.
+            </span>
+          </div>
+
+          {/* 첨부된 파일 */}
+          {draftFileAdded && (
+            <div className="flex items-center justify-between px-5 py-4 rounded-[14px]"
+              style={{ backgroundColor: '#F0F2FF', border: '1px solid #C7C9F5' }}>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-[10px] bg-white flex items-center justify-center shrink-0"
+                  style={{ border: '1px solid #EBEEF7' }}>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M5 2.5h7l4 4v11a1 1 0 01-1 1H5a1 1 0 01-1-1v-14a1 1 0 011-1z" stroke="#6366F1" strokeWidth="1.3" fill="none"/>
+                    <path d="M12 2.5V7H16.5" stroke="#6366F1" strokeWidth="1.3" strokeLinecap="round"/>
+                    <path d="M7 11h6M7 13.5h4" stroke="#6366F1" strokeWidth="1.2" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[14px] font-semibold" style={{ color: '#1C1A17' }}>시안_파일.jpg</p>
+                  <p className="text-[12px]" style={{ color: '#8486F3' }}>첨부 완료</p>
+                </div>
+              </div>
+              <button onClick={() => setDraftFileAdded(false)} className="active:opacity-60">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M4 4l10 10M14 4L4 14" stroke="#B0ADA7" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </button>
+            </div>
+          )}
+
+          {/* 파일 첨부 영역 (dashed) */}
+          {!draftFileAdded && (
+            <button
+              onClick={() => setDraftFileAdded(true)}
+              className="w-full flex flex-col items-center justify-center gap-[10px] active:opacity-70"
+              style={{ border: '1px dashed #B0ADA7', borderRadius: 14, padding: '30px 0' }}
+            >
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                <rect width="52" height="52" rx="12" fill="#F2F4F6"/>
+                <path d="M17 33c0 1.1.9 2 2 2h14a2 2 0 002-2V25l-5-5H19a2 2 0 00-2 2v11z"
+                  stroke="#78756E" strokeWidth="1.4" fill="none" strokeLinejoin="round"/>
+                <path d="M30 20v5h5" stroke="#78756E" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M26 27v6M23 30l3-3 3 3" stroke="#8486F3" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>시안 파일 첨부하기</span>
+            </button>
+          )}
+
+          {/* 또는 구분선 */}
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-[1px] bg-[#E8E7E4]" />
+            <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>또는</span>
+            <div className="flex-1 h-[1px] bg-[#E8E7E4]" />
+          </div>
+
+          {/* Drive 링크 입력 */}
+          <div>
+            <div className="flex items-center justify-between"
+              style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 10px 10px 20px' }}>
+              <input
+                value={driveLink}
+                onChange={e => setDriveLink(e.target.value)}
+                placeholder="Google Drive 링크 붙여넣기"
+                className="flex-1 bg-transparent outline-none text-[16px] font-medium"
+                style={{ color: '#1C1A17' }}
+              />
+              <button className="shrink-0 w-[34px] h-[34px] flex items-center justify-center rounded-[8px] active:opacity-70"
+                style={{ backgroundColor: driveLink ? '#6366F1' : '#F2F4F6' }}>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M10 8l-6 6M10 8H6m4 0v4" stroke={driveLink ? '#fff' : '#78756E'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M7 4H4a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3" stroke={driveLink ? '#fff' : '#78756E'} strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </button>
+            </div>
+            <p className="text-[14px] font-medium mt-2" style={{ color: '#D4D2CE' }}>
+              Google Drive, Dropbox 등 클라우드 링크를 붙여넣으세요.
+            </p>
+          </div>
+        </div>
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 협의 정보 */}
+        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+          <span className="text-[20px] font-bold text-black">협의 정보</span>
+
+          {/* 2x2 그리드 카드 */}
+          <div style={{ border: '1px solid #EBEEF7', borderRadius: 14, overflow: 'hidden' }}>
+            <div className="grid grid-cols-2" style={{ borderBottom: '1px solid #EBEEF7' }}>
+              {/* 협의 단가 */}
+              <div style={{ padding: '15px 22px 12px', borderRight: '1px solid #EBEEF7', backgroundColor: '#FAFAFC' }}>
+                <p className="text-[14px] font-semibold mb-[6px]" style={{ color: '#78756E' }}>협의 단가</p>
+                <p className="text-[20px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>
+                  350,000<span style={{ color: '#6366F1' }}>원</span>
+                </p>
+              </div>
+              {/* 콘텐츠 형식 */}
+              <div style={{ padding: '15px 22px 12px', backgroundColor: '#FAFAFC' }}>
+                <p className="text-[14px] font-semibold mb-[6px]" style={{ color: '#78756E' }}>콘텐츠 형식</p>
+                <p className="text-[20px] font-semibold leading-[135%]" style={{ color: '#1C1A17' }}>릴스 1건</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2">
+              {/* 시안 전달 예정일 */}
+              <div style={{ padding: '12px 22px 15px', borderRight: '1px solid #EBEEF7', backgroundColor: '#FAFAFC' }}>
+                <p className="text-[14px] font-semibold mb-[6px]" style={{ color: '#78756E' }}>시안 전달 예정일</p>
+                <p className="text-[20px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>2025.04.25</p>
+              </div>
+              {/* 플랫폼 */}
+              <div style={{ padding: '12px 22px 15px', backgroundColor: '#FAFAFC' }}>
+                <p className="text-[14px] font-semibold mb-[6px]" style={{ color: '#78756E' }}>플랫폼</p>
+                <p className="text-[20px] font-semibold leading-[135%]" style={{ color: '#1C1A17' }}>인스타그램</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 제품 배송 완료 */}
+          <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: 20 }}>
+            <div className="flex items-center justify-between">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
+                <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
+              </div>
+              <button
+                onClick={() => setProductShipped(v => !v)}
+                className="shrink-0 active:opacity-80 flex items-center"
+                style={{ width: 52, height: 30, borderRadius: 40, padding: 3, backgroundColor: productShipped ? '#6366F1' : '#E8E7E4', transition: 'background-color 0.2s', justifyContent: productShipped ? 'flex-end' : 'flex-start', display: 'flex' }}
+              >
+                <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        </> /* end negotiating only */}
+
         <div className="h-2 bg-[#F5F5F3]" />
 
         {/* ── 협업 이력 ── */}
@@ -889,7 +1049,20 @@ export default function InfluencerDetailPage() {
         className="absolute bottom-0 w-full bg-white flex flex-col"
         style={{ borderTop: '1px solid #E8E7E4', padding: 20, gap: 10 }}
       >
-        {effectiveStage === 'contacting' ? (
+        {effectiveStage === 'negotiating' ? (
+          <>
+            <button
+              onClick={() => router.push('/board?tab=inProgress')}
+              className="w-full flex items-center justify-center active:opacity-80"
+              style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
+            >
+              <span className="text-[16px] font-bold text-white">시안 확인 단계로 이동</span>
+            </button>
+            <button className="w-full flex items-center justify-center active:opacity-60">
+              <span className="text-[16px] font-medium" style={{ color: '#B7B7B7' }}>임시 저장</span>
+            </button>
+          </>
+        ) : effectiveStage === 'contacting' ? (
           <>
             {/* 상태 칩 (27:4440) */}
             <div className="flex justify-center" style={{ gap: 10 }}>

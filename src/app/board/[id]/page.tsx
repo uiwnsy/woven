@@ -1085,23 +1085,27 @@ export default function InfluencerDetailPage() {
             )}
           </div>
 
-          {data.isFirstCollab ? (
-            <div
-              className="flex flex-col items-center text-center"
-              style={{ backgroundColor: '#F8F8FF', borderRadius: 14, padding: 22, gap: 6 }}
-            >
+          <div
+            className="flex flex-col items-center text-center"
+            style={{ backgroundColor: '#F8F8FF', borderRadius: 14, padding: 22, gap: 6 }}
+          >
+            {data.isFirstCollab ? (
+              <>
+                <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
+                  첫 협업 인플루언서예요!
+                </span>
+                <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
+                  이번 캠페인 성과가{' '}
+                  <span className="font-bold" style={{ color: '#6366F1' }}>첫 이력으로 기록</span>
+                  됩니다.
+                </span>
+              </>
+            ) : (
               <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
-                첫 협업 인플루언서예요!
+                이전 협업 이력이 없어요.
               </span>
-              <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
-                이번 캠페인 성과가{' '}
-                <span className="font-bold" style={{ color: '#6366F1' }}>첫 이력으로 기록</span>
-                됩니다.
-              </span>
-            </div>
-          ) : (
-            <p className="text-[16px] font-medium" style={{ color: '#899098' }}>이전 협업 이력이 없어요.</p>
-          )}
+            )}
+          </div>
         </div>
 
         <div className="h-2 bg-[#F5F5F3]" />

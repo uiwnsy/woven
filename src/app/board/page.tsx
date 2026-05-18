@@ -46,10 +46,10 @@ const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
       { id: '5', name: 'minj_', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 전달 D+3', amount: '280,000원', profileImg: '/profile-kimminji.png' },
     ],
     'inProgress': [
-      { id: '4', name: 'leeum',  handle: '@leeum',  followers: '4.6만', categories: ['뷰티', '패션'], statusText: '포스팅 D-1', amount: '350,000원',
+      { id: '6', name: 'leeum',  handle: '@leeum',  followers: '4.6만', categories: ['뷰티', '패션'], statusText: '포스팅 D-1', amount: '350,000원',
         bottomTags: [{ label: '최종 승인', bg: 'bg-[#F0FDF4]', text: 'text-[#22C55E]' }, { label: 'UTM 포함', bg: 'bg-[#EFF6FF]', text: 'text-[#3D3FC7]' }],
         profileImg: '/profile-leeum.png' },
-      { id: '2', name: '이가흔', handle: '@gaaa934', followers: '2.4만', categories: ['뷰티', '패션'], statusText: '포스팅 D-3', amount: '280,000원',
+      { id: '6', name: '이가흔', handle: '@igaheun', followers: '2.4만', categories: ['뷰티', '패션'], statusText: '포스팅 D-3', amount: '280,000원',
         bottomTags: [{ label: '최종 승인', bg: 'bg-[#F0FDF4]', text: 'text-[#22C55E]' }],
         profileImg: '/profile-igaheun.png' },
     ],
@@ -354,7 +354,7 @@ function BoardPageContent() {
                       tab.id === 'negotiated' || tab.id === 'inProgress' || tab.id === 'uploaded' ? (
                         <button
                           key={item.id + i}
-                          onClick={() => router.push('/board/' + item.id)}
+                          onClick={() => router.push('/board/' + item.id + (tab.id === 'negotiated' ? '?stage=negotiating' : tab.id === 'inProgress' ? '?stage=reviewing' : ''))}
                           className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col gap-[4px] w-full text-left active:opacity-80 transition-opacity"
                         >
                           <div className="flex items-center justify-between gap-3">

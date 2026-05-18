@@ -287,9 +287,9 @@ function BoardPageContent() {
                         {/* 상태 + 금액 */}
                         <div className="flex flex-col items-end gap-[10px] shrink-0">
                           {item.statusText && (
-                            <span className="bg-stone-100 text-stone-600 text-[13px] font-semibold px-[10px] pt-[4px] pb-[6px] rounded-full leading-none whitespace-nowrap">
-                              {item.statusText}
-                            </span>
+                            <div className="bg-stone-100 px-[10px] pt-[4px] pb-[6px] rounded-full shrink-0">
+                              <span className="text-[13px] font-semibold text-stone-600 leading-none whitespace-nowrap">{item.statusText}</span>
+                            </div>
                           )}
                           {item.amount && (
                             <span className="text-[18px] font-extrabold text-[#1C1A17] pr-[3px]">{item.amount}</span>

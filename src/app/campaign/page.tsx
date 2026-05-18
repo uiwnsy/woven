@@ -88,7 +88,7 @@ function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () 
           <span className="text-[16px] font-semibold text-black leading-[1.3] flex-1 pr-3">
             {campaign.title}
           </span>
-          <span className={`${statusStyle.bg} ${statusStyle.text} text-[13px] font-bold px-[8px] py-[3px] rounded-full shrink-0`}>
+          <span className={`${statusStyle.bg} ${statusStyle.text} text-[13px] font-semibold px-[8px] py-[3px] rounded-full shrink-0`}>
             {campaign.status}
           </span>
         </div>
@@ -171,8 +171,8 @@ export default function CampaignPage() {
                 onClick={() => setActiveFilter(filter)}
                 className={`shrink-0 px-[8px] py-[3px] rounded-full text-[13px] transition-all active:opacity-70
                   ${isActive
-                    ? 'bg-iris-500 text-white font-bold'
-                    : 'border border-[#d4d2ce] text-[#899098] font-bold bg-white'}`}
+                    ? 'bg-iris-500 text-white font-semibold'
+                    : 'border border-[#d4d2ce] text-[#899098] font-semibold bg-white'}`}
               >
                 {filter}
               </button>

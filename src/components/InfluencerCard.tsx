@@ -62,7 +62,7 @@ export default function InfluencerCard({ data, onPress }: CardProps) {
 
         {/* Status pill */}
         {data.statusText && (
-          <div className="bg-stone-100 px-[8px] py-[3px] rounded-full shrink-0 ml-3">
+          <div className="bg-stone-100 px-[10px] py-[5px] rounded-full shrink-0 ml-3">
             <span className="text-[13px] font-semibold text-stone-600">{data.statusText}</span>
           </div>
         )}
@@ -73,7 +73,7 @@ export default function InfluencerCard({ data, onPress }: CardProps) {
         {(data.categories || []).map((cat, idx) => {
           const { bg, text } = getCategoryStyle(cat);
           return (
-            <span key={idx} className={`px-[8px] py-[3px] rounded-full text-[13px] font-semibold ${bg} ${text}`}>
+            <span key={idx} className={`px-[10px] py-[5px] rounded-full text-[13px] font-semibold ${bg} ${text}`}>
               {cat}
             </span>
           );

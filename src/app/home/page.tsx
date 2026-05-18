@@ -238,7 +238,7 @@ export default function HomePage() {
                     <button
                       key={f}
                       onClick={() => setRankFilter(f)}
-                      className={`shrink-0 px-[8px] py-[3px] rounded-full text-[13px] transition-all active:opacity-70
+                      className={`shrink-0 px-[10px] py-[5px] rounded-full text-[13px] transition-all active:opacity-70
                         ${rankFilter === f
                           ? 'bg-iris-500 text-white font-semibold'
                           : 'border border-[#d4d2ce] text-[#899098] font-semibold bg-white'}`}
@@ -288,12 +288,12 @@ export default function HomePage() {
                   ) : (
                     <div className="flex items-center gap-1.5">
                       {inf.stage && (
-                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[13px] font-semibold px-[8px] py-[3px] rounded-full`}>
+                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[13px] font-semibold px-[10px] py-[5px] rounded-full`}>
                           {inf.stage.label}
                         </span>
                       )}
                       {inf.status && (
-                        <span className={`${inf.status.bg} ${inf.status.text} text-[13px] font-semibold px-[8px] py-[3px] rounded-full`}>
+                        <span className={`${inf.status.bg} ${inf.status.text} text-[13px] font-semibold px-[10px] py-[5px] rounded-full`}>
                           {inf.status.label}
                         </span>
                       )}
@@ -311,7 +311,7 @@ export default function HomePage() {
         <div className="bg-white px-5 py-[40px] mb-[10px]">
           <div className="flex items-center justify-between mb-1.5">
             <span className="text-[20px] font-bold text-stone-900">루미에르 봄봄 프로모션</span>
-            <span className="bg-iris-500 text-white text-[13px] font-semibold rounded-full shrink-0 ml-2" style={{ padding: '3px 8px 3px 9px' }}>D-8</span>
+            <span className="bg-iris-500 text-white text-[13px] font-semibold rounded-full shrink-0 ml-2" style={{ padding: '5px 10px' }}>D-8</span>
           </div>
           <p className="text-[13px] font-medium text-[#8995a2] mb-[32px]">
             4월 26일 마감 &nbsp;·&nbsp; 오늘 오전 8:41
@@ -407,7 +407,7 @@ export default function HomePage() {
               >
                 {/* Title box */}
                 <div className="flex flex-col gap-[14px]">
-                  <span className={`${campaign.statusBg} ${campaign.statusText} text-[13px] font-semibold px-[8px] py-[3px] rounded-full self-start`}>
+                  <span className={`${campaign.statusBg} ${campaign.statusText} text-[13px] font-semibold px-[10px] py-[5px] rounded-full self-start`}>
                     {campaign.status}
                   </span>
                   <p className="text-[16px] font-bold text-black leading-[1.35] whitespace-pre-line">{campaign.name}</p>

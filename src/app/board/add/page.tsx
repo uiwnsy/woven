@@ -209,7 +209,7 @@ function Step2({
                   {/* Radio button */}
                   <div className={`w-[22px] h-[22px] rounded-full border-2 flex items-center justify-center shrink-0 ml-3 transition-colors
                     ${inf.selected ? 'border-iris-500 bg-iris-500' : 'border-stone-300 bg-white'}`}>
-                    {inf.selected && <div className="w-2 h-2 rounded-full bg-white" />}
+                    {inf.selected && <Check size={12} className="text-white" strokeWidth={3} />}
                   </div>
                 </div>
                 {/* Categories */}

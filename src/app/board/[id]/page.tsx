@@ -1473,14 +1473,14 @@ export default function InfluencerDetailPage() {
               {overlayMode === 'requesting' && (
                 <>
                   <div className="flex items-start gap-2 px-4 py-3 rounded-[12px]"
-                    style={{ backgroundColor: '#FFFBEB', border: '1px solid #FDE68A' }}>
+                    style={{ backgroundColor: '#EEF7FF', border: '1px solid #BFDBFE' }}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[2px]">
-                      <path d="M8 1.5L1 14.5h14L8 1.5z" stroke="#F59E0B" strokeWidth="1.3" strokeLinejoin="round"/>
-                      <path d="M8 7v3" stroke="#F59E0B" strokeWidth="1.3" strokeLinecap="round"/>
-                      <circle cx="8" cy="11.5" r="0.6" fill="#F59E0B"/>
+                      <circle cx="8" cy="8" r="7" stroke="#2D92FE" strokeWidth="1.4"/>
+                      <path d="M8 7v3.5" stroke="#2D92FE" strokeWidth="1.4" strokeLinecap="round"/>
+                      <circle cx="8" cy="5" r="0.7" fill="#2D92FE"/>
                     </svg>
-                    <span className="text-[13px] font-medium" style={{ color: '#92400E', lineHeight: '135%' }}>
-                      수정 요청을 보내면 인플루언서가 재전달할 때까지 대기 상태로 유지돼요.
+                    <span className="text-[13px] font-medium" style={{ color: '#1D4ED8', lineHeight: '135%' }}>
+                      수정 요청 내용을 기록해두세요. DM은 직접 인플루언서에게 전달해 주세요.
                     </span>
                   </div>
                   <div className="flex flex-col gap-2">
@@ -1540,7 +1540,7 @@ export default function InfluencerDetailPage() {
                     transition: 'background-color 0.15s',
                   }}
                 >
-                  <span className="text-[16px] font-bold" style={{ color: revisionText.trim() ? '#FFFFFF' : '#B0ADA7' }}>수정 요청 전송</span>
+                  <span className="text-[16px] font-bold" style={{ color: revisionText.trim() ? '#FFFFFF' : '#B0ADA7' }}>수정 요청 기록</span>
                 </button>
               </div>
             ) : draftReviewState === 'approved' || draftReviewState === 'revision-sent' ? (

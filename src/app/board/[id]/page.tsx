@@ -947,7 +947,12 @@ export default function InfluencerDetailPage() {
         {/* UTM 링크 */}
         {(() => {
           const handle = data.handle.replace('@', '');
-          const utmLink = `https://lumiere.co/?utm_source=instagram&utm_medium=influencer&utm_campaign=spring2025&utm_content=${handle}`;
+          // deterministic short code from handle
+          const seed = [...handle].reduce((acc, c) => (acc * 31 + c.charCodeAt(0)) & 0xFFFFFF, 5381);
+          const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+          const shortId = Array.from({ length: 6 }, (_, i) => chars[(seed >> (i * 3)) % chars.length]).join('');
+          const shortLink = `https://lumi.re/${shortId}`;
+          const fullUtmLink = `https://lumiere.co/?utm_source=instagram&utm_medium=influencer&utm_campaign=spring2025&utm_content=${handle}`;
           return (
             <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
               <div className="flex flex-col" style={{ gap: 6 }}>
@@ -957,21 +962,27 @@ export default function InfluencerDetailPage() {
                 </span>
               </div>
 
-              {/* Link card */}
+              {/* Short link card */}
               <div style={{ border: '1px solid #EBEEF7', borderRadius: 14, overflow: 'hidden' }}>
-                {/* UTM link row */}
+                {/* Short link + copy */}
                 <div className="flex items-center justify-between px-5 py-4" style={{ gap: 12, backgroundColor: '#FAFAFC' }}>
-                  <p className="text-[13px] font-medium flex-1 break-all leading-[150%]" style={{ color: '#4B5969', fontFamily: 'Manrope, sans-serif' }}>
-                    {utmLink}
-                  </p>
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0">
+                      <path d="M6.5 9.5a3.5 3.5 0 005 0l2-2a3.5 3.5 0 00-5-5l-1 1" stroke="#6366F1" strokeWidth="1.4" strokeLinecap="round"/>
+                      <path d="M9.5 6.5a3.5 3.5 0 00-5 0l-2 2a3.5 3.5 0 005 5l1-1" stroke="#6366F1" strokeWidth="1.4" strokeLinecap="round"/>
+                    </svg>
+                    <span className="text-[16px] font-bold truncate" style={{ color: '#6366F1', fontFamily: 'Manrope, sans-serif' }}>
+                      {shortLink}
+                    </span>
+                  </div>
                   <button
                     onClick={async () => {
-                      await navigator.clipboard.writeText(utmLink).catch(() => {});
+                      await navigator.clipboard.writeText(shortLink).catch(() => {});
                       setUtmCopied(true);
                       setTimeout(() => setUtmCopied(false), 2000);
                     }}
                     className="shrink-0 flex items-center justify-center gap-[6px] active:opacity-70"
-                    style={{ backgroundColor: utmCopied ? '#6366F1' : '#EEEEFF', borderRadius: 8, padding: '8px 12px', transition: 'background-color 0.15s' }}
+                    style={{ backgroundColor: utmCopied ? '#6366F1' : '#EEEEFF', borderRadius: 8, padding: '8px 14px', transition: 'background-color 0.15s' }}
                   >
                     {utmCopied ? (
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -1006,6 +1017,13 @@ export default function InfluencerDetailPage() {
                       <span className="text-[13px] font-semibold" style={{ color: '#1C1A17', fontFamily: 'Manrope, sans-serif' }}>{param.value}</span>
                     </div>
                   ))}
+                </div>
+
+                {/* Full URL reference */}
+                <div className="px-5 py-3" style={{ borderTop: '1px solid #F0F2F8', backgroundColor: '#FAFAFA' }}>
+                  <p className="text-[11px] font-medium break-all leading-[160%]" style={{ color: '#C0C4CF', fontFamily: 'Manrope, sans-serif' }}>
+                    {fullUtmLink}
+                  </p>
                 </div>
               </div>
             </div>

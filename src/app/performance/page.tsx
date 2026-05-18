@@ -275,7 +275,7 @@ export default function PerformancePage() {
             <div className="flex flex-col gap-[30px]">
 
               {/* Top performer card */}
-              <div className="bg-[#F8FAFF] border border-[#F5F5F3] rounded-[14px] p-[22px] flex flex-col gap-[10px]">
+              <div onClick={() => router.push('/performance/influencers/dearyq')} className="bg-[#F8FAFF] border border-[#F5F5F3] rounded-[14px] p-[22px] flex flex-col gap-[10px] cursor-pointer active:opacity-80">
 
                 {/* Summary info row */}
                 <div className="flex items-center justify-between">
@@ -337,7 +337,8 @@ export default function PerformancePage() {
                   {UPLOAD_WAITING.map((inf, i) => (
                     <div
                       key={inf.handle}
-                      className={`flex items-center justify-between py-[14px]
+                      onClick={() => router.push('/performance/influencers/' + inf.handle.replace('@', ''))}
+                      className={`flex items-center justify-between py-[14px] cursor-pointer active:opacity-70
                         ${i < UPLOAD_WAITING.length - 1 ? 'border-b border-[rgba(235,238,247,0.5)]' : ''}`}
                     >
                       {/* Left: avatar + name */}

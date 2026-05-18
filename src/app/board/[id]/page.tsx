@@ -1076,7 +1076,15 @@ export default function InfluencerDetailPage() {
 
         {/* ── 협업 이력 ── */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
-          <div className="flex items-center justify-between">
+          <div
+            className="flex items-center justify-between"
+            onClick={() => {
+              if (effectiveStage === 'contacting' || effectiveStage === 'negotiating') {
+                setCollabHistoryExpanded(v => !v);
+              }
+            }}
+            style={(effectiveStage === 'contacting' || effectiveStage === 'negotiating') ? { cursor: 'pointer' } : {}}
+          >
             <span className="text-[20px] font-bold text-black">협업 이력</span>
             {data.isFirstCollab && (
               <div className="flex items-center gap-[6px]">
@@ -1087,14 +1095,12 @@ export default function InfluencerDetailPage() {
                   첫 협업
                 </span>
                 {(effectiveStage === 'contacting' || effectiveStage === 'negotiating') && (
-                  <button onClick={() => setCollabHistoryExpanded(v => !v)} className="active:opacity-60">
-                    <svg
-                      width="18" height="18" viewBox="0 0 18 18" fill="none"
-                      style={{ transform: collabHistoryExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
-                    >
-                      <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </button>
+                  <svg
+                    width="18" height="18" viewBox="0 0 18 18" fill="none"
+                    style={{ transform: collabHistoryExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+                  >
+                    <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 )}
               </div>
             )}

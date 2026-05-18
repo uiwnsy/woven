@@ -1162,7 +1162,7 @@ export default function InfluencerDetailPage() {
                   value={postingUrl}
                   onChange={e => setPostingUrl(e.target.value)}
                   placeholder="https://instagram.com/p/..."
-                  className="w-full bg-transparent outline-none text-[20px] font-medium"
+                  className="w-full bg-transparent outline-none text-[16px] font-medium"
                   style={{ color: '#1C1A17' }}
                 />
               </div>
@@ -1183,7 +1183,7 @@ export default function InfluencerDetailPage() {
                   value={postingDate}
                   onChange={e => setPostingDate(e.target.value)}
                   placeholder="YYYY.MM.DD"
-                  className="w-full bg-transparent outline-none text-[20px] font-medium"
+                  className="w-full bg-transparent outline-none text-[16px] font-medium"
                   style={{ color: '#1C1A17' }}
                   inputMode="numeric"
                 />

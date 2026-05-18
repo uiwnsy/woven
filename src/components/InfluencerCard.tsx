@@ -27,7 +27,7 @@ export default function InfluencerCard({ data, onPress }: CardProps) {
   return (
     <button
       onClick={onPress}
-      className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col w-full text-left shadow-[0_2px_8px_rgba(235,238,247,0.8)] active:opacity-80 transition-opacity"
+      className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col w-full text-left active:opacity-80 transition-opacity"
     >
       {/* Top row: profile + name/followers + status */}
       <div className="flex flex-row items-center justify-between mb-[10px]">

@@ -1049,9 +1049,12 @@ export default function InfluencerDetailPage() {
           {/* 제품 배송 완료 */}
           <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: 20 }}>
             <div className="flex items-center justify-between">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
-                <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
+              <div className="flex items-center" style={{ gap: 10 }}>
+                <img src="/ship-icon.svg" alt="배송" width={52} height={52} className="shrink-0" />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
+                  <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
+                </div>
               </div>
               <button
                 onClick={() => setProductShipped(v => !v)}

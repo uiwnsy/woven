@@ -211,7 +211,7 @@ export default function OnboardingPage() {
   return (
     <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
       {/* Skip */}
-      <div className="flex justify-end px-5 pt-14">
+      <div className="flex justify-end px-5 pt-4">
         <button onClick={skip} className="text-[15px] text-stone-400 active:opacity-60">
           건너뛰기
         </button>

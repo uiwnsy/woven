@@ -212,7 +212,7 @@ export default function InfluencerPerformancePage() {
                 <span className="text-[14px] font-semibold" style={{ color: '#B0ADA7' }}>
                   업로드 완료 {campaignStats.length}명
                 </span>
-                {campaignStats.map(inf => <StatCard key={inf.handle} inf={inf} onClick={() => router.push(`/performance/influencers/${inf.handle.replace('@', '')}`)} />)}
+                {campaignStats.map(inf => <StatCard key={inf.handle} inf={inf} onClick={() => router.push(`/performance/influencers/${inf.handle.replace('@', '')}?cid=${selectedCampaignId}`)} />)}
               </>
             ) : (
               <div className="flex flex-col items-center justify-center py-16 gap-3">

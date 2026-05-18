@@ -7,6 +7,7 @@ export type Influencer = {
   profileImg?: string;
   statusText?: string;
   amount?: string;
+  bottomTags?: { label: string; bg: string; text: string }[];
 };
 
 type CardProps = {

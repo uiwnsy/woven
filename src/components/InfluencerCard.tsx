@@ -32,7 +32,7 @@ export default function InfluencerCard({ data, onPress }: CardProps) {
       className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col w-full text-left active:opacity-80 transition-opacity"
     >
       {/* Top row: profile + name/followers + status */}
-      <div className="flex flex-row items-center justify-between mb-[10px]">
+      <div className={`flex flex-row items-center justify-between ${data.categories && data.categories.length > 0 ? 'mb-[10px]' : ''}`}>
         <div className="flex flex-row items-center flex-1 min-w-0">
           {/* Profile image */}
           <div className="relative mr-3 shrink-0">
@@ -71,16 +71,18 @@ export default function InfluencerCard({ data, onPress }: CardProps) {
       </div>
 
       {/* Categories row */}
-      <div className="flex flex-row gap-1.5 flex-wrap">
-        {(data.categories || []).map((cat, idx) => {
-          const { bg, text } = getCategoryStyle(cat);
-          return (
-            <span key={idx} className={`px-[10px] pt-[4px] pb-[6px] rounded-full text-[13px] font-semibold leading-none ${bg} ${text}`}>
-              {cat}
-            </span>
-          );
-        })}
-      </div>
+      {data.categories && data.categories.length > 0 && (
+        <div className="flex flex-row gap-1.5 flex-wrap">
+          {data.categories.map((cat, idx) => {
+            const { bg, text } = getCategoryStyle(cat);
+            return (
+              <span key={idx} className={`px-[10px] pt-[4px] pb-[6px] rounded-full text-[13px] font-semibold leading-none ${bg} ${text}`}>
+                {cat}
+              </span>
+            );
+          })}
+        </div>
+      )}
     </button>
   );
 }

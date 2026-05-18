@@ -1079,25 +1079,24 @@ export default function InfluencerDetailPage() {
           <div className="flex items-center justify-between">
             <span className="text-[20px] font-bold text-black">협업 이력</span>
             {data.isFirstCollab && (
-              <button
-                onClick={() => {
-                  if (effectiveStage === 'contacting' || effectiveStage === 'negotiating') {
-                    setCollabHistoryExpanded(v => !v);
-                  }
-                }}
-                className="flex items-center gap-[6px]"
-                style={{ backgroundColor: '#EEEEFF', borderRadius: 50, padding: '4px 10px 4px 8px' }}
-              >
-                <span className="text-[14px] font-medium" style={{ color: '#3D3FC7' }}>첫 협업</span>
+              <div className="flex items-center gap-[6px]">
+                <span
+                  className="text-[14px] font-medium"
+                  style={{ backgroundColor: '#EEEEFF', color: '#3D3FC7', borderRadius: 50, padding: '4px 8px' }}
+                >
+                  첫 협업
+                </span>
                 {(effectiveStage === 'contacting' || effectiveStage === 'negotiating') && (
-                  <svg
-                    width="14" height="14" viewBox="0 0 14 14" fill="none"
-                    style={{ transform: collabHistoryExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
-                  >
-                    <path d="M3 5l4 4 4-4" stroke="#3D3FC7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <button onClick={() => setCollabHistoryExpanded(v => !v)} className="active:opacity-60">
+                    <svg
+                      width="18" height="18" viewBox="0 0 18 18" fill="none"
+                      style={{ transform: collabHistoryExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+                    >
+                      <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
                 )}
-              </button>
+              </div>
             )}
           </div>
 

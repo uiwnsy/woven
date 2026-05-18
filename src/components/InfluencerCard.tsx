@@ -6,6 +6,7 @@ export type Influencer = {
   categories: string[];
   profileImg?: string;
   statusText?: string;
+  amount?: string;
 };
 
 type CardProps = {

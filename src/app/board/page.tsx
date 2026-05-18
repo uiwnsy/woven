@@ -42,8 +42,8 @@ const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
       { id: '3', name: '김지영', handle: '@jijizero', followers: '21만',   categories: ['뷰티', '연애/결혼', '일상'], statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=9' },
     ],
     'negotiated': [
-      { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: 'D-8', profileImg: 'https://i.pravatar.cc/150?img=47' },
-      { id: '5', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: 'D-3', profileImg: 'https://i.pravatar.cc/150?img=44' },
+      { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '시안 전달 D+1', amount: '350,000원', profileImg: 'https://i.pravatar.cc/150?img=47' },
+      { id: '5', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 전달 D+3', amount: '280,000원', profileImg: 'https://i.pravatar.cc/150?img=44' },
     ],
     'inProgress': [
       { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=47' },
@@ -253,9 +253,45 @@ function BoardPageContent() {
                   </div>
                 )
               ) : (
-                cards.map((item, i) => (
-                  <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id)} />
-                ))
+                cards.map((item, i) =>
+                  activeTab === 'negotiated' ? (
+                    <button
+                      key={item.id + i}
+                      onClick={() => router.push('/board/' + item.id)}
+                      className="bg-white rounded-[14px] border border-[#F5F5F3] p-[22px] flex items-center gap-3 mb-[10px] w-full text-left active:opacity-70"
+                    >
+                      {/* 프로필 */}
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <div className="relative shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-stone-200 overflow-hidden">
+                            {item.profileImg && <img src={item.profileImg} alt={item.name} className="w-full h-full object-cover" />}
+                          </div>
+                          <img src="/skill-icons_instagram.svg" alt="ig" className="absolute w-4 h-4 bottom-0 -right-[1px]" />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-end gap-1">
+                            <span className="text-[16px] font-semibold text-black leading-none">{item.name}</span>
+                            <span className="text-[13px] text-[#78756E] leading-none">{item.handle}</span>
+                          </div>
+                          <span className="text-[13px] text-[#78756E]">{item.followers}</span>
+                        </div>
+                      </div>
+                      {/* 상태 + 금액 */}
+                      <div className="flex flex-col items-end gap-[10px] shrink-0">
+                        {item.statusText && (
+                          <span className="bg-[#F5F5F3] text-[#5C5A54] text-[13px] font-semibold px-[10px] pt-[4px] pb-[6px] rounded-full leading-none whitespace-nowrap">
+                            {item.statusText}
+                          </span>
+                        )}
+                        {item.amount && (
+                          <span className="text-[18px] font-extrabold text-[#1C1A17] pr-[3px]">{item.amount}</span>
+                        )}
+                      </div>
+                    </button>
+                  ) : (
+                    <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id)} />
+                  )
+                )
               )}
               {activeTab === 'list-up' && (
                 <button

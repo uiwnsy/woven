@@ -29,7 +29,7 @@ export default function InfluencerCard({ data, onPress }: CardProps) {
   return (
     <button
       onClick={onPress}
-      className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col w-full text-left active:opacity-80 transition-opacity"
+      className={`bg-white rounded-2xl px-[22px] pt-[22px] mb-[10px] border border-[#ebeef7] flex flex-col w-full text-left active:opacity-80 transition-opacity ${data.categories && data.categories.length > 0 ? 'pb-[22px]' : 'pb-[18px]'}`}
     >
       {/* Top row: profile + name/followers + status */}
       <div className={`flex flex-row items-center justify-between ${data.categories && data.categories.length > 0 ? 'mb-[10px]' : ''}`}>

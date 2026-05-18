@@ -1403,11 +1403,54 @@ export default function InfluencerDetailPage() {
           )}
         </div>
 
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 협업 이력 (접힘) */}
+        <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div
+            className="flex items-center justify-between w-full active:opacity-70"
+            onClick={() => setCollabHistoryExpanded(v => !v)}
+            style={{ padding: '24px 20px', cursor: 'pointer' }}
+          >
+            <span className="text-[20px] font-bold text-black">협업 이력</span>
+            <div className="flex items-center gap-[6px]">
+              {data.isFirstCollab && (
+                <span className="text-[14px] font-medium" style={{ backgroundColor: '#EEEEFF', color: '#3D3FC7', borderRadius: 50, padding: '4px 8px' }}>
+                  첫 협업
+                </span>
+              )}
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                style={{ transform: collabHistoryExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+                <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          {collabHistoryExpanded && (
+            <div style={{ padding: '0 20px 24px' }}>
+              <div className="flex flex-col items-center text-center" style={{ backgroundColor: '#F8F8FF', borderRadius: 14, padding: 22, gap: 6 }}>
+                {data.isFirstCollab ? (
+                  <>
+                    <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>첫 협업 인플루언서예요!</span>
+                    <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>
+                      이번 캠페인 성과가{' '}
+                      <span className="font-bold" style={{ color: '#6366F1' }}>첫 이력으로 기록</span>
+                      됩니다.
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-[16px] font-medium" style={{ color: '#6D6E8C', lineHeight: '140%' }}>이전 협업 이력이 없어요.</span>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
         </> /* end reviewing only */}
 
         <div className="h-2 bg-[#F5F5F3]" />
 
         {/* ── 협업 이력 ── */}
+        {effectiveStage !== 'reviewing' && (
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
           <div
             className="flex items-center justify-between"
@@ -1463,6 +1506,7 @@ export default function InfluencerDetailPage() {
             </div>
           )}
         </div>
+        )}
 
         <div className="h-2 bg-[#F5F5F3]" />
 

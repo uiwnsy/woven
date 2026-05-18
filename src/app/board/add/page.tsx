@@ -69,7 +69,7 @@ function Step1({
   return (
     <>
       <div className="flex-1 overflow-y-auto pb-[120px] px-5 pt-6">
-        <h1 className="text-[22px] font-bold text-stone-900 mb-1">추가할 인플루언서 계정을 알려주세요</h1>
+        <h1 className="text-[20px] font-bold text-stone-900 mb-1">추가할 인플루언서 계정을 알려주세요</h1>
         <p className="text-[13px] text-stone-400 mb-6">@, 프로필 URL, 엑셀 붙여넣기 모두 인식해요.</p>
 
         {/* 플랫폼 */}
@@ -157,7 +157,7 @@ function Step2({
   return (
     <>
       <div className="flex-1 overflow-y-auto pb-[120px] px-5 pt-6">
-        <h1 className="text-[22px] font-bold text-stone-900 mb-1">인플루언서를 확인해주세요</h1>
+        <h1 className="text-[20px] font-bold text-stone-900 mb-1">인플루언서를 확인해주세요</h1>
         <p className="text-[13px] text-stone-400 mb-6">추가할 인플루언서 선택해 주세요.</p>
 
         {/* Count + 전체 선택 */}
@@ -257,7 +257,7 @@ function Step3({
   return (
     <>
       <div className="flex-1 overflow-y-auto pb-[120px] px-5 pt-6">
-        <h1 className="text-[22px] font-bold text-stone-900 mb-1">연락 방법을 선택해 주세요</h1>
+        <h1 className="text-[20px] font-bold text-stone-900 mb-1">연락 방법을 선택해 주세요</h1>
         <p className="text-[13px] text-stone-400 mb-6">
           인플루언서와 주요 연락 방식을 선택하면<br />브리프 전송 시 자동으로 연결돼요.
         </p>
@@ -274,7 +274,7 @@ function Step3({
               className={`flex-1 flex flex-col items-center gap-2 py-5 rounded-2xl border-2 transition-all active:opacity-80
                 ${contactType === opt.id ? 'border-iris-500 bg-[#f5f5ff]' : 'border-stone-200 bg-white'}`}
             >
-              <span className="text-[24px]">{opt.icon}</span>
+              <span className="text-[22px]">{opt.icon}</span>
               <p className="text-[15px] font-semibold text-stone-900">{opt.label}</p>
               <p className="text-[12px] text-stone-400">{opt.sub}</p>
             </button>
@@ -339,7 +339,7 @@ function Step4({
           <Check size={36} className="text-white" strokeWidth={3} />
         </div>
 
-        <h1 className="text-[24px] font-bold text-stone-900 mb-2">
+        <h1 className="text-[22px] font-bold text-stone-900 mb-2">
           {selected.length}명이 추가되었어요!
         </h1>
         <p className="text-[15px] text-stone-500 text-center mb-8 leading-relaxed">

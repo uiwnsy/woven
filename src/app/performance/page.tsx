@@ -162,9 +162,9 @@ export default function PerformancePage() {
   const router = useRouter();
   const [period, setPeriod] = useState<'전체' | '7일' | '14일' | '30일'>('7일');
   const [chartGranularity, setChartGranularity] = useState<'일별' | '주별'>('일별');
-  const [selectedCampaignId, setSelectedCampaignId] = useState(1);
+  const [selectedCampaignId, setSelectedCampaignId] = useState<number | 'all'>(1);
   const [showCampaignSheet, setShowCampaignSheet] = useState(false);
-  const selectedCampaign = CAMPAIGNS.find(c => c.id === selectedCampaignId)!;
+  const selectedCampaign = selectedCampaignId !== 'all' ? CAMPAIGNS.find(c => c.id === selectedCampaignId) : null;
 
   return (
     <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
@@ -193,11 +193,17 @@ export default function PerformancePage() {
             className="flex items-center justify-between w-full bg-white rounded-[46px] px-[22px] py-[14px] shadow-[0_0_2px_rgba(99,102,241,0.3)] active:opacity-80"
           >
             <div className="flex items-center gap-2">
-              <span className="text-[16px] font-medium text-[#1C1A17]">{selectedCampaign.title}</span>
-              <span className="text-[12px] font-semibold rounded-full px-[8px] py-[3px] shrink-0"
-                style={{ backgroundColor: STATUS_STYLES[selectedCampaign.status].bg, color: STATUS_STYLES[selectedCampaign.status].text }}>
-                {selectedCampaign.status}
-              </span>
+              {selectedCampaignId === 'all' ? (
+                <span className="text-[16px] font-medium text-[#1C1A17]">전체 캠페인</span>
+              ) : (
+                <>
+                  <span className="text-[16px] font-medium text-[#1C1A17]">{selectedCampaign!.title}</span>
+                  <span className="text-[12px] font-semibold rounded-full px-[8px] py-[3px] shrink-0"
+                    style={{ backgroundColor: STATUS_STYLES[selectedCampaign!.status].bg, color: STATUS_STYLES[selectedCampaign!.status].text }}>
+                    {selectedCampaign!.status}
+                  </span>
+                </>
+              )}
             </div>
             <img src="/arrow-down-campaign.svg" alt="" width={24} height={24} />
           </button>
@@ -439,9 +445,8 @@ export default function PerformancePage() {
               </button>
             </div>
             <div className="flex flex-col gap-2">
-              {CAMPAIGNS.map(campaign => {
-                const isSelected = campaign.id === selectedCampaignId;
-                const style = STATUS_STYLES[campaign.status];
+              {[{ id: 'all' as const, title: '전체 캠페인', status: null }, ...CAMPAIGNS].map(campaign => {
+                const isSelected = selectedCampaignId === campaign.id;
                 return (
                   <button
                     key={campaign.id}
@@ -451,10 +456,12 @@ export default function PerformancePage() {
                   >
                     <div className="flex flex-col gap-[6px] text-left flex-1 pr-3">
                       <span className="text-[16px] font-medium text-[#1C1A17] leading-snug">{campaign.title}</span>
-                      <span className="text-[13px] font-semibold px-[10px] py-[4px] rounded-full w-fit"
-                        style={{ backgroundColor: style.bg, color: style.text }}>
-                        {campaign.status}
-                      </span>
+                      {campaign.status && (
+                        <span className="text-[13px] font-semibold px-[10px] py-[4px] rounded-full w-fit"
+                          style={{ backgroundColor: STATUS_STYLES[campaign.status].bg, color: STATUS_STYLES[campaign.status].text }}>
+                          {campaign.status}
+                        </span>
+                      )}
                     </div>
                     {isSelected && (
                       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">

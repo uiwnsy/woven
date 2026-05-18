@@ -395,9 +395,7 @@ export default function HomePage() {
         <div className="bg-white pt-[40px] pb-[40px] mb-[10px]">
           <div className="flex items-center justify-between px-5 mb-4">
             <h2 className="text-[20px] font-bold text-stone-900">전체 캠페인</h2>
-            <button className="border border-[#D4D2CE] rounded-[30px] px-[10px] pt-[3px] pb-1 active:opacity-70">
-              <span className="text-[13px] font-semibold" style={{ color: '#78756E' }}>더보기</span>
-            </button>
+            <button className="border border-[#D4D2CE] rounded-full px-[10px] py-[5px] text-[13px] font-semibold text-[#78756E] active:opacity-70">더보기</button>
           </div>
           <div className="flex gap-[17px] overflow-x-auto px-5 pb-1 scrollbar-none">
             {CAMPAIGNS.map(campaign => (

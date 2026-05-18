@@ -906,7 +906,7 @@ export default function InfluencerDetailPage() {
                 </div>
                 <div>
                   <p className="text-[14px] font-semibold" style={{ color: '#1C1A17' }}>
-                    {draftType === 'file' ? '시안_파일.jpg' : (driveLink.length > 26 ? driveLink.slice(0, 26) + '…' : driveLink)}
+                    {draftType === 'file' ? '시안_파일.mp4' : (driveLink.length > 26 ? driveLink.slice(0, 26) + '…' : driveLink)}
                   </p>
                   <p className="text-[12px] font-medium mt-[2px]"
                     style={{ color: draftReviewState === 'approved' ? '#22c55e' : draftReviewState === 'revision-sent' ? '#EF8652' : '#8486F3' }}>

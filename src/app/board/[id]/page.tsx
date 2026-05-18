@@ -1522,7 +1522,7 @@ export default function InfluencerDetailPage() {
         <div className="h-2 bg-[#F5F5F3]" />
 
         {/* ── 협업 이력 ── */}
-        {effectiveStage !== 'reviewing' && (
+        {effectiveStage !== 'reviewing' && effectiveStage !== 'uploaded' && (
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
           <div
             className="flex items-center justify-between"

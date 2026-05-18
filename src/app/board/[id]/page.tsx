@@ -221,6 +221,7 @@ export default function InfluencerDetailPage() {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [utmCopied, setUtmCopied] = useState(false);
   const briefTextareaRef = useRef<HTMLTextAreaElement>(null);
   const requestsTextareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -940,6 +941,76 @@ export default function InfluencerDetailPage() {
           )}
 
         </div>
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* UTM 링크 */}
+        {(() => {
+          const handle = data.handle.replace('@', '');
+          const utmLink = `https://lumiere.co/?utm_source=instagram&utm_medium=influencer&utm_campaign=spring2025&utm_content=${handle}`;
+          return (
+            <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+              <div className="flex flex-col" style={{ gap: 6 }}>
+                <span className="text-[20px] font-bold text-black">개인 UTM 링크</span>
+                <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>
+                  협의 확정 시 자동 생성된 인플루언서 전용 성과 추적 링크예요.
+                </span>
+              </div>
+
+              {/* Link card */}
+              <div style={{ border: '1px solid #EBEEF7', borderRadius: 14, overflow: 'hidden' }}>
+                {/* UTM link row */}
+                <div className="flex items-center justify-between px-5 py-4" style={{ gap: 12, backgroundColor: '#FAFAFC' }}>
+                  <p className="text-[13px] font-medium flex-1 break-all leading-[150%]" style={{ color: '#4B5969', fontFamily: 'Manrope, sans-serif' }}>
+                    {utmLink}
+                  </p>
+                  <button
+                    onClick={async () => {
+                      await navigator.clipboard.writeText(utmLink).catch(() => {});
+                      setUtmCopied(true);
+                      setTimeout(() => setUtmCopied(false), 2000);
+                    }}
+                    className="shrink-0 flex items-center justify-center gap-[6px] active:opacity-70"
+                    style={{ backgroundColor: utmCopied ? '#6366F1' : '#EEEEFF', borderRadius: 8, padding: '8px 12px', transition: 'background-color 0.15s' }}
+                  >
+                    {utmCopied ? (
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7l3.5 3.5 6.5-7" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    ) : (
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <rect x="4.5" y="1" width="8.5" height="9" rx="1.5" stroke="#6366F1" strokeWidth="1.3"/>
+                        <path d="M1 4.5h2.5v8H10V11" stroke="#6366F1" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                    <span className="text-[13px] font-semibold" style={{ color: utmCopied ? '#fff' : '#6366F1' }}>
+                      {utmCopied ? '복사됨' : '복사'}
+                    </span>
+                  </button>
+                </div>
+
+                {/* UTM params breakdown */}
+                <div style={{ borderTop: '1px solid #EBEEF7' }}>
+                  {[
+                    { key: 'utm_source',   value: 'instagram' },
+                    { key: 'utm_medium',   value: 'influencer' },
+                    { key: 'utm_campaign', value: 'spring2025' },
+                    { key: 'utm_content',  value: handle },
+                  ].map((param, i, arr) => (
+                    <div
+                      key={param.key}
+                      className="flex items-center justify-between px-5 py-3"
+                      style={{ borderBottom: i < arr.length - 1 ? '1px solid #F0F2F8' : 'none' }}
+                    >
+                      <span className="text-[13px] font-medium" style={{ color: '#899098', fontFamily: 'Manrope, sans-serif' }}>{param.key}</span>
+                      <span className="text-[13px] font-semibold" style={{ color: '#1C1A17', fontFamily: 'Manrope, sans-serif' }}>{param.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         <div className="h-2 bg-[#F5F5F3]" />
 

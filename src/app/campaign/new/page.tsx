@@ -208,10 +208,10 @@ function FormLabel({ children, required, optional, autoFill }: {
     <div className="flex items-center justify-between mb-2">
       <div className="flex items-center gap-1">
         <span className="text-[15px] font-semibold text-stone-800">{children}</span>
-        {required && <span className="text-iris-500 text-[13px]">*</span>}
-        {optional && <span className="text-stone-400 text-[13px] ml-0.5">(선택)</span>}
+        {required && <span className="text-iris-500 text-[14px]">*</span>}
+        {optional && <span className="text-stone-400 text-[14px] ml-0.5">(선택)</span>}
       </div>
-      {autoFill && <span className="text-[13px] text-iris-500 font-medium">자동 채움</span>}
+      {autoFill && <span className="text-[14px] text-iris-500 font-medium">자동 채움</span>}
     </div>
   );
 }
@@ -261,7 +261,7 @@ function TagInput({ tags, onAdd, onRemove, placeholder }: {
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-2">
           {tags.map(tag => (
-            <span key={tag} className="flex items-center gap-1 bg-stone-100 text-stone-700 text-[13px] px-3 py-1 rounded-full">
+            <span key={tag} className="flex items-center gap-1 bg-stone-100 text-stone-700 text-[14px] px-3 py-1 rounded-full">
               {tag}
               <button onClick={() => onRemove(tag)} className="active:opacity-60">
                 <X size={12} />
@@ -431,7 +431,7 @@ function Step1({ form, updateForm, togglePlatform }: {
               </div>
               <div className="flex flex-col gap-[6px] text-left">
                 <p className="text-[16px] font-medium text-[#1C1A17] leading-none">{selectedManager.name}</p>
-                <p className="text-[13px] font-medium text-[#B0ADA7] leading-none">{selectedManager.team}</p>
+                <p className="text-[14px] font-medium text-[#B0ADA7] leading-none">{selectedManager.team}</p>
               </div>
             </div>
             <img src="/arrow-down.svg" alt="" className="w-5 h-5" />
@@ -468,7 +468,7 @@ function Step1({ form, updateForm, togglePlatform }: {
                     </div>
                     <div className="flex-1 text-left">
                       <p className="text-[16px] font-medium text-[#1C1A17]">{mgr.name}</p>
-                      <p className="text-[13px] text-[#B0ADA7]">{mgr.team}</p>
+                      <p className="text-[14px] text-[#B0ADA7]">{mgr.team}</p>
                     </div>
                     {isSelected && <Check size={18} className="text-iris-500 shrink-0" />}
                   </button>
@@ -512,7 +512,7 @@ function Step2({ form, updateForm, toggleKPI }: {
                 <img src={goal.icon} alt={goal.label} className="w-[52px] h-[52px] shrink-0" />
                 <div className="flex flex-col gap-[6px]">
                   <p className="text-[16px] font-medium text-[#1C1A17]">{goal.label}</p>
-                  <p className="text-[13px] font-medium text-[#B0ADA7]">{goal.desc}</p>
+                  <p className="text-[14px] font-medium text-[#B0ADA7]">{goal.desc}</p>
                 </div>
               </button>
             );
@@ -531,7 +531,7 @@ function Step2({ form, updateForm, toggleKPI }: {
               >
                 <div className="flex flex-col gap-[6px]">
                   <p className="text-[16px] font-medium text-[#1C1A17]">{kpi.label}</p>
-                  <p className="text-[13px] font-medium text-[#B0ADA7]">{kpi.desc}</p>
+                  <p className="text-[14px] font-medium text-[#B0ADA7]">{kpi.desc}</p>
                 </div>
                 <Toggle on={form.kpis.includes(kpi.id)} onToggle={() => toggleKPI(kpi.id)} />
               </div>
@@ -554,7 +554,7 @@ const DEFAULT_RESTRICTIONS = [
 
 function AutoFillBadge() {
   return (
-    <span className="text-[13px] font-semibold text-[#26B059] bg-[#F0FDF4] px-[8px] py-[6px] rounded-full shrink-0">
+    <span className="text-[14px] font-semibold text-[#26B059] bg-[#F0FDF4] px-[8px] py-[6px] rounded-full shrink-0">
       자동 채움
     </span>
   );
@@ -601,7 +601,7 @@ function HashtagSection({ title, tags, onAdd, onRemove }: {
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-[6px]">
           {tags.map(tag => (
-            <span key={tag} className="flex items-center gap-2 bg-[#F5F5F3] text-[13px] font-medium text-[#78756E] px-[14px] py-[8px] rounded-full">
+            <span key={tag} className="flex items-center gap-2 bg-[#F5F5F3] text-[14px] font-medium text-[#78756E] px-[14px] py-[8px] rounded-full">
               #{tag}
               <button onClick={() => onRemove(tag)} className="active:opacity-60 flex items-center">
                 <X size={9} className="text-[#78756E]" />
@@ -635,7 +635,7 @@ function Step3({ form, updateForm }: {
             <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
             <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
           </svg>
-          <p className="text-[13px] font-medium text-[#2D92FE] leading-[135%]">
+          <p className="text-[14px] font-medium text-[#2D92FE] leading-[135%]">
             입력하신 정보를 반영해 AI 브리프를 만들 수 있어요.<br />
             아래 내용을 채울수록 메시지가 정교해집니다.
           </p>
@@ -658,7 +658,7 @@ function Step3({ form, updateForm }: {
             >
               <p className="text-[16px] font-medium text-[#8995A2] leading-[150%]">{form.brandDesc}</p>
             </div>
-            <p className="text-[13px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
+            <p className="text-[14px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
           </div>
         </div>
 
@@ -709,7 +709,7 @@ function Step3({ form, updateForm }: {
                 <p key={r} className="text-[16px] font-medium text-[#8995A2] leading-[150%]">- {r}</p>
               ))}
             </div>
-            <p className="text-[13px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
+            <p className="text-[14px] text-[#B0ADA7]">마이페이지 &gt; AI 브리프 기본 설정에서 불러왔어요.</p>
           </div>
         </div>
 
@@ -732,7 +732,7 @@ function Step3({ form, updateForm }: {
                 className="flex-1 text-[16px] font-medium text-[#1C1A17] outline-none placeholder:text-[#B0ADA7]"
               />
             </div>
-            <p className="text-[13px] text-[#B0ADA7]">
+            <p className="text-[14px] text-[#B0ADA7]">
               * 링크 입력 시 AI 브리프에 자동 반영돼요.<br />
               * 인플루언서 상세에서 &apos;캠페인 기본값&apos;으로 표시되며, 개별 변경도 가능해요.
             </p>
@@ -893,7 +893,7 @@ function Step4({ form, updateForm }: {
               <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
               <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
             </svg>
-            <p className="text-[13px] font-medium text-[#2D92FE] leading-[135%]">
+            <p className="text-[14px] font-medium text-[#2D92FE] leading-[135%]">
               캠페인 정보 기반으로 AI가 생성한 브리프예요.<br />
               내용을 확인하고, 필요한 부분을 수정한 뒤 저장하세요.
             </p>
@@ -952,7 +952,7 @@ function Step4({ form, updateForm }: {
               </button>
             </div>
           </div>
-          <p className="text-[13px] font-normal text-[#B0ADA7] leading-[135%]">
+          <p className="text-[14px] font-normal text-[#B0ADA7] leading-[135%]">
             인플루언서별 발송 시 이름과 핸들이 자동으로 반영돼요.
           </p>
         </div>
@@ -1010,11 +1010,11 @@ function Step5({ form, router }: { form: FormData; router: ReturnType<typeof use
         ))}
         <div className="flex items-center justify-between px-5 py-4 border-t border-stone-100">
           <span className="text-[15px] text-stone-400">AI 브리프</span>
-          <span className="bg-[#dcfce7] text-[#16a34a] text-[13px] font-semibold px-3 py-1 rounded-full">생성완료</span>
+          <span className="bg-[#dcfce7] text-[#16a34a] text-[14px] font-semibold px-3 py-1 rounded-full">생성완료</span>
         </div>
       </div>
 
-      <p className="text-[13px] text-stone-400 text-center leading-relaxed">
+      <p className="text-[14px] text-stone-400 text-center leading-relaxed">
         보드에서 인플루언서를 추가하면 저장된 브리프를<br />바로 복사해 보낼 수 있어요.
       </p>
     </div>

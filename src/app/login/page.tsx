@@ -72,7 +72,7 @@ export default function LoginPage() {
         <div className="flex items-center justify-center gap-4 mt-2">
           {['회원가입', '계정찾기', '알아보기'].map((label, i) => (
             <span key={label} className="flex items-center gap-4">
-              <button className="text-[13px] text-[rgba(255,255,255,0.45)] active:opacity-60">
+              <button className="text-[14px] text-[rgba(255,255,255,0.45)] active:opacity-60">
                 {label}
               </button>
               {i < 2 && <span className="text-[rgba(255,255,255,0.2)] text-[12px]">|</span>}

@@ -12,8 +12,8 @@ function IllustSlide1() {
       <div className="w-full bg-[#f4f4fd] rounded-2xl px-4 py-4 shadow-sm">
         <p className="text-[11px] text-stone-400 mb-2">계정 아이디 입력</p>
         <div className="flex items-center bg-white rounded-xl px-4 h-[40px] gap-2 border border-[#e0e1fb]">
-          <span className="text-[13px] text-stone-500">@</span>
-          <span className="flex-1 text-[13px] text-stone-800">woven</span>
+          <span className="text-[14px] text-stone-500">@</span>
+          <span className="flex-1 text-[14px] text-stone-800">woven</span>
           <div className="w-7 h-7 bg-iris-500 rounded-lg flex items-center justify-center">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M3 7h8M7 3l4 4-4 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -42,7 +42,7 @@ function IllustSlide1() {
         <div className="flex gap-4 border-t border-stone-100 pt-3">
           {[['12.4만', '팔로워'], ['1,250', '게시물'], ['230', '팔로우']].map(([v, l]) => (
             <div key={l} className="flex flex-col items-start">
-              <span className="text-[13px] font-semibold text-stone-700">{v}</span>
+              <span className="text-[14px] font-semibold text-stone-700">{v}</span>
               <span className="text-[11px] text-stone-400">{l}</span>
             </div>
           ))}
@@ -70,8 +70,8 @@ function IllustSlide2() {
           </div>
         ))}
         <div className="w-full h-[38px] bg-iris-500 rounded-xl flex items-center justify-center gap-2">
-          <span className="text-white text-[13px]">✦</span>
-          <span className="text-white text-[13px] font-semibold">AI 생성</span>
+          <span className="text-white text-[14px]">✦</span>
+          <span className="text-white text-[14px] font-semibold">AI 생성</span>
         </div>
       </div>
     </div>

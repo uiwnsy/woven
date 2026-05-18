@@ -63,7 +63,7 @@ function Step1({
     <>
       <div className="flex-1 overflow-y-auto pb-[120px] px-5 pt-6">
         <h1 className="text-[20px] font-bold text-stone-900 mb-1">추가할 인플루언서 계정을 알려주세요</h1>
-        <p className="text-[13px] text-stone-400 mb-6">@, 프로필 URL, 엑셀 붙여넣기 모두 인식해요.</p>
+        <p className="text-[14px] text-stone-400 mb-6">@, 프로필 URL, 엑셀 붙여넣기 모두 인식해요.</p>
 
         {/* 플랫폼 */}
         <p className="text-[15px] font-semibold text-stone-800 mb-3">플랫폼</p>
@@ -72,7 +72,7 @@ function Step1({
             <button
               key={p}
               onClick={() => setPlatform(p)}
-              className={`h-9 px-4 rounded-full text-[13px] font-medium transition-all active:opacity-70
+              className={`h-9 px-4 rounded-full text-[14px] font-medium transition-all active:opacity-70
                 ${platform === p ? 'bg-iris-500 text-white' : 'border border-stone-200 text-stone-600 bg-white'}`}
             >
               {p}
@@ -91,14 +91,14 @@ function Step1({
 
         {/* Count */}
         <div className="flex items-center justify-between mb-4">
-          <span className="text-[13px] font-medium text-stone-600">입력된 핸들</span>
-          <span className="text-[13px] font-semibold text-stone-900">{handles.length}명</span>
+          <span className="text-[14px] font-medium text-stone-600">입력된 핸들</span>
+          <span className="text-[14px] font-semibold text-stone-900">{handles.length}명</span>
         </div>
 
         {/* Info banner */}
         <div className="bg-[#eef0fd] rounded-xl px-4 py-3 flex gap-2 mb-6">
-          <span className="text-iris-500 text-[13px] shrink-0 mt-0.5">⚠</span>
-          <p className="text-[13px] text-stone-600 leading-relaxed">
+          <span className="text-iris-500 text-[14px] shrink-0 mt-0.5">⚠</span>
+          <p className="text-[14px] text-stone-600 leading-relaxed">
             콤마(,) 또는 줄바꿈으로 구분해주세요.<br />
             엑셀의 핸들 열을 복사 붙여넣기하면 자동으로 인식돼요.
           </p>
@@ -109,7 +109,7 @@ function Step1({
         <div className="border border-stone-100 rounded-2xl px-5 py-4 flex items-center justify-between bg-[#fafbfe]">
           <div>
             <p className="text-[15px] font-medium text-stone-500">2026 여름 선케어</p>
-            <p className="text-[13px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
+            <p className="text-[14px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
           </div>
           <div className="w-7 h-7 bg-iris-500 rounded-full flex items-center justify-center shrink-0">
             <Check size={14} className="text-white" strokeWidth={3} />
@@ -151,14 +151,14 @@ function Step2({
     <>
       <div className="flex-1 overflow-y-auto pb-[120px] px-5 pt-6">
         <h1 className="text-[20px] font-bold text-stone-900 mb-1">인플루언서를 확인해주세요</h1>
-        <p className="text-[13px] text-stone-400 mb-6">추가할 인플루언서 선택해 주세요.</p>
+        <p className="text-[14px] text-stone-400 mb-6">추가할 인플루언서 선택해 주세요.</p>
 
         {/* Count + 전체 선택 */}
         <div className="flex items-center justify-between mb-4">
           <span className="text-[16px] font-bold text-stone-900">{profiles.length}명</span>
           <button
             onClick={toggleAll}
-            className="bg-iris-500 text-white text-[13px] font-semibold px-4 py-1.5 rounded-full active:opacity-70"
+            className="bg-iris-500 text-white text-[14px] font-semibold px-4 py-1.5 rounded-full active:opacity-70"
           >
             전체 선택
           </button>
@@ -201,9 +201,9 @@ function Step2({
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-row items-baseline gap-1.5 mb-1">
                         <span className="text-[16px] font-semibold text-stone-900 leading-4">{inf.name}</span>
-                        <span className="text-[13px] text-stone-500 leading-4">@{inf.handle}</span>
+                        <span className="text-[14px] text-stone-500 leading-4">@{inf.handle}</span>
                       </div>
-                      <p className="text-[13px] text-stone-500 leading-4">{inf.followers}</p>
+                      <p className="text-[14px] text-stone-500 leading-4">{inf.followers}</p>
                     </div>
                   </div>
                   {/* Radio button */}
@@ -218,7 +218,7 @@ function Step2({
                     {inf.categories.map((cat, idx) => {
                       const { bg, text } = getCategoryStyle(cat);
                       return (
-                        <span key={idx} className={`px-[10px] pt-[4px] pb-[6px] rounded-full text-[13px] font-semibold leading-none ${bg} ${text}`}>
+                        <span key={idx} className={`px-[10px] pt-[4px] pb-[6px] rounded-full text-[14px] font-semibold leading-none ${bg} ${text}`}>
                           {cat}
                         </span>
                       );
@@ -235,7 +235,7 @@ function Step2({
         <div className="border border-stone-100 rounded-2xl px-5 py-4 flex items-center justify-between bg-[#fafbfe]">
           <div>
             <p className="text-[15px] font-medium text-stone-500">2026 여름 선케어</p>
-            <p className="text-[13px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
+            <p className="text-[14px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
           </div>
           <div className="w-7 h-7 bg-iris-500 rounded-full flex items-center justify-center shrink-0">
             <Check size={14} className="text-white" strokeWidth={3} />
@@ -270,7 +270,7 @@ function Step3({
     <>
       <div className="flex-1 overflow-y-auto pb-[120px] px-5 pt-6">
         <h1 className="text-[20px] font-bold text-stone-900 mb-1">연락 방법을 선택해 주세요</h1>
-        <p className="text-[13px] text-stone-400 mb-6">
+        <p className="text-[14px] text-stone-400 mb-6">
           인플루언서와 주요 연락 방식을 선택하면<br />브리프 전송 시 자동으로 연결돼요.
         </p>
 
@@ -300,7 +300,7 @@ function Step3({
             <button
               key={ch}
               onClick={() => setChannel(ch)}
-              className={`h-9 px-4 rounded-full text-[13px] font-medium transition-all active:opacity-70
+              className={`h-9 px-4 rounded-full text-[14px] font-medium transition-all active:opacity-70
                 ${channel === ch ? 'bg-iris-500 text-white' : 'border border-stone-200 text-stone-600 bg-white'}`}
             >
               {ch}
@@ -313,7 +313,7 @@ function Step3({
         <div className="border border-stone-100 rounded-2xl px-5 py-4 flex items-center justify-between bg-[#fafbfe]">
           <div>
             <p className="text-[15px] font-medium text-stone-500">2026 여름 선케어</p>
-            <p className="text-[13px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
+            <p className="text-[14px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
           </div>
           <div className="w-7 h-7 bg-iris-500 rounded-full flex items-center justify-center shrink-0">
             <Check size={14} className="text-white" strokeWidth={3} />
@@ -368,7 +368,7 @@ function Step4({
               <img src={inf.profileImg} alt={inf.name} className="w-10 h-10 rounded-full object-cover shrink-0" />
               <div>
                 <p className="text-[15px] font-semibold text-stone-900">@{inf.handle}</p>
-                <p className="text-[13px] text-stone-400">{inf.followers}</p>
+                <p className="text-[14px] text-stone-400">{inf.followers}</p>
               </div>
             </div>
           ))}
@@ -376,8 +376,8 @@ function Step4({
 
         {/* Info banner */}
         <div className="w-full bg-[#eef0fd] rounded-xl px-4 py-3 flex gap-2">
-          <span className="text-iris-500 text-[13px] shrink-0 mt-0.5">⚠</span>
-          <p className="text-[13px] text-stone-600 leading-relaxed">
+          <span className="text-iris-500 text-[14px] shrink-0 mt-0.5">⚠</span>
+          <p className="text-[14px] text-stone-600 leading-relaxed">
             각 인플루언서의 연락 방식, 협업 조건, AI 브리프는 보드에서 설정할 수 있어요.
           </p>
         </div>

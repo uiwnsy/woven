@@ -186,7 +186,7 @@ export default function PerformancePage() {
                 <button
                   key={p}
                   onClick={() => setPeriod(p)}
-                  className={`rounded-full px-[10px] py-[5px] text-[13px] font-semibold active:opacity-70 transition-all
+                  className={`rounded-full px-[10px] py-[5px] text-[14px] font-semibold active:opacity-70 transition-all
                     ${isActive ? 'bg-iris-500 text-white' : 'border border-[#D4D2CE] text-[#78756E] bg-white'}`}
                 >
                   {p}
@@ -208,9 +208,9 @@ export default function PerformancePage() {
             <div className="flex gap-3">
               {[{ label: '총 클릭 수', value: '820' }, { label: '추적 전환 수', value: '5' }].map(item => (
                 <div key={item.label} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-5 flex flex-col gap-[6px]">
-                  <span className="text-[13px] font-medium text-[#78756E]">{item.label}</span>
+                  <span className="text-[14px] font-medium text-[#78756E]">{item.label}</span>
                   <span className="text-[20px] font-extrabold text-black" style={MANROPE}>{item.value}</span>
-                  <span className="self-start bg-[#F0FDF4] text-[#22C55E] text-[13px] font-semibold rounded-full px-[10px] py-[5px]">
+                  <span className="self-start bg-[#F0FDF4] text-[#22C55E] text-[14px] font-semibold rounded-full px-[10px] py-[5px]">
                     UTM 추적
                   </span>
                 </div>
@@ -221,7 +221,7 @@ export default function PerformancePage() {
             <div className="flex gap-3">
               {[{ label: 'CVR', value: '0.61%' }, { label: 'CPC', value: '549원' }, { label: 'CPA', value: '9만원' }].map(item => (
                 <div key={item.label} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-5 flex flex-col gap-[6px]">
-                  <span className="text-[13px] font-medium text-[#78756E]" style={MANROPE}>{item.label}</span>
+                  <span className="text-[14px] font-medium text-[#78756E]" style={MANROPE}>{item.label}</span>
                   <span className="text-[16px] font-extrabold text-black" style={MANROPE}>{item.value}</span>
                 </div>
               ))}
@@ -240,7 +240,7 @@ export default function PerformancePage() {
                   <button
                     key={g}
                     onClick={() => setChartGranularity(g)}
-                    className={`w-[57px] py-[7px] rounded-full text-[13px] font-semibold transition-all active:opacity-70
+                    className={`w-[57px] py-[7px] rounded-full text-[14px] font-semibold transition-all active:opacity-70
                       ${chartGranularity === g ? 'bg-white text-[#78756E] shadow-sm' : 'text-[#ABB3BD]'}`}
                   >
                     {g}
@@ -253,11 +253,11 @@ export default function PerformancePage() {
               <div className="flex items-center justify-center gap-[14px]">
                 <div className="flex items-center gap-[6px]">
                   <div className="w-[10px] h-[10px] rounded-full bg-[#AFB2F6]" />
-                  <span className="text-[13px] text-[#9BA1AA]">클릭 수</span>
+                  <span className="text-[14px] text-[#9BA1AA]">클릭 수</span>
                 </div>
                 <div className="flex items-center gap-[6px]">
                   <div className="w-[10px] h-[10px] rounded-full bg-iris-500" />
-                  <span className="text-[13px] text-[#9BA1AA]">전환 수</span>
+                  <span className="text-[14px] text-[#9BA1AA]">전환 수</span>
                 </div>
               </div>
             </div>
@@ -269,7 +269,7 @@ export default function PerformancePage() {
         <div className="bg-white px-5 py-10 flex flex-col gap-5">
             <div className="flex items-center justify-between">
               <span className="text-[20px] font-bold text-black">인플루언서별 성과</span>
-              <button className="border border-[#D4D2CE] rounded-full px-[10px] py-[5px] text-[13px] font-semibold text-[#78756E] active:opacity-70">더보기</button>
+              <button className="border border-[#D4D2CE] rounded-full px-[10px] py-[5px] text-[14px] font-semibold text-[#78756E] active:opacity-70">더보기</button>
             </div>
 
             <div className="flex flex-col gap-[30px]">
@@ -301,29 +301,29 @@ export default function PerformancePage() {
                     <div className="flex flex-col gap-0">
                       <div className="flex items-end gap-1">
                         <span className="text-[16px] font-semibold text-black" style={MANROPE}>dearyq</span>
-                        <span className="text-[13px] text-[#78756E]" style={MANROPE}>@dearyq</span>
+                        <span className="text-[14px] text-[#78756E]" style={MANROPE}>@dearyq</span>
                       </div>
-                      <span className="text-[13px] text-[#78756E]">10.1만</span>
+                      <span className="text-[14px] text-[#78756E]">10.1만</span>
                     </div>
                   </div>
                   {/* ROAS value */}
                   <div className="flex flex-col items-end gap-[2px]">
                     <span className="text-[20px] font-extrabold text-[#1C1A17]" style={MANROPE}>1.4x</span>
-                    <span className="text-[13px] font-semibold text-[#5C5A54]" style={MANROPE}>ROAS</span>
+                    <span className="text-[14px] font-semibold text-[#5C5A54]" style={MANROPE}>ROAS</span>
                   </div>
                 </div>
 
                 {/* Action tags */}
                 <div className="flex items-center gap-1">
-                  <span className="bg-[#F0FDF4] text-[#22C55E] text-[13px] font-semibold rounded-full px-[10px] py-[5px]">업로드완료</span>
-                  <span className="bg-[#EFF6FF] text-[#3D3FC7] text-[13px] font-semibold rounded-full px-[10px] py-[5px]">UTM 포함</span>
+                  <span className="bg-[#F0FDF4] text-[#22C55E] text-[14px] font-semibold rounded-full px-[10px] py-[5px]">업로드완료</span>
+                  <span className="bg-[#EFF6FF] text-[#3D3FC7] text-[14px] font-semibold rounded-full px-[10px] py-[5px]">UTM 포함</span>
                 </div>
 
                 {/* Stats row */}
                 <div className="flex gap-1">
                   {[{ l: '클릭', v: '820' }, { l: '전환', v: '5' }, { l: 'CVR', v: '0.61%' }, { l: '단가', v: '45만' }].map(s => (
                     <div key={s.l} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-[18px] flex flex-col gap-[6px]">
-                      <span className="text-[13px] font-medium text-[#78756E]">{s.l}</span>
+                      <span className="text-[14px] font-medium text-[#78756E]">{s.l}</span>
                       <span className="text-[16px] font-extrabold text-black" style={MANROPE}>{s.v}</span>
                     </div>
                   ))}
@@ -351,18 +351,18 @@ export default function PerformancePage() {
                         <div className="flex flex-col gap-0">
                           <div className="flex items-end gap-1">
                             <span className="text-[16px] font-semibold text-black">{inf.name}</span>
-                            <span className="text-[13px] text-[#78756E]">{inf.handle}</span>
+                            <span className="text-[14px] text-[#78756E]">{inf.handle}</span>
                           </div>
                           <span className="text-[12px] text-[#78756E]">{inf.followers}</span>
                         </div>
                       </div>
                       {/* Right: badges */}
                       <div className="flex items-center gap-1 shrink-0 ml-2">
-                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[13px] font-semibold rounded-full px-[10px] py-[5px]`}>
+                        <span className={`${inf.stage.bg} ${inf.stage.text} text-[14px] font-semibold rounded-full px-[10px] py-[5px]`}>
                           {inf.stage.label}
                         </span>
                         {inf.status && (
-                          <span className={`${inf.status.bg} ${inf.status.text} text-[13px] font-semibold rounded-full px-[10px] py-[5px]`}>
+                          <span className={`${inf.status.bg} ${inf.status.text} text-[14px] font-semibold rounded-full px-[10px] py-[5px]`}>
                             {inf.status.label}
                           </span>
                         )}
@@ -385,14 +385,14 @@ export default function PerformancePage() {
                 <img src="/performance-icon.svg" alt="" width={52} height={52} className="shrink-0" />
                 <div className="flex flex-col gap-2">
                   <span className="text-[16px] font-semibold text-[#1C1A17]">캠페인 전체 요약</span>
-                  <span className="text-[13px] text-[#555553]">핵심 KPI + 인플루언서별 성과 요약</span>
+                  <span className="text-[14px] text-[#555553]">핵심 KPI + 인플루언서별 성과 요약</span>
                 </div>
               </button>
               <button className="bg-white border border-[#E8E7E4] rounded-[10px] p-5 flex items-center gap-[14px] active:opacity-70 text-left w-full">
                 <img src="/summary-icon.svg" alt="" width={52} height={52} className="shrink-0" />
                 <div className="flex flex-col gap-2">
                   <span className="text-[16px] font-semibold text-[#1C1A17]">인플루언서별 상세 데이터</span>
-                  <span className="text-[13px] font-medium text-[#B0ADA7]">일별 클릭·전환·ROAS 상세 리포트</span>
+                  <span className="text-[14px] font-medium text-[#B0ADA7]">일별 클릭·전환·ROAS 상세 리포트</span>
                 </div>
               </button>
             </div>

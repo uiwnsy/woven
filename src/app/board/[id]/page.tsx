@@ -298,11 +298,11 @@ export default function InfluencerDetailPage() {
 
               {/* Stats row */}
               <div className="flex items-center" style={{ gap: 10 }}>
-                <span className="text-[13px] text-black">인스타그램</span>
+                <span className="text-[14px] text-black">인스타그램</span>
                 <div className="w-[4px] h-[4px] rounded-full bg-[#D9D9D9]" />
-                <span className="text-[13px] text-black">팔로워 {data.followers}</span>
+                <span className="text-[14px] text-black">팔로워 {data.followers}</span>
                 <div className="w-[4px] h-[4px] rounded-full bg-[#D9D9D9]" />
-                <span className="text-[13px] text-black">게시물 {data.posts}</span>
+                <span className="text-[14px] text-black">게시물 {data.posts}</span>
               </div>
             </div>
 
@@ -313,7 +313,7 @@ export default function InfluencerDetailPage() {
                 return (
                   <span
                     key={cat}
-                    className="text-[13px] font-medium"
+                    className="text-[14px] font-medium"
                     style={{ backgroundColor: bg, color: text, borderRadius: 50, padding: '7px 10px' }}
                   >
                     {cat}
@@ -349,7 +349,7 @@ export default function InfluencerDetailPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center" style={{ gap: 8 }}>
               <span
-                className="text-[13px] font-semibold"
+                className="text-[14px] font-semibold"
                 style={{ backgroundColor: '#EEEEFF', color: '#3D3FC7', borderRadius: 50, padding: '6px 10px' }}
               >
                 {STAGE_LABELS[data.stage]}
@@ -357,7 +357,7 @@ export default function InfluencerDetailPage() {
               <span className="text-[20px] font-semibold text-black">{data.campaignName}</span>
             </div>
             <span
-              className="text-[13px] font-semibold shrink-0"
+              className="text-[14px] font-semibold shrink-0"
               style={{ backgroundColor: '#FEF6F1', color: '#EF8652', borderRadius: 50, padding: '6px 10px', fontFamily: 'Manrope, sans-serif' }}
             >
               {data.dDay}
@@ -394,7 +394,7 @@ export default function InfluencerDetailPage() {
               <path d="M8 7v3.5" stroke="#2D92FE" strokeWidth="1.4" strokeLinecap="round"/>
               <circle cx="8" cy="5" r="0.7" fill="#2D92FE"/>
             </svg>
-            <span className="text-[13px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
+            <span className="text-[14px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
               캠페인 기본값이 자동으로 채워져 있어요. 조건을 바꾼 뒤 브리프를 다시 생성해보세요.
             </span>
           </div>
@@ -404,7 +404,7 @@ export default function InfluencerDetailPage() {
             <div className="flex items-center" style={{ gap: 8 }}>
               <span className="text-[16px] font-medium text-black">플랫폼 &amp; 포맷</span>
               <span
-                className="text-[13px] font-semibold"
+                className="text-[14px] font-semibold"
                 style={{ backgroundColor: '#F2F4F6', color: '#939EA9', borderRadius: 30, padding: '7px 10px' }}
               >
                 캠페인 기본값
@@ -428,7 +428,7 @@ export default function InfluencerDetailPage() {
                   >
                     <img src={p.icon} alt={p.label} width={52} height={52} />
                     <span className="text-[16px] font-semibold text-center" style={{ color: '#1C1A17' }}>{p.label}</span>
-                    <span className="text-[13px] font-medium text-center" style={{ color: '#B0ADA7' }}>{p.format}</span>
+                    <span className="text-[14px] font-medium text-center" style={{ color: '#B0ADA7' }}>{p.format}</span>
                   </button>
                 );
               })}
@@ -447,15 +447,15 @@ export default function InfluencerDetailPage() {
                 className="flex items-center"
                 style={{ backgroundColor: '#F9FAFB', borderRadius: 10, padding: '12px 20px' }}
               >
-                <span className="text-[13px] font-medium" style={{ color: '#899098' }}>캠페인 기본 &nbsp;</span>
-                <span className="text-[13px] font-medium" style={{ color: '#4B5969' }}>{data.campaignGuidelineUrl}</span>
+                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>캠페인 기본 &nbsp;</span>
+                <span className="text-[14px] font-medium" style={{ color: '#4B5969' }}>{data.campaignGuidelineUrl}</span>
               </div>
             ) : (
               <div
                 className="flex items-center"
                 style={{ backgroundColor: '#F9FAFB', borderRadius: 10, padding: '12px 20px' }}
               >
-                <span className="text-[13px] font-medium" style={{ color: '#C7C4BE' }}>캠페인 기본값 없음 (캠페인 추가 시 미입력)</span>
+                <span className="text-[14px] font-medium" style={{ color: '#C7C4BE' }}>캠페인 기본값 없음 (캠페인 추가 시 미입력)</span>
               </div>
             )}
 
@@ -476,7 +476,7 @@ export default function InfluencerDetailPage() {
                 </svg>
               </button>
             </div>
-            <span className="text-[13px] font-medium" style={{ color: '#D4D2CE' }}>
+            <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>
               {data.campaignGuidelineUrl
                 ? '입력 시 캠페인 기본 가이드라인과 함께 브리프에 포함돼요.'
                 : '링크를 입력하면 AI 브리프에 가이드라인으로 포함돼요.'}
@@ -501,7 +501,7 @@ export default function InfluencerDetailPage() {
                 style={{ color: requests ? '#1C1A17' : undefined, height: '24px' }}
               />
             </div>
-            <span className="text-[13px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>
+            <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>AI 브리프에 개인화된 메시지로 포함됩니다.</span>
           </div>
 
           {/* Regenerate brief button */}
@@ -543,7 +543,7 @@ export default function InfluencerDetailPage() {
               <path d="M8 7v3.5" stroke="#2D92FE" strokeWidth="1.4" strokeLinecap="round"/>
               <circle cx="8" cy="5" r="0.7" fill="#2D92FE"/>
             </svg>
-            <span className="text-[13px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
+            <span className="text-[14px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
               캠페인 정보를 기반으로 AI가 자동 생성한 브리프예요. 바로 보내거나 수정 후 전송할 수 있어요.
             </span>
           </div>
@@ -598,12 +598,12 @@ export default function InfluencerDetailPage() {
             </div>
             <div className="flex flex-col px-5 py-4 bg-white" style={{ gap: 12, borderTop: '1px solid #ECECEF' }}>
               <div className="flex items-center justify-between">
-                <span className="text-[13px] font-medium" style={{ color: '#899098' }}>발송일</span>
-                <span className="text-[13px] font-medium" style={{ color: '#1C1A17' }}>2025.04.17</span>
+                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>발송일</span>
+                <span className="text-[14px] font-medium" style={{ color: '#1C1A17' }}>2025.04.17</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[13px] font-medium" style={{ color: '#899098' }}>경과</span>
-                <span className="text-[13px] font-semibold" style={{ color: '#EF8652', fontFamily: 'Manrope, sans-serif' }}>{data.dDay}</span>
+                <span className="text-[14px] font-medium" style={{ color: '#899098' }}>경과</span>
+                <span className="text-[14px] font-semibold" style={{ color: '#EF8652', fontFamily: 'Manrope, sans-serif' }}>{data.dDay}</span>
               </div>
             </div>
           </div>
@@ -634,7 +634,7 @@ export default function InfluencerDetailPage() {
                 >
                   <img src={icon} alt={label} width={52} height={52} />
                   <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>{label}</span>
-                  <span className="text-[13px] font-medium" style={{ color: '#B0ADA7' }}>{sub}</span>
+                  <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>{sub}</span>
                 </button>
               );
             })}
@@ -668,7 +668,7 @@ export default function InfluencerDetailPage() {
                       inputMode="numeric"
                     />
                   </div>
-                  <span className="text-[13px] font-medium" style={{ color: '#D4D2CE' }}>VAT 별도 금액을 입력해주세요</span>
+                  <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>VAT 별도 금액을 입력해주세요</span>
                 </div>
               </div>
 
@@ -687,7 +687,7 @@ export default function InfluencerDetailPage() {
                       {draftDeadline || 'YYYY.MM.DD'}
                     </span>
                   </button>
-                  <span className="text-[13px] font-medium" style={{ color: '#D4D2CE' }}>인플루언서가 시안을 전달하는 예정일</span>
+                  <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>인플루언서가 시안을 전달하는 예정일</span>
                 </div>
               </div>
 
@@ -712,7 +712,7 @@ export default function InfluencerDetailPage() {
                     <img src="/ship-icon.svg" alt="배송" width={52} height={52} className="shrink-0" />
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                       <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
-                      <span className="text-[13px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
+                      <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
                     </div>
                   </div>
                   {/* Toggle */}
@@ -733,7 +733,7 @@ export default function InfluencerDetailPage() {
                   <path d="M8 7v3" stroke="#2D92FE" strokeWidth="1.3" strokeLinecap="round"/>
                   <circle cx="8" cy="11.5" r="0.6" fill="#2D92FE"/>
                 </svg>
-                <span className="text-[13px] font-semibold" style={{ color: '#2D92FE', lineHeight: '135%' }}>
+                <span className="text-[14px] font-semibold" style={{ color: '#2D92FE', lineHeight: '135%' }}>
                   협의 확정 시 인플루언서 고유 UTM 링크가 자동 생성됩니다.
                 </span>
               </div>
@@ -793,7 +793,7 @@ export default function InfluencerDetailPage() {
             <span className="text-[20px] font-bold text-black">협업 이력</span>
             {data.isFirstCollab && (
               <span
-                className="text-[13px] font-medium"
+                className="text-[14px] font-medium"
                 style={{ backgroundColor: '#EEEEFF', color: '#3D3FC7', borderRadius: 50, padding: '4px 8px' }}
               >
                 첫 협업
@@ -843,7 +843,7 @@ export default function InfluencerDetailPage() {
                 </button>
               </div>
               {memo.date && (
-                <span className="text-[13px] font-medium" style={{ color: 'rgba(112,84,72,0.6)', lineHeight: '22px' }}>
+                <span className="text-[14px] font-medium" style={{ color: 'rgba(112,84,72,0.6)', lineHeight: '22px' }}>
                   {memo.date}
                 </span>
               )}
@@ -902,7 +902,7 @@ export default function InfluencerDetailPage() {
                     borderRadius: 50, padding: '4px 8px',
                   }}
                 >
-                  <span className="text-[13px] font-medium" style={{ color: chip.active ? '#6366F1' : '#B0ADA7', lineHeight: '16px' }}>
+                  <span className="text-[14px] font-medium" style={{ color: chip.active ? '#6366F1' : '#B0ADA7', lineHeight: '16px' }}>
                     {chip.label}
                   </span>
                 </div>
@@ -1054,7 +1054,7 @@ export default function InfluencerDetailPage() {
               {/* Day labels */}
               <div className="grid grid-cols-7 mb-2">
                 {['일','월','화','수','목','금','토'].map(d => (
-                  <span key={d} className="text-center text-[13px] font-medium" style={{ color: '#B0ADA7' }}>{d}</span>
+                  <span key={d} className="text-center text-[14px] font-medium" style={{ color: '#B0ADA7' }}>{d}</span>
                 ))}
               </div>
               {/* Dates */}
@@ -1141,7 +1141,7 @@ export default function InfluencerDetailPage() {
                 lineHeight: '1.6',
               }}
             />
-            <span className="text-[13px] font-medium mb-5" style={{ color: '#C0C4CF' }}>
+            <span className="text-[14px] font-medium mb-5" style={{ color: '#C0C4CF' }}>
               메모는 팀 내부에서만 확인할 수 있어요.
             </span>
 

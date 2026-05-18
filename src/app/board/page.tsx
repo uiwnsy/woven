@@ -185,7 +185,7 @@ function BoardPageContent() {
             <div className="flex bg-[#F0F2F8] rounded-[36px] p-[3px] w-full max-w-[390px] h-[38px]">
               <button
                 onClick={() => setActiveView('grid')}
-                className={`flex-1 flex items-center justify-center gap-1 rounded-[56px] text-[13px] font-medium transition-all
+                className={`flex-1 flex items-center justify-center gap-1 rounded-[56px] text-[14px] font-medium transition-all
                   ${activeView === 'grid' ? 'bg-white shadow-sm text-[#1C1A17]' : 'text-[#9BA1AA]'}`}
               >
                 <LayoutGrid size={11} />
@@ -193,7 +193,7 @@ function BoardPageContent() {
               </button>
               <button
                 onClick={() => setActiveView('list')}
-                className={`flex-1 flex items-center justify-center gap-1 rounded-[36px] text-[13px] font-medium transition-all
+                className={`flex-1 flex items-center justify-center gap-1 rounded-[36px] text-[14px] font-medium transition-all
                   ${activeView === 'list' ? 'bg-white shadow-sm text-[#1C1A17]' : 'text-[#9BA1AA]'}`}
               >
                 <List size={11} />
@@ -214,7 +214,7 @@ function BoardPageContent() {
                   className={`flex items-center gap-1 px-[10px] py-[10px] shrink-0 whitespace-nowrap border-b-[1.5px]
                     ${isActive ? 'border-iris-500' : 'border-[#F0F2F8]'}`}
                 >
-                  <span className={`text-[13px] ${isActive ? 'font-bold text-iris-500' : 'font-medium text-[#1C1A17]'}`}>
+                  <span className={`text-[14px] ${isActive ? 'font-bold text-iris-500' : 'font-medium text-[#1C1A17]'}`}>
                     {tab.label}
                   </span>
                   <span className={`text-[12px] px-[10px] leading-[20px] rounded-full font-manrope
@@ -245,7 +245,7 @@ function BoardPageContent() {
                       <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
                       <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
                     </svg>
-                    <p className="text-[13px] font-medium text-[#2D92FE] leading-[150%]">
+                    <p className="text-[14px] font-medium text-[#2D92FE] leading-[150%]">
                       인플루언서를 추가하면 리스트업 단계에 카드가 생성돼요.{'\n'}이후 컨택, 협의중, 시안확인, 업로드완료 단계로 이동하며 관리할 수 있어요.
                     </p>
                   </div>
@@ -279,16 +279,16 @@ function BoardPageContent() {
                           <div className="flex flex-col gap-1">
                             <div className="flex items-end gap-1">
                               <span className="text-[16px] font-semibold text-black leading-none">{item.name}</span>
-                              <span className="text-[13px] text-[#78756E] leading-none">{item.handle}</span>
+                              <span className="text-[14px] text-[#78756E] leading-none">{item.handle}</span>
                             </div>
-                            <span className="text-[13px] text-[#78756E]">{item.followers}</span>
+                            <span className="text-[14px] text-[#78756E]">{item.followers}</span>
                           </div>
                         </div>
                         {/* 상태 + 금액 */}
                         <div className="flex flex-col items-end gap-[5px] shrink-0">
                           {item.statusText && (
                             <div className="bg-stone-100 px-[10px] pt-[4px] pb-[6px] rounded-full shrink-0">
-                              <span className="text-[13px] font-semibold text-stone-600 leading-none whitespace-nowrap">{item.statusText}</span>
+                              <span className="text-[14px] font-semibold text-stone-600 leading-none whitespace-nowrap">{item.statusText}</span>
                             </div>
                           )}
                           {item.amount && (
@@ -300,7 +300,7 @@ function BoardPageContent() {
                       {item.bottomTags && item.bottomTags.length > 0 && (
                         <div className="flex items-center gap-1">
                           {item.bottomTags.map((tag, ti) => (
-                            <span key={ti} className={`${tag.bg} ${tag.text} text-[13px] font-medium px-[8px] pt-[4px] pb-[6px] rounded-full leading-none`}>
+                            <span key={ti} className={`${tag.bg} ${tag.text} text-[14px] font-medium px-[8px] pt-[4px] pb-[6px] rounded-full leading-none`}>
                               {tag.label}
                             </span>
                           ))}
@@ -344,10 +344,10 @@ function BoardPageContent() {
                   <div key={tab.id} className={tabIdx > 0 ? 'mt-2' : ''}>
                     {/* 단계 헤더 */}
                     <div className="flex items-center gap-2 mb-[10px]">
-                      <span className={`${stageStyle.bg} ${stageStyle.text} text-[13px] font-semibold px-[10px] pt-[4px] pb-[6px] rounded-full leading-none`}>
+                      <span className={`${stageStyle.bg} ${stageStyle.text} text-[14px] font-semibold px-[10px] pt-[4px] pb-[6px] rounded-full leading-none`}>
                         {tab.label}
                       </span>
-                      <span className="text-[13px] font-medium text-[#9BA1AA]">{stageCards.length}명</span>
+                      <span className="text-[14px] font-medium text-[#9BA1AA]">{stageCards.length}명</span>
                     </div>
                     {/* 카드 */}
                     {stageCards.map((item, i) =>
@@ -368,14 +368,14 @@ function BoardPageContent() {
                               <div className="flex flex-col gap-1">
                                 <div className="flex items-end gap-1">
                                   <span className="text-[16px] font-semibold text-black leading-none">{item.name}</span>
-                                  <span className="text-[13px] text-[#78756E] leading-none">{item.handle}</span>
+                                  <span className="text-[14px] text-[#78756E] leading-none">{item.handle}</span>
                                 </div>
-                                <span className="text-[13px] text-[#78756E]">{item.followers}</span>
+                                <span className="text-[14px] text-[#78756E]">{item.followers}</span>
                               </div>
                             </div>
                             <div className="flex flex-col items-end gap-[5px] shrink-0">
                               {item.statusText && (
-                                <span className="bg-stone-100 text-stone-600 text-[13px] font-semibold px-[10px] pt-[4px] pb-[6px] rounded-full leading-none whitespace-nowrap">
+                                <span className="bg-stone-100 text-stone-600 text-[14px] font-semibold px-[10px] pt-[4px] pb-[6px] rounded-full leading-none whitespace-nowrap">
                                   {item.statusText}
                                 </span>
                               )}
@@ -451,7 +451,7 @@ function BoardPageContent() {
                   >
                     <div className="flex flex-col gap-[6px] text-left flex-1 pr-3">
                       <span className="text-[16px] font-medium text-[#1C1A17] leading-snug">{campaign.title}</span>
-                      <span className={`${style.bg} ${style.text} text-[13px] font-semibold px-[10px] py-[5px] rounded-full w-fit`}>
+                      <span className={`${style.bg} ${style.text} text-[14px] font-semibold px-[10px] py-[5px] rounded-full w-fit`}>
                         {campaign.status}
                       </span>
                     </div>

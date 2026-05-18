@@ -56,16 +56,16 @@ export default function InfluencerCard({ data, onPress }: CardProps) {
           <div className="flex-1 min-w-0">
             <div className="flex flex-row items-baseline gap-1.5 mb-1">
               <span className="text-[16px] font-semibold text-stone-900 leading-4">{data.name}</span>
-              <span className="text-[13px] text-stone-500 leading-4">{data.handle}</span>
+              <span className="text-[14px] text-stone-500 leading-4">{data.handle}</span>
             </div>
-            <p className="text-[13px] text-stone-500 leading-4">{data.followers}</p>
+            <p className="text-[14px] text-stone-500 leading-4">{data.followers}</p>
           </div>
         </div>
 
         {/* Status pill */}
         {data.statusText && (
           <div className="bg-stone-100 px-[10px] pt-[4px] pb-[6px] rounded-full shrink-0 ml-3">
-            <span className="text-[13px] font-semibold text-stone-600 leading-none">{data.statusText}</span>
+            <span className="text-[14px] font-semibold text-stone-600 leading-none">{data.statusText}</span>
           </div>
         )}
       </div>
@@ -76,7 +76,7 @@ export default function InfluencerCard({ data, onPress }: CardProps) {
           {data.categories.map((cat, idx) => {
             const { bg, text } = getCategoryStyle(cat);
             return (
-              <span key={idx} className={`px-[10px] pt-[4px] pb-[6px] rounded-full text-[13px] font-semibold leading-none ${bg} ${text}`}>
+              <span key={idx} className={`px-[10px] pt-[4px] pb-[6px] rounded-full text-[14px] font-semibold leading-none ${bg} ${text}`}>
                 {cat}
               </span>
             );

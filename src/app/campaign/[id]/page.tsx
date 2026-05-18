@@ -154,21 +154,21 @@ export default function CampaignDetailPage() {
                   {campaign.productName}
                 </span>
               </div>
-              <span className={`${statusStyle.bg} ${statusStyle.text} text-[13px] font-semibold px-[10px] py-[5px] rounded-full shrink-0 mt-1`}>
+              <span className={`${statusStyle.bg} ${statusStyle.text} text-[14px] font-semibold px-[10px] py-[5px] rounded-full shrink-0 mt-1`}>
                 {campaign.status}
               </span>
             </div>
 
             {/* Tag chips */}
             <div className="flex flex-wrap gap-[6px]">
-              <span className="flex items-center gap-1 border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[13px] font-semibold text-[#1C1A17]">
+              <span className="flex items-center gap-1 border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-semibold text-[#1C1A17]">
                 <Calendar size={14} className="text-[#78756E] shrink-0" />
                 {campaign.dateRange}
               </span>
-              <span className="border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[13px] font-semibold text-[#1C1A17]">
+              <span className="border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-semibold text-[#1C1A17]">
                 {campaign.platform}
               </span>
-              <span className="border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[13px] font-semibold text-[#1C1A17]">
+              <span className="border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-semibold text-[#1C1A17]">
                 {campaign.goal}
               </span>
             </div>
@@ -209,7 +209,7 @@ export default function CampaignDetailPage() {
                   <path d="M9 7v3.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
                   <circle cx="9" cy="12.5" r="0.75" fill="#2D92FE"/>
                 </svg>
-                <p className="text-[13px] font-medium text-[#2D92FE] leading-[135%]">
+                <p className="text-[14px] font-medium text-[#2D92FE] leading-[135%]">
                   보드 현황이 비어있어요.{'\n'}보드에서 인플루언서를 추가하여 관리하세요.
                 </p>
               </div>
@@ -225,7 +225,7 @@ export default function CampaignDetailPage() {
                 <img src="/board-icon.svg" alt="" className="w-[52px] h-[52px] shrink-0" />
                 <div className="flex flex-col text-left">
                   <span className="text-[16px] font-medium text-[#1C1A17]">보드에서 인플루언서 관리하기</span>
-                  <span className="text-[13px] font-medium text-[#B0ADA7]">단계 이동 · 브리프 발송 · 전체 현황</span>
+                  <span className="text-[14px] font-medium text-[#B0ADA7]">단계 이동 · 브리프 발송 · 전체 현황</span>
                 </div>
               </div>
               <img src="/arrow-right.svg" alt="" className="w-6 h-6 shrink-0" />
@@ -240,7 +240,7 @@ export default function CampaignDetailPage() {
             <div className="flex items-center justify-between px-5 py-[18px]">
               <div className="flex flex-col gap-1">
                 <span className="text-[16px] font-medium text-[#1C1A17]">AI 브리프 보기</span>
-                <span className="text-[13px] font-normal text-[#B0ADA7]">브리프 편집 · 재생성</span>
+                <span className="text-[14px] font-normal text-[#B0ADA7]">브리프 편집 · 재생성</span>
               </div>
               <img src="/arrow-right.svg" alt="" className="w-6 h-6 shrink-0" />
             </div>
@@ -257,7 +257,7 @@ export default function CampaignDetailPage() {
                     key={kpi.label}
                     className="flex-1 flex flex-col gap-[10px] border border-[#E8E7E4] rounded-[10px] px-[18px] py-[15px]"
                   >
-                    <span className="text-[13px] font-semibold text-[#1C1A17] leading-[20px] font-manrope">
+                    <span className="text-[14px] font-semibold text-[#1C1A17] leading-[20px] font-manrope">
                       {kpi.label}
                     </span>
                     <span className={`text-[20px] font-semibold leading-[20px] ${kpi.value === '데이터 집계 전' ? 'text-[#D4D2CE]' : 'text-[#1C1A17]'}`}>
@@ -278,7 +278,7 @@ export default function CampaignDetailPage() {
                 <img src="/report-icon.svg" alt="" className="w-[52px] h-[52px] shrink-0" />
                 <div className="flex flex-col text-left">
                   <span className="text-[16px] font-medium text-[#1C1A17]">성과 탭에서 자세히 보기</span>
-                  <span className="text-[13px] font-medium text-[#B0ADA7]">캠페인 성과 · 인플루언서 성과 비교</span>
+                  <span className="text-[14px] font-medium text-[#B0ADA7]">캠페인 성과 · 인플루언서 성과 비교</span>
                 </div>
               </div>
               <img src="/arrow-right.svg" alt="" className="w-6 h-6 shrink-0" />

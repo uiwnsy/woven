@@ -67,10 +67,10 @@ export default function EmailLoginPage() {
                 </svg>
               )}
             </div>
-            <span className="text-[13px] text-stone-600">자동 로그인</span>
+            <span className="text-[14px] text-stone-600">자동 로그인</span>
           </button>
 
-          <div className="flex items-center gap-3 text-[13px] text-stone-400">
+          <div className="flex items-center gap-3 text-[14px] text-stone-400">
             <button className="active:opacity-60">아이디 찾기</button>
             <span>|</span>
             <button className="active:opacity-60">비밀번호 찾기</button>

@@ -109,7 +109,7 @@ export default function MyPage() {
           </div>
           <div>
             <p className="text-[16px] font-bold text-stone-900">김지은</p>
-            <p className="text-[13px] text-stone-500 mt-0.5">jieun@lumiere.co.kr</p>
+            <p className="text-[14px] text-stone-500 mt-0.5">jieun@lumiere.co.kr</p>
           </div>
         </div>
 
@@ -117,10 +117,10 @@ export default function MyPage() {
         <div className="mx-5 mb-6 bg-stone-900 rounded-2xl px-5 py-4 flex items-center justify-between">
           <div>
             <p className="text-[16px] font-bold text-white mb-1">Woven Plus Plan</p>
-            <p className="text-[13px] text-stone-400">다음 결제일 5월 18일</p>
+            <p className="text-[14px] text-stone-400">다음 결제일 5월 18일</p>
           </div>
           <div className="bg-iris-500 px-[10px] pt-[4px] pb-[6px] rounded-full shrink-0 ml-3">
-            <span className="text-white text-[13px] font-semibold whitespace-nowrap leading-none">멤버십 124 일째 이용 중</span>
+            <span className="text-white text-[14px] font-semibold whitespace-nowrap leading-none">멤버십 124 일째 이용 중</span>
           </div>
         </div>
 
@@ -139,7 +139,7 @@ export default function MyPage() {
                   <div className="flex-1 min-w-0 mr-3">
                     <p className="text-[16px] font-medium text-stone-900">{item.title}</p>
                     {item.subtitle && (
-                      <p className="text-[13px] text-stone-400 mt-0.5">{item.subtitle}</p>
+                      <p className="text-[14px] text-stone-400 mt-0.5">{item.subtitle}</p>
                     )}
                   </div>
 
@@ -151,7 +151,7 @@ export default function MyPage() {
                   ) : (
                     <div className="flex items-center gap-1 shrink-0">
                       {item.value && (
-                        <span className="text-[13px] text-stone-500">{item.value}</span>
+                        <span className="text-[14px] text-stone-500">{item.value}</span>
                       )}
                       {item.chevron && (
                         <ChevronRight size={18} className="text-stone-400" />

@@ -215,10 +215,6 @@ export default function InfluencerPerformancePage() {
                         <span className="text-[14px] font-semibold text-[#5C5A54]" style={MANROPE}>ROAS</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <span className="bg-[#F0FDF4] text-[#22C55E] text-[14px] font-semibold rounded-full px-[10px] py-[5px]">업로드완료</span>
-                      {inf.hasUtm && <span className="bg-[#EFF6FF] text-[#3D3FC7] text-[14px] font-semibold rounded-full px-[10px] py-[5px]">UTM 포함</span>}
-                    </div>
                     <div className="flex gap-1">
                       {[{ l: '클릭', v: inf.clicks }, { l: '전환', v: inf.conversions }, { l: 'CVR', v: inf.cvr }, { l: '단가', v: inf.cost }].map(s => (
                         <div key={s.l} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-[14px] flex flex-col gap-[6px]">

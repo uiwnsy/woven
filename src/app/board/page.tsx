@@ -54,7 +54,9 @@ const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
         profileImg: '/profile-igaheun.png' },
     ],
     'uploaded': [
-      { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: '업로드 완료', profileImg: 'https://i.pravatar.cc/150?img=47' },
+      { id: '4', name: 'dearyq', handle: '@dearyq', followers: '10.1만', categories: ['뷰티', '패션', '일상'], statusText: '업로드 D+1', amount: '₩450,000',
+        bottomTags: [{ label: 'UTM 포함', bg: 'bg-[#EFF6FF]', text: 'text-[#3D3FC7]' }, { label: '입금 대기', bg: 'bg-[#FFFBEB]', text: 'text-[#F59E0B]' }],
+        profileImg: '/profile-dearyq.png' },
     ],
   },
   2: {
@@ -258,7 +260,7 @@ function BoardPageContent() {
                 )
               ) : (
                 cards.map((item, i) =>
-                  activeTab === 'negotiated' || activeTab === 'inProgress' ? (
+                  activeTab === 'negotiated' || activeTab === 'inProgress' || activeTab === 'uploaded' ? (
                     <button
                       key={item.id + i}
                       onClick={() => router.push('/board/' + item.id)}

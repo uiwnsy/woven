@@ -219,7 +219,7 @@ export default function PerformancePage() {
 
             {/* CVR / CPC / CPA */}
             <div className="flex gap-3">
-              {[{ label: 'CVR', value: '0.61%' }, { label: 'CPC', value: '₩549' }, { label: 'CPA', value: '9만원' }].map(item => (
+              {[{ label: 'CVR', value: '0.61%' }, { label: 'CPC', value: '549원' }, { label: 'CPA', value: '9만원' }].map(item => (
                 <div key={item.label} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-5 flex flex-col gap-[6px]">
                   <span className="text-[13px] font-medium text-[#78756E]" style={MANROPE}>{item.label}</span>
                   <span className="text-[16px] font-extrabold text-black" style={MANROPE}>{item.value}</span>

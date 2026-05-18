@@ -218,6 +218,7 @@ export default function InfluencerDetailPage() {
   const [briefVersion, setBriefVersion] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isEditingRequests, setIsEditingRequests] = useState(false);
+  const [negotiatingBriefExpanded, setNegotiatingBriefExpanded] = useState(false);
   const [collabHistoryExpanded, setCollabHistoryExpanded] = useState(
     () => effectiveStage !== 'contacting' && effectiveStage !== 'negotiating'
   );
@@ -1049,6 +1050,16 @@ export default function InfluencerDetailPage() {
             </div>
           </div>
 
+          {/* 배송 주소 */}
+          <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: '14px 20px' }}>
+            <div className="flex items-start justify-between" style={{ gap: 12 }}>
+              <span className="text-[14px] font-medium shrink-0" style={{ color: '#78756E' }}>배송 주소</span>
+              <span className="text-[14px] font-medium text-right" style={{ color: '#1C1A17' }}>
+                {deliveryAddress || '서울 강남구 테헤란로 635, 3층'}
+              </span>
+            </div>
+          </div>
+
           {/* 제품 배송 완료 */}
           <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: 20 }}>
             <div className="flex items-center justify-between">
@@ -1067,6 +1078,46 @@ export default function InfluencerDetailPage() {
                 <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
               </button>
             </div>
+          </div>
+        </div>
+
+        <div className="h-2 bg-[#F5F5F3]" />
+
+        {/* 발송된 브리프 */}
+        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+          <span className="text-[20px] font-bold text-black">발송된 브리프</span>
+          <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden flex flex-col">
+            <button
+              onClick={() => setNegotiatingBriefExpanded(v => !v)}
+              className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF] w-full active:opacity-70"
+            >
+              <span className="text-[16px] font-medium text-black">AI 브리프</span>
+              <div className="flex items-center gap-2">
+                <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
+                  <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
+                </div>
+                <svg
+                  width="18" height="18" viewBox="0 0 18 18" fill="none"
+                  style={{ transform: negotiatingBriefExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+                >
+                  <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </button>
+            {negotiatingBriefExpanded && (
+              <>
+                <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
+                  <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
+                    {data.brief ?? BRIEF_VARIANTS[0]}
+                  </p>
+                </div>
+                <div className="border-t border-[#ECECEF]">
+                  <button onClick={handleCopyBrief} className="w-full py-[15px] flex items-center justify-center bg-[#F8FAFF] active:opacity-70">
+                    <span className="text-[16px] font-medium text-black">{briefCopied ? '복사됨 ✓' : '복사하기'}</span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
 

@@ -176,21 +176,21 @@ function BoardPageContent() {
           </div>
 
           <div className="px-5 mb-4 flex justify-center">
-            <div className="flex bg-[#F0F2F8] rounded-[36px] p-1 w-full max-w-[390px] h-[50px]">
+            <div className="flex bg-[#F0F2F8] rounded-[36px] p-[3px] w-full max-w-[390px] h-[38px]">
               <button
                 onClick={() => setActiveView('grid')}
-                className={`flex-1 flex items-center justify-center gap-1 rounded-[56px] text-[16px] font-medium transition-all
+                className={`flex-1 flex items-center justify-center gap-1 rounded-[56px] text-[13px] font-medium transition-all
                   ${activeView === 'grid' ? 'bg-white shadow-sm text-[#1C1A17]' : 'text-[#9BA1AA]'}`}
               >
-                <LayoutGrid size={13} />
+                <LayoutGrid size={11} />
                 단계별
               </button>
               <button
                 onClick={() => setActiveView('list')}
-                className={`flex-1 flex items-center justify-center gap-1 rounded-[36px] text-[16px] font-medium transition-all
+                className={`flex-1 flex items-center justify-center gap-1 rounded-[36px] text-[13px] font-medium transition-all
                   ${activeView === 'list' ? 'bg-white shadow-sm text-[#1C1A17]' : 'text-[#9BA1AA]'}`}
               >
-                <List size={13} />
+                <List size={11} />
                 리스트
               </button>
             </div>

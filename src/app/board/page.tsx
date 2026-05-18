@@ -32,18 +32,18 @@ const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
 const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
   1: {
     'list-up': [
-      { id: 'lu1', name: 'minj_',  handle: '@minj_',   followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-kimminji.png' },
-      { id: 'lu2', name: '박서연', handle: '@ppseo0',  followers: '48만',   categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-parkseo.png' },
-      { id: 'lu3', name: 'leezsu', handle: '@leezsu',  followers: '12만',   categories: ['뷰티', '일상'],         statusText: '리스트업', profileImg: '/profile-paooar.png' },
+      { id: 'lu1', name: '김민지', handle: '@minj_',    followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-kimminji.png' },
+      { id: 'lu2', name: '박서연', handle: '@ppseoo',   followers: '4만',    categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-parkseo.png' },
+      { id: 'lu3', name: '박진이', handle: '@jinstlee', followers: '6.8만',  categories: ['뷰티', '일상'],         statusText: '리스트업', profileImg: '/profile-parkjini.png' },
     ],
     'contacting': [
-      { id: '1', name: 'haye0',  handle: '@haye0',    followers: '10.4만', categories: ['뷰티', '패션'],              statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=1' },
-      { id: '2', name: 'zigoo',  handle: '@zigoo',    followers: '8만',    categories: ['뷰티', '패션'],              statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=5' },
-      { id: '3', name: '김지영', handle: '@jijizero', followers: '21만',   categories: ['뷰티', '연애/결혼', '일상'], statusText: '전송 D+26', profileImg: 'https://i.pravatar.cc/150?img=9' },
+      { id: '1', name: 'haye0',  handle: '@haye0',    followers: '10.4만', categories: ['뷰티', '패션'],              statusText: '전송 D+26', profileImg: '/profile-haye0.png' },
+      { id: '2', name: 'zigoo',  handle: '@zigoo',    followers: '2만',    categories: ['뷰티', '패션'],              statusText: '전송 D+26', profileImg: '/profile-zigoo.png' },
+      { id: '3', name: '김지영', handle: '@jijizero', followers: '21만',   categories: ['뷰티', '연애/결혼', '일상'], statusText: '전송 D+26', profileImg: '/profile-kimjiyoung.png' },
     ],
     'negotiated': [
-      { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '시안 전달 D+1', amount: '350,000원', profileImg: 'https://i.pravatar.cc/150?img=47' },
-      { id: '5', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 전달 D+3', amount: '280,000원', profileImg: 'https://i.pravatar.cc/150?img=44' },
+      { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '시안 전달 D+1', amount: '350,000원', profileImg: '/profile-paooar.png' },
+      { id: '5', name: '김민지', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 전달 D+3', amount: '280,000원', profileImg: '/profile-kimminji.png' },
     ],
     'inProgress': [
       { id: '4', name: 'leeum',  handle: '@leeum',  followers: '4.6만', categories: ['뷰티', '패션'], statusText: '포스팅 D-1', amount: '350,000원',
@@ -69,24 +69,24 @@ const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
   3: {
     'list-up': [],
     'contacting': [
-      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만', categories: ['뷰티', '패션', '일상'], statusText: '전송 D+5', profileImg: 'https://i.pravatar.cc/150?img=47' },
-      { id: '7', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],        statusText: '전송 D+5', profileImg: 'https://i.pravatar.cc/150?img=44' },
-      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '8만',    categories: ['뷰티', '패션'],        statusText: '전송 D+5', profileImg: 'https://i.pravatar.cc/150?img=5'  },
+      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '전송 D+5', profileImg: '/profile-paooar.png' },
+      { id: '7', name: '김민지', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '전송 D+5', profileImg: '/profile-kimminji.png' },
+      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '2만',    categories: ['뷰티', '패션'],         statusText: '전송 D+5', profileImg: '/profile-zigoo.png' },
     ],
     'negotiated': [
-      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '협의 완료', profileImg: 'https://i.pravatar.cc/150?img=47' },
-      { id: '7', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '협의 완료', profileImg: 'https://i.pravatar.cc/150?img=44' },
-      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '8만',    categories: ['뷰티', '패션'],         statusText: '협의 완료', profileImg: 'https://i.pravatar.cc/150?img=5'  },
+      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '협의 완료', profileImg: '/profile-paooar.png' },
+      { id: '7', name: '김민지', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '협의 완료', profileImg: '/profile-kimminji.png' },
+      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '2만',    categories: ['뷰티', '패션'],         statusText: '협의 완료', profileImg: '/profile-zigoo.png' },
     ],
     'inProgress': [
-      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=47' },
-      { id: '7', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=44' },
-      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '8만',    categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: 'https://i.pravatar.cc/150?img=5'  },
+      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '시안 확인 중', profileImg: '/profile-paooar.png' },
+      { id: '7', name: '김민지', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: '/profile-kimminji.png' },
+      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '2만',    categories: ['뷰티', '패션'],         statusText: '시안 확인 중', profileImg: '/profile-zigoo.png' },
     ],
     'uploaded': [
-      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '업로드 완료', profileImg: 'https://i.pravatar.cc/150?img=47' },
-      { id: '7', name: 'minj_',  handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '업로드 완료', profileImg: 'https://i.pravatar.cc/150?img=44' },
-      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '8만',    categories: ['뷰티', '패션'],         statusText: '업로드 완료', profileImg: 'https://i.pravatar.cc/150?img=5'  },
+      { id: '6', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '업로드 완료', profileImg: '/profile-paooar.png' },
+      { id: '7', name: '김민지', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '업로드 완료', profileImg: '/profile-kimminji.png' },
+      { id: '8', name: 'zigoo',  handle: '@zigoo',  followers: '2만',    categories: ['뷰티', '패션'],         statusText: '업로드 완료', profileImg: '/profile-zigoo.png' },
     ],
   },
 };

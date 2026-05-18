@@ -328,7 +328,7 @@ function BoardPageContent() {
             </>
           ) : (
             /* ── 리스트 뷰 ── */
-            <div className="bg-white rounded-[14px] border border-[#EBEEF7] overflow-hidden">
+            <div className="flex flex-col">
               {TAB_IDS.map((tab, tabIdx) => {
                 const stageCards = boardData[tab.id] ?? [];
                 if (stageCards.length === 0) return null;
@@ -341,43 +341,63 @@ function BoardPageContent() {
                 };
                 const stageStyle = STAGE_STYLES[tab.id];
                 return (
-                  <div key={tab.id}>
+                  <div key={tab.id} className={tabIdx > 0 ? 'mt-2' : ''}>
                     {/* 단계 헤더 */}
-                    <div className={`flex items-center gap-2 px-5 py-[10px] bg-[#fafbfe] ${tabIdx > 0 ? 'border-t border-[#EBEEF7]' : ''}`}>
+                    <div className="flex items-center gap-2 mb-[10px]">
                       <span className={`${stageStyle.bg} ${stageStyle.text} text-[13px] font-semibold px-[10px] pt-[4px] pb-[6px] rounded-full leading-none`}>
                         {tab.label}
                       </span>
                       <span className="text-[13px] font-medium text-[#9BA1AA]">{stageCards.length}명</span>
                     </div>
-                    {/* 인플루언서 행 */}
-                    {stageCards.map((item, i) => (
-                      <button
-                        key={item.id + i}
-                        onClick={() => router.push('/board/' + item.id)}
-                        className={`w-full flex items-center justify-between px-5 py-[13px] active:opacity-70 bg-white
-                          ${i < stageCards.length - 1 ? 'border-b border-[#f0f2f8]' : ''}`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="relative shrink-0">
-                            <div className="w-9 h-9 rounded-full bg-stone-200 overflow-hidden">
-                              {item.profileImg && (
-                                <img src={item.profileImg} alt={item.name} className="w-full h-full object-cover" />
+                    {/* 카드 */}
+                    {stageCards.map((item, i) =>
+                      tab.id === 'negotiated' || tab.id === 'inProgress' || tab.id === 'uploaded' ? (
+                        <button
+                          key={item.id + i}
+                          onClick={() => router.push('/board/' + item.id)}
+                          className="bg-white rounded-2xl px-[22px] py-[22px] mb-[10px] border border-[#ebeef7] flex flex-col gap-3 w-full text-left active:opacity-80 transition-opacity"
+                        >
+                          <div className="flex items-center justify-between gap-3">
+                            <div className="flex items-center gap-3 flex-1 min-w-0">
+                              <div className="relative shrink-0">
+                                <div className="w-10 h-10 rounded-full bg-stone-200 overflow-hidden">
+                                  {item.profileImg && <img src={item.profileImg} alt={item.name} className="w-full h-full object-cover" />}
+                                </div>
+                                <img src="/skill-icons_instagram.svg" alt="ig" className="absolute w-4 h-4 bottom-0 -right-[1px]" />
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <div className="flex items-end gap-1">
+                                  <span className="text-[16px] font-semibold text-black leading-none">{item.name}</span>
+                                  <span className="text-[13px] text-[#78756E] leading-none">{item.handle}</span>
+                                </div>
+                                <span className="text-[13px] text-[#78756E]">{item.followers}</span>
+                              </div>
+                            </div>
+                            <div className="flex flex-col items-end gap-[10px] shrink-0">
+                              {item.statusText && (
+                                <span className="bg-[#F5F5F3] text-[#5C5A54] text-[13px] font-semibold px-[10px] pt-[4px] pb-[6px] rounded-full leading-none whitespace-nowrap">
+                                  {item.statusText}
+                                </span>
+                              )}
+                              {item.amount && (
+                                <span className="text-[18px] font-extrabold text-[#1C1A17] pr-[3px]">{item.amount}</span>
                               )}
                             </div>
-                            <img src="/skill-icons_instagram.svg" alt="ig" className="absolute w-[14px] h-[14px] bottom-0 -right-[1px]" />
                           </div>
-                          <div className="flex flex-col gap-0.5">
-                            <span className="text-[15px] font-semibold text-black leading-none">{item.name}</span>
-                            <span className="text-[13px] text-stone-500">{item.handle} · {item.followers}</span>
-                          </div>
-                        </div>
-                        {item.statusText && (
-                          <span className="bg-stone-100 px-[10px] pt-[4px] pb-[6px] rounded-full text-[13px] font-semibold text-stone-600 leading-none shrink-0 ml-3">
-                            {item.statusText}
-                          </span>
-                        )}
-                      </button>
-                    ))}
+                          {item.bottomTags && item.bottomTags.length > 0 && (
+                            <div className="flex items-center gap-1">
+                              {item.bottomTags.map((tag, ti) => (
+                                <span key={ti} className={`${tag.bg} ${tag.text} text-[13px] font-medium px-[8px] pt-[4px] pb-[6px] rounded-full leading-none`}>
+                                  {tag.label}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </button>
+                      ) : (
+                        <InfluencerCard key={item.id + i} data={item} onPress={() => router.push('/board/' + item.id)} />
+                      )
+                    )}
                   </div>
                 );
               })}

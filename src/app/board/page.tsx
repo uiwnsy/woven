@@ -274,7 +274,7 @@ function BoardPageContent() {
       </div>
 
       {/* ── Bottom navigation ── */}
-      <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-3 bg-white border-t border-[#f0f2f8]">
+      <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-[2px] bg-white border-t border-[#F5F5F3] z-20">
         {[
           { Icon: HomeDisabledIcon,   label: '홈',        active: false, onClick: () => router.push('/home') },
           { Icon: BriefDisabledIcon,  label: '캠페인',    active: false, onClick: () => router.push('/campaign') },
@@ -285,11 +285,15 @@ function BoardPageContent() {
           <button
             key={label}
             onClick={onClick}
-            className={`flex-1 flex flex-col items-center justify-center gap-[5px] active:opacity-60
-              ${active ? 'text-stone-900' : 'text-stone-300'}`}
+            className="flex-1 h-[60px] flex flex-col items-center justify-start pt-[7px] gap-[4px] text-black active:opacity-60"
           >
             <Icon size={32} />
-            <span className={`text-[12px] ${active ? 'font-semibold' : 'font-medium'}`}>{label}</span>
+            <span
+              className="text-[12px] leading-none"
+              style={{ fontWeight: active ? 600 : 500, letterSpacing: '-0.5px' }}
+            >
+              {label}
+            </span>
           </button>
         ))}
       </div>

@@ -987,15 +987,16 @@ function Step5({ form, router }: { form: FormData; router: ReturnType<typeof use
 
   return (
     <div className="px-5 pt-12 flex flex-col items-center pb-[140px]">
-      {/* Checkmark circle */}
-      <div className="w-[72px] h-[72px] bg-iris-500 rounded-full flex items-center justify-center mb-6">
-        <Check size={36} className="text-white" strokeWidth={3} />
+      {/* Checkmark + title + subtitle */}
+      <div className="flex flex-col items-center pt-8 pb-[66px]">
+        <div className="w-[72px] h-[72px] bg-iris-500 rounded-full flex items-center justify-center mb-6">
+          <Check size={36} className="text-white" strokeWidth={3} />
+        </div>
+        <h1 className="text-[24px] font-bold text-stone-900 mb-3">캠페인이 추가됐어요!</h1>
+        <p className="text-[15px] text-stone-500 text-center leading-relaxed">
+          이제 인플루언서를 추가하고<br />보드에서 관리해보세요
+        </p>
       </div>
-
-      <h1 className="text-[24px] font-bold text-stone-900 mb-3">캠페인이 추가됐어요!</h1>
-      <p className="text-[15px] text-stone-500 text-center mb-8 leading-relaxed">
-        이제 인플루언서를 추가하고<br />보드에서 관리해보세요
-      </p>
 
       {/* Summary card */}
       <div className="w-full border border-stone-200 rounded-2xl overflow-hidden mb-3">

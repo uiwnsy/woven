@@ -257,7 +257,7 @@ export default function PerformancePage() {
           {/* Click + Conversion */}
           <div className="flex gap-3">
             {[{ label: '총 클릭 수', value: '820' }, { label: '추적 전환 수', value: '5' }].map(item => (
-              <div key={item.label} className="flex-1 bg-white border border-[#ebeef7] rounded-[14px] p-5 flex flex-col gap-1">
+              <div key={item.label} className="flex-1 bg-white border border-[#ebeef7] rounded-[14px] p-5 flex flex-col gap-[2px]">
                 <span className="text-[14px] font-medium text-[#78756E]">{item.label}</span>
                 <span className="text-[20px] font-extrabold text-black" style={MANROPE}>{item.value}</span>
               </div>

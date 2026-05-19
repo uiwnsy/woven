@@ -341,17 +341,18 @@ function Step4({
   return (
     <>
       <div className="flex-1 overflow-y-auto pb-[140px] px-5 pt-16 flex flex-col items-center">
-        {/* Checkmark */}
-        <div className="w-[72px] h-[72px] bg-iris-500 rounded-full flex items-center justify-center mb-6">
-          <Check size={36} className="text-white" strokeWidth={3} />
+        {/* Checkmark + title + subtitle */}
+        <div className="flex flex-col items-center py-8">
+          <div className="w-[72px] h-[72px] bg-iris-500 rounded-full flex items-center justify-center mb-6">
+            <Check size={36} className="text-white" strokeWidth={3} />
+          </div>
+          <h1 className="text-[22px] font-bold text-stone-900 mb-2">
+            {selected.length}명이 추가되었어요!
+          </h1>
+          <p className="text-[15px] text-stone-500 text-center leading-relaxed">
+            2026 여름 선케어의<br />리스트업 단계에 추가되었어요.
+          </p>
         </div>
-
-        <h1 className="text-[22px] font-bold text-stone-900 mb-2">
-          {selected.length}명이 추가되었어요!
-        </h1>
-        <p className="text-[15px] text-stone-500 text-center mb-8 leading-relaxed">
-          2026 여름 선케어의<br />리스트업 단계에 추가되었어요.
-        </p>
 
         {/* Added influencer list */}
         <div className="w-full border border-stone-100 rounded-2xl overflow-hidden mb-4">

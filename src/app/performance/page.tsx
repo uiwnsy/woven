@@ -125,7 +125,7 @@ function TrendChart() {
               <div key={d.date} className="flex-1 flex justify-center items-end">
                 <div
                   className="rounded-t-[3px]"
-                  style={{ width: 14, height: Math.round((d.clicks / MAX_CLICKS) * CHART_H), backgroundColor: '#A5A6F6' }}
+                  style={{ width: 20, height: Math.round((d.clicks / MAX_CLICKS) * CHART_H), backgroundColor: '#A5A6F6' }}
                 />
               </div>
             ))}

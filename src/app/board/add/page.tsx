@@ -342,7 +342,7 @@ function Step4({
     <>
       <div className="flex-1 overflow-y-auto pb-[140px] px-5 pt-16 flex flex-col items-center">
         {/* Checkmark + title + subtitle */}
-        <div className="flex flex-col items-center pt-8 pb-14">
+        <div className="flex flex-col items-center pt-8 pb-[66px]">
           <div className="w-[72px] h-[72px] bg-iris-500 rounded-full flex items-center justify-center mb-6">
             <Check size={36} className="text-white" strokeWidth={3} />
           </div>

@@ -111,9 +111,6 @@ function Step1({
             <p className="text-[15px] font-medium text-stone-500">2026 여름 선케어</p>
             <p className="text-[14px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
           </div>
-          <div className="w-7 h-7 bg-iris-500 rounded-full flex items-center justify-center shrink-0">
-            <Check size={14} className="text-white" strokeWidth={3} />
-          </div>
         </div>
       </div>
 
@@ -237,9 +234,6 @@ function Step2({
             <p className="text-[15px] font-medium text-stone-500">2026 여름 선케어</p>
             <p className="text-[14px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
           </div>
-          <div className="w-7 h-7 bg-iris-500 rounded-full flex items-center justify-center shrink-0">
-            <Check size={14} className="text-white" strokeWidth={3} />
-          </div>
         </div>
       </div>
 
@@ -314,9 +308,6 @@ function Step3({
           <div>
             <p className="text-[15px] font-medium text-stone-500">2026 여름 선케어</p>
             <p className="text-[14px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
-          </div>
-          <div className="w-7 h-7 bg-iris-500 rounded-full flex items-center justify-center shrink-0">
-            <Check size={14} className="text-white" strokeWidth={3} />
           </div>
         </div>
       </div>

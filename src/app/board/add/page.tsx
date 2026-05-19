@@ -180,12 +180,13 @@ function Step2({
               <button
                 key={inf.handle}
                 onClick={() => toggleOne(inf.handle)}
-                className={`flex flex-col w-full text-left rounded-2xl px-[22px] py-[22px] mb-[10px] border active:opacity-80 transition-all
+                className={`flex flex-row items-center w-full text-left rounded-2xl px-[22px] py-[22px] mb-[10px] border active:opacity-80 transition-all
                   ${inf.selected ? 'border-iris-400 bg-[#fafaff]' : 'border-[#ebeef7] bg-white'}`}
               >
-                {/* Top row */}
-                <div className={`flex flex-row items-center justify-between ${inf.categories.length > 0 ? 'mb-[10px]' : ''}`}>
-                  <div className="flex flex-row items-center flex-1 min-w-0">
+                {/* Content (profile + categories) */}
+                <div className="flex flex-col flex-1 min-w-0">
+                  {/* Top row */}
+                  <div className={`flex flex-row items-center ${inf.categories.length > 0 ? 'mb-[10px]' : ''}`}>
                     {/* Profile image */}
                     <div className="relative mr-3 shrink-0">
                       <div className="w-10 h-10 rounded-full bg-stone-200 overflow-hidden flex items-center justify-center">
@@ -206,25 +207,25 @@ function Step2({
                       <p className="text-[14px] text-stone-500 leading-4">{inf.followers}</p>
                     </div>
                   </div>
-                  {/* Radio button */}
-                  <div className={`w-[22px] h-[22px] rounded-full border-2 flex items-center justify-center shrink-0 ml-3 transition-colors
-                    ${inf.selected ? 'border-iris-500 bg-iris-500' : 'border-stone-300 bg-white'}`}>
-                    {inf.selected && <Check size={12} className="text-white" strokeWidth={3} />}
-                  </div>
+                  {/* Categories */}
+                  {inf.categories.length > 0 && (
+                    <div className="flex flex-row gap-1.5 flex-wrap">
+                      {inf.categories.map((cat, idx) => {
+                        const { bg, text } = getCategoryStyle(cat);
+                        return (
+                          <span key={idx} className={`px-[10px] pt-[4px] pb-[6px] rounded-full text-[14px] font-semibold leading-none ${bg} ${text}`}>
+                            {cat}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-                {/* Categories */}
-                {inf.categories.length > 0 && (
-                  <div className="flex flex-row gap-1.5 flex-wrap">
-                    {inf.categories.map((cat, idx) => {
-                      const { bg, text } = getCategoryStyle(cat);
-                      return (
-                        <span key={idx} className={`px-[10px] pt-[4px] pb-[6px] rounded-full text-[14px] font-semibold leading-none ${bg} ${text}`}>
-                          {cat}
-                        </span>
-                      );
-                    })}
-                  </div>
-                )}
+                {/* Radio button */}
+                <div className={`w-[22px] h-[22px] rounded-full border-2 flex items-center justify-center shrink-0 ml-3 transition-colors
+                  ${inf.selected ? 'border-iris-500 bg-iris-500' : 'border-stone-300 bg-white'}`}>
+                  {inf.selected && <Check size={12} className="text-white" strokeWidth={3} />}
+                </div>
               </button>
             );
           })}

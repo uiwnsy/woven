@@ -283,7 +283,7 @@ function Step3({
             <button
               key={opt.id}
               onClick={() => setContactType(opt.id)}
-              className={`flex-1 flex flex-col items-center gap-2 py-5 rounded-2xl border-2 transition-all active:opacity-80
+              className={`flex-1 flex flex-col items-center gap-2 py-5 rounded-2xl border transition-all active:opacity-80
                 ${contactType === opt.id ? 'border-[#6366F1] bg-[#EEEEFF]' : 'border-stone-200 bg-white'}`}
             >
               <img src={opt.icon} alt="" width={52} height={52} />

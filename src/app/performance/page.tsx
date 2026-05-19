@@ -159,7 +159,7 @@ function TrendChart() {
                 transform: 'translate(-50%, -50%)',
               }}
             >
-              <div style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#6366F1', border: '2px solid white' }} />
+              <div style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#6366F1', border: '2px solid #6366F1' }} />
             </div>
           ))}
         </div>

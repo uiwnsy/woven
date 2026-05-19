@@ -97,7 +97,10 @@ function Step1({
 
         {/* Info banner */}
         <div className="bg-[#eef0fd] rounded-xl px-4 py-3 flex gap-2 mb-6">
-          <span className="text-iris-500 text-[14px] shrink-0 mt-0.5">⚠</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[1px]">
+            <circle cx="8" cy="8" r="7" stroke="#6366F1" strokeWidth="1.5"/>
+            <path d="M8 5v1M8 7.5v3.5" stroke="#6366F1" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
           <p className="text-[14px] text-stone-600 leading-relaxed">
             콤마(,) 또는 줄바꿈으로 구분해주세요.<br />
             엑셀의 핸들 열을 복사 붙여넣기하면 자동으로 인식돼요.
@@ -367,7 +370,10 @@ function Step4({
 
         {/* Info banner */}
         <div className="w-full bg-[#eef0fd] rounded-xl px-4 py-3 flex gap-2">
-          <span className="text-iris-500 text-[14px] shrink-0 mt-0.5">⚠</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[1px]">
+            <circle cx="8" cy="8" r="7" stroke="#6366F1" strokeWidth="1.5"/>
+            <path d="M8 5v1M8 7.5v3.5" stroke="#6366F1" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
           <p className="text-[14px] text-stone-600 leading-relaxed">
             각 인플루언서의 연락 방식, 협업 조건, AI 브리프는 보드에서 설정할 수 있어요.
           </p>

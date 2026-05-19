@@ -28,6 +28,13 @@ type InfluencerDetail = {
 
 const STAGES = ['리스트업', '컨택', '협의중', '시안확인', '업로드'];
 const STAGE_IDS: Stage[] = ['list-up', 'contacting', 'negotiating', 'reviewing', 'uploaded'];
+const STAGE_TO_TAB: Record<Stage, string> = {
+  'list-up': 'list-up',
+  'contacting': 'contacting',
+  'negotiating': 'negotiated',
+  'reviewing': 'inProgress',
+  'uploaded': 'uploaded',
+};
 const STAGE_LABELS: Record<Stage, string> = {
   'list-up': '리스트업',
   'contacting': '컨택',
@@ -315,7 +322,7 @@ export default function InfluencerDetailPage() {
         className="flex items-center justify-between px-4 shrink-0"
         style={{ height: 56, backgroundColor: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(203,213,225,0.2)' }}
       >
-        <button onClick={() => router.back()} className="w-[42px] h-[42px] flex items-center justify-center active:opacity-60">
+        <button onClick={() => router.push('/board?tab=' + STAGE_TO_TAB[effectiveStage])} className="w-[42px] h-[42px] flex items-center justify-center active:opacity-60">
           <img src="/back-icon.svg" alt="back" width={24} height={24} />
         </button>
         <span className="text-[16px] font-bold text-black">인플루언서 상세</span>

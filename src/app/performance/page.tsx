@@ -86,48 +86,85 @@ const CAMPAIGNS = [
 
 const MANROPE: React.CSSProperties = { fontFamily: 'Manrope, sans-serif' };
 
-function BarChart() {
+function TrendChart() {
+  const MAX_CONV = 5;
   const yLabels = [600, 450, 300, 150, 0];
+  const SEGS = CHART_DATA.length;
+
+  const convPoints = CHART_DATA.map((d, i) => {
+    const x = ((i * 2 + 1) / (SEGS * 2)) * 700;
+    const y = d.conversions === 0 ? CHART_H : CHART_H * (1 - (d.conversions / MAX_CONV) * 0.82);
+    return { x, y };
+  });
+  const polylinePoints = convPoints.map(p => `${p.x},${p.y}`).join(' ');
+
   return (
     <div className="flex gap-2">
-      {/* Y-axis: absolutely positioned so each label centers on its grid line */}
       <div className="relative shrink-0" style={{ height: CHART_H, width: 28 }}>
         {yLabels.map((v, i) => (
           <span
             key={v}
             className="absolute text-[12px] leading-none w-full text-right"
-            style={{
-              color: 'rgba(155,161,170,0.5)',
-              top: `${(i / 4) * 100}%`,
-              transform: 'translateY(-50%)',
-            }}
+            style={{ color: 'rgba(155,161,170,0.5)', top: `${(i / 4) * 100}%`, transform: 'translateY(-50%)' }}
           >
             {v}
           </span>
         ))}
       </div>
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         <div className="relative" style={{ height: CHART_H }}>
           {/* Grid lines */}
           {[0, 1, 2, 3, 4].map(i => (
-            <div key={i} className="absolute w-full border-t border-[#E4E8F4]" style={{ top: `${(i / 4) * 100}%` }} />
+            <div key={i} className="absolute w-full border-t border-[#EAECF4]" style={{ top: `${(i / 4) * 100}%` }} />
           ))}
-          {/* Bars: equal-width columns, centered */}
+
+          {/* Click bars */}
           <div className="absolute inset-x-0 bottom-0 flex items-end">
-            {CHART_DATA.map(d => {
-              const clickH = Math.round((d.clicks / MAX_CLICKS) * CHART_H);
-              const convH = d.conversions > 0 ? Math.max(2, Math.round((d.conversions / MAX_CLICKS) * CHART_H)) : 0;
-              return (
-                <div key={d.date} className="flex-1 flex justify-center items-end gap-[2px]">
-                  <div className="w-[14px] rounded-t-sm bg-[#A5A8F5]" style={{ height: clickH }} />
-                  {convH > 0 && <div className="w-[14px] rounded-t-sm bg-iris-500" style={{ height: convH }} />}
-                </div>
-              );
-            })}
+            {CHART_DATA.map(d => (
+              <div key={d.date} className="flex-1 flex justify-center items-end">
+                <div
+                  className="rounded-t-[3px]"
+                  style={{ width: 14, height: Math.round((d.clicks / MAX_CLICKS) * CHART_H), backgroundColor: '#A5A6F6' }}
+                />
+              </div>
+            ))}
           </div>
+
+          {/* Conversion line */}
+          <svg
+            className="absolute inset-0 w-full h-full"
+            viewBox={`0 0 700 ${CHART_H}`}
+            preserveAspectRatio="none"
+          >
+            <polyline
+              points={polylinePoints}
+              fill="none"
+              stroke="#6366F1"
+              strokeWidth="2.5"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+
+          {/* Conversion dots */}
+          {convPoints.map((p, i) => (
+            <div
+              key={i}
+              className="absolute"
+              style={{
+                left: `${(p.x / 700) * 100}%`,
+                top: p.y,
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <div style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#6366F1', border: '2px solid white' }} />
+            </div>
+          ))}
         </div>
-        {/* Date labels: equal-width columns matching bars */}
+
+        {/* Date labels */}
         <div className="flex mt-2">
           {CHART_DATA.map(d => (
             <div key={d.date} className="flex-1 text-center">
@@ -285,15 +322,25 @@ export default function PerformancePage() {
                 ))}
               </div>
             </div>
-            <div className="bg-[#F8FAFF] border border-[rgba(221,231,255,0.4)] rounded-[14px] px-[22px] pt-[30px] pb-[22px] flex flex-col gap-[21px]">
-              <BarChart />
+
+            {/* Insight pill */}
+            <div
+              className="flex items-center gap-[6px] bg-white rounded-full px-3 py-[7px] self-start"
+              style={{ boxShadow: '0 0 0 1px rgba(99,102,241,0.15)' }}
+            >
+              <div className="w-[6px] h-[6px] rounded-full bg-[#6366F1] shrink-0" />
+              <span className="text-[13px] font-medium text-[#78756E]">최고 클릭일 4/17 · 전환 5건</span>
+            </div>
+
+            <div className="bg-[#F8F9FF] border border-[#E6E8FF] rounded-[14px] px-[22px] pt-[30px] pb-[22px] flex flex-col gap-[21px]">
+              <TrendChart />
               <div className="flex items-center justify-center gap-[14px]">
                 <div className="flex items-center gap-[6px]">
-                  <div className="w-[10px] h-[10px] rounded-full bg-[#AFB2F6]" />
+                  <div className="w-[10px] h-[10px] rounded-full bg-[#A5A6F6]" />
                   <span className="text-[14px] text-[#9BA1AA]">클릭 수</span>
                 </div>
                 <div className="flex items-center gap-[6px]">
-                  <div className="w-[10px] h-[10px] rounded-full bg-iris-500" />
+                  <div className="w-[10px] h-[10px] rounded-full bg-[#6366F1]" />
                   <span className="text-[14px] text-[#9BA1AA]">전환 수</span>
                 </div>
               </div>

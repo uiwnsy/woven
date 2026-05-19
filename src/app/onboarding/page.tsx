@@ -26,7 +26,7 @@ const SLIDES = [
     cta: '다음',
   },
   {
-    illust: <img src="/onboarding04.png" alt="" className="w-full max-w-[320px] object-contain" />,
+    illust: <img src="/onboarding04.png" alt="" className="w-full max-w-[240px] object-contain" />,
     title: '성과를 비교하고\n다음 협업에 활용하세요',
     desc: '클릭, 전환, ROAS를\n인플루언서별로 비교하고\n성과 좋은 협업 이력을 다시 활용할 수 있어요.',
     cta: '시작하기',
@@ -62,7 +62,7 @@ export default function OnboardingPage() {
       </div>
 
       {/* Text + dots + CTA */}
-      <div className="px-6 pb-10">
+      <div className="px-6 pb-20">
         {/* Title */}
         <h1 className="text-[24px] font-bold text-stone-900 leading-tight mb-3 text-center whitespace-pre-line">
           {slide.title}

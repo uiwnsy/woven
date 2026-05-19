@@ -214,7 +214,7 @@ export default function PerformancePage() {
           <div className="bg-[#F8FAFF] rounded-[14px] border border-[rgba(221,231,255,0.4)] px-5 py-[30px] flex flex-col gap-5">
 
             {/* ROAS headline */}
-            <div className="flex flex-col gap-[10px]">
+            <div className="flex flex-col gap-1">
               <span className="text-[16px] font-medium text-[#78756E]">평균 ROAS</span>
               <span className="text-[28px] font-extrabold text-black" style={MANROPE}>1.4x</span>
             </div>

@@ -194,53 +194,85 @@ export default function PerformancePage() {
           </button>
 
           {/* Period Filters */}
-          <div className="flex items-center gap-[10px]">
-            {(['전체', '7일', '14일', '30일'] as const).map(p => {
-              const isActive = period === p;
-              return (
-                <button
-                  key={p}
-                  onClick={() => setPeriod(p)}
-                  className={`rounded-full px-[10px] py-[5px] text-[14px] font-semibold active:opacity-70 transition-all
-                    ${isActive ? 'bg-[#6366F1] text-white' : 'border border-[#D4D2CE] text-[#78756E] bg-white'}`}
-                >
-                  {p}
-                </button>
-              );
-            })}
+          <div className="flex flex-col gap-[6px]">
+            <div className="flex items-center gap-[10px]">
+              {(['7일', '14일', '30일', '전체'] as const).map(p => {
+                const isActive = period === p;
+                return (
+                  <button
+                    key={p}
+                    onClick={() => setPeriod(p)}
+                    className={`rounded-full px-[10px] py-[5px] text-[14px] font-semibold active:opacity-70 transition-all
+                      ${isActive ? 'bg-[#6366F1] text-white' : 'border border-[#D4D2CE] text-[#78756E] bg-white'}`}
+                  >
+                    {p}
+                  </button>
+                );
+              })}
+            </div>
+            <span className="text-[12px] text-[#B0ADA7]">2026.05.12 - 2026.05.18 기준</span>
           </div>
 
-          {/* Summary Card */}
-          <div className="bg-[#F8FAFF] rounded-[14px] border border-[rgba(221,231,255,0.4)] px-5 py-[30px] flex flex-col gap-5">
+          {/* ROAS KPI Card */}
+          <div
+            className="rounded-[14px] border border-[#E6E8FF] overflow-hidden flex flex-col"
+            style={{ background: 'linear-gradient(160deg, #FFFFFF 0%, #F2F3FF 100%)' }}
+          >
+            <div className="px-5 pt-5 pb-4 flex flex-col gap-4">
 
-            {/* ROAS headline */}
-            <div className="flex flex-col gap-1">
-              <span className="text-[16px] font-medium text-[#78756E]">평균 ROAS</span>
-              <span className="text-[28px] font-extrabold text-black" style={MANROPE}>1.4x</span>
-            </div>
+              {/* Header row */}
+              <div className="flex items-center justify-between">
+                <span className="text-[14px] font-medium text-[#78756E]">평균 ROAS</span>
+                <span className="text-[12px] font-semibold text-[#F59E0B] bg-[#FFFBEB] rounded-full px-[8px] py-[3px]">집계 중</span>
+              </div>
 
-            {/* Click + Conversion */}
-            <div className="flex gap-3">
-              {[{ label: '총 클릭 수', value: '820' }, { label: '추적 전환 수', value: '5' }].map(item => (
-                <div key={item.label} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-5 flex flex-col gap-1">
-                  <span className="text-[14px] font-medium text-[#78756E]">{item.label}</span>
-                  <span className="text-[20px] font-extrabold text-black" style={MANROPE}>{item.value}</span>
-                  <span className="self-start bg-[#F0FDF4] text-[#22C55E] text-[14px] font-semibold rounded-full px-[10px] py-[5px]">
-                    UTM 추적
-                  </span>
+              {/* Value + delta */}
+              <div className="flex items-end gap-2">
+                <span className="text-[40px] font-extrabold text-black leading-none" style={MANROPE}>1.4x</span>
+                <span className="mb-[5px] text-[13px] font-semibold text-[#22C55E] bg-[#F0FDF4] rounded-full px-[8px] py-[3px]">+0.3x</span>
+              </div>
+
+              {/* Goal gap text */}
+              <span className="text-[14px] font-medium text-[#5C5A54]">
+                목표 <span className="font-bold text-[#6366F1]">2.0x</span>까지 <span className="font-bold text-[#6366F1]">0.6x</span> 남았어요
+              </span>
+
+              {/* Progress bar */}
+              <div className="flex flex-col gap-[5px]">
+                <div className="w-full h-[7px] bg-[#E6E8FF] rounded-full overflow-hidden">
+                  <div className="h-full bg-[#6366F1] rounded-full" style={{ width: '70%' }} />
                 </div>
-              ))}
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-medium text-[#9BA1AA]">현재 1.4x</span>
+                  <span className="text-[11px] font-medium text-[#9BA1AA]">목표 2.0x</span>
+                </div>
+              </div>
             </div>
 
-            {/* CVR / CPC / CPA */}
-            <div className="flex gap-3">
-              {[{ label: 'CVR', value: '0.61%' }, { label: 'CPC', value: '549원' }, { label: 'CPA', value: '9만원' }].map(item => (
-                <div key={item.label} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-5 flex flex-col gap-[6px]">
-                  <span className="text-[14px] font-medium text-[#78756E]" style={MANROPE}>{item.label}</span>
-                  <span className="text-[16px] font-extrabold text-black" style={MANROPE}>{item.value}</span>
-                </div>
-              ))}
+            {/* UTM chip */}
+            <div className="px-5 pb-5">
+              <span className="text-[12px] font-semibold text-[#6366F1] bg-[#EEEEFF] rounded-full px-[10px] py-[5px]">UTM 기준 집계 중</span>
             </div>
+          </div>
+
+          {/* Click + Conversion */}
+          <div className="flex gap-3">
+            {[{ label: '총 클릭 수', value: '820' }, { label: '추적 전환 수', value: '5' }].map(item => (
+              <div key={item.label} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-5 flex flex-col gap-1">
+                <span className="text-[14px] font-medium text-[#78756E]">{item.label}</span>
+                <span className="text-[20px] font-extrabold text-black" style={MANROPE}>{item.value}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* CVR / CPC / CPA */}
+          <div className="flex gap-3">
+            {[{ label: 'CVR', value: '0.61%' }, { label: 'CPC', value: '549원' }, { label: 'CPA', value: '9만원' }].map(item => (
+              <div key={item.label} className="flex-1 bg-white border border-[#F5F5F3] rounded-[14px] p-5 flex flex-col gap-[6px]">
+                <span className="text-[14px] font-medium text-[#78756E]" style={MANROPE}>{item.label}</span>
+                <span className="text-[16px] font-extrabold text-black" style={MANROPE}>{item.value}</span>
+              </div>
+            ))}
           </div>
         </div>
 

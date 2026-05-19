@@ -215,7 +215,7 @@ export default function PerformancePage() {
           {/* ROAS KPI Card */}
           <div
             className="rounded-[14px] border border-[#E6E8FF] overflow-hidden flex flex-col"
-            style={{ background: '#F2F3FF' }}
+            style={{ background: '#F6F7FF' }}
           >
             <div className="px-5 pt-5 pb-4 flex flex-col gap-4">
 

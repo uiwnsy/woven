@@ -454,14 +454,8 @@ export default function PerformancePage() {
                     className="flex items-center justify-between px-4 py-4 rounded-[12px] active:opacity-70 transition-colors"
                     style={{ backgroundColor: isSelected ? '#F0F0FF' : '#FAFBFE', border: isSelected ? '1.5px solid #6366F1' : '1.5px solid transparent' }}
                   >
-                    <div className="flex flex-col gap-[6px] text-left flex-1 pr-3">
-                      <span className="text-[16px] font-medium text-[#1C1A17] leading-snug">{campaign.title}</span>
-                      {campaign.status && (
-                        <span className="text-[13px] font-semibold px-[10px] py-[4px] rounded-full w-fit"
-                          style={{ backgroundColor: STATUS_STYLES[campaign.status].bg, color: STATUS_STYLES[campaign.status].text }}>
-                          {campaign.status}
-                        </span>
-                      )}
+                    <div className="text-left flex-1 pr-3">
+                      <span className={`text-[16px] font-medium leading-snug ${isSelected ? 'text-[#6366F1]' : 'text-[#1C1A17]'}`}>{campaign.title}</span>
                     </div>
                     {isSelected && (
                       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">

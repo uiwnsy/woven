@@ -23,11 +23,6 @@ const CAMPAIGNS: CampaignOption[] = [
   { id: 3, title: '선크림 런칭 캠페인', status: '완료' },
 ];
 
-const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
-  진행중: { bg: 'bg-[#fef6f1]', text: 'text-[#d96430]' },
-  기획:   { bg: 'bg-[#fffbeb]', text: 'text-[#92400e]' },
-  완료:   { bg: 'bg-[#f0fdf4]', text: 'text-[#26af58]' },
-};
 
 const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
   1: {
@@ -437,7 +432,6 @@ function BoardPageContent() {
             <div className="flex flex-col gap-2">
               {CAMPAIGNS.map(campaign => {
                 const isSelected = campaign.id === selectedCampaignId;
-                const style = STATUS_STYLES[campaign.status];
                 return (
                   <button
                     key={campaign.id}
@@ -449,11 +443,8 @@ function BoardPageContent() {
                     className={`flex items-center justify-between px-4 py-4 rounded-[12px] active:opacity-70 transition-colors
                       ${isSelected ? 'bg-[#EEEEFF] border border-[#6366F1]' : 'bg-[#fafbfe] border border-transparent'}`}
                   >
-                    <div className="flex flex-col gap-[6px] text-left flex-1 pr-3">
-                      <span className="text-[16px] font-medium text-[#1C1A17] leading-snug">{campaign.title}</span>
-                      <span className={`${style.bg} ${style.text} text-[14px] font-semibold px-[10px] py-[5px] rounded-full w-fit`}>
-                        {campaign.status}
-                      </span>
+                    <div className="text-left flex-1 pr-3">
+                      <span className={`text-[16px] font-medium leading-snug ${isSelected ? 'text-[#6366F1]' : 'text-[#1C1A17]'}`}>{campaign.title}</span>
                     </div>
                     {isSelected && <Check size={18} className="text-iris-500 shrink-0" />}
                   </button>

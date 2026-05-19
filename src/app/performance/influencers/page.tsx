@@ -263,14 +263,8 @@ export default function InfluencerPerformancePage() {
                     className="flex items-center justify-between px-5 py-4 rounded-[14px] active:opacity-70"
                     style={{ backgroundColor: isSelected ? '#F0F0FF' : '#F8F8FA', border: isSelected ? '1.5px solid #6366F1' : '1.5px solid transparent' }}
                   >
-                    <div className="flex items-center gap-2">
-                      <span className="text-[16px] font-medium text-[#1C1A17] text-left">{c.title}</span>
-                      {c.status && (
-                        <span className="text-[12px] font-semibold rounded-full px-[8px] py-[3px] shrink-0"
-                          style={{ backgroundColor: STATUS_STYLE[c.status].bg, color: STATUS_STYLE[c.status].text }}>
-                          {c.status}
-                        </span>
-                      )}
+                    <div>
+                      <span className={`text-[16px] font-medium text-left ${isSelected ? 'text-[#6366F1]' : 'text-[#1C1A17]'}`}>{c.title}</span>
                     </div>
                     {isSelected && (
                       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">

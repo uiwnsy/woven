@@ -257,10 +257,10 @@ export default function CampaignDetailPage() {
                     key={kpi.label}
                     className="flex-1 flex flex-col gap-[10px] border border-[#E8E7E4] rounded-[10px] px-[18px] py-[15px]"
                   >
-                    <span className="text-[14px] font-semibold text-[#1C1A17] leading-[20px] font-manrope">
+                    <span className="text-[14px] font-medium text-[#78756E] leading-[20px] font-manrope">
                       {kpi.label}
                     </span>
-                    <span className={`text-[20px] font-semibold leading-[20px] ${kpi.value === '데이터 집계 전' ? 'text-[#D4D2CE]' : 'text-[#1C1A17]'}`}>
+                    <span className={`text-[20px] font-extrabold leading-[20px] ${kpi.value === '데이터 집계 전' ? 'text-[#D4D2CE]' : 'text-[#1C1A17]'}`}>
                       {kpi.value}
                     </span>
                   </div>

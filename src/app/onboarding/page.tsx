@@ -59,7 +59,7 @@ export default function OnboardingPage() {
 
   return (
     <div
-      className="flex flex-col h-screen bg-white max-w-[430px] mx-auto overflow-hidden"
+      className="flex flex-col h-screen bg-white max-w-[430px] mx-auto overflow-hidden relative"
       onTouchStart={e => handleDragStart(e.touches[0].clientX)}
       onTouchEnd={e => handleDragEnd(e.changedTouches[0].clientX)}
       onMouseDown={e => handleDragStart(e.clientX)}
@@ -67,13 +67,14 @@ export default function OnboardingPage() {
     >
 
       {/* Skip */}
-      <div className="flex justify-end px-5 pt-[10px]">
-        {step < SLIDES.length - 1 && (
-          <button onClick={skip} className="text-[18px] font-medium text-[#999999] px-5 py-[10px] active:opacity-60">
-            건너뛰기
-          </button>
-        )}
-      </div>
+      {step < SLIDES.length - 1 && (
+        <button
+          onClick={skip}
+          className="absolute top-[14px] right-[20px] text-[18px] font-medium text-[#999999] py-[10px] z-20 active:opacity-60"
+        >
+          건너뛰기
+        </button>
+      )}
 
       {/* Illustration */}
       <div className="flex-1 relative">

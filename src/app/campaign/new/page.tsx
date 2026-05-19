@@ -1089,22 +1089,23 @@ export default function CampaignNewPage() {
     <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
 
       {/* Header */}
-      <div className="flex items-center justify-center px-5 h-[56px] border-b border-[#f0f2f8] bg-white shrink-0 relative">
-        {step < 5 && (
-          <button onClick={goBack} className="absolute left-5 active:opacity-60">
-            <ChevronLeft size={24} className="text-stone-900" />
-          </button>
-        )}
-        <span className="text-[16px] font-semibold text-stone-900">캠페인 추가</span>
-      </div>
-
-      {/* Progress bar */}
-      <div className="h-[4px] bg-stone-100 shrink-0">
-        <div
-          className="h-full bg-iris-500 transition-all duration-300"
-          style={{ width: `${progressPct}%` }}
-        />
-      </div>
+      {step < 5 && (
+        <>
+          <div className="flex items-center justify-center px-5 h-[56px] border-b border-[#f0f2f8] bg-white shrink-0 relative">
+            <button onClick={goBack} className="absolute left-5 active:opacity-60">
+              <ChevronLeft size={24} className="text-stone-900" />
+            </button>
+            <span className="text-[16px] font-semibold text-stone-900">캠페인 추가</span>
+          </div>
+          {/* Progress bar */}
+          <div className="h-[4px] bg-stone-100 shrink-0">
+            <div
+              className="h-full bg-iris-500 transition-all duration-300"
+              style={{ width: `${progressPct}%` }}
+            />
+          </div>
+        </>
+      )}
 
       {/* Scrollable content */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto pb-[160px]">

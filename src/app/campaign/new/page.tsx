@@ -467,8 +467,8 @@ function Step1({ form, updateForm, togglePlatform }: {
                       <span className="text-white text-[16px] font-bold">{mgr.initial}</span>
                     </div>
                     <div className="flex-1 text-left">
-                      <p className="text-[16px] font-medium text-[#1C1A17]">{mgr.name}</p>
-                      <p className="text-[14px] text-[#B0ADA7]">{mgr.team}</p>
+                      <p className="text-[16px] font-semibold text-black">{mgr.name}</p>
+                      <p className="text-[14px] text-black">{mgr.team}</p>
                     </div>
                     {isSelected && <Check size={18} className="text-iris-500 shrink-0" />}
                   </button>
@@ -511,8 +511,8 @@ function Step2({ form, updateForm, toggleKPI }: {
               >
                 <img src={goal.icon} alt={goal.label} className="w-[52px] h-[52px] shrink-0" />
                 <div className="flex flex-col gap-[6px]">
-                  <p className="text-[16px] font-medium text-[#1C1A17]">{goal.label}</p>
-                  <p className="text-[14px] font-medium text-[#B0ADA7]">{goal.desc}</p>
+                  <p className="text-[16px] font-semibold text-black">{goal.label}</p>
+                  <p className="text-[14px] text-black">{goal.desc}</p>
                 </div>
               </button>
             );

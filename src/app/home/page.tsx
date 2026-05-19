@@ -358,7 +358,7 @@ export default function HomePage() {
                   <img src={item.icon} alt="" width={52} height={52} className="shrink-0" />
                   <div className="text-left">
                     <p className="text-[16px] font-semibold text-black">{item.title}</p>
-                    <p className="text-[14px] text-black/60 mt-1">{item.subtitle}</p>
+                    <p className="text-[14px] text-black mt-1">{item.subtitle}</p>
                   </div>
                 </div>
                 <img src="/arrow-right.svg" alt="" width={20} height={20} className="shrink-0 ml-2" />

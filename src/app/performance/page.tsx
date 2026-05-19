@@ -141,7 +141,7 @@ function TrendChart() {
               points={polylinePoints}
               fill="none"
               stroke="#6366F1"
-              strokeWidth="2.5"
+              strokeWidth="3"
               strokeLinejoin="round"
               strokeLinecap="round"
               vectorEffect="non-scaling-stroke"
@@ -159,7 +159,7 @@ function TrendChart() {
                 transform: 'translate(-50%, -50%)',
               }}
             >
-              <div style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#6366F1', border: '2px solid #6366F1' }} />
+              <div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#6366F1', border: '2px solid #6366F1' }} />
             </div>
           ))}
         </div>

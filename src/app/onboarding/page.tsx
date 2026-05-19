@@ -61,16 +61,18 @@ export default function OnboardingPage() {
         {slide.illust}
       </div>
 
-      {/* Text + dots + CTA */}
-      <div className="px-6 pb-20">
-        {/* Title */}
+      {/* Title + desc */}
+      <div className="px-6 pt-2 pb-6">
         <h1 className="text-[24px] font-bold text-stone-900 leading-tight mb-3 text-center whitespace-pre-line">
           {slide.title}
         </h1>
-        <p className="text-[15px] text-stone-400 text-center leading-relaxed mb-8 whitespace-pre-line">
+        <p className="text-[15px] text-stone-400 text-center leading-relaxed whitespace-pre-line">
           {slide.desc}
         </p>
+      </div>
 
+      {/* Dots + CTA */}
+      <div className="px-6 pb-10">
         {/* Dots */}
         <div className="flex items-center justify-center gap-2 mb-6">
           {SLIDES.map((_, i) => (

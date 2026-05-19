@@ -96,15 +96,15 @@ function Step1({
         </div>
 
         {/* Info banner */}
-        <div className="bg-[#EEF7FF] rounded-xl px-4 py-3 flex gap-2 mb-6">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[1px]">
-            <circle cx="8" cy="8" r="7" stroke="#2D92FE" strokeWidth="1.5"/>
-            <path d="M8 5v1M8 7.5v3.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
+        <div className="flex items-start" style={{ backgroundColor: '#EEF7FF', borderRadius: 14, padding: 20, gap: 8, marginBottom: 24 }}>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[2px]">
+            <circle cx="8" cy="8" r="7" stroke="#2D92FE" strokeWidth="1.4"/>
+            <path d="M8 7v3.5" stroke="#2D92FE" strokeWidth="1.4" strokeLinecap="round"/>
+            <circle cx="8" cy="5" r="0.7" fill="#2D92FE"/>
           </svg>
-          <p className="text-[14px] leading-relaxed" style={{ color: '#2D92FE' }}>
-            콤마(,) 또는 줄바꿈으로 구분해주세요.<br />
-            엑셀의 핸들 열을 복사 붙여넣기하면 자동으로 인식돼요.
-          </p>
+          <span className="text-[14px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
+            콤마(,) 또는 줄바꿈으로 구분해주세요. 엑셀의 핸들 열을 복사 붙여넣기하면 자동으로 인식돼요.
+          </span>
         </div>
 
         {/* Campaign */}
@@ -369,14 +369,15 @@ function Step4({
         </div>
 
         {/* Info banner */}
-        <div className="w-full bg-[#EEF7FF] rounded-xl px-4 py-3 flex gap-2">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[1px]">
-            <circle cx="8" cy="8" r="7" stroke="#2D92FE" strokeWidth="1.5"/>
-            <path d="M8 5v1M8 7.5v3.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
+        <div className="flex items-start w-full" style={{ backgroundColor: '#EEF7FF', borderRadius: 14, padding: 20, gap: 8 }}>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[2px]">
+            <circle cx="8" cy="8" r="7" stroke="#2D92FE" strokeWidth="1.4"/>
+            <path d="M8 7v3.5" stroke="#2D92FE" strokeWidth="1.4" strokeLinecap="round"/>
+            <circle cx="8" cy="5" r="0.7" fill="#2D92FE"/>
           </svg>
-          <p className="text-[14px] leading-relaxed" style={{ color: '#2D92FE' }}>
+          <span className="text-[14px] font-medium" style={{ color: '#2D92FE', lineHeight: '135%' }}>
             각 인플루언서의 연락 방식, 협업 조건, AI 브리프는 보드에서 설정할 수 있어요.
-          </p>
+          </span>
         </div>
       </div>
 

@@ -1882,66 +1882,63 @@ export default function InfluencerDetailPage() {
             style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
             onClick={() => setShowMemoOverlay(false)}
           />
-          {/* Bottom sheet */}
-          <div
-            className="fixed bottom-0 left-1/2 z-50 w-full max-w-[430px] bg-white flex flex-col"
-            style={{ transform: 'translateX(-50%)', borderRadius: '20px 20px 0 0', padding: '20px 20px 40px' }}
-          >
-            {/* Handle bar */}
-            <div className="flex justify-center mb-4">
-              <div className="w-10 h-[4px] rounded-full bg-[#E8E7E4]" />
-            </div>
+          {/* Center overlay */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-5">
+            <div
+              className="w-full bg-white flex flex-col"
+              style={{ borderRadius: 20, padding: '24px 20px 20px', maxWidth: 390 }}
+            >
+              {/* Title row */}
+              <div className="flex items-center justify-between mb-5">
+                <span className="text-[16px] font-bold text-black">메모 추가</span>
+                <button
+                  onClick={() => setShowMemoOverlay(false)}
+                  className="w-[36px] h-[36px] flex items-center justify-center rounded-full active:opacity-60"
+                  style={{ backgroundColor: '#F2F4F6' }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 3l10 10M13 3L3 13" stroke="#78756E" strokeWidth="1.6" strokeLinecap="round"/>
+                  </svg>
+                </button>
+              </div>
 
-            {/* Title row */}
-            <div className="flex items-center justify-between mb-5">
-              <span className="text-[16px] font-bold text-black">메모 추가</span>
+              {/* Textarea */}
+              <textarea
+                value={memoInput}
+                onChange={e => setMemoInput(e.target.value)}
+                placeholder="팀 내부에서만 볼 수 있는 메모를 입력하세요"
+                rows={5}
+                autoFocus
+                className="w-full outline-none resize-none text-[16px] font-medium mb-3"
+                style={{
+                  backgroundColor: '#FAFAFA',
+                  border: '1px solid #E8E7E4',
+                  borderRadius: 12,
+                  padding: '14px 16px',
+                  color: '#1C1A17',
+                  lineHeight: '1.6',
+                }}
+              />
+              <span className="text-[14px] font-medium mb-5" style={{ color: '#C0C4CF' }}>
+                메모는 팀 내부에서만 확인할 수 있어요.
+              </span>
+
+              {/* Save button */}
               <button
-                onClick={() => setShowMemoOverlay(false)}
-                className="w-[36px] h-[36px] flex items-center justify-center rounded-full active:opacity-60"
-                style={{ backgroundColor: '#F2F4F6' }}
+                onClick={() => {
+                  if (!memoInput.trim()) return;
+                  const now = new Date();
+                  const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} 작성`;
+                  setMemos(prev => [{ text: memoInput.trim(), date: dateStr }, ...prev]);
+                  setMemoInput('');
+                  setShowMemoOverlay(false);
+                }}
+                className="w-full flex items-center justify-center active:opacity-80"
+                style={{ backgroundColor: memoInput.trim() ? '#6366F1' : '#E8E7E4', borderRadius: 12, padding: 16, transition: 'background-color 0.15s' }}
               >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 3l10 10M13 3L3 13" stroke="#78756E" strokeWidth="1.6" strokeLinecap="round"/>
-                </svg>
+                <span className="text-[16px] font-bold" style={{ color: memoInput.trim() ? '#FFFFFF' : '#B0ADA7' }}>저장</span>
               </button>
             </div>
-
-            {/* Textarea */}
-            <textarea
-              value={memoInput}
-              onChange={e => setMemoInput(e.target.value)}
-              placeholder="팀 내부에서만 볼 수 있는 메모를 입력하세요"
-              rows={5}
-              autoFocus
-              className="w-full outline-none resize-none text-[16px] font-medium mb-3"
-              style={{
-                backgroundColor: '#FAFAFA',
-                border: '1px solid #E8E7E4',
-                borderRadius: 12,
-                padding: '14px 16px',
-                color: '#1C1A17',
-                lineHeight: '1.6',
-              }}
-            />
-            <span className="text-[14px] font-medium mb-5" style={{ color: '#C0C4CF' }}>
-              메모는 팀 내부에서만 확인할 수 있어요.
-            </span>
-
-            {/* Save button */}
-            <button
-              onClick={() => {
-                if (!memoInput.trim()) return;
-                const now = new Date();
-                const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} 작성`;
-                setMemos(prev => [{ text: memoInput.trim(), date: dateStr }, ...prev]);
-                setMemoInput('');
-                setShowMemoOverlay(false);
-              }}
-              className="w-full flex items-center justify-center active:opacity-80"
-              style={{ backgroundColor: memoInput.trim() ? '#6366F1' : '#E8E7E4', borderRadius: 12, padding: 16, transition: 'background-color 0.15s' }}
-            >
-              <span className="text-[16px] font-bold" style={{ color: memoInput.trim() ? '#FFFFFF' : '#B0ADA7' }}>저장</span>
-            </button>
           </div>
         </>
       )}

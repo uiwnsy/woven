@@ -1571,9 +1571,9 @@ export default function InfluencerDetailPage() {
 
         <div className="h-2 bg-[#F5F5F3]" />
 
-        {/* ── 내부 메모 ── */}
+        {/* ── 메모 ── */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
-          <span className="text-[20px] font-bold text-black">내부 메모</span>
+          <span className="text-[20px] font-bold text-black">메모</span>
 
           {memos.map((memo, i) => (
             <div key={i} className="flex flex-col" style={{ backgroundColor: '#FFFDE5', borderRadius: 14, padding: 22, gap: 6 }}>

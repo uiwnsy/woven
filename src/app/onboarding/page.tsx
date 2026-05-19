@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 
@@ -38,6 +38,7 @@ const SLIDES = [
 export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState(0);
+  const dragStartX = useRef<number | null>(null);
 
   const skip = () => router.push('/login');
   const next = () => {
@@ -45,10 +46,25 @@ export default function OnboardingPage() {
     else router.push('/login');
   };
 
+  const handleDragStart = (x: number) => { dragStartX.current = x; };
+  const handleDragEnd = (x: number) => {
+    if (dragStartX.current === null) return;
+    const delta = x - dragStartX.current;
+    dragStartX.current = null;
+    if (delta < -50 && step < SLIDES.length - 1) setStep(s => s + 1);
+    if (delta > 50 && step > 0) setStep(s => s - 1);
+  };
+
   const slide = SLIDES[step];
 
   return (
-    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto overflow-hidden">
+    <div
+      className="flex flex-col h-screen bg-white max-w-[430px] mx-auto overflow-hidden"
+      onTouchStart={e => handleDragStart(e.touches[0].clientX)}
+      onTouchEnd={e => handleDragEnd(e.changedTouches[0].clientX)}
+      onMouseDown={e => handleDragStart(e.clientX)}
+      onMouseUp={e => handleDragEnd(e.clientX)}
+    >
 
       {/* Skip */}
       <div className="flex justify-end px-5 pt-[10px]">

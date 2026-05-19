@@ -217,7 +217,7 @@ export default function PerformancePage() {
                   key={p}
                   onClick={() => setPeriod(p)}
                   className={`rounded-full px-[10px] py-[5px] text-[14px] font-semibold active:opacity-70 transition-all
-                    ${isActive ? 'bg-[#EEEEFF] text-[#6366F1] border border-[#6366F1]' : 'border border-[#D4D2CE] text-[#78756E] bg-white'}`}
+                    ${isActive ? 'bg-[#6366F1] text-white' : 'border border-[#D4D2CE] text-[#78756E] bg-white'}`}
                 >
                   {p}
                 </button>

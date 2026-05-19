@@ -339,9 +339,6 @@ export default function HomePage() {
                   <p className="text-[14px] font-medium leading-none" style={{ color: '#5C5A54' }}>{kpi.label}</p>
                   <p className="text-[24px] font-bold text-black leading-none">{kpi.value}</p>
                 </div>
-                <div className={`${kpi.badgeBg} px-[10px] py-1 rounded-full inline-flex self-start`}>
-                  <span className={`text-[14px] font-semibold ${kpi.badgeText} whitespace-nowrap`}>{kpi.badge}</span>
-                </div>
               </div>
             ))}
           </div>

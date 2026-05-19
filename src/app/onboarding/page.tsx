@@ -57,8 +57,15 @@ export default function OnboardingPage() {
       </div>
 
       {/* Illustration */}
-      <div className="flex-1 flex items-center justify-center px-8">
-        {slide.illust}
+      <div className="flex-1 relative">
+        {SLIDES.map((s, i) => (
+          <div
+            key={i}
+            className={`absolute inset-0 flex items-center justify-center px-8 transition-opacity duration-200 ${i === step ? 'opacity-100' : 'opacity-0'}`}
+          >
+            {s.illust}
+          </div>
+        ))}
       </div>
 
       {/* Title + desc */}

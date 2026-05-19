@@ -86,7 +86,7 @@ function Step1({
           onChange={e => setInputText(e.target.value)}
           placeholder={'예: @woven01\n@woven02\n@woven03'}
           rows={5}
-          className="w-full border border-stone-200 rounded-xl px-4 py-3 text-[15px] text-stone-900 outline-none resize-none focus:border-iris-400 placeholder:text-stone-400 bg-white mb-3"
+          className="w-full border border-stone-200 rounded-xl px-4 py-3 text-[16px] text-stone-900 outline-none resize-none focus:border-iris-400 placeholder:text-stone-400 bg-white mb-3"
         />
 
         {/* Count */}

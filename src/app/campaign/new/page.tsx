@@ -385,7 +385,7 @@ function Step1({ form, updateForm, togglePlatform }: {
                 onClick={() => togglePlatform(p)}
                 className={`h-[40px] px-5 rounded-full text-[16px] font-medium transition-all active:opacity-70
                   ${form.platforms.includes(p)
-                    ? 'bg-[#EEEEFF] text-[#6366F1] border border-[#6366F1]'
+                    ? 'bg-[#6366F1] text-white'
                     : 'border border-[#E8E7E4] text-[#78756E] bg-white'}`}
               >
                 {p}

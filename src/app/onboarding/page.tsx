@@ -52,9 +52,11 @@ export default function OnboardingPage() {
 
       {/* Skip */}
       <div className="flex justify-end px-5 pt-[10px]">
-        <button onClick={skip} className="text-[18px] font-medium text-[#999999] px-5 py-[10px] active:opacity-60">
-          건너뛰기
-        </button>
+        {step < SLIDES.length - 1 && (
+          <button onClick={skip} className="text-[18px] font-medium text-[#999999] px-5 py-[10px] active:opacity-60">
+            건너뛰기
+          </button>
+        )}
       </div>
 
       {/* Illustration */}

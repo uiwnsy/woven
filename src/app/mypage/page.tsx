@@ -166,7 +166,7 @@ export default function MyPage() {
 
         {/* Logout */}
         <div className="h-[10px] bg-[#F5F5F3]" />
-        <button className="w-full py-5 active:opacity-60">
+        <button className="w-full py-5 bg-[#F5F5F3] active:opacity-60">
           <span className="text-[16px] text-stone-500">로그아웃</span>
         </button>
 

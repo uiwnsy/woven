@@ -93,7 +93,7 @@ function TrendChart() {
 
   const convPoints = CHART_DATA.map((d, i) => {
     const x = ((i * 2 + 1) / (SEGS * 2)) * 700;
-    const y = d.conversions === 0 ? CHART_H : CHART_H * (1 - (d.conversions / MAX_CONV) * 0.82);
+    const y = d.conversions === 0 ? CHART_H - 2 : CHART_H * (1 - (d.conversions / MAX_CONV) * 0.82);
     return { x, y };
   });
   const polylinePoints = convPoints.map(p => `${p.x},${p.y}`).join(' ');
@@ -136,11 +136,13 @@ function TrendChart() {
             className="absolute inset-0 w-full h-full"
             viewBox={`0 0 700 ${CHART_H}`}
             preserveAspectRatio="none"
+            overflow="visible"
+            style={{ overflow: 'visible' }}
           >
             <polyline
               points={polylinePoints}
               fill="none"
-              stroke="#22C55E"
+              stroke="#6366F1"
               strokeWidth="2"
               strokeLinejoin="round"
               strokeLinecap="round"
@@ -159,7 +161,7 @@ function TrendChart() {
                 transform: 'translate(-50%, -50%)',
               }}
             >
-              <div style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#22C55E', border: '2px solid #22C55E' }} />
+              <div style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#6366F1', border: '2px solid #6366F1' }} />
             </div>
           ))}
         </div>
@@ -340,7 +342,7 @@ export default function PerformancePage() {
                   <span className="text-[14px] text-[#9BA1AA]">클릭 수</span>
                 </div>
                 <div className="flex items-center gap-[6px]">
-                  <div className="w-[10px] h-[10px] rounded-full bg-[#22C55E]" />
+                  <div className="w-[10px] h-[10px] rounded-full bg-[#6366F1]" />
                   <span className="text-[14px] text-[#9BA1AA]">전환 수</span>
                 </div>
               </div>

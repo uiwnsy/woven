@@ -184,10 +184,10 @@ export default function CampaignDetailPage() {
                 {campaign.boardStages.map((stage, i) => (
                   <div
                     key={stage.label}
-                    className={`flex-1 flex flex-col items-center gap-[10px] py-[10px] bg-[#F6F7FF]
+                    className={`flex-1 flex flex-col items-center gap-[10px] py-[10px] bg-white
                       ${i === 0
-                        ? 'border border-[#E6E8FF] rounded-l-[10px]'
-                        : 'border-t border-r border-b border-[#E6E8FF]'}
+                        ? 'border border-[#E8E7E4] rounded-l-[10px]'
+                        : 'border-t border-r border-b border-[#E8E7E4]'}
                       ${i === campaign.boardStages.length - 1 ? 'rounded-r-[10px]' : ''}`}
                   >
                     <span className="text-[20px] font-extrabold text-[#1C1A17] leading-[20px] font-manrope">

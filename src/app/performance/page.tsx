@@ -361,7 +361,7 @@ export default function PerformancePage() {
             <div className="flex flex-col gap-[30px]">
 
               {/* Top performer card */}
-              <div onClick={() => router.push('/performance/influencers/dearyq')} className="bg-[#F8F9FF] border border-[#F5F5F3] rounded-[14px] p-[22px] flex flex-col gap-[10px] cursor-pointer active:opacity-80">
+              <div onClick={() => router.push('/performance/influencers/dearyq')} className="bg-[#F8F9FF] border border-[#E6E8FF] rounded-[14px] p-[22px] flex flex-col gap-[10px] cursor-pointer active:opacity-80">
 
                 {/* Summary info row */}
                 <div className="flex items-center justify-between">

@@ -95,11 +95,11 @@ function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () 
         <div className="flex items-center gap-[14px]">
           <div className="flex items-center gap-[3px]">
             <Calendar size={16} className="shrink-0" style={{ color: '#78756E' }} />
-            <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>{campaign.dateRange}</span>
+            <span className="text-[14px] font-normal" style={{ color: '#78756E' }}>{campaign.dateRange}</span>
           </div>
           <div className="flex items-center gap-[2px]">
             <Users size={16} className="shrink-0" style={{ color: '#78756E' }} />
-            <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>
+            <span className="text-[14px] font-normal" style={{ color: '#78756E' }}>
               인플루언서 {campaign.influencerCount}명 연결
             </span>
           </div>

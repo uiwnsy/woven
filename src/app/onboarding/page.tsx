@@ -68,8 +68,8 @@ export default function OnboardingPage() {
         ))}
       </div>
 
-      {/* Title + desc */}
-      <div className="px-6 pt-2 pb-6">
+      {/* Title + desc — absolute, overlays illustration */}
+      <div className="absolute bottom-[148px] inset-x-0 px-6 pt-6 pb-2 bg-white z-10">
         <h1 className="text-[24px] font-bold text-stone-900 leading-tight mb-3 text-center whitespace-pre-line">
           {slide.title}
         </h1>

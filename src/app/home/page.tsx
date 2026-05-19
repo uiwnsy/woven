@@ -143,7 +143,7 @@ const CAMPAIGNS: Campaign[] = [
   { id: 1, type: 'active', status: '진행중', statusBg: 'bg-[#fef6f1]', statusText: 'text-[#d96430]',
     name: '루미에르\n봄봄 프로모션', progress: '업로드 1/11', dday: 'D-8', progressPct: 1 / 11 },
   { id: 2, type: 'active', status: '기획', statusBg: 'bg-[#f5f5f3]', statusText: 'text-[#5C5A54]',
-    name: '수분크림 마이크로\n인플루언서', progress: '리스트업 2/20', dday: 'D-34', progressPct: 2 / 20 },
+    name: '수분크림 마이크로\n인플루언서', progress: '리스트업 2명', dday: 'D-34', progressPct: 2 / 20 },
   { id: 3, type: 'completed', status: '완료', statusBg: 'bg-[#f0fdf4]', statusText: 'text-[#166534]',
     name: '루미에르\n스킨케어 신제품 런칭', roas: '4.1x', clicks: '29.2x',
     influencerCount: '인플루언서 6명', completedMonth: '3월 완료' },
@@ -410,7 +410,7 @@ export default function HomePage() {
                 </div>
                 {/* Active: progress bar */}
                 {campaign.type === 'active' && (
-                  <div className="flex flex-col gap-[13px]">
+                  <div className="flex flex-col gap-[13px] pt-[14px] border-t border-[#E8E7E4]">
                     <div className="relative w-full h-[3px] bg-[#D9D9D9] rounded-[20px]">
                       <div className="absolute top-0 left-0 h-full bg-iris-500 rounded-[20px]"
                         style={{ width: `${campaign.progressPct * 100}%` }} />

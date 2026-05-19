@@ -292,7 +292,7 @@ export default function CampaignDetailPage() {
             </div>
             <div className="w-full px-5">
               {/* container has px-5 (20px), rows have py-4 only — matches Figma padding: 0px 20px on container, 16px 0px on rows */}
-              <div className="bg-[#F8FAFF] rounded-[14px] px-5">
+              <div className="bg-[#F8F9FF] rounded-[14px] px-5">
                 {campaign.info.map((row, i) => (
                   <div
                     key={row.label}

@@ -466,7 +466,7 @@ function Step1({ form, updateForm, togglePlatform }: {
                     >
                       <span className="text-white text-[16px] font-bold">{mgr.initial}</span>
                     </div>
-                    <div className="flex-1 flex flex-col gap-[6px] text-left">
+                    <div className="flex-1 flex flex-col gap-1 text-left">
                       <p className="text-[16px] font-semibold text-black">{mgr.name}</p>
                       <p className="text-[14px] text-black">{mgr.team}</p>
                     </div>
@@ -510,7 +510,7 @@ function Step2({ form, updateForm, toggleKPI }: {
                   ${isActive ? 'bg-[#EEEEFF] border border-[#6366F1]' : 'bg-white border border-[#E8E7E4]'}`}
               >
                 <img src={goal.icon} alt={goal.label} className="w-[52px] h-[52px] shrink-0" />
-                <div className="flex flex-col gap-[6px]">
+                <div className="flex flex-col gap-1">
                   <p className="text-[16px] font-semibold text-black">{goal.label}</p>
                   <p className="text-[14px] text-black">{goal.desc}</p>
                 </div>

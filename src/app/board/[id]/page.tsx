@@ -1879,7 +1879,7 @@ export default function InfluencerDetailPage() {
         <>
           <div className="fixed inset-0 z-50 bg-white" />
           <div className="fixed inset-x-0 top-0 z-[60] h-[56px] flex items-center justify-between px-5 bg-white border-b border-[#E8E7E4]">
-            <span className="text-[16px] font-semibold text-black">메모 추가</span>
+            <span className="text-[16px] font-semibold text-black">메모</span>
             <button
               onClick={() => {
                 const val = memoTextareaRef.current?.value.trim() ?? '';
@@ -1905,7 +1905,7 @@ export default function InfluencerDetailPage() {
                 ref={memoTextareaRef}
                 defaultValue={memoInput}
                 autoFocus
-                placeholder="팀 내부에서만 볼 수 있는 메모를 입력하세요"
+                placeholder="인플루언서에 대해 기억해두고 싶은 내용을 기록해보세요"
                 onInput={e => {
                   const el = e.currentTarget;
                   el.style.height = '0px';

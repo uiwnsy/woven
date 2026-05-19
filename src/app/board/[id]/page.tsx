@@ -393,7 +393,7 @@ export default function InfluencerDetailPage() {
           </div>
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* ── Campaign Progress ── */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 25, display: 'flex', flexDirection: 'column' }}>
@@ -421,7 +421,7 @@ export default function InfluencerDetailPage() {
           <StageTracker stageId={effectiveStage} />
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* ── 리스트업 전용: 협의 조건 + AI 브리프 ── */}
         {effectiveStage === 'list-up' && <>
@@ -580,7 +580,7 @@ export default function InfluencerDetailPage() {
           </button>
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* ── AI 브리프 ── */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
@@ -662,7 +662,7 @@ export default function InfluencerDetailPage() {
           </div>
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* 응답 상태 (27:4351) */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 24, display: 'flex', flexDirection: 'column' }}>
@@ -694,7 +694,7 @@ export default function InfluencerDetailPage() {
           </div>
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* 협의 정보 (27:4367) */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 10, display: 'flex', flexDirection: 'column' }}>
@@ -795,7 +795,7 @@ export default function InfluencerDetailPage() {
           </div>
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* 발송된 브리프 (접기/펼치기) */}
         <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -963,7 +963,7 @@ export default function InfluencerDetailPage() {
 
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* UTM 링크 */}
         {(() => {
@@ -1041,7 +1041,7 @@ export default function InfluencerDetailPage() {
           );
         })()}
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* 협의 정보 */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
@@ -1104,7 +1104,7 @@ export default function InfluencerDetailPage() {
           </div>
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* 발송된 브리프 */}
         <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -1269,7 +1269,7 @@ export default function InfluencerDetailPage() {
           </div>
         )}
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* 시안 (접힘) */}
         <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -1312,7 +1312,7 @@ export default function InfluencerDetailPage() {
           )}
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* 개인 UTM 링크 (접힘) */}
         {(() => {
@@ -1358,7 +1358,7 @@ export default function InfluencerDetailPage() {
           );
         })()}
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* 협의 정보 (접힘) */}
         <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -1425,7 +1425,7 @@ export default function InfluencerDetailPage() {
           )}
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* 발송된 브리프 (접힘) */}
         <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -1463,7 +1463,7 @@ export default function InfluencerDetailPage() {
           )}
         </div>
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* 협업 이력 (접힘) */}
         <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -1507,7 +1507,7 @@ export default function InfluencerDetailPage() {
 
         </> /* end reviewing/uploaded */}
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* ── 협업 이력 ── */}
         {effectiveStage !== 'reviewing' && effectiveStage !== 'uploaded' && (
@@ -1568,7 +1568,7 @@ export default function InfluencerDetailPage() {
         </div>
         )}
 
-        <div className="h-2 bg-[#F5F5F3]" />
+        <div className="h-[10px] bg-[#F5F5F3]" />
 
         {/* ── 메모 ── */}
         <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>

@@ -225,7 +225,7 @@ export default function HomePage() {
         </div>
 
         {/* Tab content */}
-        <div className="bg-[#F0F2F8]">
+        <div className="bg-[#F5F5F3]">
 
         {activeTab === '인플루언서' && (
           <>

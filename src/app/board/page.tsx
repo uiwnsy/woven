@@ -447,7 +447,7 @@ function BoardPageContent() {
                       setShowCampaignSheet(false);
                     }}
                     className={`flex items-center justify-between px-4 py-4 rounded-[12px] active:opacity-70 transition-colors
-                      ${isSelected ? 'bg-[#f0f0fd]' : 'bg-[#fafbfe]'}`}
+                      ${isSelected ? 'bg-[#EEEEFF] border border-[#6366F1]' : 'bg-[#fafbfe] border border-transparent'}`}
                   >
                     <div className="flex flex-col gap-[6px] text-left flex-1 pr-3">
                       <span className="text-[16px] font-medium text-[#1C1A17] leading-snug">{campaign.title}</span>

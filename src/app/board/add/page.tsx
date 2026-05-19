@@ -73,7 +73,7 @@ function Step1({
               key={p}
               onClick={() => setPlatform(p)}
               className={`h-9 px-4 rounded-full text-[14px] font-medium transition-all active:opacity-70
-                ${platform === p ? 'bg-iris-500 text-white' : 'border border-stone-200 text-stone-600 bg-white'}`}
+                ${platform === p ? 'bg-[#EEEEFF] text-[#6366F1] border border-[#6366F1]' : 'border border-stone-200 text-stone-600 bg-white'}`}
             >
               {p}
             </button>
@@ -301,7 +301,7 @@ function Step3({
               key={ch}
               onClick={() => setChannel(ch)}
               className={`h-9 px-4 rounded-full text-[14px] font-medium transition-all active:opacity-70
-                ${channel === ch ? 'bg-iris-500 text-white' : 'border border-stone-200 text-stone-600 bg-white'}`}
+                ${channel === ch ? 'bg-[#EEEEFF] text-[#6366F1] border border-[#6366F1]' : 'border border-stone-200 text-stone-600 bg-white'}`}
             >
               {ch}
             </button>

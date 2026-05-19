@@ -240,7 +240,7 @@ export default function HomePage() {
                       onClick={() => setRankFilter(f)}
                       className={`shrink-0 px-[10px] py-[5px] rounded-full text-[14px] transition-all active:opacity-70
                         ${rankFilter === f
-                          ? 'bg-iris-500 text-white font-semibold'
+                          ? 'bg-[#EEEEFF] text-[#6366F1] font-semibold border border-[#6366F1]'
                           : 'border border-[#d4d2ce] text-[#899098] font-semibold bg-white'}`}
                     >
                       {f}

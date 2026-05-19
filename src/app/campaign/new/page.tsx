@@ -385,7 +385,7 @@ function Step1({ form, updateForm, togglePlatform }: {
                 onClick={() => togglePlatform(p)}
                 className={`h-[40px] px-5 rounded-full text-[16px] font-medium transition-all active:opacity-70
                   ${form.platforms.includes(p)
-                    ? 'bg-iris-500 text-white'
+                    ? 'bg-[#EEEEFF] text-[#6366F1] border border-[#6366F1]'
                     : 'border border-[#E8E7E4] text-[#78756E] bg-white'}`}
               >
                 {p}
@@ -506,8 +506,8 @@ function Step2({ form, updateForm, toggleKPI }: {
                   updateForm('goal', goal.id);
                   updateForm('kpis', GOAL_KPI_MAP[goal.id]);
                 }}
-                className={`w-full flex items-center gap-[14px] p-5 rounded-[10px] border border-[#E8E7E4] text-left transition-all active:opacity-80
-                  ${isActive ? 'bg-[#EEEEFF]' : 'bg-white'}`}
+                className={`w-full flex items-center gap-[14px] p-5 rounded-[10px] text-left transition-all active:opacity-80
+                  ${isActive ? 'bg-[#EEEEFF] border border-[#6366F1]' : 'bg-white border border-[#E8E7E4]'}`}
               >
                 <img src={goal.icon} alt={goal.label} className="w-[52px] h-[52px] shrink-0" />
                 <div className="flex flex-col gap-[6px]">
@@ -911,7 +911,7 @@ function Step4({ form, updateForm }: {
                   key={tone.id}
                   onClick={() => handleToneChange(tone.id)}
                   className={`flex-1 flex flex-col items-center gap-2 p-5 rounded-[10px] transition-all active:opacity-80
-                    ${isActive ? 'border border-[#E8E7E4] bg-[#EEEEFF]' : 'border border-[#E8E7E4] bg-white'}`}
+                    ${isActive ? 'border border-[#6366F1] bg-[#EEEEFF]' : 'border border-[#E8E7E4] bg-white'}`}
                 >
                   <img src={tone.icon} alt={tone.label} className="w-[52px] h-[52px]" />
                   <span className="text-[16px] font-semibold text-[#1C1A17]">{tone.label}</span>

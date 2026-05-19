@@ -161,14 +161,14 @@ export default function CampaignDetailPage() {
 
             {/* Tag chips */}
             <div className="flex flex-wrap gap-[6px]">
-              <span className="flex items-center gap-1 border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-semibold text-[#1C1A17]">
+              <span className="flex items-center gap-1 border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-medium text-[#1C1A17]">
                 <Calendar size={14} className="text-[#78756E] shrink-0 translate-y-[-0.5px]" />
                 <span className="leading-none">{campaign.dateRange}</span>
               </span>
-              <span className="border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-semibold text-[#1C1A17]">
+              <span className="border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-medium text-[#1C1A17]">
                 {campaign.platform}
               </span>
-              <span className="border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-semibold text-[#1C1A17]">
+              <span className="border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-medium text-[#1C1A17]">
                 {campaign.goal}
               </span>
             </div>
@@ -239,8 +239,8 @@ export default function CampaignDetailPage() {
             </div>
             <div className="flex items-center justify-between px-5 py-[18px]">
               <div className="flex flex-col gap-1">
-                <span className="text-[16px] font-medium text-[#1C1A17]">AI 브리프 보기</span>
-                <span className="text-[14px] font-normal text-[#B0ADA7]">브리프 편집 · 재생성</span>
+                <span className="text-[16px] font-semibold text-[#1C1A17]">AI 브리프 보기</span>
+                <span className="text-[14px] font-normal text-black">브리프 편집 · 재생성</span>
               </div>
               <img src="/arrow-right.svg" alt="" className="w-6 h-6 shrink-0" />
             </div>

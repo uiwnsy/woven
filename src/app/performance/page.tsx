@@ -244,7 +244,7 @@ export default function PerformancePage() {
           </div>
         </div>
 
-        <div className="h-[14px] bg-[#fafbfe]" />
+        <div className="h-[14px] bg-[#F0F2F8]" />
 
         {/* ── Chart Section ── */}
         <div className="bg-white px-5 py-10 flex flex-col gap-5">
@@ -278,7 +278,7 @@ export default function PerformancePage() {
             </div>
         </div>
 
-        <div className="h-[14px] bg-[#fafbfe]" />
+        <div className="h-[14px] bg-[#F0F2F8]" />
 
         {/* ── Performance Section ── */}
         <div className="bg-white px-5 py-10 flex flex-col gap-5">
@@ -391,7 +391,7 @@ export default function PerformancePage() {
             </div>
         </div>
 
-        <div className="h-[14px] bg-[#fafbfe]" />
+        <div className="h-[14px] bg-[#F0F2F8]" />
 
         {/* ── Report Section ── */}
         <div className="bg-white px-5 py-10 flex flex-col gap-5">

@@ -127,7 +127,7 @@ export default function MyPage() {
         {/* Settings sections */}
         {SECTIONS.map((section, si) => (
           <div key={section.heading}>
-            {si > 0 && <div className="h-[14px] bg-[#fafbfe]" />}
+            {si > 0 && <div className="h-[14px] bg-[#F0F2F8]" />}
             <div className="px-5 pt-5 pb-2">
               <h2 className="text-[20px] font-bold text-stone-900 mb-3">{section.heading}</h2>
               {section.items.map((item, ii) => (
@@ -165,7 +165,7 @@ export default function MyPage() {
         ))}
 
         {/* Logout */}
-        <div className="h-[14px] bg-[#fafbfe]" />
+        <div className="h-[14px] bg-[#F0F2F8]" />
         <button className="w-full py-5 active:opacity-60">
           <span className="text-[16px] text-stone-500">로그아웃</span>
         </button>

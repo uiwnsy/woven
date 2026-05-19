@@ -252,7 +252,7 @@ export default function InfluencerPerformancePage() {
                 </svg>
               </button>
             </div>
-            <div className="flex flex-col px-5 gap-2">
+            <div className="flex flex-col px-5 gap-0">
               {/* 전체 캠페인 옵션 */}
               {[{ id: 'all' as const, title: '전체 캠페인', status: null }, ...CAMPAIGNS].map(c => {
                 const isSelected = selectedId === c.id;
@@ -260,7 +260,7 @@ export default function InfluencerPerformancePage() {
                   <button
                     key={c.id}
                     onClick={() => { setSelectedId(c.id); setShowSheet(false); }}
-                    className="flex items-center justify-between py-4 rounded-[14px] active:opacity-70 bg-white"
+                    className="flex items-center justify-between py-3 rounded-[14px] active:opacity-70 bg-white"
                   >
                     <div>
                       <span className={`text-[16px] font-medium text-left ${isSelected ? 'text-[#6366F1]' : 'text-[#1C1A17]'}`}>{c.title}</span>

@@ -437,21 +437,21 @@ export default function PerformancePage() {
           <div className="absolute inset-0 bg-black/40" onClick={() => setShowCampaignSheet(false)} />
           <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-10">
             <div className="flex items-center justify-between mb-5">
-              <span className="text-[16px] font-bold text-[#1C1A17]">캠페인 선택</span>
+              <span className="text-[18px] font-bold text-[#1C1A17]">캠페인 선택</span>
               <button onClick={() => setShowCampaignSheet(false)} className="active:opacity-60">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M4 4l12 12M16 4L4 16" stroke="#1C1A17" strokeWidth="1.8" strokeLinecap="round"/>
                 </svg>
               </button>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-0">
               {[{ id: 'all' as const, title: '전체 캠페인', status: null }, ...CAMPAIGNS].map(campaign => {
                 const isSelected = selectedCampaignId === campaign.id;
                 return (
                   <button
                     key={campaign.id}
                     onClick={() => { setSelectedCampaignId(campaign.id); setShowCampaignSheet(false); }}
-                    className="flex items-center justify-between py-4 rounded-[12px] active:opacity-70 bg-white"
+                    className="flex items-center justify-between py-3 rounded-[12px] active:opacity-70 bg-white"
                   >
                     <div className="text-left flex-1 pr-3">
                       <span className={`text-[16px] font-medium leading-snug ${isSelected ? 'text-[#6366F1]' : 'text-[#1C1A17]'}`}>{campaign.title}</span>

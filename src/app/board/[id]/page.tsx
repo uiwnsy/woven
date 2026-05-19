@@ -798,30 +798,29 @@ export default function InfluencerDetailPage() {
         <div className="h-2 bg-[#F5F5F3]" />
 
         {/* 발송된 브리프 (접기/펼치기) */}
-        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
-          <span className="text-[20px] font-bold text-black">발송된 브리프</span>
-          <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden flex flex-col">
-            {/* 헤더 - 탭하면 펼침 */}
-            <button
-              onClick={() => setBriefExpanded(v => !v)}
-              className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF] w-full active:opacity-70"
-            >
-              <span className="text-[16px] font-medium text-black">AI 브리프</span>
-              <div className="flex items-center gap-2">
-                <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
-                  <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
-                </div>
-                <svg
-                  width="18" height="18" viewBox="0 0 18 18" fill="none"
-                  style={{ transform: briefExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
-                >
-                  <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+        <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
+          <button
+            onClick={() => setBriefExpanded(v => !v)}
+            className="flex items-center justify-between w-full active:opacity-70"
+            style={{ padding: '24px 20px' }}
+          >
+            <span className="text-[20px] font-bold text-black">발송된 브리프</span>
+            <div className="flex items-center gap-2">
+              <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
+                <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
               </div>
-            </button>
-            {briefExpanded && (
-              <>
-                <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
+              <svg
+                width="18" height="18" viewBox="0 0 18 18" fill="none"
+                style={{ transform: briefExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+              >
+                <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </button>
+          {briefExpanded && (
+            <div style={{ padding: '0 20px 24px' }}>
+              <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden">
+                <div className="bg-white px-5 py-[14px]">
                   <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
                     {BRIEF_VARIANTS[0]}
                   </p>
@@ -831,9 +830,9 @@ export default function InfluencerDetailPage() {
                     <span className="text-[16px] font-medium text-black">{briefCopied ? '복사됨 ✓' : '복사하기'}</span>
                   </button>
                 </div>
-              </>
-            )}
-          </div>
+              </div>
+            </div>
+          )}
         </div>
 
         </> /* end contacting only */}
@@ -1108,29 +1107,29 @@ export default function InfluencerDetailPage() {
         <div className="h-2 bg-[#F5F5F3]" />
 
         {/* 발송된 브리프 */}
-        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
-          <span className="text-[20px] font-bold text-black">발송된 브리프</span>
-          <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden flex flex-col">
-            <button
-              onClick={() => setNegotiatingBriefExpanded(v => !v)}
-              className="flex items-center justify-between px-5 py-[15px] bg-[#F8FAFF] w-full active:opacity-70"
-            >
-              <span className="text-[16px] font-medium text-black">AI 브리프</span>
-              <div className="flex items-center gap-2">
-                <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
-                  <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
-                </div>
-                <svg
-                  width="18" height="18" viewBox="0 0 18 18" fill="none"
-                  style={{ transform: negotiatingBriefExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
-                >
-                  <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+        <div className="bg-white" style={{ display: 'flex', flexDirection: 'column' }}>
+          <button
+            onClick={() => setNegotiatingBriefExpanded(v => !v)}
+            className="flex items-center justify-between w-full active:opacity-70"
+            style={{ padding: '24px 20px' }}
+          >
+            <span className="text-[20px] font-bold text-black">발송된 브리프</span>
+            <div className="flex items-center gap-2">
+              <div className="w-[36px] bg-[#6366F1] rounded-[7px] flex items-center justify-center py-[3px]">
+                <span className="text-[16px] font-bold text-white" style={{ fontFamily: 'Manrope, sans-serif' }}>AI</span>
               </div>
-            </button>
-            {negotiatingBriefExpanded && (
-              <>
-                <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
+              <svg
+                width="18" height="18" viewBox="0 0 18 18" fill="none"
+                style={{ transform: negotiatingBriefExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+              >
+                <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="#899098" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </button>
+          {negotiatingBriefExpanded && (
+            <div style={{ padding: '0 20px 24px' }}>
+              <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden">
+                <div className="bg-white px-5 py-[14px]">
                   <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
                     {data.brief ?? BRIEF_VARIANTS[0]}
                   </p>
@@ -1140,9 +1139,9 @@ export default function InfluencerDetailPage() {
                     <span className="text-[16px] font-medium text-black">{briefCopied ? '복사됨 ✓' : '복사하기'}</span>
                   </button>
                 </div>
-              </>
-            )}
-          </div>
+              </div>
+            </div>
+          )}
         </div>
 
         </> /* end negotiating only */}

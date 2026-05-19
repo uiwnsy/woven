@@ -162,8 +162,8 @@ export default function CampaignDetailPage() {
             {/* Tag chips */}
             <div className="flex flex-wrap gap-[6px]">
               <span className="flex items-center gap-1 border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-semibold text-[#1C1A17]">
-                <Calendar size={14} className="text-[#78756E] shrink-0" />
-                {campaign.dateRange}
+                <Calendar size={14} className="text-[#78756E] shrink-0 translate-y-[-0.5px]" />
+                <span className="leading-none">{campaign.dateRange}</span>
               </span>
               <span className="border border-[#E8E7E4] rounded-full px-[10px] py-[5px] text-[14px] font-semibold text-[#1C1A17]">
                 {campaign.platform}
@@ -184,10 +184,10 @@ export default function CampaignDetailPage() {
                 {campaign.boardStages.map((stage, i) => (
                   <div
                     key={stage.label}
-                    className={`flex-1 flex flex-col items-center gap-[10px] py-[10px] bg-white
+                    className={`flex-1 flex flex-col items-center gap-[10px] py-[10px] bg-[#F6F7FF]
                       ${i === 0
-                        ? 'border border-[#E8E7E4] rounded-l-[10px]'
-                        : 'border-t border-r border-b border-[#E8E7E4]'}
+                        ? 'border border-[#E6E8FF] rounded-l-[10px]'
+                        : 'border-t border-r border-b border-[#E6E8FF]'}
                       ${i === campaign.boardStages.length - 1 ? 'rounded-r-[10px]' : ''}`}
                   >
                     <span className="text-[20px] font-extrabold text-[#1C1A17] leading-[20px] font-manrope">

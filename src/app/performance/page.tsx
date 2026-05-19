@@ -140,8 +140,8 @@ function TrendChart() {
             <polyline
               points={polylinePoints}
               fill="none"
-              stroke="#6366F1"
-              strokeWidth="3"
+              stroke="#22C55E"
+              strokeWidth="2"
               strokeLinejoin="round"
               strokeLinecap="round"
               vectorEffect="non-scaling-stroke"
@@ -159,7 +159,7 @@ function TrendChart() {
                 transform: 'translate(-50%, -50%)',
               }}
             >
-              <div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#6366F1', border: '2px solid #6366F1' }} />
+              <div style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#22C55E', border: '2px solid #22C55E' }} />
             </div>
           ))}
         </div>
@@ -340,7 +340,7 @@ export default function PerformancePage() {
                   <span className="text-[14px] text-[#9BA1AA]">클릭 수</span>
                 </div>
                 <div className="flex items-center gap-[6px]">
-                  <div className="w-[10px] h-[10px] rounded-full bg-[#6366F1]" />
+                  <div className="w-[10px] h-[10px] rounded-full bg-[#22C55E]" />
                   <span className="text-[14px] text-[#9BA1AA]">전환 수</span>
                 </div>
               </div>

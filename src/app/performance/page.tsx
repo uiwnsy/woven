@@ -210,7 +210,6 @@ export default function PerformancePage() {
                 );
               })}
             </div>
-            <span className="text-[12px] text-[#B0ADA7]">2026.05.12 - 2026.05.18 기준</span>
           </div>
 
           {/* ROAS KPI Card */}

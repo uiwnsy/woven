@@ -451,7 +451,7 @@ export default function PerformancePage() {
                   <button
                     key={campaign.id}
                     onClick={() => { setSelectedCampaignId(campaign.id); setShowCampaignSheet(false); }}
-                    className="flex items-center justify-between px-4 py-4 rounded-[12px] active:opacity-70 bg-white"
+                    className="flex items-center justify-between py-4 rounded-[12px] active:opacity-70 bg-white"
                   >
                     <div className="text-left flex-1 pr-3">
                       <span className={`text-[16px] font-medium leading-snug ${isSelected ? 'text-[#6366F1]' : 'text-[#1C1A17]'}`}>{campaign.title}</span>

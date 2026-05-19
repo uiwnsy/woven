@@ -260,7 +260,7 @@ export default function InfluencerPerformancePage() {
                   <button
                     key={c.id}
                     onClick={() => { setSelectedId(c.id); setShowSheet(false); }}
-                    className="flex items-center justify-between px-5 py-4 rounded-[14px] active:opacity-70 bg-white"
+                    className="flex items-center justify-between py-4 rounded-[14px] active:opacity-70 bg-white"
                   >
                     <div>
                       <span className={`text-[16px] font-medium text-left ${isSelected ? 'text-[#6366F1]' : 'text-[#1C1A17]'}`}>{c.title}</span>

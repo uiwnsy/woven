@@ -414,14 +414,14 @@ export default function PerformancePage() {
             <div className="flex flex-col gap-[10px]">
               <button className="bg-white border border-[#E8E7E4] rounded-[10px] p-5 flex items-center gap-[14px] active:opacity-70 text-left w-full">
                 <img src="/performance-icon.svg" alt="" width={52} height={52} className="shrink-0" />
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-[6px]">
                   <span className="text-[16px] font-semibold text-black">캠페인 전체 요약</span>
                   <span className="text-[14px] text-black">핵심 KPI + 인플루언서별 성과 요약</span>
                 </div>
               </button>
               <button className="bg-white border border-[#E8E7E4] rounded-[10px] p-5 flex items-center gap-[14px] active:opacity-70 text-left w-full">
                 <img src="/summary-icon.svg" alt="" width={52} height={52} className="shrink-0" />
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-[6px]">
                   <span className="text-[16px] font-semibold text-black">인플루언서별 상세 데이터</span>
                   <span className="text-[14px] text-black">일별 클릭·전환·ROAS 상세 리포트</span>
                 </div>

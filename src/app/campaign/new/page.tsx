@@ -466,7 +466,7 @@ function Step1({ form, updateForm, togglePlatform }: {
                     >
                       <span className="text-white text-[16px] font-bold">{mgr.initial}</span>
                     </div>
-                    <div className="flex-1 text-left">
+                    <div className="flex-1 flex flex-col gap-[6px] text-left">
                       <p className="text-[16px] font-semibold text-black">{mgr.name}</p>
                       <p className="text-[14px] text-black">{mgr.team}</p>
                     </div>

@@ -223,7 +223,7 @@ export default function CampaignDetailPage() {
             >
               <div className="flex items-center gap-[14px]">
                 <img src="/board-icon.svg" alt="" className="w-[52px] h-[52px] shrink-0" />
-                <div className="flex flex-col text-left">
+                <div className="flex flex-col gap-[6px] text-left">
                   <span className="text-[16px] font-semibold text-black">보드에서 인플루언서 관리하기</span>
                   <span className="text-[14px] text-black">단계 이동 · 브리프 발송 · 전체 현황</span>
                 </div>
@@ -276,7 +276,7 @@ export default function CampaignDetailPage() {
             >
               <div className="flex items-center gap-[14px]">
                 <img src="/report-icon.svg" alt="" className="w-[52px] h-[52px] shrink-0" />
-                <div className="flex flex-col text-left">
+                <div className="flex flex-col gap-[6px] text-left">
                   <span className="text-[16px] font-semibold text-black">성과 탭에서 자세히 보기</span>
                   <span className="text-[14px] text-black">캠페인 성과 · 인플루언서 성과 비교</span>
                 </div>

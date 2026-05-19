@@ -356,9 +356,9 @@ export default function HomePage() {
               >
                 <div className="flex items-center gap-3">
                   <img src={item.icon} alt="" width={52} height={52} className="shrink-0" />
-                  <div className="text-left">
+                  <div className="flex flex-col gap-[6px] text-left">
                     <p className="text-[16px] font-semibold text-black">{item.title}</p>
-                    <p className="text-[14px] text-black mt-1">{item.subtitle}</p>
+                    <p className="text-[14px] text-black">{item.subtitle}</p>
                   </div>
                 </div>
                 <img src="/arrow-right.svg" alt="" width={20} height={20} className="shrink-0 ml-2" />

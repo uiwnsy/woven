@@ -334,7 +334,7 @@ export default function PerformancePage() {
               <span className="text-[13px] font-medium text-[#78756E]">최고 클릭일 4/17 · 전환 5건</span>
             </div>
 
-            <div className="bg-[#F8F9FF] border border-[#E6E8FF] rounded-[14px] px-[22px] pt-[30px] pb-[22px] flex flex-col gap-[12px]">
+            <div className="bg-[#F8F9FF] border border-[#E6E8FF] rounded-[14px] px-[22px] pt-[44px] pb-[22px] flex flex-col gap-[12px]">
               <TrendChart />
               <div className="flex items-center justify-center gap-[14px]">
                 <div className="flex items-center gap-[6px]">

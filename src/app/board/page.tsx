@@ -161,11 +161,8 @@ function BoardPageContent() {
         </div>
       </div>
 
-      {/* ── Scrollable body ── */}
-      <div className="flex-1 bg-[#fafbfe] overflow-y-auto pb-[95px]">
-
-        {/* Campaign selector + View toggle + Board tabs */}
-        <div className="bg-white">
+      {/* Campaign selector + View toggle + Board tabs — fixed */}
+      <div className="bg-white shrink-0">
           <div className="px-5 pt-[26px] pb-4 flex justify-center">
             <button
               onClick={() => setShowCampaignSheet(true)}
@@ -225,9 +222,10 @@ function BoardPageContent() {
             <div className="shrink-0 w-5" />
             </div>
           )}
-        </div>
+      </div>
 
-        {/* Content */}
+      {/* ── Scrollable card area ── */}
+      <div className="flex-1 bg-[#fafbfe] overflow-y-auto pb-[95px]">
         <div className="px-5 pt-5 flex flex-col">
 
           {activeView === 'grid' ? (

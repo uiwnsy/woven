@@ -242,8 +242,8 @@ export default function PerformancePage() {
                   <div className="h-full bg-[#6366F1] rounded-full" style={{ width: '70%' }} />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-medium text-[#9BA1AA]">현재 1.4x</span>
-                  <span className="text-[11px] font-medium text-[#9BA1AA]">목표 2.0x</span>
+                  <span className="text-[12px] font-medium text-[#9BA1AA]">현재 1.4x</span>
+                  <span className="text-[12px] font-medium text-[#9BA1AA]">목표 2.0x</span>
                 </div>
               </div>
             </div>

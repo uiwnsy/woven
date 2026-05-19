@@ -193,7 +193,7 @@ export default function CampaignDetailPage() {
                     <span className="text-[20px] font-extrabold text-[#1C1A17] leading-[20px] font-manrope">
                       {stage.count}
                     </span>
-                    <span className="text-[16px] font-medium text-[#1C1A17] text-center leading-none">
+                    <span className="text-[14px] font-medium text-[#1C1A17] text-center leading-none">
                       {stage.label}
                     </span>
                   </div>

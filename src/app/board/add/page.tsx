@@ -277,16 +277,32 @@ function Step3({
         {/* Contact type cards */}
         <div className="flex gap-3 mb-8">
           {[
-            { id: 'direct',  label: '직접 연락',   sub: 'DM 또는 이메일',   icon: '/icon/send-icon.svg' },
-            { id: 'agency',  label: '에이전시 경유', sub: '담당자에게 연락', icon: '/icon/message-icon.svg' },
+            {
+              id: 'direct', label: '직접 연락', sub: 'DM 또는 이메일',
+              icon: (
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                  <path d="M6 8h20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+                  <path d="M4 10l12 9 12-9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              ),
+            },
+            {
+              id: 'agency', label: '에이전시 경유', sub: '담당자에게 연락',
+              icon: (
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                  <path d="M28 20c0 1.1-.9 2-2 2H8l-4 4V8c0-1.1.9-2 2-2h20c1.1 0 2 .9 2 2v12z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+                  <path d="M11 13h10M11 17h6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                </svg>
+              ),
+            },
           ].map(opt => (
             <button
               key={opt.id}
               onClick={() => setContactType(opt.id)}
               className={`flex-1 flex flex-col items-center gap-2 py-5 rounded-2xl border-2 transition-all active:opacity-80
-                ${contactType === opt.id ? 'border-iris-500 bg-[#f5f5ff]' : 'border-stone-200 bg-white'}`}
+                ${contactType === opt.id ? 'border-[#6366F1] bg-[#EEEEFF] text-[#6366F1]' : 'border-stone-200 bg-white text-stone-400'}`}
             >
-              <img src={opt.icon} alt="" width={32} height={32} />
+              {opt.icon}
               <p className="text-[15px] font-semibold text-stone-900">{opt.label}</p>
               <p className="text-[12px] text-stone-400">{opt.sub}</p>
             </button>

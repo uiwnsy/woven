@@ -128,7 +128,7 @@ export default function MyPage() {
         {SECTIONS.map((section, si) => (
           <div key={section.heading}>
             {si > 0 && <div className="h-[14px] bg-[#F0F2F8]" />}
-            <div className="px-5 pt-5 pb-2">
+            <div className="px-5 py-6">
               <h2 className="text-[20px] font-bold text-stone-900 mb-3">{section.heading}</h2>
               {section.items.map((item, ii) => (
                 <div

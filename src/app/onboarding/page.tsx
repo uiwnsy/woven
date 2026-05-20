@@ -60,7 +60,7 @@ export default function OnboardingPage() {
   return (
     <div
       className="flex flex-col bg-white max-w-[430px] mx-auto overflow-hidden relative"
-      style={{ height: '100dvh' }}
+      style={{ height: '100dvh', minHeight: '100dvh' }}
       onTouchStart={e => handleDragStart(e.touches[0].clientX)}
       onTouchEnd={e => handleDragEnd(e.changedTouches[0].clientX)}
       onMouseDown={e => handleDragStart(e.clientX)}

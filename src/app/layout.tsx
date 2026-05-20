@@ -33,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className={manrope.variable}>
-      <body className="bg-white min-h-screen font-sans">{children}</body>
+      <body className="bg-white text-[#1C1A17] min-h-screen font-sans">{children}</body>
     </html>
   );
 }

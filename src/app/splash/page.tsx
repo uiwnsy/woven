@@ -7,8 +7,18 @@ export default function SplashPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const t = setTimeout(() => router.push('/onboarding'), 2000);
-    return () => clearTimeout(t);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    meta?.setAttribute('content', '#1C1C1E');
+
+    const t = setTimeout(() => {
+      meta?.setAttribute('content', '#ffffff');
+      router.push('/onboarding');
+    }, 2000);
+
+    return () => {
+      clearTimeout(t);
+      meta?.setAttribute('content', '#ffffff');
+    };
   }, [router]);
 
   return (

@@ -1200,6 +1200,18 @@ export default function CampaignNewPage() {
     scrollRef.current?.scrollTo({ top: 0 });
   }, [step]);
 
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const reset = () => window.scrollTo(0, 0);
+    vv.addEventListener('resize', reset);
+    vv.addEventListener('scroll', reset);
+    return () => {
+      vv.removeEventListener('resize', reset);
+      vv.removeEventListener('scroll', reset);
+    };
+  }, []);
+
   const [form, setForm] = useState<FormData>({
     campaignName: '',
     productName: '',

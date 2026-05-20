@@ -312,6 +312,18 @@ export default function InfluencerDetailPage() {
 
   useEffect(() => { setMounted(true); }, []);
 
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const reset = () => window.scrollTo(0, 0);
+    vv.addEventListener('resize', reset);
+    vv.addEventListener('scroll', reset);
+    return () => {
+      vv.removeEventListener('resize', reset);
+      vv.removeEventListener('scroll', reset);
+    };
+  }, []);
+
   const isAnyOverlayOpen = isEditingBrief || isEditingRequests;
   useEffect(() => {
     if (!isAnyOverlayOpen) return;

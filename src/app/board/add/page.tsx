@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, Check } from 'lucide-react';
 
@@ -424,6 +424,18 @@ export default function BoardAddPage() {
     setProfiles(handles.map(getProfile));
     setStep(2);
   };
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const reset = () => window.scrollTo(0, 0);
+    vv.addEventListener('resize', reset);
+    vv.addEventListener('scroll', reset);
+    return () => {
+      vv.removeEventListener('resize', reset);
+      vv.removeEventListener('scroll', reset);
+    };
+  }, []);
 
   const progressPct = step === 1 ? 33 : step === 2 ? 66 : step === 3 ? 100 : 100;
 

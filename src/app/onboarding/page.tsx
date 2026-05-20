@@ -81,7 +81,7 @@ export default function OnboardingPage() {
         {SLIDES.map((s, i) => (
           <div
             key={i}
-            className={`absolute inset-0 flex items-center justify-center px-[43px] pb-[140px] transition-opacity duration-200 ${i === step ? 'opacity-100' : 'opacity-0'}`}
+            className={`absolute inset-0 flex items-center justify-center px-[43px] pb-[250px] transition-opacity duration-200 ${i === step ? 'opacity-100' : 'opacity-0'}`}
           >
             {s.illust}
           </div>
@@ -89,7 +89,7 @@ export default function OnboardingPage() {
       </div>
 
       {/* Title + desc */}
-      <div className="absolute left-0 right-0 bottom-[220px] flex flex-col items-center gap-[14px] px-6">
+      <div className="absolute left-0 right-0 bottom-[190px] flex flex-col items-center gap-[14px] px-6">
         <h1 className="text-[24px] font-semibold text-black leading-[1.4] text-center whitespace-pre-line">
           {slide.title}
         </h1>

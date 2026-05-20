@@ -161,7 +161,7 @@ function BoardPageContent() {
   const isEmpty = cards.length === 0;
 
   return (
-    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
+    <div className="flex flex-col bg-white max-w-[430px] mx-auto relative overflow-hidden" style={{ height: '100dvh' }}>
 
       {/* ── Header ── */}
       <div className="flex items-center justify-between px-5 h-[65px] border-b border-[#f0f2f8] bg-white shrink-0">
@@ -438,7 +438,7 @@ function BoardPageContent() {
       </button>
 
       {/* ── Bottom navigation ── */}
-      <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-[2px] bg-white border-t border-[#F5F5F3] z-20">
+      <div className="absolute bottom-0 w-full flex items-start pt-[2px] bg-white border-t border-[#F5F5F3] z-20" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
         {[
           { Icon: HomeDisabledIcon,   label: '홈',        active: false, onClick: () => router.push('/home') },
           { Icon: BriefDisabledIcon,  label: '캠페인',    active: false, onClick: () => router.push('/campaign') },

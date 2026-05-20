@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
+import type { Viewport } from 'next';
 
-export const metadata: Metadata = {
-  themeColor: '#15163a',
+export const viewport: Viewport = {
+  themeColor: '#1C1C1E',
 };
 
 export default function SplashLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ backgroundColor: '#15163a', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#1C1C1E', height: '100dvh' }}>
       {children}
     </div>
   );

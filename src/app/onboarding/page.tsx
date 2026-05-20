@@ -59,7 +59,8 @@ export default function OnboardingPage() {
 
   return (
     <div
-      className="flex flex-col h-screen bg-white max-w-[430px] mx-auto overflow-hidden relative"
+      className="flex flex-col bg-white max-w-[430px] mx-auto overflow-hidden relative"
+      style={{ height: '100dvh' }}
       onTouchStart={e => handleDragStart(e.touches[0].clientX)}
       onTouchEnd={e => handleDragEnd(e.changedTouches[0].clientX)}
       onMouseDown={e => handleDragStart(e.clientX)}
@@ -77,11 +78,11 @@ export default function OnboardingPage() {
       )}
 
       {/* Illustration */}
-      <div className="flex-1 relative">
+      <div className="flex-1 min-h-0 flex items-center justify-center px-[43px] relative">
         {SLIDES.map((s, i) => (
           <div
             key={i}
-            className={`absolute inset-0 flex items-center justify-center px-[43px] transition-opacity duration-200 ${i === step ? 'opacity-100' : 'opacity-0'} ${i === 3 ? 'pb-[290px]' : 'pb-[250px]'}`}
+            className={`absolute inset-0 flex items-center justify-center px-[43px] transition-opacity duration-200 ${i === step ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           >
             {s.illust}
           </div>
@@ -89,7 +90,7 @@ export default function OnboardingPage() {
       </div>
 
       {/* Title + desc */}
-      <div className="absolute left-0 right-0 bottom-[190px] flex flex-col items-center gap-[14px] px-6">
+      <div className="flex flex-col items-center gap-[14px] px-6 pb-6">
         <h1 className="text-[24px] font-semibold text-black leading-[1.4] text-center whitespace-pre-line">
           {slide.title}
         </h1>
@@ -99,7 +100,7 @@ export default function OnboardingPage() {
       </div>
 
       {/* Dots + CTA */}
-      <div className="absolute bottom-0 left-0 right-0 px-5 pt-5 pb-[2.25rem] flex flex-col gap-[16px]">
+      <div className="px-5 pt-6 flex flex-col gap-[16px]" style={{ paddingBottom: 'max(2.25rem, env(safe-area-inset-bottom))' }}>
 
         {/* Dots */}
         <div className="flex items-center justify-center gap-[10px]">

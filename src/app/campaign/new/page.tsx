@@ -280,39 +280,160 @@ function TagInput({ tags, onAdd, onRemove, placeholder }: {
 
 // ─── DateBox ────────────────────────────────────────────────────────────────
 
-function DateBox({ value, onChange, placeholder }: {
+function DateBox({ value, onClick, placeholder }: {
   value: string;
-  onChange: (v: string) => void;
+  onClick: () => void;
   placeholder: string;
 }) {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const formatted = value
-    ? value.slice(2).replace(/-/g, '.')
-    : '';
-
+  const formatted = value ? value.slice(2).replace(/-/g, '.') : '';
   return (
     <div
-      className="relative flex-1 h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 flex items-center gap-[6px] bg-white cursor-pointer"
-      onClick={() => {
-        const el = inputRef.current;
-        if (!el) return;
-        if (typeof el.showPicker === 'function') el.showPicker();
-        else el.click();
-      }}
+      onClick={onClick}
+      className="flex-1 h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 flex items-center gap-[6px] bg-white cursor-pointer active:opacity-70"
     >
       <Calendar size={20} className="text-stone-400 shrink-0" />
       <span className={`text-[16px] font-medium select-none ${formatted ? 'text-[#1C1A17]' : 'text-[#C7C4BE]'}`}>
         {formatted || placeholder}
       </span>
-      <input
-        ref={inputRef}
-        type="date"
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-        tabIndex={-1}
-      />
+    </div>
+  );
+}
+
+function CalendarSheet({ startDate, endDate, onConfirm, onClose }: {
+  startDate: string;
+  endDate: string;
+  onConfirm: (start: string, end: string) => void;
+  onClose: () => void;
+}) {
+  const today = new Date();
+  const init = startDate ? new Date(startDate) : today;
+  const [year, setYear] = useState(init.getFullYear());
+  const [month, setMonth] = useState(init.getMonth());
+  const [tempStart, setTempStart] = useState(startDate);
+  const [tempEnd, setTempEnd] = useState(endDate);
+  const [selecting, setSelecting] = useState<'start' | 'end'>(startDate ? 'end' : 'start');
+
+  const prevMonth = () => { if (month === 0) { setYear(y => y - 1); setMonth(11); } else setMonth(m => m - 1); };
+  const nextMonth = () => { if (month === 11) { setYear(y => y + 1); setMonth(0); } else setMonth(m => m + 1); };
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const cells: (number | null)[] = [...Array(firstDay).fill(null), ...Array.from({ length: daysInMonth }, (_, i) => i + 1)];
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  const toStr = (d: number) => `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+  const handleDayPress = (d: number) => {
+    const str = toStr(d);
+    if (selecting === 'start') {
+      setTempStart(str);
+      setTempEnd('');
+      setSelecting('end');
+    } else {
+      if (str < tempStart) {
+        setTempStart(str);
+        setTempEnd('');
+        setSelecting('end');
+      } else {
+        setTempEnd(str);
+      }
+    }
+  };
+
+  const fmtLabel = (v: string) => v ? v.slice(2).replace(/-/g, '.') : '날짜 선택';
+  const canConfirm = !!tempStart && !!tempEnd;
+
+  return (
+    <div className="fixed inset-0 z-50 flex flex-col justify-end" style={{ maxWidth: 430, margin: '0 auto' }}>
+      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-8 flex flex-col gap-4">
+
+        {/* 선택 상태 표시 */}
+        <div className="flex items-center gap-3">
+          <div
+            className={`flex-1 flex flex-col items-center py-3 rounded-[12px] cursor-pointer transition-all ${selecting === 'start' ? 'bg-[#EEEEFF]' : 'bg-[#F5F5F3]'}`}
+            onClick={() => setSelecting('start')}
+          >
+            <span className="text-[12px] font-medium text-[#78756E]">시작일</span>
+            <span className={`text-[16px] font-bold mt-[2px] ${tempStart ? 'text-[#6366F1]' : 'text-[#C7C4BE]'}`}>{fmtLabel(tempStart)}</span>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#B0ADA7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          <div
+            className={`flex-1 flex flex-col items-center py-3 rounded-[12px] cursor-pointer transition-all ${selecting === 'end' ? 'bg-[#EEEEFF]' : 'bg-[#F5F5F3]'}`}
+            onClick={() => { if (tempStart) setSelecting('end'); }}
+          >
+            <span className="text-[12px] font-medium text-[#78756E]">종료일</span>
+            <span className={`text-[16px] font-bold mt-[2px] ${tempEnd ? 'text-[#6366F1]' : 'text-[#C7C4BE]'}`}>{fmtLabel(tempEnd)}</span>
+          </div>
+        </div>
+
+        {/* 월 헤더 */}
+        <div className="flex items-center justify-between">
+          <span className="text-[16px] font-bold text-[#1C1A17]">{year}년 {month + 1}월</span>
+          <div className="flex items-center gap-1">
+            <button onClick={prevMonth} className="w-9 h-9 flex items-center justify-center active:opacity-60">
+              <ChevronLeft size={20} className="text-[#78756E]" />
+            </button>
+            <button onClick={nextMonth} className="w-9 h-9 flex items-center justify-center active:opacity-60">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#78756E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        {/* 요일 헤더 */}
+        <div className="grid grid-cols-7 text-center">
+          {['일','월','화','수','목','금','토'].map((d, i) => (
+            <span key={d} className={`text-[13px] font-semibold pb-1 ${i === 0 ? 'text-red-400' : i === 6 ? 'text-blue-400' : 'text-[#B0ADA7]'}`}>{d}</span>
+          ))}
+        </div>
+
+        {/* 날짜 그리드 */}
+        <div className="grid grid-cols-7 text-center">
+          {cells.map((d, i) => {
+            if (!d) return <div key={i} className="h-9" />;
+            const str = toStr(d);
+            const isStart = str === tempStart;
+            const isEnd = str === tempEnd;
+            const inRange = tempStart && tempEnd && str > tempStart && str < tempEnd;
+            const isSun = i % 7 === 0;
+            const isSat = i % 7 === 6;
+
+            return (
+              <div key={i} className="relative flex items-center justify-center h-9">
+                {/* range background */}
+                {inRange && (
+                  <div className="absolute inset-y-0 inset-x-0 bg-[#EEEEFF]"
+                    style={{ left: isSun ? '50%' : 0, right: isSat ? '50%' : 0 }} />
+                )}
+                {isStart && tempEnd && (
+                  <div className="absolute inset-y-0 right-0 left-1/2 bg-[#EEEEFF]" />
+                )}
+                {isEnd && tempStart && (
+                  <div className="absolute inset-y-0 left-0 right-1/2 bg-[#EEEEFF]" />
+                )}
+                <button
+                  onClick={() => handleDayPress(d)}
+                  className={`relative z-10 h-9 w-9 rounded-full text-[15px] font-medium flex items-center justify-center transition-all active:opacity-70
+                    ${isStart || isEnd ? 'bg-[#6366F1] text-white font-bold'
+                      : isSun ? 'text-red-400' : isSat ? 'text-blue-400' : 'text-[#1C1A17]'}`}
+                >
+                  {d}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* CTA */}
+        <button
+          onClick={() => { if (canConfirm) { onConfirm(tempStart, tempEnd); onClose(); } }}
+          disabled={!canConfirm}
+          className="w-full h-[52px] rounded-[12px] text-[16px] font-bold text-white active:opacity-80"
+          style={{ backgroundColor: canConfirm ? '#2E2C28' : '#D4D2CE' }}
+        >
+          확인
+        </button>
+      </div>
     </div>
   );
 }
@@ -328,6 +449,7 @@ function Step1({ form, updateForm, togglePlatform }: {
 }) {
   const [showManagerSheet, setShowManagerSheet] = useState(false);
   const [showRoasSheet, setShowRoasSheet] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const selectedManager = MOCK_MANAGERS.find(m => m.name === form.manager) ?? MOCK_MANAGERS[0];
 
@@ -373,9 +495,9 @@ function Step1({ form, updateForm, togglePlatform }: {
             <span className="text-iris-500">*</span>
           </div>
           <div className="flex items-center gap-2">
-            <DateBox value={form.startDate} onChange={v => updateForm('startDate', v)} placeholder="시작일" />
+            <DateBox value={form.startDate} onClick={() => setShowCalendar(true)} placeholder="시작일" />
             <span className="text-[#C7C4BE] font-medium text-[16px]">-</span>
-            <DateBox value={form.endDate} onChange={v => updateForm('endDate', v)} placeholder="종료일" />
+            <DateBox value={form.endDate} onClick={() => setShowCalendar(true)} placeholder="종료일" />
           </div>
         </div>
 
@@ -520,6 +642,16 @@ function Step1({ form, updateForm, togglePlatform }: {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Calendar bottom sheet */}
+      {showCalendar && (
+        <CalendarSheet
+          startDate={form.startDate}
+          endDate={form.endDate}
+          onConfirm={(s, e) => { updateForm('startDate', s); updateForm('endDate', e); }}
+          onClose={() => setShowCalendar(false)}
+        />
       )}
 
       {/* Manager bottom sheet */}
@@ -1299,7 +1431,7 @@ export default function CampaignNewPage() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="absolute bottom-0 w-full px-5 pt-5 pb-8 bg-white border-t border-[#E8E7E4] flex flex-col gap-[10px]">
+      <div className="absolute bottom-0 w-full px-5 pt-5 bg-white border-t border-[#E8E7E4] flex flex-col gap-[10px]" style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom))' }}>
         {step === 1 && (
           <button
             onClick={() => step1Valid && setStep(2)}

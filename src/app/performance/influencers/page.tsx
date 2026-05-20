@@ -116,13 +116,7 @@ export default function InfluencerPerformancePage() {
               {selectedId === 'all' ? (
                 <span className="text-[16px] font-medium text-[#1C1A17]">전체 캠페인</span>
               ) : (
-                <>
-                  <span className="text-[16px] font-medium text-[#1C1A17]">{selectedCampaign!.title}</span>
-                  <span className="text-[12px] font-semibold rounded-full px-[8px] py-[3px] shrink-0"
-                    style={{ backgroundColor: STATUS_STYLE[selectedCampaign!.status].bg, color: STATUS_STYLE[selectedCampaign!.status].text }}>
-                    {selectedCampaign!.status}
-                  </span>
-                </>
+                <span className="text-[16px] font-medium text-[#1C1A17]">{selectedCampaign!.title}</span>
               )}
             </div>
             <img src="/arrow-down-campaign.svg" alt="" width={24} height={24} />

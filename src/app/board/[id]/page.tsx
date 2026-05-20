@@ -7,6 +7,79 @@ import { Calendar, Check, X } from 'lucide-react';
 
 const MANROPE: React.CSSProperties = { fontFamily: 'Manrope, sans-serif' };
 
+function CalendarSheet({ value, onChange, onClose }: {
+  value: string; // YYYY-MM-DD
+  onChange: (v: string) => void;
+  onClose: () => void;
+}) {
+  const today = new Date();
+  const init = value ? new Date(value) : today;
+  const [year, setYear] = useState(init.getFullYear());
+  const [month, setMonth] = useState(init.getMonth());
+  const [selected, setSelected] = useState(value);
+
+  const prevMonth = () => { if (month === 0) { setYear(y => y - 1); setMonth(11); } else setMonth(m => m - 1); };
+  const nextMonth = () => { if (month === 11) { setYear(y => y + 1); setMonth(0); } else setMonth(m => m + 1); };
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const cells: (number | null)[] = [...Array(firstDay).fill(null), ...Array.from({ length: daysInMonth }, (_, i) => i + 1)];
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  const toStr = (d: number) => `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+  return (
+    <div className="fixed inset-0 z-[60] flex flex-col justify-end" style={{ maxWidth: 430, margin: '0 auto' }}>
+      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-8 flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <span className="text-[18px] font-bold text-[#1C1A17]">{year}년 {month + 1}월</span>
+          <div className="flex items-center gap-1">
+            <button onClick={prevMonth} className="w-9 h-9 flex items-center justify-center active:opacity-60">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#78756E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button onClick={nextMonth} className="w-9 h-9 flex items-center justify-center active:opacity-60">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#78756E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div className="grid grid-cols-7 text-center">
+          {['일','월','화','수','목','금','토'].map((d, i) => (
+            <span key={d} className={`text-[13px] font-semibold pb-1 ${i === 0 ? 'text-red-400' : i === 6 ? 'text-blue-400' : 'text-[#B0ADA7]'}`}>{d}</span>
+          ))}
+        </div>
+        <div className="grid grid-cols-7 text-center gap-y-1">
+          {cells.map((d, i) => {
+            if (!d) return <div key={i} className="h-9" />;
+            const str = toStr(d);
+            const isSel = str === selected;
+            const isSun = i % 7 === 0;
+            const isSat = i % 7 === 6;
+            return (
+              <button
+                key={i}
+                onClick={() => setSelected(str)}
+                className={`h-9 w-9 mx-auto rounded-full text-[15px] font-medium flex items-center justify-center active:opacity-70
+                  ${isSel ? 'bg-[#6366F1] text-white font-bold' : isSun ? 'text-red-400' : isSat ? 'text-blue-400' : 'text-[#1C1A17]'}`}
+              >
+                {d}
+              </button>
+            );
+          })}
+        </div>
+        <button
+          onClick={() => { if (selected) { onChange(selected); onClose(); } }}
+          disabled={!selected}
+          className="w-full h-[52px] rounded-[12px] text-[16px] font-bold text-white active:opacity-80"
+          style={{ backgroundColor: selected ? '#2E2C28' : '#D4D2CE' }}
+        >
+          확인
+        </button>
+      </div>
+    </div>
+  );
+}
+
 type Stage = 'list-up' | 'contacting' | 'negotiating' | 'reviewing' | 'uploaded';
 
 type InfluencerDetail = {
@@ -289,6 +362,7 @@ export default function InfluencerDetailPage() {
   const [negotiatingBriefExpanded, setNegotiatingBriefExpanded] = useState(false);
   const [postingUrl, setPostingUrl] = useState(() => effectiveStage === 'uploaded' ? 'https://instagram.com/p/C4xBkQFP5Xx/' : '');
   const [postingDate, setPostingDate] = useState(() => effectiveStage === 'uploaded' ? '2025.05.02' : '');
+  const [showPostingDateCalendar, setShowPostingDateCalendar] = useState(false);
   const [captionHasUtm, setCaptionHasUtm] = useState(() => effectiveStage === 'uploaded');
   const [rvDraftExpanded, setRvDraftExpanded] = useState(false);
   const [rvUtmExpanded, setRvUtmExpanded] = useState(false);
@@ -905,8 +979,8 @@ export default function InfluencerDetailPage() {
                     style={{ backgroundColor: driveLink ? '#6366F1' : '#F2F4F6' }}
                   >
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                      <path d="M10 8l-6 6M10 8H6m4 0v4" stroke={driveLink ? '#fff' : '#78756E'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M7 4H4a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3" stroke={driveLink ? '#fff' : '#78756E'} strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M10 3h5v5M8 10l7-7" stroke={driveLink ? '#fff' : '#78756E'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M8 4H4a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-4" stroke={driveLink ? '#fff' : '#78756E'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </button>
                 </div>
@@ -1300,34 +1374,51 @@ export default function InfluencerDetailPage() {
                 <span className="text-[17px] font-medium text-black">
                   게시일 <span style={{ color: '#6366F1' }}>*</span>
                 </span>
-                <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
-                  <input
-                    value={postingDate}
-                    onChange={e => setPostingDate(e.target.value)}
-                    placeholder="YYYY.MM.DD"
-                    className="w-full bg-transparent outline-none text-[16px] font-medium"
-                    style={{ color: '#1C1A17' }}
-                    inputMode="numeric"
-                  />
-                </div>
+                <button
+                  onClick={() => setShowPostingDateCalendar(true)}
+                  className="w-full text-left active:opacity-70"
+                  style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '14px 20px' }}
+                >
+                  <span className="text-[16px] font-medium" style={{ color: postingDate ? '#1C1A17' : '#D4D2CE' }}>
+                    {postingDate || 'YYYY.MM.DD'}
+                  </span>
+                </button>
               </div>
               <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>
                 콘텐츠가 실제로 업로드된 날짜
               </span>
             </div>
+            {showPostingDateCalendar && (
+              <CalendarSheet
+                value={postingDate ? postingDate.replace(/\./g, '-') : ''}
+                onChange={v => setPostingDate(v.replace(/-/g, '.'))}
+                onClose={() => setShowPostingDateCalendar(false)}
+              />
+            )}
 
             {/* 캡션에 UTM 링크 포함 */}
-            <div style={{ backgroundColor: 'rgba(221, 223, 253, 0.3)', borderRadius: 10, padding: 20 }}>
-              <div className="flex items-center justify-between">
-                <span className="text-[18px] font-semibold" style={{ color: '#1C1A17' }}>캡션에 UTM 링크 포함</span>
-                <button
-                  onClick={() => setCaptionHasUtm(v => !v)}
-                  className="shrink-0 active:opacity-80 flex items-center"
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <span className="text-[17px] font-medium text-black">캡션 UTM 링크 포함</span>
+              <button
+                onClick={() => setCaptionHasUtm(v => !v)}
+                className="flex items-center justify-between w-full active:opacity-70"
+                style={{ border: `1px solid ${captionHasUtm ? '#A5A8F5' : '#E8E7E4'}`, borderRadius: 10, padding: '14px 20px', backgroundColor: captionHasUtm ? 'rgba(221,223,253,0.15)' : '#FFFFFF', transition: 'all 0.2s' }}
+              >
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 3 }}>
+                  <span className="text-[15px] font-semibold" style={{ color: captionHasUtm ? '#6366F1' : '#78756E' }}>
+                    {captionHasUtm ? '포함' : '미포함'}
+                  </span>
+                  <span className="text-[13px]" style={{ color: '#B0ADA7' }}>
+                    캡션에 UTM 파라미터가 있나요?
+                  </span>
+                </div>
+                <div
+                  className="shrink-0 flex items-center"
                   style={{ width: 52, height: 30, borderRadius: 40, padding: 3, backgroundColor: captionHasUtm ? '#6366F1' : '#E8E7E4', transition: 'background-color 0.2s', justifyContent: captionHasUtm ? 'flex-end' : 'flex-start', display: 'flex' }}
                 >
                   <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-                </button>
-              </div>
+                </div>
+              </button>
             </div>
 
             {/* 정산 금액 */}
@@ -1730,7 +1821,7 @@ export default function InfluencerDetailPage() {
       {/* ── Bottom action bar ── */}
       <div
         className="absolute bottom-0 w-full bg-white flex flex-col"
-        style={{ borderTop: '1px solid #E8E7E4', padding: 20, gap: 10 }}
+        style={{ borderTop: '1px solid #E8E7E4', padding: 20, paddingBottom: 'max(16px, env(safe-area-inset-bottom))', gap: 10 }}
       >
         {effectiveStage === 'uploaded' ? (
           <button

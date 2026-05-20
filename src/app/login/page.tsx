@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 
@@ -35,18 +34,6 @@ function AppleIcon() {
 
 export default function LoginPage() {
   const router = useRouter();
-
-  useEffect(() => {
-    const prev = document.body.style.backgroundColor;
-    document.body.style.backgroundColor = '#1C1C1E';
-    const meta = document.querySelector('meta[name="theme-color"]');
-    const prevTheme = meta?.getAttribute('content') ?? '';
-    meta?.setAttribute('content', '#1C1C1E');
-    return () => {
-      document.body.style.backgroundColor = prev;
-      if (meta) meta.setAttribute('content', prevTheme);
-    };
-  }, []);
 
   return (
     <div

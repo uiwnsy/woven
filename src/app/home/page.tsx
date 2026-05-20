@@ -167,13 +167,14 @@ const CAMPAIGNS: Campaign[] = [
 
 export default function HomePage() {
   const router = useRouter();
+
   const [activeTab, setActiveTab] = useState<'현황' | '인플루언서'>('현황');
   const [rankFilter, setRankFilter] = useState('ROAS순');
   const [fabOpen, setFabOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
+    <div className="flex flex-col bg-white max-w-[430px] mx-auto relative overflow-hidden" style={{ height: '100dvh' }}>
 
       {/* ── Fixed nav bar ── */}
       <div className="shrink-0" style={{ background: '#8486F3' }}>
@@ -239,12 +240,12 @@ export default function HomePage() {
         </div>
 
         {/* Tab content */}
-        <div className="bg-white">
+        <div className="bg-[#F5F5F3]">
 
           {activeTab === '인플루언서' && (
             <>
               {/* 성과 순위 */}
-              <div className="bg-white px-5 pt-[40px] pb-[40px] mb-[14px]">
+              <div className="bg-white px-5 pt-[40px] pb-[40px] mb-[10px]">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-[20px] font-bold text-stone-900">성과 순위</h2>
                   <div className="flex gap-2 overflow-x-auto scrollbar-none">
@@ -323,7 +324,7 @@ export default function HomePage() {
           {/* Campaign summary - 현황 탭만 */}
           {activeTab === '현황' && (
             <>
-              <div className="bg-white px-5 py-[40px] mb-[14px]">
+              <div className="bg-white px-5 py-[40px] mb-[10px]">
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[20px] font-bold text-stone-900">루미에르 봄봄 프로모션</span>
                   <span className="bg-iris-500 text-white text-[14px] font-semibold rounded-full shrink-0 ml-2" style={{ padding: '5px 10px' }}>D-8</span>
@@ -381,7 +382,7 @@ export default function HomePage() {
           )}
 
           {/* AI 인사이트 */}
-          <div className="bg-white pt-[40px] pb-[40px] mb-[14px]">
+          <div className="bg-white pt-[40px] pb-[40px] mb-[10px]">
             <h2 className="text-[20px] font-bold text-stone-900 px-5 mb-4">AI 인사이트</h2>
             <div className="flex gap-3 overflow-x-auto px-5 pb-1 scrollbar-none">
               {AI_INSIGHTS.map(insight => (
@@ -406,7 +407,7 @@ export default function HomePage() {
           </div>
 
           {/* 전체 캠페인 */}
-          <div className="bg-white pt-[40px] pb-[40px] mb-[14px]">
+          <div className="bg-white pt-[40px] pb-[40px] mb-[10px]">
             <div className="flex items-center justify-between px-5 mb-4">
               <h2 className="text-[20px] font-bold text-stone-900">전체 캠페인</h2>
               <button
@@ -493,7 +494,7 @@ export default function HomePage() {
         <div className="absolute inset-0 z-[25]" onClick={() => setFabOpen(false)} />
       )}
       {fabOpen && (
-        <div className="absolute bottom-[175px] right-[20px] z-30 flex flex-col items-end gap-3">
+        <div className="absolute right-[20px] z-30 flex flex-col items-end gap-3" style={{ bottom: 'calc(env(safe-area-inset-bottom) + 82px + 64px + 12px)' }}>
           <button
             onClick={() => { setFabOpen(false); router.push('/campaign/new'); }}
             className="flex items-center bg-white rounded-full px-5 py-3 shadow-lg border border-[#ebeef7] active:opacity-70"
@@ -510,8 +511,8 @@ export default function HomePage() {
       )}
       <button
         onClick={() => setFabOpen(f => !f)}
-        className="absolute bottom-[110px] right-[20px] z-30 w-14 h-14 bg-[#6366F1] rounded-full flex items-center justify-center shadow-lg active:opacity-80 transition-transform duration-200"
-        style={{ transform: fabOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
+        className="absolute right-[20px] z-30 w-14 h-14 bg-[#6366F1] rounded-full flex items-center justify-center shadow-lg active:opacity-80 transition-transform duration-200"
+        style={{ bottom: 'calc(env(safe-area-inset-bottom) + 82px)', transform: fabOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
@@ -519,7 +520,7 @@ export default function HomePage() {
       </button>
 
       {/* ── Bottom navigation ── */}
-      <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-[2px] bg-white border-t border-[#F5F5F3] z-20">
+      <div className="absolute bottom-0 w-full flex items-start pt-[2px] bg-white border-t border-[#F5F5F3] z-20" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
         {[
           { Icon: HomeSelectedIcon, label: '홈', active: true, onClick: () => { } },
           { Icon: BriefDisabledIcon, label: '캠페인', active: false, onClick: () => router.push('/campaign') },

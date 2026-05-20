@@ -117,7 +117,7 @@ function Step1({
         </div>
       </div>
 
-      <div className="absolute bottom-0 w-full px-5 pb-8 pt-4 bg-white border-t border-[#f0f2f8]">
+      <div className="absolute bottom-0 w-full px-5 pt-4 bg-white border-t border-[#f0f2f8]" style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom))' }}>
         <button
           onClick={onNext}
           disabled={!isFilled}
@@ -241,7 +241,7 @@ function Step2({
         </div>
       </div>
 
-      <div className="absolute bottom-0 w-full px-5 pb-8 pt-4 bg-white border-t border-[#f0f2f8]">
+      <div className="absolute bottom-0 w-full px-5 pt-4 bg-white border-t border-[#f0f2f8]" style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom))' }}>
         <button
           onClick={onNext}
           disabled={selectedCount === 0}
@@ -316,7 +316,7 @@ function Step3({
         </div>
       </div>
 
-      <div className="absolute bottom-0 w-full px-5 pb-8 pt-4 bg-white border-t border-[#f0f2f8]">
+      <div className="absolute bottom-0 w-full px-5 pt-4 bg-white border-t border-[#f0f2f8]" style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom))' }}>
         <button
           onClick={onNext}
           className="w-full h-[56px] bg-stone-900 text-white rounded-2xl text-[16px] font-semibold active:opacity-80"
@@ -384,7 +384,7 @@ function Step4({
         </div>
       </div>
 
-      <div className="absolute bottom-0 w-full px-5 pb-8 pt-4 bg-white border-t border-[#f0f2f8]">
+      <div className="absolute bottom-0 w-full px-5 pt-4 bg-white border-t border-[#f0f2f8]" style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom))' }}>
         <button
           onClick={() => router.push(`/board?added=${addedQuery}`)}
           className="w-full h-[56px] bg-stone-900 text-white rounded-2xl text-[16px] font-semibold active:opacity-80 mb-3"

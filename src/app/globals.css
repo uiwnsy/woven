@@ -10,11 +10,13 @@
     overflow: hidden;
     width: 100%;
     height: 100%;
+    background-color: #ffffff;
   }
   body {
     overflow: hidden;
     width: 100%;
     height: 100%;
+    background-color: #ffffff;
   }
   body {
     font-family: var(--font-manrope), 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;

@@ -11,6 +11,15 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: 'Woven',
   description: '뷰티 브랜드 인하우스 마케터를 위한 인플루언서 캠페인 관리 앱',
+  openGraph: {
+    title: 'Woven',
+    description: '뷰티 브랜드 인하우스 마케터를 위한 인플루언서 캠페인 관리 앱',
+    images: [{ url: '/link_img.png' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/link_img.png'],
+  },
 };
 
 export const viewport: Viewport = {

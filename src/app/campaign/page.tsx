@@ -147,7 +147,7 @@ export default function CampaignPage() {
     : MOCK_CAMPAIGNS.filter(c => c.status === activeFilter);
 
   return (
-    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
+    <div className="flex flex-col bg-white max-w-[430px] mx-auto relative overflow-hidden" style={{ height: '100dvh' }}>
 
       {/* ── Header ── */}
       <div className="flex items-center justify-between px-5 h-[65px] border-b border-[#f0f2f8] bg-white shrink-0">
@@ -236,7 +236,7 @@ export default function CampaignPage() {
       </button>
 
       {/* ── Bottom navigation ── */}
-      <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-[2px] bg-white border-t border-[#F5F5F3] z-20">
+      <div className="absolute bottom-0 w-full flex items-start pt-[2px] bg-white border-t border-[#F5F5F3] z-20" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
         {[
           { Icon: HomeDisabledIcon,   label: '홈',        active: false, onClick: () => router.push('/home') },
           { Icon: BriefSelectedIcon,  label: '캠페인',    active: true,  onClick: () => {} },

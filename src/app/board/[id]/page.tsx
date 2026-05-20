@@ -365,7 +365,7 @@ export default function InfluencerDetailPage() {
   ];
 
   return (
-    <div className="flex flex-col bg-white max-w-[430px] mx-auto relative overflow-hidden" style={{ height: '100dvh' }}>
+    <div className="flex flex-col bg-white max-w-[430px] mx-auto relative overflow-hidden" style={{ height: '100svh' }}>
 
       {/* ── Header ── */}
       <div

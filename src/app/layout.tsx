@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className={manrope.variable}>
-      <body className="bg-gray-100 min-h-screen font-sans">{children}</body>
+      <body className="bg-white min-h-screen font-sans">{children}</body>
     </html>
   );
 }

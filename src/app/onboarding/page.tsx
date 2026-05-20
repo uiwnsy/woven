@@ -81,7 +81,7 @@ export default function OnboardingPage() {
         {SLIDES.map((s, i) => (
           <div
             key={i}
-            className={`absolute inset-0 flex items-center justify-center px-[43px] transition-opacity duration-200 ${i === step ? 'opacity-100' : 'opacity-0'}`}
+            className={`absolute inset-0 flex items-center justify-center px-[43px] pb-[140px] transition-opacity duration-200 ${i === step ? 'opacity-100' : 'opacity-0'}`}
           >
             {s.illust}
           </div>
@@ -89,23 +89,24 @@ export default function OnboardingPage() {
       </div>
 
       {/* Title + desc */}
-      <div className="flex flex-col items-center gap-[14px] px-6 mb-5">
-        <h1 className="text-[24px] font-bold text-black leading-[1.4] text-center whitespace-pre-line">
+      <div className="absolute left-0 right-0 bottom-[220px] flex flex-col items-center gap-[14px] px-6">
+        <h1 className="text-[24px] font-semibold text-black leading-[1.4] text-center whitespace-pre-line">
           {slide.title}
         </h1>
-        <p className="text-[18px] font-medium text-black leading-[1.4] text-center whitespace-pre-line">
+        <p className="text-[18px] text-black leading-[1.4] text-center whitespace-pre-line">
           {slide.desc}
         </p>
       </div>
 
       {/* Dots + CTA */}
-      <div className="h-[128px] px-5 py-5 flex flex-col justify-between">
+      <div className="absolute bottom-0 left-0 right-0 px-5 pt-5 pb-[2.25rem] flex flex-col gap-[16px]">
 
         {/* Dots */}
         <div className="flex items-center justify-center gap-[10px]">
           {SLIDES.map((_, i) => (
-            <div
+            <button
               key={i}
+              onClick={() => setStep(i)}
               className={`rounded-full transition-all duration-300
                 ${i === step
                   ? 'w-10 h-3 bg-[#1C1A17]'
@@ -117,7 +118,7 @@ export default function OnboardingPage() {
         {/* CTA */}
         <button
           onClick={next}
-          className="w-full py-4 bg-[#2E2C28] text-white text-[18px] font-bold rounded-xl active:opacity-80"
+          className="w-full py-4 bg-[#2E2C28] text-white text-[18px] font-semibold rounded-xl active:opacity-80"
         >
           {slide.cta}
         </button>

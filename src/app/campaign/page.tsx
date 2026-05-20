@@ -22,7 +22,6 @@ type Campaign = {
   progressLabel?: string;
   progressFraction?: string;
   progressPct?: number;
-  briefDone: boolean;
   salesChannel?: string;
   targetRoas?: string;
 };
@@ -37,7 +36,6 @@ const MOCK_CAMPAIGNS: Campaign[] = [
     progressLabel: '업로드 완료',
     progressFraction: '1 / 3',
     progressPct: 1 / 3,
-    briefDone: true,
     salesChannel: '카페24',
     targetRoas: '200%',
   },
@@ -47,7 +45,6 @@ const MOCK_CAMPAIGNS: Campaign[] = [
     status: '기획',
     dateRange: '5.10 ~ 5.17',
     influencerCount: '-',
-    briefDone: false,
     salesChannel: '카페24',
   },
   {
@@ -59,7 +56,6 @@ const MOCK_CAMPAIGNS: Campaign[] = [
     progressLabel: '전체 완료',
     progressFraction: '3 / 3',
     progressPct: 1,
-    briefDone: true,
     salesChannel: '카페24',
     targetRoas: '300%',
   },
@@ -71,17 +67,6 @@ const STATUS_STYLES: Record<Campaign['status'], { bg: string; text: string }> = 
   완료:   { bg: 'bg-[#f0fdf4]', text: 'text-[#26af58]' },
 };
 
-function DocumentIcon({ done }: { done: boolean }) {
-  const color = done ? '#3d3fc7' : '#78756e';
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M3 2.5C3 1.95 3.45 1.5 4 1.5H9.5L13 5V13.5C13 14.05 12.55 14.5 12 14.5H4C3.45 14.5 3 14.05 3 13.5V2.5Z"
-        stroke={color} strokeWidth="1.2" fill="none" strokeLinejoin="round"/>
-      <path d="M9.5 1.5V5H13" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M5.5 8H10.5M5.5 10.5H8.5" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
-    </svg>
-  );
-}
 
 function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () => void }) {
   const statusStyle = STATUS_STYLES[campaign.status];
@@ -129,15 +114,7 @@ function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () 
         </div>
       )}
 
-      {/* Section 3: Brief status */}
-      <div className="flex items-center gap-[2px]">
-        <DocumentIcon done={campaign.briefDone} />
-        <span className={`text-[14px] font-semibold ${campaign.briefDone ? 'text-[#3d3fc7]' : 'text-[#78756E]'}`}>
-          {campaign.briefDone ? '브리프 생성 완료' : '브리프 생성 필요'}
-        </span>
-      </div>
-
-      {/* Section 4: Sales channel + target ROAS */}
+      {/* Section 3: Sales channel + target ROAS */}
       {(campaign.salesChannel || campaign.targetRoas) && (
         <div className="flex items-center gap-[6px]">
           {campaign.salesChannel && (

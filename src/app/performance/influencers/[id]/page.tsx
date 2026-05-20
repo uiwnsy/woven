@@ -395,7 +395,7 @@ function PageContent() {
       </div>
 
       {/* ── Body ── */}
-      <div className="flex-1 bg-[#FAFBFE] overflow-y-auto pb-10">
+      <div className="flex-1 bg-white overflow-y-auto pb-10">
 
         {/* ── 프로필 ── */}
         <div className="bg-white px-5 pt-6 pb-6 flex items-center gap-4">

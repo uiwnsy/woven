@@ -216,7 +216,7 @@ export default function PerformancePage() {
       </div>
 
       {/* ── Scrollable body ── */}
-      <div className="flex-1 bg-[#FAFBFE] overflow-y-auto pb-[95px]">
+      <div className="flex-1 bg-white overflow-y-auto pb-[95px]">
 
         {/* ── Content Box: Selector + Filters + Summary ── */}
         <div className="bg-white px-5 pt-[26px] pb-[26px] flex flex-col gap-5">

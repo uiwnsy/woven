@@ -79,7 +79,7 @@ export default function CampaignBriefPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#F5F5F3] max-w-[430px] mx-auto relative overflow-hidden">
+    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
 
       {/* Header */}
       <div className="flex items-center justify-between px-4 h-[56px] border-b border-[#F0F2F8] bg-white shrink-0">
@@ -87,7 +87,13 @@ export default function CampaignBriefPage() {
           <ChevronLeft size={24} className="text-stone-900" />
         </button>
         <span className="text-[16px] font-bold text-black">AI 브리프</span>
-        <div className="w-[42px]" />
+        <button
+          onClick={() => router.push(`/campaign/${id}`)}
+          disabled={isGenerating}
+          className="w-[42px] h-[42px] flex items-center justify-center active:opacity-60"
+        >
+          <span className="text-[15px] font-semibold text-[#6366F1]">저장</span>
+        </button>
       </div>
 
       {/* Scrollable content */}

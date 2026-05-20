@@ -33,24 +33,24 @@ const STATUS_STYLE: Record<string, { bg: string; text: string }> = {
 
 const CAMPAIGN_DATA: Record<number, InfluencerStat[]> = {
   1: [
-    { rank: 1, name: 'dearyq', handle: '@dearyq', followers: '10.1만', profile: '/profile-dearyq.png', roas: '1.4x', clicks: '820',   conversions: '5', cvr: '0.61%', cost: '45만', hasUtm: true },
-    { rank: 2, name: 'leeum',  handle: '@leeum',  followers: '4.6만',  profile: '/profile-leeum.png',  roas: '1.1x', clicks: '640',   conversions: '3', cvr: '0.47%', cost: '35만', hasUtm: true },
-    { rank: 3, name: 'paooar', handle: '@paooar', followers: '9.2만',  profile: '/profile-paooar.png', roas: '0.8x', clicks: '310',   conversions: '2', cvr: '0.65%', cost: '35만', hasUtm: false },
+    { rank: 1, name: 'dearyq', handle: '@dearyq', followers: '10.1만', profile: '/profile-dearyq.png', roas: '140%', clicks: '820',   conversions: '5', cvr: '0.61%', cost: '45만', hasUtm: true },
+    { rank: 2, name: 'leeum',  handle: '@leeum',  followers: '4.6만',  profile: '/profile-leeum.png',  roas: '110%', clicks: '640',   conversions: '3', cvr: '0.47%', cost: '35만', hasUtm: true },
+    { rank: 3, name: 'paooar', handle: '@paooar', followers: '9.2만',  profile: '/profile-paooar.png', roas: '80%', clicks: '310',   conversions: '2', cvr: '0.65%', cost: '35만', hasUtm: false },
   ],
   3: [
-    { rank: 1, name: 'minj_',  handle: '@minj_',  followers: '24.5만', profile: '/profile-kimminji.png', roas: '1.2x', clicks: '1,240', conversions: '8', cvr: '0.65%', cost: '60만', hasUtm: true },
-    { rank: 2, name: 'zigoo',  handle: '@zigoo',  followers: '8만',    profile: '/profile-zigoo.png',    roas: '0.9x', clicks: '560',   conversions: '3', cvr: '0.54%', cost: '28만', hasUtm: true },
-    { rank: 3, name: 'haye0',  handle: '@haye0',  followers: '10.4만', profile: '/profile-haye0.png',    roas: '0.7x', clicks: '390',   conversions: '1', cvr: '0.26%', cost: '30만', hasUtm: false },
+    { rank: 1, name: 'minj_',  handle: '@minj_',  followers: '24.5만', profile: '/profile-kimminji.png', roas: '120%', clicks: '1,240', conversions: '8', cvr: '0.65%', cost: '60만', hasUtm: true },
+    { rank: 2, name: 'zigoo',  handle: '@zigoo',  followers: '8만',    profile: '/profile-zigoo.png',    roas: '90%', clicks: '560',   conversions: '3', cvr: '0.54%', cost: '28만', hasUtm: true },
+    { rank: 3, name: 'haye0',  handle: '@haye0',  followers: '10.4만', profile: '/profile-haye0.png',    roas: '70%', clicks: '390',   conversions: '1', cvr: '0.26%', cost: '30만', hasUtm: false },
   ],
   2: [],
 };
 
 const ALL_TIME: AllTimeStat[] = [
-  { rank: 1, name: 'dearyq', handle: '@dearyq', followers: '10.1만', profile: '/profile-dearyq.png',   avgRoas: '1.6x', totalClicks: '2,410', totalConversions: '14', avgCvr: '0.58%', campaigns: 3, lastCampaign: '루미에르 봄봄 프로모션' },
-  { rank: 2, name: 'minj_',  handle: '@minj_',  followers: '24.5만', profile: '/profile-kimminji.png', avgRoas: '1.2x', totalClicks: '1,800', totalConversions: '10', avgCvr: '0.56%', campaigns: 2, lastCampaign: '선크림 런칭 캠페인' },
-  { rank: 3, name: 'leeum',  handle: '@leeum',  followers: '4.6만',  profile: '/profile-leeum.png',    avgRoas: '1.1x', totalClicks: '1,280', totalConversions: '7',  avgCvr: '0.55%', campaigns: 2, lastCampaign: '루미에르 봄봄 프로모션' },
-  { rank: 4, name: 'paooar', handle: '@paooar', followers: '9.2만',  profile: '/profile-paooar.png',   avgRoas: '0.9x', totalClicks: '980',   totalConversions: '5',  avgCvr: '0.51%', campaigns: 2, lastCampaign: '루미에르 봄봄 프로모션' },
-  { rank: 5, name: 'zigoo',  handle: '@zigoo',  followers: '8만',    profile: '/profile-zigoo.png',    avgRoas: '0.7x', totalClicks: '560',   totalConversions: '3',  avgCvr: '0.54%', campaigns: 1, lastCampaign: '선크림 런칭 캠페인' },
+  { rank: 1, name: 'dearyq', handle: '@dearyq', followers: '10.1만', profile: '/profile-dearyq.png',   avgRoas: '160%', totalClicks: '2,410', totalConversions: '14', avgCvr: '0.58%', campaigns: 3, lastCampaign: '루미에르 봄봄 프로모션' },
+  { rank: 2, name: 'minj_',  handle: '@minj_',  followers: '24.5만', profile: '/profile-kimminji.png', avgRoas: '120%', totalClicks: '1,800', totalConversions: '10', avgCvr: '0.56%', campaigns: 2, lastCampaign: '선크림 런칭 캠페인' },
+  { rank: 3, name: 'leeum',  handle: '@leeum',  followers: '4.6만',  profile: '/profile-leeum.png',    avgRoas: '110%', totalClicks: '1,280', totalConversions: '7',  avgCvr: '0.55%', campaigns: 2, lastCampaign: '루미에르 봄봄 프로모션' },
+  { rank: 4, name: 'paooar', handle: '@paooar', followers: '9.2만',  profile: '/profile-paooar.png',   avgRoas: '90%', totalClicks: '980',   totalConversions: '5',  avgCvr: '0.51%', campaigns: 2, lastCampaign: '루미에르 봄봄 프로모션' },
+  { rank: 5, name: 'zigoo',  handle: '@zigoo',  followers: '8만',    profile: '/profile-zigoo.png',    avgRoas: '70%', totalClicks: '560',   totalConversions: '3',  avgCvr: '0.54%', campaigns: 1, lastCampaign: '선크림 런칭 캠페인' },
 ];
 
 function IGBadge() {
@@ -104,7 +104,7 @@ export default function InfluencerPerformancePage() {
       </div>
 
       {/* ── Body ── */}
-      <div className="flex-1 bg-[#FAFBFE] overflow-y-auto pb-10">
+      <div className="flex-1 bg-white overflow-y-auto pb-10">
 
         {/* ── 캠페인 셀렉터 ── */}
         <div className="bg-white px-5 pt-5 pb-3">

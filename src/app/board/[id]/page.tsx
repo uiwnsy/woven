@@ -365,7 +365,7 @@ export default function InfluencerDetailPage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-[#FAFBFE] max-w-[430px] mx-auto relative overflow-hidden">
+    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
 
       {/* ── Header ── */}
       <div
@@ -1652,10 +1652,12 @@ export default function InfluencerDetailPage() {
         </div>
         )}
 
-        <div className="h-[10px] bg-[#F5F5F3]" />
+        {(effectiveStage !== 'reviewing' && effectiveStage !== 'uploaded') && (
+          <div className="h-[10px] bg-[#F5F5F3]" />
+        )}
 
         {/* ── 메모 ── */}
-        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+        <div className="bg-white" style={{ padding: '30px 20px 80px', gap: 20, display: 'flex', flexDirection: 'column' }}>
           <span className="text-[20px] font-bold text-black">메모</span>
 
           {memos.map((memo, i) => (
@@ -1904,9 +1906,9 @@ export default function InfluencerDetailPage() {
                   {/* UTM 안내 */}
                   <div className="flex items-start gap-2 mb-6 rounded-[12px] px-4 py-3" style={{ backgroundColor: '#EEF7FF' }}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[1px]">
-                      <path d="M8 1.5L1 14.5h14L8 1.5z" stroke="#2D92FE" strokeWidth="1.3" strokeLinejoin="round"/>
-                      <path d="M8 7v3" stroke="#2D92FE" strokeWidth="1.3" strokeLinecap="round"/>
-                      <circle cx="8" cy="11.5" r="0.6" fill="#2D92FE"/>
+                      <circle cx="8" cy="8" r="7" stroke="#2D92FE" strokeWidth="1.3"/>
+                      <path d="M8 7v4" stroke="#2D92FE" strokeWidth="1.3" strokeLinecap="round"/>
+                      <circle cx="8" cy="5.5" r="0.6" fill="#2D92FE"/>
                     </svg>
                     <span className="text-[13px] font-semibold" style={{ color: '#2D92FE', lineHeight: '140%' }}>
                       협의 확정 시 인플루언서 고유 UTM 링크가 자동 생성됩니다.

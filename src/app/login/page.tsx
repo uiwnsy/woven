@@ -38,15 +38,15 @@ export default function LoginPage() {
   return (
     <div
       className="flex flex-col h-screen max-w-[430px] mx-auto relative"
-      style={{ backgroundColor: '#15163a' }}
+      style={{ backgroundColor: '#1C1C1E' }}
     >
       {/* Logo centered */}
       <div className="flex-1 flex items-center justify-center">
-        <img src="/woven-logo.svg" alt="Woven" width={115} height={21} />
+        <img src="/woven-logo.svg" alt="Woven" width={100} height={18.26} />
       </div>
 
       {/* Buttons */}
-      <div className="px-6 pb-10 flex flex-col gap-3">
+      <div className="px-6 pb-[5rem] flex flex-col gap-3">
         {/* 이메일로 로그인 */}
         <button
           onClick={() => router.push('/login/email')}

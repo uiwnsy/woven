@@ -125,7 +125,7 @@ export default function CampaignDetailPage() {
   const boardEmpty = campaign.boardStages.every(s => s.count === '-');
 
   return (
-    <div className="flex flex-col h-screen bg-[#F9FAFB] max-w-[430px] mx-auto relative overflow-hidden">
+    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
 
       {/* ── Header ── */}
       <div
@@ -146,7 +146,7 @@ export default function CampaignDetailPage() {
 
       {/* ── Scrollable content ── */}
       <div className="flex-1 overflow-y-auto pb-10">
-        <div className="flex flex-col gap-[10px]">
+        <div className="flex flex-col">
 
           {/* ── 1. Campaign header card ── */}
           <div className="bg-white px-5 pt-[30px] pb-[30px] flex flex-col gap-[14px]">
@@ -180,6 +180,8 @@ export default function CampaignDetailPage() {
             </div>
           </div>
 
+          <div className="h-[10px] bg-[#F5F5F3]" />
+
           {/* ── 2. 보드 현황 ── */}
           <div className="bg-white py-[30px] flex flex-col items-center gap-[18px]">
             {/* Title + board stages */}
@@ -211,9 +213,9 @@ export default function CampaignDetailPage() {
             {boardEmpty && (
               <div className="flex items-start gap-2 bg-[#EEF7FF] rounded-[10px] p-5 w-full mx-5" style={{ width: 'calc(100% - 40px)' }}>
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 mt-[1px]">
-                  <path d="M9 1.5L16.5 15H1.5L9 1.5Z" stroke="#2D92FE" strokeWidth="1.5" strokeLinejoin="round"/>
-                  <path d="M9 7v3.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
-                  <circle cx="9" cy="12.5" r="0.75" fill="#2D92FE"/>
+                  <circle cx="9" cy="9" r="8" stroke="#2D92FE" strokeWidth="1.5"/>
+                  <path d="M9 8v4.5" stroke="#2D92FE" strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="9" cy="6" r="0.75" fill="#2D92FE"/>
                 </svg>
                 <p className="text-[14px] font-medium text-[#2D92FE] leading-[135%]">
                   보드 현황이 비어있어요.{'\n'}보드에서 인플루언서를 추가하여 관리하세요.
@@ -238,6 +240,8 @@ export default function CampaignDetailPage() {
             </button>
           </div>
 
+          <div className="h-[10px] bg-[#F5F5F3]" />
+
           {/* ── 3. AI 브리프 ── */}
           <div className="bg-white py-[30px] flex flex-col gap-[18px]">
             <div className="px-5">
@@ -254,6 +258,8 @@ export default function CampaignDetailPage() {
               <img src="/arrow-right.svg" alt="" className="w-6 h-6 shrink-0" />
             </button>
           </div>
+
+          <div className="h-[10px] bg-[#F5F5F3]" />
 
           {/* ── 4. KPI 현황 ── */}
           <div className="bg-white py-[30px] flex flex-col items-center gap-[18px]">
@@ -294,6 +300,8 @@ export default function CampaignDetailPage() {
             </button>
           </div>
 
+          <div className="h-[10px] bg-[#F5F5F3]" />
+
           {/* ── 5. 캠페인 정보 ── */}
           <div className="bg-white py-[30px] flex flex-col items-center gap-5">
             <div className="w-full px-5">
@@ -318,6 +326,8 @@ export default function CampaignDetailPage() {
               </div>
             </div>
           </div>
+
+          <div className="h-[10px] bg-[#F5F5F3]" />
 
           {/* ── 6. 콘텐츠 가이드라인 ── */}
           {campaign.guidelineUrl && (
@@ -344,6 +354,8 @@ export default function CampaignDetailPage() {
               </a>
             </div>
           )}
+
+          <div className="h-[10px] bg-[#F5F5F3]" />
 
           {/* ── 7. 핵심 메시지 ── */}
           {campaign.coreMessage && (

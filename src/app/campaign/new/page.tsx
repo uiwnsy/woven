@@ -50,6 +50,8 @@ const TONES = [
   { id: 'casual',   label: '캐주얼', icon: '/casual-icon.svg' },
 ];
 
+const QUICK_PROMPTS = ['더 친근하게', '더 짧게', '더 전문적으로', '제품 혜택 강조', '핵심만 간결하게', '이모지 없이'];
+
 const GOAL_KPI_MAP: Record<string, string[]> = {
   purchase:  ['roas', 'clicks', 'conversion'],
   awareness: ['clicks', 'upload'],
@@ -853,7 +855,11 @@ function Step4({ form, updateForm }: {
   const [editedBrief, setEditedBrief] = useState<string | null>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [showRegenSheet, setShowRegenSheet] = useState(false);
+  const [regenPrompt, setRegenPrompt] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const promptRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -873,8 +879,14 @@ function Step4({ form, updateForm }: {
   };
 
   const handleRegenerate = () => {
+    setShowRegenSheet(false);
+    setIsGenerating(true);
     setEditedBrief(null);
-    setBriefVersion(v => v + 1);
+    setTimeout(() => {
+      setBriefVersion(v => v + 1);
+      setIsGenerating(false);
+      setRegenPrompt('');
+    }, 1500);
   };
 
   const handleToneChange = (toneId: string) => {
@@ -1012,20 +1024,30 @@ function Step4({ form, updateForm }: {
               </div>
             </div>
             <div className="bg-white px-5 py-[14px] border-t border-[#ECECEF]">
-              <p className="text-[16px] font-medium text-[#1C1A17] leading-[150%] whitespace-pre-wrap">
-                {displayBrief}
-              </p>
+              {isGenerating ? (
+                <div className="flex flex-col gap-3 py-4">
+                  {[100, 85, 92, 70, 88, 60].map((w, i) => (
+                    <div key={i} className="h-4 bg-[#EEEEFF] rounded-full animate-pulse" style={{ width: `${w}%`, animationDelay: `${i * 80}ms` }} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[16px] font-medium text-[#1C1A17] leading-[150%] whitespace-pre-wrap">
+                  {displayBrief}
+                </p>
+              )}
             </div>
             <div className="flex border-t border-[#ECECEF]">
               <button
                 onClick={() => setIsEditing(true)}
-                className="flex-1 py-[15px] flex items-center justify-center bg-[#F8FAFF] border-r border-[#ECECEF] rounded-bl-[14px] active:opacity-70"
+                disabled={isGenerating}
+                className="flex-1 py-[15px] flex items-center justify-center bg-[#F8FAFF] border-r border-[#ECECEF] rounded-bl-[14px] active:opacity-70 disabled:opacity-40"
               >
                 <span className="text-[16px] font-medium text-black">수정하기</span>
               </button>
               <button
                 onClick={handleCopy}
-                className="flex-1 py-[15px] flex items-center justify-center gap-1 bg-[#F8FAFF] rounded-br-[14px] active:opacity-70"
+                disabled={isGenerating}
+                className="flex-1 py-[15px] flex items-center justify-center gap-1 bg-[#F8FAFF] rounded-br-[14px] active:opacity-70 disabled:opacity-40"
               >
                 {copied
                   ? <><Check size={14} className="text-[#6366F1]" /><span className="text-[16px] font-medium text-[#6366F1]">복사됨</span></>
@@ -1040,13 +1062,72 @@ function Step4({ form, updateForm }: {
 
         {/* Regenerate button */}
         <button
-          onClick={handleRegenerate}
-          className="w-full h-[56px] bg-[#F0F2FB] rounded-[12px] flex items-center justify-center active:opacity-70"
+          onClick={() => setShowRegenSheet(true)}
+          disabled={isGenerating}
+          className="w-full h-[56px] rounded-[12px] flex items-center justify-center gap-2 active:opacity-80"
+          style={{ backgroundColor: isGenerating ? '#A5A8F5' : '#6366F1', transition: 'background-color 0.2s' }}
         >
-          <span className="text-[16px] font-bold text-[#6366F1]">다시 생성하기</span>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className={isGenerating ? 'animate-spin' : ''}>
+            <path d="M15 9A6 6 0 1 1 9 3h3m0 0l-2-2m2 2l-2 2" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span className="text-[16px] font-bold text-white">
+            {isGenerating ? 'AI 생성 중...' : '브리프 다시 생성하기'}
+          </span>
         </button>
 
       </div>
+
+      {/* Regen bottom sheet */}
+      {showRegenSheet && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-end" style={{ maxWidth: 430, margin: '0 auto' }}>
+          <div className="absolute inset-0 bg-black/40" onClick={() => setShowRegenSheet(false)} />
+          <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-8 flex flex-col gap-5">
+            <div className="flex items-center justify-between">
+              <span className="text-[18px] font-bold text-[#1C1A17]">어떻게 바꿀까요?</span>
+              <button onClick={() => setShowRegenSheet(false)}>
+                <X size={22} className="text-[#78756E]" />
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {QUICK_PROMPTS.map(p => {
+                const isActive = regenPrompt === p;
+                return (
+                  <button
+                    key={p}
+                    onClick={() => setRegenPrompt(prev => prev === p ? '' : p)}
+                    className={`px-[14px] py-[8px] rounded-full text-[14px] font-semibold border transition-all active:opacity-70
+                      ${isActive ? 'bg-[#6366F1] text-white border-[#6366F1]' : 'bg-white text-[#1C1A17] border-[#E8E7E4]'}`}
+                  >
+                    {p}
+                  </button>
+                );
+              })}
+            </div>
+            <div>
+              <p className="text-[14px] font-semibold text-[#1C1A17] mb-2">직접 입력</p>
+              <textarea
+                ref={promptRef}
+                value={regenPrompt}
+                onChange={e => setRegenPrompt(e.target.value)}
+                rows={3}
+                placeholder="원하는 방향을 자유롭게 입력하세요"
+                className="w-full border border-[#E8E7E4] rounded-[10px] px-4 py-3 text-[15px] text-[#1C1A17] resize-none outline-none focus:border-[#6366F1]"
+              />
+            </div>
+            <button
+              onClick={handleRegenerate}
+              className="w-full h-[56px] rounded-[12px] flex items-center justify-center active:opacity-70"
+              style={{ backgroundColor: regenPrompt.trim() ? '#2E2C28' : '#6366F1' }}
+            >
+              <span className="text-[16px] font-bold text-white">
+                {regenPrompt.trim()
+                  ? `"${regenPrompt.length > 14 ? regenPrompt.slice(0, 14) + '…' : regenPrompt}" 반영해서 생성`
+                  : '그냥 다시 생성하기'}
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

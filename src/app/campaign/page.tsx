@@ -23,6 +23,8 @@ type Campaign = {
   progressFraction?: string;
   progressPct?: number;
   briefDone: boolean;
+  salesChannel?: string;
+  targetRoas?: string;
 };
 
 const MOCK_CAMPAIGNS: Campaign[] = [
@@ -36,6 +38,8 @@ const MOCK_CAMPAIGNS: Campaign[] = [
     progressFraction: '1 / 3',
     progressPct: 1 / 3,
     briefDone: true,
+    salesChannel: '카페24',
+    targetRoas: '200%',
   },
   {
     id: 2,
@@ -44,6 +48,7 @@ const MOCK_CAMPAIGNS: Campaign[] = [
     dateRange: '5.10 ~ 5.17',
     influencerCount: '-',
     briefDone: false,
+    salesChannel: '카페24',
   },
   {
     id: 3,
@@ -55,6 +60,8 @@ const MOCK_CAMPAIGNS: Campaign[] = [
     progressFraction: '3 / 3',
     progressPct: 1,
     briefDone: true,
+    salesChannel: '카페24',
+    targetRoas: '300%',
   },
 ];
 
@@ -129,6 +136,26 @@ function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () 
           {campaign.briefDone ? '브리프 생성 완료' : '브리프 생성 필요'}
         </span>
       </div>
+
+      {/* Section 4: Sales channel + target ROAS */}
+      {(campaign.salesChannel || campaign.targetRoas) && (
+        <div className="flex items-center gap-[6px]">
+          {campaign.salesChannel && (
+            <span className="text-[13px] font-medium text-[#78756E] bg-[#F5F5F3] px-[10px] py-[4px] rounded-full">
+              {campaign.salesChannel}
+            </span>
+          )}
+          {campaign.targetRoas ? (
+            <span className="text-[13px] font-medium text-[#78756E] bg-[#F5F5F3] px-[10px] py-[4px] rounded-full">
+              목표 ROAS {campaign.targetRoas}
+            </span>
+          ) : (
+            <span className="text-[13px] font-medium text-[#B0ADA7] bg-[#F5F5F3] px-[10px] py-[4px] rounded-full">
+              목표 ROAS 미설정
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -136,6 +163,7 @@ function CampaignCard({ campaign, onClick }: { campaign: Campaign; onClick?: () 
 export default function CampaignPage() {
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState<string>('전체');
+  const [fabOpen, setFabOpen] = useState(false);
 
   const filtered = activeFilter === '전체' || activeFilter === '마감 임박순'
     ? MOCK_CAMPAIGNS
@@ -199,6 +227,36 @@ export default function CampaignPage() {
         </div>
 
       </div>
+
+      {/* ── FAB ── */}
+      {fabOpen && (
+        <div className="absolute inset-0 z-[25]" onClick={() => setFabOpen(false)} />
+      )}
+      {fabOpen && (
+        <div className="absolute bottom-[175px] right-[20px] z-30 flex flex-col items-end gap-3">
+          <button
+            onClick={() => { setFabOpen(false); router.push('/campaign/new'); }}
+            className="flex items-center bg-white rounded-full px-5 py-3 shadow-lg border border-[#ebeef7] active:opacity-70"
+          >
+            <span className="text-[15px] font-semibold text-stone-900">새 캠페인 만들기</span>
+          </button>
+          <button
+            onClick={() => { setFabOpen(false); router.push('/board/add'); }}
+            className="flex items-center bg-white rounded-full px-5 py-3 shadow-lg border border-[#ebeef7] active:opacity-70"
+          >
+            <span className="text-[15px] font-semibold text-stone-900">인플루언서 추가</span>
+          </button>
+        </div>
+      )}
+      <button
+        onClick={() => setFabOpen(f => !f)}
+        className="absolute bottom-[110px] right-[20px] z-30 w-14 h-14 bg-[#6366F1] rounded-full flex items-center justify-center shadow-lg active:opacity-80 transition-transform duration-200"
+        style={{ transform: fabOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
+        </svg>
+      </button>
 
       {/* ── Bottom navigation ── */}
       <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-[2px] bg-white border-t border-[#F5F5F3] z-20">

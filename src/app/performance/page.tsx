@@ -252,46 +252,58 @@ export default function PerformancePage() {
           </div>
 
           {/* ROAS KPI Card */}
-          <div
-            className="rounded-[14px] border border-[#E6E8FF] overflow-hidden flex flex-col"
-            style={{ background: '#F6F7FF' }}
-          >
-            <div className="px-5 pt-5 pb-4 flex flex-col gap-4">
+          {(() => {
+            const currentRoas = '140%';
+            const targetRoas = '200%'; // null이면 미설정 상태
+            const hasTarget = !!targetRoas;
+            return (
+              <div
+                className="rounded-[14px] border border-[#E6E8FF] overflow-hidden flex flex-col"
+                style={{ background: '#F6F7FF' }}
+              >
+                <div className="px-5 pt-5 pb-4 flex flex-col gap-4">
 
-              {/* Header row */}
-              <div className="flex items-center justify-between">
-                <span className="text-[14px] font-medium text-[#78756E]">평균 ROAS</span>
-                <span className="text-[12px] font-semibold text-[#F59E0B] bg-[#FFFBEB] rounded-full px-[8px] py-[3px]">집계 중</span>
-              </div>
+                  {/* Header row */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-[14px] font-medium text-[#78756E]">평균 ROAS</span>
+                    {hasTarget
+                      ? <span className="text-[12px] font-semibold text-[#F59E0B] bg-[#FFFBEB] rounded-full px-[8px] py-[3px]">집계 중</span>
+                      : <span className="text-[12px] font-semibold text-[#B0ADA7] bg-[#F5F5F3] rounded-full px-[8px] py-[3px]">목표 ROAS 미설정</span>
+                    }
+                  </div>
 
-              {/* Value + delta */}
-              <div className="flex items-end gap-2">
-                <span className="text-[40px] font-extrabold text-black leading-none" style={MANROPE}>1.4x</span>
-                <span className="mb-[5px] text-[13px] font-semibold text-[#22C55E] bg-[#F0FDF4] rounded-full px-[8px] py-[3px]">+0.3x</span>
-              </div>
+                  {/* Value + delta */}
+                  <div className="flex items-end gap-2">
+                    <span className="text-[40px] font-extrabold text-black leading-none" style={MANROPE}>{currentRoas}</span>
+                    <span className="mb-[5px] text-[13px] font-semibold text-[#22C55E] bg-[#F0FDF4] rounded-full px-[8px] py-[3px]">+30%p</span>
+                  </div>
 
-              {/* Goal gap text */}
-              <span className="text-[14px] font-medium text-[#5C5A54]">
-                목표 <span className="font-bold text-[#6366F1]">2.0x</span>까지 <span className="font-bold text-[#6366F1]">0.6x</span> 남았어요
-              </span>
-
-              {/* Progress bar */}
-              <div className="flex flex-col gap-[5px]">
-                <div className="w-full h-[7px] bg-[#E6E8FF] rounded-full overflow-hidden">
-                  <div className="h-full bg-[#6366F1] rounded-full" style={{ width: '70%' }} />
+                  {/* Goal gap text + progress bar (목표 설정 시에만) */}
+                  {hasTarget && (
+                    <>
+                      <span className="text-[14px] font-medium text-[#5C5A54]">
+                        목표 <span className="font-bold text-[#6366F1]">{targetRoas}</span>까지 <span className="font-bold text-[#6366F1]">60%p</span> 남았어요
+                      </span>
+                      <div className="flex flex-col gap-[5px]">
+                        <div className="w-full h-[7px] bg-[#E6E8FF] rounded-full overflow-hidden">
+                          <div className="h-full bg-[#6366F1] rounded-full" style={{ width: '70%' }} />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[12px] font-medium text-[#9BA1AA]">현재 {currentRoas}</span>
+                          <span className="text-[12px] font-medium text-[#9BA1AA]">목표 {targetRoas}</span>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[12px] font-medium text-[#9BA1AA]">현재 1.4x</span>
-                  <span className="text-[12px] font-medium text-[#9BA1AA]">목표 2.0x</span>
+
+                {/* UTM chip */}
+                <div className="px-5 pb-5">
+                  <span className="text-[12px] font-semibold text-[#6366F1] bg-[#EEEEFF] rounded-full px-[10px] py-[5px]">UTM 기준 집계 중</span>
                 </div>
               </div>
-            </div>
-
-            {/* UTM chip */}
-            <div className="px-5 pb-5">
-              <span className="text-[12px] font-semibold text-[#6366F1] bg-[#EEEEFF] rounded-full px-[10px] py-[5px]">UTM 기준 집계 중</span>
-            </div>
-          </div>
+            );
+          })()}
 
           {/* Click + Conversion */}
           <div className="flex gap-3">
@@ -394,7 +406,7 @@ export default function PerformancePage() {
                   </div>
                   {/* ROAS value */}
                   <div className="flex flex-col items-end gap-[2px]">
-                    <span className="text-[20px] font-extrabold text-[#1C1A17]" style={MANROPE}>1.4x</span>
+                    <span className="text-[20px] font-extrabold text-[#1C1A17]" style={MANROPE}>140%</span>
                     <span className="text-[14px] font-semibold text-[#5C5A54]" style={MANROPE}>ROAS</span>
                   </div>
                 </div>

@@ -111,8 +111,8 @@ function Step1({
         <p className="text-[15px] font-semibold text-stone-800 mb-3">연결된 캠페인</p>
         <div className="border border-stone-100 rounded-2xl px-5 py-4 flex items-center justify-between bg-[#fafbfe]">
           <div>
-            <p className="text-[15px] font-medium text-stone-500">2026 여름 선케어</p>
-            <p className="text-[14px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
+            <p className="text-[15px] font-medium text-stone-500">루미에르 봄봄 프로모션</p>
+            <p className="text-[14px] text-stone-400 mt-0.5">4.17 ~ 4.26</p>
           </div>
         </div>
       </div>
@@ -235,8 +235,8 @@ function Step2({
         <p className="text-[15px] font-semibold text-stone-800 mb-3">연결된 캠페인</p>
         <div className="border border-stone-100 rounded-2xl px-5 py-4 flex items-center justify-between bg-[#fafbfe]">
           <div>
-            <p className="text-[15px] font-medium text-stone-500">2026 여름 선케어</p>
-            <p className="text-[14px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
+            <p className="text-[15px] font-medium text-stone-500">루미에르 봄봄 프로모션</p>
+            <p className="text-[14px] text-stone-400 mt-0.5">4.17 ~ 4.26</p>
           </div>
         </div>
       </div>
@@ -310,8 +310,8 @@ function Step3({
         <p className="text-[15px] font-semibold text-stone-800 mb-3">연결된 캠페인</p>
         <div className="border border-stone-100 rounded-2xl px-5 py-4 flex items-center justify-between bg-[#fafbfe]">
           <div>
-            <p className="text-[15px] font-medium text-stone-500">2026 여름 선케어</p>
-            <p className="text-[14px] text-stone-400 mt-0.5">6.1 ~ 7.31</p>
+            <p className="text-[15px] font-medium text-stone-500">루미에르 봄봄 프로모션</p>
+            <p className="text-[14px] text-stone-400 mt-0.5">4.17 ~ 4.26</p>
           </div>
         </div>
       </div>
@@ -337,6 +337,7 @@ function Step4({
   router: ReturnType<typeof useRouter>;
 }) {
   const selected = profiles.filter(p => p.selected);
+  const addedQuery = selected.map(p => p.handle).join(',');
 
   return (
     <>
@@ -350,7 +351,7 @@ function Step4({
             {selected.length}명이 추가되었어요!
           </h1>
           <p className="text-[15px] text-stone-500 text-center leading-relaxed">
-            2026 여름 선케어의<br />리스트업 단계에 추가되었어요.
+            루미에르 봄봄 프로모션의<br />리스트업 단계에 추가되었어요.
           </p>
         </div>
 
@@ -385,7 +386,7 @@ function Step4({
 
       <div className="absolute bottom-0 w-full px-5 pb-8 pt-4 bg-white border-t border-[#f0f2f8]">
         <button
-          onClick={() => router.push('/board')}
+          onClick={() => router.push(`/board?added=${addedQuery}`)}
           className="w-full h-[56px] bg-stone-900 text-white rounded-2xl text-[16px] font-semibold active:opacity-80 mb-3"
         >
           보드에서 컨택 시작하기

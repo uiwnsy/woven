@@ -27,9 +27,8 @@ const CAMPAIGNS: CampaignOption[] = [
 const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
   1: {
     'list-up': [
-      { id: 'lu1', name: 'minj_', handle: '@minj_',    followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-kimminji.png' },
-      { id: 'lu2', name: '박서연', handle: '@ppseoo',   followers: '4만',    categories: ['뷰티', '패션'],         statusText: '리스트업', profileImg: '/profile-parkseo.png' },
-      { id: 'lu3', name: '박진이', handle: '@jinstlee', followers: '6.8만',  categories: ['뷰티', '일상'],         statusText: '리스트업', profileImg: '/profile-parkjini.png' },
+      { id: 'lu1', name: 'minj_', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'], statusText: '리스트업', profileImg: '/profile-kimminji.png' },
+      { id: 'lu2', name: '박서연', handle: '@ppseoo', followers: '4만',    categories: ['뷰티', '패션'], statusText: '리스트업', profileImg: '/profile-parkseo.png' },
     ],
     'contacting': [
       { id: '1', name: 'haye0',  handle: '@haye0',    followers: '10.4만', categories: ['뷰티', '패션'],              statusText: '전송 D+26', profileImg: '/profile-haye0.png' },
@@ -39,12 +38,13 @@ const CAMPAIGN_BOARD_DATA: Record<number, Record<string, Influencer[]>> = {
     'negotiated': [
       { id: '4', name: 'paooar', handle: '@paooar', followers: '9.2만',  categories: ['뷰티', '패션', '일상'], statusText: '시안 전달 D+1', amount: '350,000원', profileImg: '/profile-paooar.png' },
       { id: '5', name: 'minj_', handle: '@minj_',  followers: '24.5만', categories: ['뷰티', '패션'],         statusText: '시안 전달 D+3', amount: '280,000원', profileImg: '/profile-kimminji.png' },
+      { id: '8', name: '박진이', handle: '@jinstlee', followers: '6.8만', categories: ['뷰티', '일상'],       statusText: '시안 전달 D+2', amount: '300,000원', profileImg: '/profile-parkjini.png' },
     ],
     'inProgress': [
       { id: '6', name: 'leeum',  handle: '@leeum',  followers: '4.6만', categories: ['뷰티', '패션'], statusText: '포스팅 D-1', amount: '350,000원',
         bottomTags: [{ label: '최종 승인', bg: 'bg-[#F0FDF4]', text: 'text-[#22C55E]' }, { label: 'UTM 포함', bg: 'bg-[#EFF6FF]', text: 'text-[#3D3FC7]' }],
         profileImg: '/profile-leeum.png' },
-      { id: '6', name: '이가흔', handle: '@igaheun', followers: '2.4만', categories: ['뷰티', '패션'], statusText: '포스팅 D-3', amount: '280,000원',
+      { id: '9', name: '이가흔', handle: '@gaaa934', followers: '2.4만', categories: ['뷰티', '패션'], statusText: '포스팅 D-3', amount: '280,000원',
         bottomTags: [{ label: '최종 승인', bg: 'bg-[#F0FDF4]', text: 'text-[#22C55E]' }],
         profileImg: '/profile-igaheun.png' },
     ],
@@ -102,6 +102,7 @@ function BoardPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sentId = searchParams.get('sent');
+  const addedHandles = (searchParams.get('added') ?? '').split(',').filter(Boolean);
 
   const [allBoardData] = useState<Record<number, Record<string, Influencer[]>>>(() => {
     const clone: Record<number, Record<string, Influencer[]>> = {};
@@ -112,6 +113,7 @@ function BoardPageContent() {
         clone[numId][stage] = [...cards];
       }
     }
+    // 브리프 전송 후 리스트업 → 컨택 이동
     if (sentId) {
       for (const cId of Object.keys(clone)) {
         const numId = Number(cId);
@@ -125,6 +127,19 @@ function BoardPageContent() {
         }
       }
     }
+    // 인플루언서 추가 후 리스트업에 신규 카드 삽입
+    if (addedHandles.length > 0) {
+      const newCards: Influencer[] = addedHandles.map((handle, i) => ({
+        id: `new_${handle}`,
+        name: handle,
+        handle: `@${handle}`,
+        followers: '-',
+        categories: ['뷰티'],
+        statusText: '리스트업',
+        profileImg: `/profile-${handle}.png`,
+      }));
+      clone[1]['list-up'] = [...newCards, ...clone[1]['list-up']];
+    }
     return clone;
   });
 
@@ -132,6 +147,7 @@ function BoardPageContent() {
   const [activeView, setActiveView] = useState<'grid' | 'list'>('grid');
   const [selectedCampaignId, setSelectedCampaignId] = useState(1);
   const [showCampaignSheet, setShowCampaignSheet] = useState(false);
+  const [fabOpen, setFabOpen] = useState(false);
 
   const selectedCampaign = CAMPAIGNS.find(c => c.id === selectedCampaignId) ?? CAMPAIGNS[0];
   const boardData = allBoardData[selectedCampaignId] ?? {};
@@ -390,6 +406,36 @@ function BoardPageContent() {
 
         </div>
       </div>
+
+      {/* ── FAB ── */}
+      {fabOpen && (
+        <div className="absolute inset-0 z-[25]" onClick={() => setFabOpen(false)} />
+      )}
+      {fabOpen && (
+        <div className="absolute bottom-[175px] right-[20px] z-30 flex flex-col items-end gap-3">
+          <button
+            onClick={() => { setFabOpen(false); router.push('/campaign/new'); }}
+            className="flex items-center bg-white rounded-full px-5 py-3 shadow-lg border border-[#ebeef7] active:opacity-70"
+          >
+            <span className="text-[15px] font-semibold text-stone-900">새 캠페인 만들기</span>
+          </button>
+          <button
+            onClick={() => { setFabOpen(false); router.push('/board/add'); }}
+            className="flex items-center bg-white rounded-full px-5 py-3 shadow-lg border border-[#ebeef7] active:opacity-70"
+          >
+            <span className="text-[15px] font-semibold text-stone-900">인플루언서 추가</span>
+          </button>
+        </div>
+      )}
+      <button
+        onClick={() => setFabOpen(f => !f)}
+        className="absolute bottom-[110px] right-[20px] z-30 w-14 h-14 bg-[#6366F1] rounded-full flex items-center justify-center shadow-lg active:opacity-80 transition-transform duration-200"
+        style={{ transform: fabOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
+        </svg>
+      </button>
 
       {/* ── Bottom navigation ── */}
       <div className="absolute bottom-0 w-full h-[95px] flex items-start pt-[2px] bg-white border-t border-[#F5F5F3] z-20">

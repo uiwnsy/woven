@@ -13,7 +13,9 @@ type FormData = {
   startDate: string;
   endDate: string;
   platforms: string[];
+  productUrl: string;
   budget: string;
+  roasTarget: string;
   manager: string;
   goal: string;
   kpis: string[];
@@ -315,12 +317,15 @@ function DateBox({ value, onChange, placeholder }: {
 
 // ─── Step 1: Basic Info ─────────────────────────────────────────────────────
 
+const ROAS_PRESETS = ['100%', '150%', '200%', '250%', '300%', '400%', '500% 이상'];
+
 function Step1({ form, updateForm, togglePlatform }: {
   form: FormData;
   updateForm: (k: keyof FormData, v: any) => void;
   togglePlatform: (p: string) => void;
 }) {
   const [showManagerSheet, setShowManagerSheet] = useState(false);
+  const [showRoasSheet, setShowRoasSheet] = useState(false);
 
   const selectedManager = MOCK_MANAGERS.find(m => m.name === form.manager) ?? MOCK_MANAGERS[0];
 
@@ -394,6 +399,32 @@ function Step1({ form, updateForm, togglePlatform }: {
           </div>
         </div>
 
+        {/* 판매 채널 */}
+        <div className="mb-6">
+          <div className="flex items-center gap-1 mb-2">
+            <span className="text-[16px] font-medium text-[#1C1A17]">판매 채널</span>
+          </div>
+          <div className="w-full border border-[#E8E7E4] rounded-[10px] px-5 h-[52px] flex items-center justify-between bg-[#FAFAFA]">
+            <span className="text-[16px] font-medium text-[#1C1A17]">카페24</span>
+            <span className="text-[12px] font-medium text-[#B0ADA7] bg-[#F0F0F0] px-[8px] py-[4px] rounded-full">현재 지원 채널</span>
+          </div>
+        </div>
+
+        {/* 자사몰 상품 URL */}
+        <div className="mb-6">
+          <div className="flex items-center gap-1 mb-2">
+            <span className="text-[16px] font-medium text-[#1C1A17]">상품 URL</span>
+            <span className="text-iris-500">*</span>
+          </div>
+          <input
+            type="text"
+            value={form.productUrl}
+            onChange={e => updateForm('productUrl', e.target.value)}
+            placeholder="https://brand.com/product/..."
+            className="w-full h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 text-[16px] font-medium text-[#1C1A17] outline-none focus:border-iris-400 placeholder:text-[#C7C4BE] bg-white"
+          />
+        </div>
+
         {/* 예산 */}
         <div className="mb-6">
           <div className="flex items-center gap-1 mb-2">
@@ -411,6 +442,24 @@ function Step1({ form, updateForm, togglePlatform }: {
             <span className="text-[#78756E] text-[16px] font-semibold shrink-0">원</span>
           </div>
         </div>
+
+        {/* ROAS 목표 */}
+        <div className="mb-6">
+          <div className="flex items-center gap-1 mb-2">
+            <span className="text-[16px] font-medium text-[#1C1A17]">ROAS 목표</span>
+            <span className="text-[16px] font-medium text-[#78756E]">(선택)</span>
+          </div>
+          <button
+            onClick={() => setShowRoasSheet(true)}
+            className="w-full border border-[#E8E7E4] rounded-[10px] px-5 h-[52px] flex items-center justify-between bg-white active:opacity-70"
+          >
+            <span className={`text-[16px] font-medium ${form.roasTarget ? 'text-[#1C1A17]' : 'text-[#C7C4BE]'}`}>
+              {form.roasTarget || '목표 ROAS를 선택해주세요'}
+            </span>
+            <img src="/arrow-down.svg" alt="" className="w-5 h-5" />
+          </button>
+        </div>
+
 
         {/* 담당자 */}
         <div className="mb-6">
@@ -438,6 +487,38 @@ function Step1({ form, updateForm, togglePlatform }: {
           </button>
         </div>
       </div>
+
+      {/* ROAS bottom sheet */}
+      {showRoasSheet && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-end" style={{ maxWidth: 430, margin: '0 auto' }}>
+          <div className="absolute inset-0 bg-black/40" onClick={() => setShowRoasSheet(false)} />
+          <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-8">
+            <div className="flex items-center justify-between mb-5">
+              <span className="text-[16px] font-bold text-[#1C1A17]">ROAS 목표 선택</span>
+              <button onClick={() => setShowRoasSheet(false)} className="active:opacity-60">
+                <X size={22} className="text-stone-500" />
+              </button>
+            </div>
+            <div className="flex flex-col gap-0">
+              {ROAS_PRESETS.map(preset => {
+                const isSelected = form.roasTarget === preset;
+                return (
+                  <button
+                    key={preset}
+                    onClick={() => { updateForm('roasTarget', preset); setShowRoasSheet(false); }}
+                    className="flex items-center justify-between py-[14px] active:opacity-70"
+                  >
+                    <span className={`text-[16px] font-medium ${isSelected ? 'text-[#6366F1]' : 'text-[#1C1A17]'}`}>
+                      {preset}
+                    </span>
+                    {isSelected && <Check size={18} className="text-iris-500" />}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Manager bottom sheet */}
       {showManagerSheet && (
@@ -972,7 +1053,7 @@ function Step4({ form, updateForm }: {
 
 // ─── Step 5: Completion ────────────────────────────────────────────────────
 
-function Step5({ form, router }: { form: FormData; router: ReturnType<typeof useRouter> }) {
+function Step5({ form, router, briefGenerated }: { form: FormData; router: ReturnType<typeof useRouter>; briefGenerated: boolean }) {
   const goalLabel = GOALS.find(g => g.id === form.goal)?.label ?? '구매전환';
   const dateRange = form.startDate && form.endDate
     ? `${form.startDate.slice(2).replace(/-/g, '.')} ~ ${form.endDate.slice(2).replace(/-/g, '.')}`
@@ -1011,7 +1092,10 @@ function Step5({ form, router }: { form: FormData; router: ReturnType<typeof use
         ))}
         <div className="flex items-center justify-between px-5 py-4 border-t border-stone-100">
           <span className="text-[15px] text-stone-400">AI 브리프</span>
-          <span className="bg-[#dcfce7] text-[#16a34a] text-[14px] font-semibold px-3 py-1 rounded-full">생성완료</span>
+          {briefGenerated
+            ? <span className="bg-[#dcfce7] text-[#16a34a] text-[14px] font-semibold px-3 py-1 rounded-full">생성완료</span>
+            : <span className="bg-[#F5F5F3] text-[#B0ADA7] text-[14px] font-semibold px-3 py-1 rounded-full">미생성</span>
+          }
         </div>
       </div>
 
@@ -1028,6 +1112,7 @@ export default function CampaignNewPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>(1);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [briefGenerated, setBriefGenerated] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -1040,7 +1125,9 @@ export default function CampaignNewPage() {
     startDate: '',
     endDate: '',
     platforms: ['인스타그램'],
+    productUrl: '',
     budget: '',
+    roasTarget: '',
     manager: '김지은',
     goal: 'purchase',
     kpis: ['roas', 'clicks', 'conversion'],
@@ -1069,12 +1156,14 @@ export default function CampaignNewPage() {
     form.productName.trim() !== '' &&
     form.startDate !== '' &&
     form.endDate !== '' &&
-    form.platforms.length > 0;
+    form.platforms.length > 0 &&
+    form.productUrl.trim() !== '';
 
   const handleGenerateBrief = async () => {
     setIsGenerating(true);
     await new Promise(r => setTimeout(r, 1800));
     setIsGenerating(false);
+    setBriefGenerated(true);
     setStep(4);
   };
 
@@ -1113,7 +1202,7 @@ export default function CampaignNewPage() {
         {step === 2 && <Step2 form={form} updateForm={updateForm} toggleKPI={toggleKPI} />}
         {step === 3 && <Step3 form={form} updateForm={updateForm} />}
         {step === 4 && <Step4 form={form} updateForm={updateForm} />}
-        {step === 5 && <Step5 form={form} router={router} />}
+        {step === 5 && <Step5 form={form} router={router} briefGenerated={briefGenerated} />}
       </div>
 
       {/* Bottom CTA */}

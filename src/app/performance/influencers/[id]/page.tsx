@@ -45,11 +45,11 @@ const STATUS_STYLE: Record<string, { bg: string; text: string }> = {
 const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
   dearyq: {
     name: 'dearyq', handle: '@dearyq', followers: '10.1만', profile: '/profile-dearyq.png',
-    avgRoas: '1.6x', totalClicks: 2410, totalConversions: 14, avgCvr: '0.58%',
+    avgRoas: '160%', totalClicks: 2410, totalConversions: 14, avgCvr: '0.58%',
     campaigns: [
       {
         campaignId: 1, campaignTitle: '루미에르 봄봄 프로모션', campaignStatus: '진행중',
-        roas: '1.4x', clicks: 820, conversions: 5, cvr: '0.61%', cost: '450,000원',
+        roas: '140%', clicks: 820, conversions: 5, cvr: '0.61%', cost: '450,000원',
         hasUtm: true, postingUrl: 'https://instagram.com/p/C4xBkQFP5Xx/', postingDate: '2025.05.02',
         daily: [
           { date: '5/2', clicks: 48, conversions: 0 }, { date: '5/3', clicks: 72, conversions: 1 },
@@ -60,7 +60,7 @@ const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
       },
       {
         campaignId: 3, campaignTitle: '선크림 런칭 캠페인', campaignStatus: '완료',
-        roas: '1.8x', clicks: 1240, conversions: 7, cvr: '0.56%', cost: '400,000원',
+        roas: '180%', clicks: 1240, conversions: 7, cvr: '0.56%', cost: '400,000원',
         hasUtm: true, postingUrl: 'https://instagram.com/p/C2yZaBcDeF/', postingDate: '2025.03.10',
         daily: [
           { date: '3/10', clicks: 60, conversions: 0 }, { date: '3/11', clicks: 190, conversions: 2 },
@@ -71,7 +71,7 @@ const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
       },
       {
         campaignId: 2, campaignTitle: '수분크림 마이크로 인플루언서', campaignStatus: '기획',
-        roas: '1.6x', clicks: 350, conversions: 2, cvr: '0.57%', cost: '300,000원',
+        roas: '160%', clicks: 350, conversions: 2, cvr: '0.57%', cost: '300,000원',
         hasUtm: false, postingUrl: 'https://instagram.com/p/C6mNoPqRsT/', postingDate: '2025.04.20',
         daily: [
           { date: '4/20', clicks: 30, conversions: 0 }, { date: '4/21', clicks: 80, conversions: 1 },
@@ -84,11 +84,11 @@ const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
   },
   leeum: {
     name: 'leeum', handle: '@leeum', followers: '4.6만', profile: '/profile-leeum.png',
-    avgRoas: '1.3x', totalClicks: 1280, totalConversions: 7, avgCvr: '0.55%',
+    avgRoas: '130%', totalClicks: 1280, totalConversions: 7, avgCvr: '0.55%',
     campaigns: [
       {
         campaignId: 1, campaignTitle: '루미에르 봄봄 프로모션', campaignStatus: '진행중',
-        roas: '1.1x', clicks: 640, conversions: 3, cvr: '0.47%', cost: '350,000원',
+        roas: '110%', clicks: 640, conversions: 3, cvr: '0.47%', cost: '350,000원',
         hasUtm: true, postingUrl: 'https://instagram.com/p/C5aBcDeFgHi/', postingDate: '2025.05.04',
         daily: [
           { date: '5/4', clicks: 30, conversions: 0 }, { date: '5/5', clicks: 95, conversions: 1 },
@@ -99,7 +99,7 @@ const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
       },
       {
         campaignId: 3, campaignTitle: '선크림 런칭 캠페인', campaignStatus: '완료',
-        roas: '1.5x', clicks: 640, conversions: 4, cvr: '0.63%', cost: '320,000원',
+        roas: '150%', clicks: 640, conversions: 4, cvr: '0.63%', cost: '320,000원',
         hasUtm: true, postingUrl: 'https://instagram.com/p/C3kLmNoPqR/', postingDate: '2025.03.12',
         daily: [
           { date: '3/12', clicks: 40, conversions: 0 }, { date: '3/13', clicks: 120, conversions: 1 },
@@ -112,11 +112,11 @@ const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
   },
   paooar: {
     name: 'paooar', handle: '@paooar', followers: '9.2만', profile: '/profile-paooar.png',
-    avgRoas: '0.9x', totalClicks: 980, totalConversions: 5, avgCvr: '0.51%',
+    avgRoas: '90%', totalClicks: 980, totalConversions: 5, avgCvr: '0.51%',
     campaigns: [
       {
         campaignId: 1, campaignTitle: '루미에르 봄봄 프로모션', campaignStatus: '진행중',
-        roas: '0.8x', clicks: 310, conversions: 2, cvr: '0.65%', cost: '350,000원',
+        roas: '80%', clicks: 310, conversions: 2, cvr: '0.65%', cost: '350,000원',
         hasUtm: false, postingUrl: 'https://instagram.com/p/C6jKlMnOpQr/', postingDate: '2025.05.05',
         daily: [
           { date: '5/5', clicks: 20, conversions: 0 }, { date: '5/6', clicks: 60, conversions: 1 },
@@ -127,7 +127,7 @@ const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
       },
       {
         campaignId: 3, campaignTitle: '선크림 런칭 캠페인', campaignStatus: '완료',
-        roas: '1.0x', clicks: 670, conversions: 3, cvr: '0.45%', cost: '300,000원',
+        roas: '100%', clicks: 670, conversions: 3, cvr: '0.45%', cost: '300,000원',
         hasUtm: true, postingUrl: 'https://instagram.com/p/C3sTuVwXyZb/', postingDate: '2025.03.15',
         daily: [
           { date: '3/15', clicks: 50, conversions: 0 }, { date: '3/16', clicks: 160, conversions: 1 },
@@ -140,11 +140,11 @@ const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
   },
   'minj_': {
     name: 'minj_', handle: '@minj_', followers: '24.5만', profile: '/profile-kimminji.png',
-    avgRoas: '1.2x', totalClicks: 1800, totalConversions: 10, avgCvr: '0.56%',
+    avgRoas: '120%', totalClicks: 1800, totalConversions: 10, avgCvr: '0.56%',
     campaigns: [
       {
         campaignId: 3, campaignTitle: '선크림 런칭 캠페인', campaignStatus: '완료',
-        roas: '1.2x', clicks: 1240, conversions: 8, cvr: '0.65%', cost: '600,000원',
+        roas: '120%', clicks: 1240, conversions: 8, cvr: '0.65%', cost: '600,000원',
         hasUtm: true, postingUrl: 'https://instagram.com/p/C3sTuVwXyZa/', postingDate: '2025.03.14',
         daily: [
           { date: '3/14', clicks: 80, conversions: 1 }, { date: '3/15', clicks: 320, conversions: 3 },
@@ -155,7 +155,7 @@ const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
       },
       {
         campaignId: 1, campaignTitle: '루미에르 봄봄 프로모션', campaignStatus: '진행중',
-        roas: '1.2x', clicks: 560, conversions: 2, cvr: '0.36%', cost: '350,000원',
+        roas: '120%', clicks: 560, conversions: 2, cvr: '0.36%', cost: '350,000원',
         hasUtm: true, postingUrl: 'https://instagram.com/p/C5xYzAbCdE/', postingDate: '2025.05.03',
         daily: [
           { date: '5/3', clicks: 40, conversions: 0 }, { date: '5/4', clicks: 120, conversions: 1 },
@@ -168,11 +168,11 @@ const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
   },
   zigoo: {
     name: 'zigoo', handle: '@zigoo', followers: '8만', profile: '/profile-zigoo.png',
-    avgRoas: '0.7x', totalClicks: 560, totalConversions: 3, avgCvr: '0.54%',
+    avgRoas: '70%', totalClicks: 560, totalConversions: 3, avgCvr: '0.54%',
     campaigns: [
       {
         campaignId: 3, campaignTitle: '선크림 런칭 캠페인', campaignStatus: '완료',
-        roas: '0.9x', clicks: 560, conversions: 3, cvr: '0.54%', cost: '280,000원',
+        roas: '90%', clicks: 560, conversions: 3, cvr: '0.54%', cost: '280,000원',
         hasUtm: true, postingUrl: 'https://instagram.com/p/C3bCdEfGhIj/', postingDate: '2025.03.16',
         daily: [
           { date: '3/16', clicks: 40, conversions: 0 }, { date: '3/17', clicks: 140, conversions: 1 },
@@ -182,6 +182,48 @@ const DETAIL_DATA: Record<string, InfluencerFullDetail> = {
         ],
       },
     ],
+  },
+  haye0: {
+    name: 'haye0', handle: '@haye0', followers: '10.4만', profile: '/profile-haye0.png',
+    avgRoas: '70%', totalClicks: 390, totalConversions: 1, avgCvr: '0.26%',
+    campaigns: [
+      {
+        campaignId: 3, campaignTitle: '선크림 런칭 캠페인', campaignStatus: '완료',
+        roas: '70%', clicks: 390, conversions: 1, cvr: '0.26%', cost: '300,000원',
+        hasUtm: false, postingUrl: 'https://instagram.com/p/C3hYzAbCdEf/', postingDate: '2025.03.17',
+        daily: [
+          { date: '3/17', clicks: 30, conversions: 0 }, { date: '3/18', clicks: 100, conversions: 0 },
+          { date: '3/19', clicks: 130, conversions: 1 }, { date: '3/20', clicks: 80, conversions: 0 },
+          { date: '3/21', clicks: 30, conversions: 0 }, { date: '3/22', clicks: 15, conversions: 0 },
+          { date: '3/23', clicks: 5, conversions: 0 },
+        ],
+      },
+    ],
+  },
+  gaaa934: {
+    name: '이가흔', handle: '@gaaa934', followers: '2.4만', profile: '/profile-igaheun.png',
+    avgRoas: '-', totalClicks: 0, totalConversions: 0, avgCvr: '-',
+    campaigns: [],
+  },
+  jinstlee: {
+    name: '박진이', handle: '@jinstlee', followers: '6.8만', profile: '/profile-parkjini.png',
+    avgRoas: '-', totalClicks: 0, totalConversions: 0, avgCvr: '-',
+    campaigns: [],
+  },
+  jijizero: {
+    name: '김지영', handle: '@jijizero', followers: '21만', profile: '/profile-kimjiyoung.png',
+    avgRoas: '-', totalClicks: 0, totalConversions: 0, avgCvr: '-',
+    campaigns: [],
+  },
+  ppseo0: {
+    name: '박서연', handle: '@ppseo0', followers: '48만', profile: '/profile-parkseo.png',
+    avgRoas: '-', totalClicks: 0, totalConversions: 0, avgCvr: '-',
+    campaigns: [],
+  },
+  leezsu: {
+    name: 'leezsu', handle: '@leezsu', followers: '12만', profile: '/profile-paooar.png',
+    avgRoas: '-', totalClicks: 0, totalConversions: 0, avgCvr: '-',
+    campaigns: [],
   },
 };
 
@@ -412,13 +454,23 @@ function PageContent() {
         {/* ── 캠페인별 성과 ── */}
         <div className="bg-white px-5 py-6 flex flex-col gap-3">
           <span className="text-[18px] font-bold text-black">캠페인별 성과</span>
-          {inf.campaigns.map(c => (
-            <CampaignCard
-              key={c.campaignId}
-              c={c}
-              defaultOpen={fromCampaignId === c.campaignId || (fromCampaignId === null && inf.campaigns.indexOf(c) === 0)}
-            />
-          ))}
+          {inf.campaigns.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 gap-3">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="20" stroke="#E8E7E4" strokeWidth="2"/>
+                <path d="M16 24h16M24 16v16" stroke="#E8E7E4" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+              <span className="text-[15px] font-medium" style={{ color: '#B0ADA7' }}>아직 업로드된 콘텐츠가 없어요</span>
+            </div>
+          ) : (
+            inf.campaigns.map(c => (
+              <CampaignCard
+                key={c.campaignId}
+                c={c}
+                defaultOpen={fromCampaignId === c.campaignId || (fromCampaignId === null && inf.campaigns.indexOf(c) === 0)}
+              />
+            ))
+          )}
         </div>
 
       </div>

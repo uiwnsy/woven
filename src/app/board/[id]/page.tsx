@@ -3,6 +3,7 @@
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { Calendar, Check, X } from 'lucide-react';
 
 const MANROPE: React.CSSProperties = { fontFamily: 'Manrope, sans-serif' };
 
@@ -125,7 +126,53 @@ const MOCK_DETAILS: Record<string, InfluencerDetail> = {
     isFirstCollab: true, brief: BRIEF_TEXT,
     campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
   },
+  '8': {
+    id: '8', name: '박진이', handle: '@jinstlee', followers: '6.8만', posts: '1,102',
+    categories: ['뷰티', '라이프'], profileImg: '/profile-parkjini.png',
+    stage: 'negotiating', campaignName: '루미에르 봄봄 프로모션', dDay: 'D+7',
+    isFirstCollab: false, brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
+  },
+  '9': {
+    id: '9', name: '이가흔', handle: '@igaheun', followers: '2.4만', posts: '654',
+    categories: ['뷰티', '패션'], profileImg: '/profile-igaheun.png',
+    stage: 'reviewing', campaignName: '루미에르 봄봄 프로모션', dDay: 'D+9',
+    isFirstCollab: true, brief: BRIEF_TEXT,
+    campaignGuidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
+  },
 };
+
+function TransitionDateBox({ value, onChange, placeholder }: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const formatted = value ? value.slice(2).replace(/-/g, '.') : '';
+  return (
+    <div
+      className="relative flex h-[52px] border border-[#E8E7E4] rounded-[10px] px-5 items-center gap-2 bg-white cursor-pointer"
+      onClick={() => {
+        const el = inputRef.current;
+        if (!el) return;
+        if (typeof el.showPicker === 'function') el.showPicker(); else el.click();
+      }}
+    >
+      <Calendar size={18} className="text-stone-400 shrink-0" />
+      <span className={`text-[16px] font-medium select-none ${formatted ? 'text-[#1C1A17]' : 'text-[#C7C4BE]'}`}>
+        {formatted || placeholder}
+      </span>
+      <input
+        ref={inputRef}
+        type="date"
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+        tabIndex={-1}
+      />
+    </div>
+  );
+}
 
 function getCategoryStyle(c: string) {
   switch (c) {
@@ -218,8 +265,6 @@ export default function InfluencerDetailPage() {
   const [draftDeadline, setDraftDeadline] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [productShipped, setProductShipped] = useState(false);
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [calendarDate, setCalendarDate] = useState(() => new Date());
   const [briefExpanded, setBriefExpanded] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<'ig' | 'yt' | 'tt'>('ig');
   const [guidelineUrl, setGuidelineUrl] = useState('');
@@ -256,6 +301,11 @@ export default function InfluencerDetailPage() {
   const [mounted, setMounted] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [utmCopied, setUtmCopied] = useState(false);
+  const [showTransitionSheet, setShowTransitionSheet] = useState(false);
+  const [dmSent, setDmSent] = useState(false);
+  const [dmChannel, setDmChannel] = useState('');
+  const [settlementAmount, setSettlementAmount] = useState('');
+  const [paymentDone, setPaymentDone] = useState(false);
   const briefTextareaRef = useRef<HTMLTextAreaElement>(null);
   const requestsTextareaRef = useRef<HTMLTextAreaElement>(null);
   const memoTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -665,6 +715,12 @@ export default function InfluencerDetailPage() {
                 <span className="text-[14px] font-medium" style={{ color: '#899098' }}>경과</span>
                 <span className="text-[14px] font-semibold" style={{ color: '#EF8652', fontFamily: 'Manrope, sans-serif' }}>{data.dDay}</span>
               </div>
+              {dmChannel && (
+                <div className="flex items-center justify-between">
+                  <span className="text-[14px] font-medium" style={{ color: '#899098' }}>발송 채널</span>
+                  <span className="text-[14px] font-medium" style={{ color: '#1C1A17' }}>{dmChannel}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -703,101 +759,41 @@ export default function InfluencerDetailPage() {
 
         <div className="h-[10px] bg-[#F5F5F3]" />
 
-        {/* 협의 정보 (27:4367) */}
-        <div className="bg-white" style={{ padding: '30px 20px', gap: 10, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <span className="text-[20px] font-bold text-black">협의 정보</span>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        {/* 배송 정보 */}
+        <div className="bg-white" style={{ padding: '30px 20px', gap: 20, display: 'flex', flexDirection: 'column' }}>
+          <span className="text-[20px] font-bold text-black">배송 정보</span>
 
-              {/* 협의 단가 */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <span className="text-[16px] font-medium text-black">
-                  협의 단가 <span style={{ color: '#6366F1' }}>*</span>
-                </span>
+          {/* 주소 */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <span className="text-[16px] font-medium text-black">주소</span>
+            <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
+              <input
+                value={deliveryAddress}
+                onChange={e => setDeliveryAddress(e.target.value)}
+                placeholder="인플루언서 수령 주소를 입력해 주세요"
+                className="w-full bg-transparent outline-none text-[16px] font-medium"
+                style={{ color: '#1C1A17' }}
+              />
+            </div>
+          </div>
+
+          {/* 제품 배송 완료 */}
+          <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: 20 }}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center" style={{ gap: 10 }}>
+                <img src="/ship-icon.svg" alt="배송" width={52} height={52} className="shrink-0" />
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
-                    <input
-                      value={negotiationPrice}
-                      onChange={e => {
-                        const raw = e.target.value.replace(/[^0-9]/g, '');
-                        setNegotiationPrice(raw ? Number(raw).toLocaleString('ko-KR') : '');
-                      }}
-                      placeholder="예: 300,000"
-                      className="w-full bg-transparent outline-none text-[16px] font-medium"
-                      style={{ color: '#1C1A17' }}
-                      inputMode="numeric"
-                    />
-                  </div>
-                  <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>VAT 별도 금액을 입력해주세요</span>
+                  <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
+                  <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
                 </div>
               </div>
-
-              {/* 시안 전달 예정일 */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <span className="text-[16px] font-medium text-black">
-                  시안 전달 예정일 <span style={{ color: '#6366F1' }}>*</span>
-                </span>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <button
-                    onClick={() => setShowCalendar(true)}
-                    className="w-full text-left active:opacity-70"
-                    style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}
-                  >
-                    <span className="text-[16px] font-medium" style={{ color: draftDeadline ? '#1C1A17' : '#D4D2CE' }}>
-                      {draftDeadline || 'YYYY.MM.DD'}
-                    </span>
-                  </button>
-                  <span className="text-[14px] font-medium" style={{ color: '#D4D2CE' }}>인플루언서가 시안을 전달하는 예정일</span>
-                </div>
-              </div>
-
-              {/* 주소 */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <span className="text-[16px] font-medium text-black">주소</span>
-                <div style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
-                  <input
-                    value={deliveryAddress}
-                    onChange={e => setDeliveryAddress(e.target.value)}
-                    placeholder="주소를 입력해 주세요"
-                    className="w-full bg-transparent outline-none text-[16px] font-medium"
-                    style={{ color: '#1C1A17' }}
-                  />
-                </div>
-              </div>
-
-              {/* 제품 배송 완료 */}
-              <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: 20 }}>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center" style={{ gap: 10 }}>
-                    <img src="/ship-icon.svg" alt="배송" width={52} height={52} className="shrink-0" />
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                      <span className="text-[16px] font-semibold" style={{ color: '#1C1A17' }}>제품 배송 완료</span>
-                      <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>인플루언서에게 제품을 발송했나요?</span>
-                    </div>
-                  </div>
-                  {/* Toggle */}
-                  <button
-                    onClick={() => setProductShipped(v => !v)}
-                    className="shrink-0 active:opacity-80 flex items-center"
-                    style={{ width: 52, height: 30, borderRadius: 40, padding: 3, backgroundColor: productShipped ? '#6366F1' : '#E8E7E4', transition: 'background-color 0.2s', justifyContent: productShipped ? 'flex-end' : 'flex-start', display: 'flex' }}
-                  >
-                    <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Info box */}
-              <div className="flex items-start" style={{ backgroundColor: '#EEF7FF', borderRadius: 14, padding: 20, gap: 8 }}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[1px]">
-                  <path d="M8 1.5L1 14.5h14L8 1.5z" stroke="#2D92FE" strokeWidth="1.3" strokeLinejoin="round"/>
-                  <path d="M8 7v3" stroke="#2D92FE" strokeWidth="1.3" strokeLinecap="round"/>
-                  <circle cx="8" cy="11.5" r="0.6" fill="#2D92FE"/>
-                </svg>
-                <span className="text-[14px] font-semibold" style={{ color: '#2D92FE', lineHeight: '135%' }}>
-                  협의 확정 시 인플루언서 고유 UTM 링크가 자동 생성됩니다.
-                </span>
-              </div>
-
+              <button
+                onClick={() => setProductShipped(v => !v)}
+                className="shrink-0 active:opacity-80"
+                style={{ width: 52, height: 30, borderRadius: 40, padding: 3, backgroundColor: productShipped ? '#6366F1' : '#E8E7E4', transition: 'background-color 0.2s', justifyContent: productShipped ? 'flex-end' : 'flex-start', display: 'flex' }}
+              >
+                <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+              </button>
             </div>
           </div>
         </div>
@@ -1060,7 +1056,9 @@ export default function InfluencerDetailPage() {
               {/* 협의 단가 */}
               <div className="flex flex-col" style={{ gap: 2, padding: '24px 22px 18px', backgroundColor: '#FAFAFC' }}>
                 <p className="text-[14px] font-medium leading-[135%]" style={{ color: '#78756E' }}>협의 단가</p>
-                <p className="text-[19px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>350,000원</p>
+                <p className="text-[19px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>
+                  {negotiationPrice ? `${negotiationPrice}원` : '-'}
+                </p>
               </div>
               {/* 콘텐츠 형식 */}
               <div className="flex flex-col" style={{ gap: 2, padding: '24px 22px 18px', backgroundColor: '#FAFAFC' }}>
@@ -1070,7 +1068,9 @@ export default function InfluencerDetailPage() {
               {/* 시안 전달 예정일 */}
               <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px 24px', backgroundColor: '#FAFAFC' }}>
                 <p className="text-[14px] font-medium leading-[135%]" style={{ color: '#78756E' }}>시안 전달 예정일</p>
-                <p className="text-[19px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>2025.04.25</p>
+                <p className="text-[19px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>
+                  {draftDeadline ? draftDeadline.replace(/-/g, '.') : '-'}
+                </p>
               </div>
               {/* 플랫폼 */}
               <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px 24px', backgroundColor: '#FAFAFC' }}>
@@ -1138,7 +1138,7 @@ export default function InfluencerDetailPage() {
               <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden">
                 <div className="bg-white px-5 py-[14px]">
                   <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
-                    {data.brief ?? BRIEF_VARIANTS[0]}
+                    {editedBrief ?? data.brief ?? BRIEF_VARIANTS[0]}
                   </p>
                 </div>
                 <div className="border-t border-[#ECECEF]">
@@ -1203,6 +1203,50 @@ export default function InfluencerDetailPage() {
                 <span className="text-[17px] font-bold" style={{ color: captionHasUtm ? '#6366F1' : '#B0ADA7' }}>
                   {captionHasUtm ? '포함' : '미포함'}
                 </span>
+              </div>
+            </div>
+
+            {/* 정산 금액 */}
+            <div style={{ border: '1px solid #E8E7E4', borderRadius: 14, padding: '14px 20px' }}>
+              <div className="flex items-center justify-between">
+                <span className="text-[14px] font-medium" style={{ color: '#78756E' }}>정산 금액</span>
+                <span className="text-[16px] font-bold" style={{ fontFamily: 'Manrope, sans-serif', color: settlementAmount ? '#1C1A17' : '#B0ADA7' }}>
+                  {settlementAmount ? `${settlementAmount}원` : '미입력'}
+                </span>
+              </div>
+            </div>
+
+            {/* 입금 완료 토글 */}
+            <div style={{ border: `1px solid ${paymentDone ? '#BBF7D0' : '#E8E7E4'}`, borderRadius: 14, padding: 20, backgroundColor: paymentDone ? '#F0FDF4' : '#FFFFFF', transition: 'all 0.2s' }}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center" style={{ gap: 10 }}>
+                  <div
+                    className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: paymentDone ? '#DCFCE7' : '#F5F5F3' }}
+                  >
+                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                      <path d="M13 3C7.477 3 3 7.477 3 13s4.477 10 10 10 10-4.477 10-10S18.523 3 13 3z"
+                        stroke={paymentDone ? '#22C55E' : '#B0ADA7'} strokeWidth="1.5" fill="none"/>
+                      <path d="M9 13l2.5 2.5L17 10"
+                        stroke={paymentDone ? '#22C55E' : '#B0ADA7'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    <span className="text-[16px] font-semibold" style={{ color: paymentDone ? '#16A34A' : '#1C1A17' }}>
+                      {paymentDone ? '입금 완료' : '입금 대기'}
+                    </span>
+                    <span className="text-[14px] font-medium" style={{ color: '#B0ADA7' }}>
+                      {paymentDone ? '인플루언서에게 정산을 완료했어요' : '인플루언서 정산을 완료했나요?'}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setPaymentDone(v => !v)}
+                  className="shrink-0 active:opacity-80 flex items-center"
+                  style={{ width: 52, height: 30, borderRadius: 40, padding: 3, backgroundColor: paymentDone ? '#22C55E' : '#E8E7E4', transition: 'background-color 0.2s', justifyContent: paymentDone ? 'flex-end' : 'flex-start', display: 'flex' }}
+                >
+                  <div style={{ width: 24, height: 24, borderRadius: '50%', backgroundColor: '#FFFFFF', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                </button>
               </div>
             </div>
 
@@ -1273,6 +1317,27 @@ export default function InfluencerDetailPage() {
                 </button>
               </div>
             </div>
+
+            {/* 정산 금액 */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <span className="text-[17px] font-medium text-black">
+                정산 금액 <span className="text-[14px] font-normal" style={{ color: '#B0ADA7' }}>(선택)</span>
+              </span>
+              <div className="flex items-center" style={{ border: '1px solid #E8E7E4', borderRadius: 10, padding: '10px 20px' }}>
+                <input
+                  value={settlementAmount}
+                  onChange={e => {
+                    const raw = e.target.value.replace(/[^0-9]/g, '');
+                    setSettlementAmount(raw ? Number(raw).toLocaleString('ko-KR') : '');
+                  }}
+                  placeholder="0"
+                  inputMode="numeric"
+                  className="flex-1 bg-transparent outline-none text-[16px] font-medium"
+                  style={{ color: '#1C1A17' }}
+                />
+                <span className="text-[16px] font-semibold shrink-0" style={{ color: '#78756E' }}>원</span>
+              </div>
+            </div>
           </div>
         )}
 
@@ -1300,14 +1365,22 @@ export default function InfluencerDetailPage() {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-[10px] bg-white flex items-center justify-center shrink-0" style={{ border: '1px solid #EBEEF7' }}>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path d="M5 2.5h7l4 4v11a1 1 0 01-1 1H5a1 1 0 01-1-1v-14a1 1 0 011-1z" stroke="#22c55e" strokeWidth="1.3" fill="none"/>
-                      <path d="M12 2.5V7H16.5" stroke="#22c55e" strokeWidth="1.3" strokeLinecap="round"/>
-                      <path d="M7 11h6M7 13.5h4" stroke="#22c55e" strokeWidth="1.2" strokeLinecap="round"/>
-                    </svg>
+                    {draftType === 'file' ? (
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M5 2.5h7l4 4v11a1 1 0 01-1 1H5a1 1 0 01-1-1v-14a1 1 0 011-1z" stroke="#22c55e" strokeWidth="1.3" fill="none"/>
+                        <path d="M12 2.5V7H16.5" stroke="#22c55e" strokeWidth="1.3" strokeLinecap="round"/>
+                        <path d="M7 11h6M7 13.5h4" stroke="#22c55e" strokeWidth="1.2" strokeLinecap="round"/>
+                      </svg>
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M13 3h4v4M10 10l7-7M9 5H5a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-4" stroke="#22c55e" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
                   </div>
                   <div className="text-left">
-                    <p className="text-[14px] font-semibold" style={{ color: '#1C1A17' }}>시안_파일.mp4</p>
+                    <p className="text-[14px] font-semibold" style={{ color: '#1C1A17' }}>
+                      {draftType === 'file' ? '시안_파일.mp4' : (driveLink.length > 26 ? driveLink.slice(0, 26) + '…' : driveLink)}
+                    </p>
                     <p className="text-[13px] font-medium" style={{ color: '#22c55e' }}>승인 완료</p>
                   </div>
                 </div>
@@ -1386,7 +1459,9 @@ export default function InfluencerDetailPage() {
                 <div className="grid grid-cols-2">
                   <div className="flex flex-col" style={{ gap: 2, padding: '24px 22px 18px', backgroundColor: '#FAFAFC' }}>
                     <p className="text-[14px] font-medium leading-[135%]" style={{ color: '#78756E' }}>협의 단가</p>
-                    <p className="text-[19px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>350,000원</p>
+                    <p className="text-[19px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>
+                      {negotiationPrice ? `${negotiationPrice}원` : '-'}
+                    </p>
                   </div>
                   <div className="flex flex-col" style={{ gap: 2, padding: '24px 22px 18px', backgroundColor: '#FAFAFC' }}>
                     <p className="text-[14px] font-medium leading-[135%]" style={{ color: '#78756E' }}>콘텐츠 형식</p>
@@ -1394,7 +1469,9 @@ export default function InfluencerDetailPage() {
                   </div>
                   <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px 24px', backgroundColor: '#FAFAFC' }}>
                     <p className="text-[14px] font-medium leading-[135%]" style={{ color: '#78756E' }}>시안 전달 예정일</p>
-                    <p className="text-[19px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>2025.04.25</p>
+                    <p className="text-[19px] font-bold leading-[135%]" style={{ fontFamily: 'Manrope, sans-serif', color: '#1C1A17' }}>
+                      {draftDeadline ? draftDeadline.replace(/-/g, '.') : '-'}
+                    </p>
                   </div>
                   <div className="flex flex-col" style={{ gap: 2, padding: '18px 22px 24px', backgroundColor: '#FAFAFC' }}>
                     <p className="text-[14px] font-medium leading-[135%]" style={{ color: '#78756E' }}>플랫폼</p>
@@ -1457,7 +1534,7 @@ export default function InfluencerDetailPage() {
               <div className="border border-[#ECECEF] rounded-[14px] overflow-hidden">
                 <div className="bg-white px-5 py-[14px]">
                   <p className="text-[16px] font-medium whitespace-pre-wrap text-[#1C1A17] leading-[150%]">
-                    {data.brief ?? BRIEF_VARIANTS[0]}
+                    {editedBrief ?? data.brief ?? BRIEF_VARIANTS[0]}
                   </p>
                 </div>
                 <div className="border-t border-[#ECECEF]">
@@ -1651,10 +1728,18 @@ export default function InfluencerDetailPage() {
           </button>
         ) : effectiveStage === 'reviewing' ? (
           <>
+            {(!postingUrl.trim() || !postingDate.trim()) && (
+              <p className="text-center text-[13px] font-medium" style={{ color: '#B0ADA7' }}>
+                포스팅 URL과 게시일을 입력해야 이동할 수 있어요
+              </p>
+            )}
             <button
-              onClick={() => router.push('/board?tab=uploaded')}
+              onClick={() => postingUrl.trim() && postingDate.trim() && router.push('/board?tab=uploaded')}
               className="w-full flex items-center justify-center active:opacity-80"
-              style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
+              style={{
+                backgroundColor: postingUrl.trim() && postingDate.trim() ? '#2E2C28' : '#D4D2CE',
+                borderRadius: 12, padding: 16,
+              }}
             >
               <span className="text-[16px] font-bold text-white">업로드 완료로 이동</span>
             </button>
@@ -1664,10 +1749,18 @@ export default function InfluencerDetailPage() {
           </>
         ) : effectiveStage === 'negotiating' ? (
           <>
+            {draftReviewState !== 'approved' && (
+              <p className="text-center text-[13px] font-medium" style={{ color: '#B0ADA7' }}>
+                시안을 검토하고 승인해야 이동할 수 있어요
+              </p>
+            )}
             <button
-              onClick={() => router.push('/board?tab=inProgress')}
+              onClick={() => draftReviewState === 'approved' && router.push('/board?tab=inProgress')}
               className="w-full flex items-center justify-center active:opacity-80"
-              style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
+              style={{
+                backgroundColor: draftReviewState === 'approved' ? '#2E2C28' : '#D4D2CE',
+                borderRadius: 12, padding: 16,
+              }}
             >
               <span className="text-[16px] font-bold text-white">시안 확인 단계로 이동</span>
             </button>
@@ -1677,28 +1770,8 @@ export default function InfluencerDetailPage() {
           </>
         ) : effectiveStage === 'contacting' ? (
           <>
-            {/* 상태 칩 (27:4440) */}
-            <div className="flex justify-center" style={{ gap: 10 }}>
-              {[
-                { label: '긍정 응답', active: responseStatus === 'positive' },
-                { label: '협의 단가', active: !!negotiationPrice },
-                { label: '시안 전달일', active: !!draftDeadline },
-              ].map(chip => (
-                <div
-                  key={chip.label}
-                  style={{
-                    backgroundColor: chip.active ? '#EEEEFF' : '#F5F5F3',
-                    borderRadius: 50, padding: '4px 8px',
-                  }}
-                >
-                  <span className="text-[14px] font-medium" style={{ color: chip.active ? '#6366F1' : '#B0ADA7', lineHeight: '16px' }}>
-                    {chip.label}
-                  </span>
-                </div>
-              ))}
-            </div>
             <button
-              onClick={() => router.push('/board?tab=negotiated')}
+              onClick={() => setShowTransitionSheet(true)}
               className="w-full flex items-center justify-center active:opacity-80"
               style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
             >
@@ -1711,10 +1784,7 @@ export default function InfluencerDetailPage() {
         ) : (
           <>
             <button
-              onClick={() => {
-                setShowToast(true);
-                setTimeout(() => router.push(`/board?tab=contacting&sent=${id}`), 1500);
-              }}
+              onClick={() => setShowTransitionSheet(true)}
               className="w-full flex items-center justify-center active:opacity-80"
               style={{ backgroundColor: '#2E2C28', borderRadius: 12, padding: 16 }}
             >
@@ -1726,6 +1796,139 @@ export default function InfluencerDetailPage() {
           </>
         )}
       </div>
+
+      {/* ── 단계 이동 바텀시트 ── */}
+      {showTransitionSheet && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-end" style={{ maxWidth: 430, margin: '0 auto' }}>
+          <div className="absolute inset-0 bg-black/40" onClick={() => setShowTransitionSheet(false)} />
+          <div className="relative bg-white rounded-t-[20px] px-5 pt-5 pb-8 max-h-[85vh] overflow-y-auto">
+
+            {/* ── 리스트업 → 컨택 ── */}
+            {effectiveStage === 'list-up' && (() => {
+              const canAdvance = dmSent;
+              return (
+                <>
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="text-[16px] font-bold text-[#1C1A17]">컨택 단계로 이동</span>
+                    <button onClick={() => setShowTransitionSheet(false)} className="active:opacity-60">
+                      <X size={22} className="text-stone-500" />
+                    </button>
+                  </div>
+                  {/* DM 발송 완료 체크 */}
+                  <button
+                    onClick={() => setDmSent(v => !v)}
+                    className="w-full flex items-center gap-3 p-4 rounded-[12px] mb-5 active:opacity-70"
+                    style={{ border: `1px solid ${dmSent ? '#6366F1' : '#E8E7E4'}`, backgroundColor: dmSent ? '#EEEEFF' : '#FAFBFE' }}
+                  >
+                    <div
+                      className="w-6 h-6 rounded-md flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: dmSent ? '#6366F1' : '#E8E7E4' }}
+                    >
+                      {dmSent && <Check size={14} className="text-white" strokeWidth={2.5} />}
+                    </div>
+                    <span className="text-[16px] font-medium text-[#1C1A17]">브리프 발송 완료</span>
+                  </button>
+                  {/* 발송 채널 */}
+                  <div className="mb-6">
+                    <p className="text-[15px] font-semibold text-[#1C1A17] mb-3">발송 채널</p>
+                    <div className="flex gap-2">
+                      {(['DM', '이메일', '카카오톡'] as const).map(ch => (
+                        <button
+                          key={ch}
+                          onClick={() => setDmChannel(ch)}
+                          className="flex-1 py-3 rounded-[10px] text-[15px] font-medium active:opacity-70"
+                          style={{
+                            border: `1px solid ${dmChannel === ch ? '#6366F1' : '#E8E7E4'}`,
+                            backgroundColor: dmChannel === ch ? '#EEEEFF' : '#FFFFFF',
+                            color: dmChannel === ch ? '#6366F1' : '#78756E',
+                          }}
+                        >
+                          {ch}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowTransitionSheet(false);
+                      setShowToast(true);
+                      setTimeout(() => router.push(`/board?tab=contacting&sent=${id}`), 1500);
+                    }}
+                    disabled={!canAdvance}
+                    className="w-full py-4 rounded-[12px] text-[16px] font-bold text-white active:opacity-80"
+                    style={{ backgroundColor: canAdvance ? '#2E2C28' : '#D4D2CE' }}
+                  >
+                    컨택 단계로 이동
+                  </button>
+                </>
+              );
+            })()}
+
+            {/* ── 컨택 → 협의중 ── */}
+            {effectiveStage === 'contacting' && (() => {
+              const canAdvance = !!negotiationPrice && !!draftDeadline;
+              return (
+                <>
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="text-[16px] font-bold text-[#1C1A17]">협의중 단계로 이동</span>
+                    <button onClick={() => setShowTransitionSheet(false)} className="active:opacity-60">
+                      <X size={22} className="text-stone-500" />
+                    </button>
+                  </div>
+                  {/* 협의 단가 */}
+                  <div className="mb-5">
+                    <p className="text-[15px] font-semibold text-[#1C1A17] mb-2">협의 단가 <span style={{ color: '#6366F1' }}>*</span></p>
+                    <div className="flex items-center border border-[#E8E7E4] rounded-[10px] px-5 h-[52px] bg-white">
+                      <input
+                        value={negotiationPrice}
+                        onChange={e => {
+                          const raw = e.target.value.replace(/[^0-9]/g, '');
+                          setNegotiationPrice(raw ? Number(raw).toLocaleString('ko-KR') : '');
+                        }}
+                        placeholder="예: 300,000"
+                        inputMode="numeric"
+                        className="flex-1 text-[16px] font-medium text-[#1C1A17] outline-none placeholder:text-[#C7C4BE]"
+                      />
+                      <span className="text-[#78756E] text-[16px] font-semibold shrink-0">원</span>
+                    </div>
+                  </div>
+                  {/* 시안 전달 예정일 */}
+                  <div className="mb-5">
+                    <p className="text-[15px] font-semibold text-[#1C1A17] mb-2">시안 전달 예정일 <span style={{ color: '#6366F1' }}>*</span></p>
+                    <TransitionDateBox
+                      value={draftDeadline}
+                      onChange={setDraftDeadline}
+                      placeholder="날짜 선택"
+                    />
+                  </div>
+                  {/* UTM 안내 */}
+                  <div className="flex items-start gap-2 mb-6 rounded-[12px] px-4 py-3" style={{ backgroundColor: '#EEF7FF' }}>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-[1px]">
+                      <path d="M8 1.5L1 14.5h14L8 1.5z" stroke="#2D92FE" strokeWidth="1.3" strokeLinejoin="round"/>
+                      <path d="M8 7v3" stroke="#2D92FE" strokeWidth="1.3" strokeLinecap="round"/>
+                      <circle cx="8" cy="11.5" r="0.6" fill="#2D92FE"/>
+                    </svg>
+                    <span className="text-[13px] font-semibold" style={{ color: '#2D92FE', lineHeight: '140%' }}>
+                      협의 확정 시 인플루언서 고유 UTM 링크가 자동 생성됩니다.
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => { setShowTransitionSheet(false); router.push('/board?tab=negotiated'); }}
+                    disabled={!canAdvance}
+                    className="w-full py-4 rounded-[12px] text-[16px] font-bold text-white active:opacity-80"
+                    style={{ backgroundColor: canAdvance ? '#2E2C28' : '#D4D2CE' }}
+                  >
+                    협의중 단계로 이동
+                  </button>
+                </>
+              );
+            })()}
+
+
+
+          </div>
+        </div>
+      )}
 
       {/* ── 브리프 수정 오버레이 (portal) ── */}
       {mounted && isEditingBrief && createPortal(
@@ -1805,80 +2008,6 @@ export default function InfluencerDetailPage() {
         </>,
         document.body
       )}
-
-      {/* ── 캘린더 오버레이 ── */}
-      {showCalendar && (() => {
-        const y = calendarDate.getFullYear();
-        const m = calendarDate.getMonth();
-        const firstDay = new Date(y, m, 1).getDay();
-        const daysInMonth = new Date(y, m + 1, 0).getDate();
-        const weeks: (number | null)[][] = [];
-        let week: (number | null)[] = Array(firstDay).fill(null);
-        for (let d = 1; d <= daysInMonth; d++) {
-          week.push(d);
-          if (week.length === 7) { weeks.push(week); week = []; }
-        }
-        if (week.length) weeks.push([...week, ...Array(7 - week.length).fill(null)]);
-        const selectedParts = draftDeadline.split('.');
-        const selY = parseInt(selectedParts[0]), selM = parseInt(selectedParts[1]) - 1, selD = parseInt(selectedParts[2]);
-
-        return (
-          <>
-            <div className="fixed inset-0 z-40 bg-black/40" onClick={() => setShowCalendar(false)} />
-            <div className="fixed bottom-0 left-1/2 z-50 w-full max-w-[430px] bg-white flex flex-col" style={{ transform: 'translateX(-50%)', borderRadius: '20px 20px 0 0', padding: '20px 20px 40px' }}>
-              {/* Handle */}
-              <div className="flex justify-center mb-4">
-                <div className="w-10 h-[4px] rounded-full bg-[#E8E7E4]" />
-              </div>
-              {/* Month nav */}
-              <div className="flex items-center justify-between mb-5">
-                <button onClick={() => setCalendarDate(new Date(y, m - 1, 1))} className="w-9 h-9 flex items-center justify-center active:opacity-60">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11.25 13.5L6.75 9L11.25 4.5" stroke="#1C1A17" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </button>
-                <span className="text-[16px] font-bold text-black">{y}년 {m + 1}월</span>
-                <button onClick={() => setCalendarDate(new Date(y, m + 1, 1))} className="w-9 h-9 flex items-center justify-center active:opacity-60">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6.75 4.5L11.25 9L6.75 13.5" stroke="#1C1A17" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </button>
-              </div>
-              {/* Day labels */}
-              <div className="grid grid-cols-7 mb-2">
-                {['일','월','화','수','목','금','토'].map(d => (
-                  <span key={d} className="text-center text-[14px] font-medium" style={{ color: '#B0ADA7' }}>{d}</span>
-                ))}
-              </div>
-              {/* Dates */}
-              <div className="flex flex-col gap-1">
-                {weeks.map((week, wi) => (
-                  <div key={wi} className="grid grid-cols-7">
-                    {week.map((day, di) => {
-                      const isSelected = day !== null && selY === y && selM === m && selD === day;
-                      return (
-                        <button
-                          key={di}
-                          onClick={() => {
-                            if (!day) return;
-                            const str = `${y}.${String(m + 1).padStart(2, '0')}.${String(day).padStart(2, '0')}`;
-                            setDraftDeadline(str);
-                            setShowCalendar(false);
-                          }}
-                          disabled={!day}
-                          className="h-9 flex items-center justify-center active:opacity-70"
-                        >
-                          {day && (
-                            <div className="w-9 h-9 flex items-center justify-center rounded-full" style={{ backgroundColor: isSelected ? '#6366F1' : 'transparent' }}>
-                              <span className="text-[15px] font-medium" style={{ color: isSelected ? '#FFFFFF' : di === 0 ? '#FF686D' : '#1C1A17' }}>{day}</span>
-                            </div>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </>
-        );
-      })()}
 
       {/* ── 메모 추가 오버레이 ── */}
       {mounted && showMemoOverlay && createPortal(

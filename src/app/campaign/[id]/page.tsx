@@ -16,6 +16,8 @@ type CampaignDetail = {
   info: { label: string; value: string }[];
   coreMessage: string;
   guidelineUrl?: string;
+  salesChannel?: string;
+  productUrl?: string;
 };
 
 const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
@@ -52,6 +54,8 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
     ],
     coreMessage: '자외선 차단은 기본, 피부 장벽 케어까지. 매일 바르고 싶은 선케어를 강조',
     guidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
+    salesChannel: '카페24',
+    productUrl: 'https://lumiere.co/product/sunblock',
   },
   2: {
     id: 2,
@@ -107,6 +111,8 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
     ],
     coreMessage: '자연스러운 일상 속 선크림 사용을 통해 브랜드 인지도와 UGC 확보',
     guidelineUrl: 'docs.google.com/fxB2eY1zadeox4dkz',
+    salesChannel: '자사몰',
+    productUrl: 'https://lumiere.co/product/suncream',
   },
 };
 
@@ -237,13 +243,16 @@ export default function CampaignDetailPage() {
             <div className="px-5">
               <span className="text-[20px] font-semibold text-black">AI 브리프</span>
             </div>
-            <div className="flex items-center justify-between px-5 py-[18px]">
-              <div className="flex flex-col gap-1">
+            <button
+              onClick={() => router.push(`/campaign/${id}/brief`)}
+              className="flex items-center justify-between px-5 py-[18px] active:opacity-70 w-full"
+            >
+              <div className="flex flex-col gap-1 text-left">
                 <span className="text-[16px] font-semibold text-[#1C1A17]">AI 브리프 보기</span>
                 <span className="text-[14px] font-normal text-black">브리프 편집 · 재생성</span>
               </div>
               <img src="/arrow-right.svg" alt="" className="w-6 h-6 shrink-0" />
-            </div>
+            </button>
           </div>
 
           {/* ── 4. KPI 현황 ── */}
@@ -293,13 +302,17 @@ export default function CampaignDetailPage() {
             <div className="w-full px-5">
               {/* container has px-5 (20px), rows have py-4 only — matches Figma padding: 0px 20px on container, 16px 0px on rows */}
               <div className="bg-[#F8F9FF] rounded-[14px] px-5">
-                {campaign.info.map((row, i) => (
+                {[
+                  ...campaign.info,
+                  ...(campaign.salesChannel ? [{ label: '판매 채널', value: campaign.salesChannel }] : []),
+                  ...(campaign.productUrl    ? [{ label: '상품 URL',  value: campaign.productUrl   }] : []),
+                ].map((row, i, arr) => (
                   <div
                     key={row.label}
-                    className={`flex items-center justify-between py-4 ${i < campaign.info.length - 1 ? 'border-b border-[#F0F2F8]' : ''}`}
+                    className={`flex items-start justify-between py-4 gap-4 ${i < arr.length - 1 ? 'border-b border-[#F0F2F8]' : ''}`}
                   >
-                    <span className="text-[16px] font-medium text-[#8995A2]">{row.label}</span>
-                    <span className="text-[16px] font-medium text-[#1C1A17]">{row.value}</span>
+                    <span className="text-[16px] font-medium text-[#8995A2] shrink-0">{row.label}</span>
+                    <span className="text-[16px] font-medium text-[#1C1A17] text-right break-all">{row.value}</span>
                   </div>
                 ))}
               </div>

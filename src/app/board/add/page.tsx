@@ -430,7 +430,7 @@ export default function BoardAddPage() {
   const title = step === 4 ? '' : '인플루언서 추가';
 
   return (
-    <div className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
+    <div className="flex flex-col bg-white max-w-[430px] mx-auto relative overflow-hidden" style={{ height: '100dvh' }}>
       {/* Header */}
       {step < 4 && (
         <>

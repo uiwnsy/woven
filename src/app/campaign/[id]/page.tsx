@@ -36,8 +36,8 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
     platform: '인스타그램',
     goal: '구매전환',
     kpis: [
-      { label: 'ROAS', value: '데이터 집계 전' },
-      { label: 'CTR', value: '데이터 집계 전' },
+      { label: 'ROAS', value: '-' },
+      { label: '전환수', value: '-' },
     ],
     boardStages: [
       { label: '리스트업', count: '-' },
@@ -66,8 +66,8 @@ const MOCK_DETAILS: Record<number, CampaignDetail> = {
     platform: '인스타그램',
     goal: '인지도 확대',
     kpis: [
-      { label: '클릭수', value: '데이터 집계 전' },
-      { label: '업로드 수', value: '데이터 집계 전' },
+      { label: '클릭수', value: '-' },
+      { label: '업로드 수', value: '-' },
     ],
     boardStages: [
       { label: '리스트업', count: '-' },
@@ -275,7 +275,7 @@ export default function CampaignDetailPage() {
                     <span className="text-[14px] font-medium text-[#78756E] leading-[20px] font-manrope">
                       {kpi.label}
                     </span>
-                    <span className={`text-[20px] font-extrabold leading-[20px] ${kpi.value === '데이터 집계 전' ? 'text-[#D4D2CE]' : 'text-[#1C1A17]'}`}>
+                    <span className={`text-[20px] font-extrabold leading-[20px] ${kpi.value === '-' ? 'text-[#D4D2CE]' : 'text-[#1C1A17]'}`}>
                       {kpi.value}
                     </span>
                   </div>

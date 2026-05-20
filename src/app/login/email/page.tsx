@@ -24,7 +24,7 @@ export default function EmailLoginPage() {
   };
 
   return (
-    <div onClick={handleScreenTap} className="flex flex-col h-screen bg-white max-w-[430px] mx-auto relative overflow-hidden">
+    <div onClick={handleScreenTap} className="flex flex-col bg-white max-w-[430px] mx-auto relative overflow-hidden" style={{ height: '100dvh' }}>
       {/* Header */}
       <div className="flex items-center justify-center px-5 h-[65px] border-b border-[#f0f2f8] shrink-0 relative">
         <button onClick={() => router.back()} className="absolute left-5 active:opacity-60">

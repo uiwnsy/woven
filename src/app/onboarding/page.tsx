@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 
@@ -39,11 +39,6 @@ export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const dragStartX = useRef<number | null>(null);
-
-  useEffect(() => {
-    document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.setAttribute('content', '#ffffff'));
-    document.body.style.backgroundColor = '#ffffff';
-  }, []);
 
   const skip = () => router.push('/login');
   const next = () => {

@@ -7,20 +7,8 @@ export default function SplashPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Set all theme-color meta tags to dark for splash
-    const metas = document.querySelectorAll('meta[name="theme-color"]');
-    const prevValues = Array.from(metas).map(m => m.getAttribute('content'));
-    metas.forEach(m => m.setAttribute('content', '#1C1C1E'));
-    document.body.style.backgroundColor = '#1C1C1E';
-
     const t = setTimeout(() => router.push('/onboarding'), 2000);
-
-    return () => {
-      clearTimeout(t);
-      // Restore white before leaving
-      metas.forEach((m, i) => m.setAttribute('content', prevValues[i] ?? '#ffffff'));
-      document.body.style.backgroundColor = '';
-    };
+    return () => clearTimeout(t);
   }, [router]);
 
   return (

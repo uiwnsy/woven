@@ -210,7 +210,7 @@ export default function CampaignPage() {
         <div className="absolute inset-0 z-[25]" onClick={() => setFabOpen(false)} />
       )}
       {fabOpen && (
-        <div className="absolute bottom-[175px] right-[20px] z-30 flex flex-col items-end gap-3">
+        <div className="absolute right-[20px] z-30 flex flex-col items-end gap-3" style={{ bottom: 'calc(env(safe-area-inset-bottom) + 82px + 64px + 12px)' }}>
           <button
             onClick={() => { setFabOpen(false); router.push('/campaign/new'); }}
             className="flex items-center bg-white rounded-full px-5 py-3 shadow-lg border border-[#ebeef7] active:opacity-70"
@@ -227,8 +227,8 @@ export default function CampaignPage() {
       )}
       <button
         onClick={() => setFabOpen(f => !f)}
-        className="absolute bottom-[110px] right-[20px] z-30 w-14 h-14 bg-[#6366F1] rounded-full flex items-center justify-center shadow-lg active:opacity-80 transition-transform duration-200"
-        style={{ transform: fabOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
+        className="absolute right-[20px] z-30 w-14 h-14 bg-[#6366F1] rounded-full flex items-center justify-center shadow-lg active:opacity-80 transition-transform duration-200"
+        style={{ bottom: 'calc(env(safe-area-inset-bottom) + 82px)', transform: fabOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
